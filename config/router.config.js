@@ -60,6 +60,33 @@ export default [
             name: 'index',
             component: './V1/FangDan/Index',
           },
+          {
+            path: '/fangdan/step-form',
+            name: 'stepform',
+            component: './V1/FangDan/StepForm',
+            hideInMenu: true,
+            routes: [
+              {
+                path: '/fangdan/step-form',
+                redirect: '/fangdan/step-form/info',
+              },
+              {
+                path: '/fangdan/step-form/info',
+                name: 'info',
+                component: './V1/FangDan/StepForm/Step1',
+              },
+              {
+                path: '/fangdan/step-form/confirm',
+                name: 'confirm',
+                component: './V1/FangDan/StepForm/Step2',
+              },
+              {
+                path: '/fangdan/step-form/result',
+                name: 'result',
+                component: './V1/FangDan/StepForm/Step3',
+              },
+            ],
+          },
         ],
       },
       // forms

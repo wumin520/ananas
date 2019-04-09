@@ -1,5 +1,9 @@
 import { stringify } from 'qs';
 import request from '@/utils/request';
+// server api
+export async function queryServerTest(params) {
+  return request(`/v1/wechat/register/reward?${stringify(params)}`);
+}
 
 export async function queryProjectNotice() {
   return request('/api/project/notice');

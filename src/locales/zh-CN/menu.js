@@ -1,6 +1,8 @@
 export default {
   'menu.fangdan': '放单中心',
   'menu.fangdan.index': '我要放单',
+  'menu.fangdan.stepform': '好评全返',
+  'menu.fangdan.stepform.info': '第一步',
   'menu.home': '首页',
   'menu.login': '登录',
   'menu.register': '注册',
