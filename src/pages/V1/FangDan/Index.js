@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Card, Button, Icon, List } from 'antd';
+import { router } from 'umi';
 
 import Ellipsis from '@/components/Ellipsis';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -31,21 +32,20 @@ class Index extends PureComponent {
     const content = (
       <div className={styles.pageHeaderContent}>
         <p>
-          段落示意：蚂蚁金服务设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，
-          提供跨越设计与开发的体验解决方案。
+          超多客为电商推广提供量身定制方案,快速提升商品搜索排名,带来大量免费真实用户,获得精准商品流量，提升付费转化率
         </p>
         <div className={styles.contentLink}>
           <a>
             <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg" />{' '}
-            快速开始
+            提升转化率
           </a>
           <a>
             <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg" />{' '}
-            产品简介
+            快速聚集人气
           </a>
           <a>
             <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg" />{' '}
-            产品文档
+            提高商品流量
           </a>
         </div>
       </div>
@@ -60,9 +60,14 @@ class Index extends PureComponent {
       </div>
     );
 
+    const onTabChange = index => {
+      console.log('onTabChange', 1, index);
+      router.push('/fangdan/step-form');
+    };
+
     return (
       <PageHeaderWrapper title="我要放单" content={content} extraContent={extraContent}>
-        <div className={styles.Index}>
+        <div className={styles.cardList}>
           <List
             rowKey="id"
             loading={loading}
@@ -71,7 +76,26 @@ class Index extends PureComponent {
             renderItem={item =>
               item ? (
                 <List.Item key={item.id}>
-                  <Card hoverable className={styles.card} actions={[<a>操作一</a>, <a>操作二</a>]}>
+                  <Card
+                    hoverable
+                    className={styles.card}
+                    actions={[
+                      <a
+                        onClick={() => {
+                          onTabChange(1);
+                        }}
+                      >
+                        列表
+                      </a>,
+                      <a
+                        onClick={() => {
+                          onTabChange('2');
+                        }}
+                      >
+                        新增
+                      </a>,
+                    ]}
+                  >
                     <Card.Meta
                       avatar={<img alt="" className={styles.cardAvatar} src={item.avatar} />}
                       title={<a>{item.title}</a>}
