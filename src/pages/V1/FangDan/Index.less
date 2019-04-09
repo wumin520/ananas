@@ -1,6 +1,13 @@
 @import '~antd/lib/style/themes/default.less';
 @import '~@/utils/utils.less';
 
+.upgradeTag {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 2px 4px;
+  border: 1px solid #333;
+}
+
 .cardList {
   margin-bottom: -24px;
 
@@ -25,7 +32,9 @@
     }
   }
   .item {
-    height: 64px;
+    min-height: 64px;
+    white-space: pre-wrap;
+    -webkit-line-clamp: 6 !important;
   }
 
   :global {

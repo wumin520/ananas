@@ -8,9 +8,10 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 import styles from './Index.less';
 
-@connect(({ list, loading }) => ({
+@connect(({ list, loading, setting }) => ({
   list,
   loading: loading.models.list,
+  setting,
 }))
 class Index extends PureComponent {
   componentDidMount() {
@@ -25,10 +26,37 @@ class Index extends PureComponent {
 
   render() {
     const {
-      list: { list },
+      // list: { list },
       loading,
+      setting,
     } = this.props;
 
+    const { primaryColor } = setting;
+
+    const listTemp = [
+      {
+        actions: ['列表', '+新增'],
+        state: 1,
+        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
+        title: '好评全返',
+        description: `适用于：
+基础销量偏低
+宝贝流量较少
+宝贝销评破零
+DSR评分低
+佣金比例≥20%`,
+      },
+      {
+        actions: ['列表', '敬请期待...'],
+        state: 0,
+        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
+        title: '高佣高券',
+        description: `适用于：
+宝贝月销量≥50，评价数≥50
+DSR评分≥4.8分
+佣金比例≥50%`,
+      },
+    ];
     const content = (
       <div className={styles.pageHeaderContent}>
         <p>
@@ -59,7 +87,12 @@ class Index extends PureComponent {
         />
       </div>
     );
-
+    const titleContent = item => (
+      <div>
+        <a>{item.title}</a>
+        {item.state ? '' : <div className={styles.upgradeTag}>升级中</div>}
+      </div>
+    );
     const onTabChange = index => {
       console.log('onTabChange', 1, index);
       router.push('/fangdan/step-form');
@@ -72,7 +105,7 @@ class Index extends PureComponent {
             rowKey="id"
             loading={loading}
             grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
-            dataSource={['', ...list]}
+            dataSource={[...listTemp]}
             renderItem={item =>
               item ? (
                 <List.Item key={item.id}>
@@ -85,20 +118,21 @@ class Index extends PureComponent {
                           onTabChange(1);
                         }}
                       >
-                        列表
+                        {item.actions && item.actions[0]}
                       </a>,
                       <a
+                        style={item.state ? { color: primaryColor } : {}}
                         onClick={() => {
                           onTabChange('2');
                         }}
                       >
-                        新增
+                        {item.actions && item.actions[1]}
                       </a>,
                     ]}
                   >
                     <Card.Meta
                       avatar={<img alt="" className={styles.cardAvatar} src={item.avatar} />}
-                      title={<a>{item.title}</a>}
+                      title={titleContent(item)}
                       description={
                         <Ellipsis className={styles.item} lines={3}>
                           {item.description}

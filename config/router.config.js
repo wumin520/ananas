@@ -94,6 +94,7 @@ export default [
         path: '/form',
         icon: 'form',
         name: 'form',
+        hideInMenu: true,
         routes: [
           {
             path: '/form/basic-form',
@@ -104,7 +105,6 @@ export default [
             path: '/form/step-form',
             name: 'stepform',
             component: './Forms/StepForm',
-            hideChildrenInMenu: true,
             routes: [
               {
                 path: '/form/step-form',
