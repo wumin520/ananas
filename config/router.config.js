@@ -29,6 +29,8 @@ export default [
         path: '/dashboard',
         name: 'dashboard',
         icon: 'dashboard',
+        component: './Dashboard/Analysis',
+        hideChildrenInMenu: true,
         routes: [
           {
             path: '/dashboard/analysis',
@@ -185,6 +187,7 @@ export default [
         name: 'exception',
         icon: 'warning',
         path: '/exception',
+        hideInMenu: true,
         routes: [
           // exception
           {
@@ -214,6 +217,7 @@ export default [
         name: 'account',
         icon: 'user',
         path: '/account',
+        hideInMenu: true,
         routes: [
           {
             path: '/account/center',
@@ -272,6 +276,7 @@ export default [
         name: 'editor',
         icon: 'highlight',
         path: '/editor',
+        hideInMenu: true,
         routes: [
           {
             path: '/editor/flow',
