@@ -49,6 +49,19 @@ export default [
           },
         ],
       },
+      // task
+      {
+        path: '/fangdan',
+        icon: 'form',
+        name: 'fangdan',
+        routes: [
+          {
+            path: '/fangdan/Index',
+            name: 'index',
+            component: './V1/FangDan/Index',
+          },
+        ],
+      },
       // forms
       {
         path: '/form',
