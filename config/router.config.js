@@ -27,7 +27,7 @@ export default [
       { path: '/', redirect: '/dashboard/analysis', authority: ['admin', 'user'] },
       {
         path: '/dashboard',
-        name: 'dashboard',
+        name: 'dashboard1',
         icon: 'dashboard',
         component: './Dashboard/Analysis',
         hideChildrenInMenu: true,
@@ -46,6 +46,22 @@ export default [
             path: '/dashboard/workplace',
             name: 'workplace',
             component: './Dashboard/Workplace',
+          },
+        ],
+      },
+      // new homePage
+      // { path: '/', redirect: '/homePage/index', authority: ['admin', 'user'] },
+      {
+        path: '/homePage',
+        name: 'dashboard',
+        icon: 'dashboard',
+        component: './V1/HomePage/Index',
+        hideChildrenInMenu: true,
+        routes: [
+          {
+            path: '/homePage/Index',
+            name: 'index',
+            component: './V1/HomePage/Index',
           },
         ],
       },
