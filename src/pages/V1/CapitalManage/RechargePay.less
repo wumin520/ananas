@@ -1,0 +1,46 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/utils/utils.less';
+
+.title {
+  color: #000;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.payMoney {
+  color: #fa8c16;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.unit {
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.payBlock {
+  width: 100%;
+  color: #000;
+
+  .payBlock_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    padding-left: 30px;
+  }
+  .payBlock_center {
+    margin: 30px 0;
+    padding: 30px 0 10px;
+    text-align: center;
+    border-top: 1px dashed #000;
+    border-bottom: 1px solid #000;
+
+    .payInfo {
+      width: 320px;
+      margin: 0 auto 20px;
+      padding: 20px;
+      border: 1px solid #000;
+    }
+  }
+}
