@@ -97,6 +97,68 @@ export default [
               },
             ],
           },
+        ],
+      },
+      //capitalManage
+      {
+        path: '/capitalManage',
+        icon: 'profile',
+        name: 'capital',
+        routes: [
+          {
+            path: '/CapitalManage/Recharge',
+            name: 'recharge',
+            component: './V1/CapitalManage/Recharge',
+          },
+          {
+            path: '/CapitalManage/CapitalDetail',
+            name: 'detail',
+            component: './V1/CapitalManage/CapitalDetail',
+          },
+          {
+            path: '/CapitalManage/Withdraw',
+            name: 'withdraw',
+            component: './V1/CapitalManage/Withdraw',
+          },
+          {
+            path: '/CapitalManage/FreezeDetail',
+            name: 'freeze',
+            hideInMenu: true,
+            component: './V1/CapitalManage/FreezeDetail',
+          },
+          {
+            path: '/CapitalManage/RechargePay',
+            name: 'rechargePay',
+            hideInMenu: true,
+            component: './V1/CapitalManage/RechargePay',
+          },
+          {
+            path: '/CapitalManage/RechargePaySuccess',
+            name: 'success',
+            hideInMenu: true,
+            component: './V1/CapitalManage/RechargePaySuccess',
+          },
+          {
+            path: '/CapitalManage/RechargePayError',
+            name: 'error',
+            hideInMenu: true,
+            component: './V1/CapitalManage/RechargePayError',
+          },
+          {
+            path: '/CapitalManage/WithdrawSuccess',
+            name: 'withdrawSuccess',
+            hideInMenu: true,
+            component: './V1/CapitalManage/WithdrawSuccess',
+          },
+        ],
+      },
+      // forms
+      {
+        path: '/form',
+        icon: 'form',
+        name: 'form',
+        hideInMenu: true,
+        routes: [
           {
             path: '/fangdan/list',
             name: 'myList',
