@@ -270,6 +270,12 @@ export default [
             authority: ['admin'],
             component: './Profile/AdvancedProfile',
           },
+          {
+            path: '/profile/creditRecord',
+            name: 'creditRecord',
+            authority: ['admin'],
+            component: './Profile/CreditRecord',
+          },
         ],
       },
       {

@@ -47,6 +47,7 @@ export default {
   'menu.profile': '资金管理',
   'menu.profile.basic': '基础详情页',
   'menu.profile.advanced': '高级详情页',
+  'menu.profile.creditRecord': '信用记录',
   'menu.result': '信用记录',
   'menu.result.success': '成功页',
   'menu.result.fail': '失败页',
