@@ -81,9 +81,19 @@ export default [
                 component: './V1/FangDan/StepForm/Step2',
               },
               {
+                path: '/fangdan/step-form/schedule',
+                name: 'schedule',
+                component: './V1/FangDan/StepForm/Step3',
+              },
+              {
+                path: '/fangdan/step-form/pay',
+                name: 'pay',
+                component: './V1/FangDan/StepForm/Step4',
+              },
+              {
                 path: '/fangdan/step-form/result',
                 name: 'result',
-                component: './V1/FangDan/StepForm/Step3',
+                component: './V1/FangDan/StepForm/Step5',
               },
             ],
           },
@@ -94,6 +104,7 @@ export default [
         path: '/form',
         icon: 'form',
         name: 'form',
+        hideInMenu: true,
         routes: [
           {
             path: '/form/basic-form',
@@ -104,7 +115,6 @@ export default [
             path: '/form/step-form',
             name: 'stepform',
             component: './Forms/StepForm',
-            hideChildrenInMenu: true,
             routes: [
               {
                 path: '/form/step-form',
