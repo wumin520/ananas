@@ -107,9 +107,9 @@ export default [
         hideInMenu: true,
         routes: [
           {
-            path: '/form/basic-form',
-            name: 'basicform',
-            component: './Forms/BasicForm',
+            path: '/fangdan/list',
+            name: 'myList',
+            component: './V1/FangDan/List',
           },
           {
             path: '/form/step-form',
@@ -136,16 +136,19 @@ export default [
                 component: './Forms/StepForm/Step3',
               },
             ],
+            path: '/fangdan/list/GeneralizeDetail',
+            name: 'generalizeDetail',
+            component: './V1/FangDan/List/GeneralizeDetail',
+            hideInMenu: true,
           },
           {
-            path: '/form/advanced-form',
-            name: 'advancedform',
-            authority: ['admin'],
-            component: './Forms/AdvancedForm',
+            path: '/fangdan/list/order',
+            name: 'order',
+            component: './V1/FangDan/List/order',
+            hideInMenu: true,
           },
         ],
       },
-      // list
       {
         path: '/list',
         icon: 'table',

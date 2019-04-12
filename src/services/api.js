@@ -4,11 +4,13 @@ import request from '@/utils/request';
 export async function queryServerTest(params) {
   return request(`/v1/wechat/register/reward?${stringify(params)}`);
 }
-
+// 推广详情
+export async function taskDetail(params) {
+  return request(`/v1/web/task/detail?${stringify(params)}`);
+}
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }
-
 export async function queryActivities() {
   return request('/api/activities');
 }
