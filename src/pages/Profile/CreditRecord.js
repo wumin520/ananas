@@ -114,6 +114,18 @@ class CreditRecord extends Component {
       title: '放单-好评全返',
       dataIndex: 'backQ',
     },
+    {
+      title: '平台官方推荐',
+      dataIndex: 'recommend',
+    },
+    {
+      title: '提现',
+      dataIndex: 'withdraw',
+    },
+    {
+      title: '冻结账号',
+      dataIndex: 'freeze',
+    },
   ];
 
   dataStatic = [
@@ -121,11 +133,153 @@ class CreditRecord extends Component {
       key: '1',
       pointDeduct: '满12分',
       backQ: '限制',
+      recommend: '不限制',
+      withdraw: '不限制',
+      freeze: '不限制',
     },
     {
       key: '2',
-      pointDeduct: '满12分',
+      pointDeduct: '满24分',
       backQ: '限制',
+      recommend: '限制',
+      withdraw: '不限制',
+      freeze: '不限制',
+    },
+    {
+      key: '3',
+      pointDeduct: '满36分',
+      backQ: '限制',
+      recommend: '限制',
+      withdraw: '限制',
+      freeze: '不限制',
+    },
+    {
+      key: '4',
+      pointDeduct: '超出36分',
+      backQ: '限制',
+      recommend: '限制',
+      withdraw: '限制',
+      freeze: '限制',
+    },
+  ];
+
+  columnsStaticRule = [
+    {
+      title: '',
+      dataIndex: 'name',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          row,
+          props: {},
+        };
+
+        obj.props.rowSpan = 0;
+
+        const valObj = {
+          0: 3,
+          3: 4,
+          7: 2,
+          9: 1,
+        };
+        if ({}.hasOwnProperty.call(valObj, index)) obj.props.rowSpan = valObj[index];
+
+        return obj;
+      },
+    },
+    {
+      title: '处罚分类',
+      dataIndex: 'item',
+    },
+    {
+      title: '活动要求',
+      dataIndex: 'require',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          row,
+          props: {},
+        };
+        obj.props.rowSpan = index === 0 ? 10 : 0;
+        return obj;
+      },
+    },
+    {
+      title: '不符合活动要求的处罚规定',
+      dataIndex: 'punish',
+    },
+  ];
+
+  dataStaticRule = [
+    {
+      key: '1',
+      name: '任务过程',
+      item: '商品价格类',
+      require: '与 《超多客商家处罚规则一致》',
+      punish: '每次扣1分',
+    },
+    {
+      key: '2',
+      name: '任务过程',
+      item: '上下架类',
+      require: '与 《超多客商家处罚规则一致》',
+      punish: '每次扣2分',
+    },
+    {
+      key: '3',
+      name: '任务过程',
+      item: '下单类',
+      require: '与 《超多客商家处罚规则一致》',
+      punish: '每次扣2分',
+    },
+    {
+      key: '4',
+      name: '发货过程',
+      item: '发货时间',
+      require: '与 《超多客商家处罚规则一致》',
+      punish: '每次扣2分',
+    },
+    {
+      key: '5',
+      name: '发货过程',
+      item: '商品质量',
+      require: '与 《超多客商家处罚规则一致》',
+      punish: '每次扣3分',
+    },
+    {
+      key: '6',
+      name: '发货过程',
+      item: '错发漏发',
+      require: '与 《超多客商家处罚规则一致》',
+      punish: '每次扣1分',
+    },
+    {
+      key: '7',
+      name: '发货过程',
+      item: '收货评价',
+      require: '与 《超多客商家处罚规则一致》',
+      punish: '每次扣2分',
+    },
+    {
+      key: '8',
+      name: '平台规则',
+      item: '私下拉群',
+      require: '与 《超多客商家处罚规则一致》',
+      punish: '每次扣3分',
+    },
+    {
+      key: '9',
+      name: '平台规则',
+      item: '商家规范',
+      require: '与 《超多客商家处罚规则一致》',
+      punish: '每次扣2分',
+    },
+    {
+      key: '10',
+      name: '其他行为',
+      item: '其他恶意行为',
+      require: '与 《超多客商家处罚规则一致》',
+      punish: '根据情况每次扣1~12分',
     },
   ];
 
@@ -349,7 +503,24 @@ class CreditRecord extends Component {
               columns={this.columnsStatic}
               dataSource={this.dataStatic}
               bordered
+              pagination={false}
               title={() => '扣分限制'}
+            />
+            <div>
+              <p>
+                限制放单：指卖家无法在平台发布活动（满24分每2天只能发布一次活动，满36分每月只能发布5次活动）
+              </p>
+              <p>商品平台不做任何推荐：卖家商品无法获得平台任何资源的推荐</p>
+              <p>提现：满36分提现受限，2个月内不能提现，超出36分不能使用提现功能</p>
+              <p>冻结账号：均不能使用，请联系招商办理解冻</p>
+            </div>
+
+            <Table
+              columns={this.columnsStaticRule}
+              dataSource={this.dataStaticRule}
+              bordered
+              pagination={false}
+              title={() => '违规扣分规则：'}
             />
           </Card>
         </div>
