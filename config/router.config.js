@@ -81,9 +81,19 @@ export default [
                 component: './V1/FangDan/StepForm/Step2',
               },
               {
+                path: '/fangdan/step-form/schedule',
+                name: 'schedule',
+                component: './V1/FangDan/StepForm/Step3',
+              },
+              {
+                path: '/fangdan/step-form/pay',
+                name: 'pay',
+                component: './V1/FangDan/StepForm/Step4',
+              },
+              {
                 path: '/fangdan/step-form/result',
                 name: 'result',
-                component: './V1/FangDan/StepForm/Step3',
+                component: './V1/FangDan/StepForm/Step5',
               },
             ],
           },

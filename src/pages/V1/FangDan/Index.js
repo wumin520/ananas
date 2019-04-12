@@ -93,7 +93,10 @@ DSR评分≥4.8分
         {item.state ? '' : <div className={styles.upgradeTag}>升级中</div>}
       </div>
     );
-    const onTabChange = index => {
+    const onTabChange = (index, item) => {
+      if (!item.state) {
+        return;
+      }
       console.log('onTabChange', 1, index);
       router.push('/fangdan/step-form');
     };
@@ -115,7 +118,7 @@ DSR评分≥4.8分
                     actions={[
                       <a
                         onClick={() => {
-                          onTabChange(1);
+                          onTabChange(1, item);
                         }}
                       >
                         {item.actions && item.actions[0]}
@@ -123,7 +126,7 @@ DSR评分≥4.8分
                       <a
                         style={item.state ? { color: primaryColor } : {}}
                         onClick={() => {
-                          onTabChange('2');
+                          onTabChange('2', item);
                         }}
                       >
                         {item.actions && item.actions[1]}
