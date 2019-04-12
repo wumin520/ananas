@@ -17,6 +17,11 @@ export async function orderList(params) {
   return request(`/v1/web/order/list?${stringify(params)}`);
 }
 
+// 资金明细
+export async function getAssetList(params) {
+  return request(`/web/account/asset_list?${stringify(params)}`);
+}
+
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }

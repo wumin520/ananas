@@ -5,7 +5,7 @@ import { Card, Row, Col, Button, Form, Select, Table } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 // import Result from '@/components/Result';
 
-import styles from './FreezeDetail.less';
+import styles from './styles.less';
 
 const { Option } = Select;
 
