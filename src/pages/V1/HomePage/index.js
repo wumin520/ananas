@@ -20,7 +20,8 @@ const getValue = obj =>
 const statusMap = ['default', 'processing', 'success', 'error'];
 const status = ['关闭', '运行中', '已上线', '异常'];
 
-@connect(({ chart, rule, loading }) => ({
+@connect(({ chart, rule, loading, home }) => ({
+  home,
   chart,
   rule,
   loading: loading.effects['chart/fetch'],
@@ -96,6 +97,9 @@ class Index extends Component {
     });
     dispatch({
       type: 'rule/fetch',
+    });
+    dispatch({
+      type: 'home/fetch',
     });
   }
 

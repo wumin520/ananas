@@ -100,6 +100,11 @@ export async function pay(params) {
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }
+
+export async function getHomeData() {
+  return request('/api/web/home');
+}
+
 export async function queryActivities() {
   return request('/api/activities');
 }
