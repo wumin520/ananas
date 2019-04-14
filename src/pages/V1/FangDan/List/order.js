@@ -1,6 +1,4 @@
 import React, { PureComponent } from 'react';
-// import { findDOMNode } from 'react-dom';
-// import moment from 'moment';
 import { connect } from 'dva';
 // import router from 'umi/router';
 import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Pagination } from 'antd';
@@ -11,39 +9,101 @@ import styles from './order.less';
 
 const { Option } = Select;
 const FormItem = Form.Item;
-const statusMap = ['processing', 'success', 'error', 'warning'];
-const status = ['已下单', '已完成', '无效', '待评价'];
-@connect(({ list, loading }) => ({
-  list,
-  loading: loading.models.list,
+const statusMap = ['error', 'processing', 'warning', 'success'];
+const status = ['无效', '已下单', '待评价', '已完成'];
+@connect(({ task, loading }) => ({
+  task,
+  loading: loading.models.task,
 }))
 @Form.create()
-class BasicList extends PureComponent {
+class OrderList extends PureComponent {
   state = {};
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'task/orderData',
+      payload: {
+        page: 1,
+        task_id: '2222',
+        goods_id: '222',
+        state: 0,
+      },
+    });
+  }
+
+  // 查询
+  handleSearch = e => {
+    e.preventDefault();
+    const { dispatch, form } = this.props;
+    form.validateFields((err, fieldsValue) => {
+      if (err) return;
+      const values = {
+        ...fieldsValue,
+        updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
+      };
+      // this.setState({
+      //   formValues: values,
+      // });
+
+      dispatch({
+        type: 'task/orderData',
+        payload: values,
+      });
+    });
+  };
+
+  // 重置
+  handleFormReset = () => {
+    const { form, dispatch } = this.props;
+    form.resetFields();
+    // this.setState({
+    //   formValues: {},
+    // });
+    dispatch({
+      type: 'task/fetch',
+      payload: {},
+    });
+  };
+
   renderSimpleForm() {
-    const { getFieldDecorator } = this.props;
+    const {
+      form: { getFieldDecorator },
+    } = this.props;
+    const stateSelect = [
+      { name: '全部', value: '-1' },
+      { name: '无效', value: '0' },
+      { name: '已下单', value: '1' },
+      { name: '待评价', value: '2' },
+      { name: '已完成', value: '3' },
+    ];
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
           <Col md={5} sm={24}>
             <FormItem label="推广编号">
-              {getFieldDecorator('name')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('number')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
             <FormItem label="商品id">
-              {getFieldDecorator('name')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('productId')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
             <FormItem label="状态">
               {getFieldDecorator('status')(
-                <Select placeholder="全部" style={{ width: '100%' }}>
-                  <Option value="0">已下单</Option>
-                  <Option value="1">已完成</Option>
-                  <Option value="2">售后</Option>
-                  <Option value="3">待评价</Option>
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="全部"
+                  onChange={this.selectTypeChange}
+                >
+                  {stateSelect.length &&
+                    stateSelect.map(e => (
+                      <Option key={e.value} value={e.value}>
+                        {e.name}
+                      </Option>
+                    ))}
                 </Select>
               )}
             </FormItem>
@@ -68,53 +128,66 @@ class BasicList extends PureComponent {
   }
 
   render() {
+    // const { data, order_num_info, state_select,page_info} = this.props;
     const columns = [
       {
         title: '推广编号',
-        dataIndex: 'number',
-        key: 'number',
+        dataIndex: 'task_id',
+        key: 'task_id',
       },
       {
         title: '商品',
-        dataIndex: 'product',
-        key: 'product',
         render: val => {
           return (
             <p>
               <img src={val.img} alt="a" style={{ width: 50, heigth: 50 }} />
-              <span> {val.title}</span>
+              <span> {val.goods_name}</span>
             </p>
           );
         },
       },
       {
         title: '订单编号',
-        dataIndex: 'dnumber',
-        key: 'dnumber',
+        dataIndex: 'p_order_id',
+        key: 'p_order_id',
       },
       {
         title: '购买价格',
-        dataIndex: 'price',
-        key: 'price',
+        dataIndex: 'orderPrice',
+        key: 'orderPrice',
+        render(orderPrice) {
+          return <span>￥{orderPrice}</span>;
+        },
       },
       {
         title: '状态',
-        dataIndex: 'status',
+        dataIndex: 'state',
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
       },
       {
         title: '时间',
-        dataIndex: 'date',
-        key: 'date',
+        render(val) {
+          return (
+            <span>
+              <span>下单:{val.ordered_datetime}</span>
+              <br />
+              <span>确认收货:{val.harvest_time}</span>
+              <br />
+              <span>好评:{val.proof_time}</span>
+              <br />
+              <span>售后:</span>
+            </span>
+          );
+        },
       },
       {
         title: '操作',
         key: 'action',
-        render: (text, record) => (
+        render: () => (
           <span>
-            <a href="">查看 {record.name}</a>
+            <a href="">查看</a>
           </span>
         ),
       },
@@ -122,63 +195,51 @@ class BasicList extends PureComponent {
     const data = [
       {
         key: '1',
-        number: '12334',
-        dnumber: '13245',
-        product: {
-          img:
-            'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-          title: '商品名称1行的商品名称',
-        },
-        date: '2016-09-21  08:50:08',
-        price: '￥20.00',
-        status: 0,
-        count: {
-          a: 100,
-          b: 200,
-          c: 300,
-        },
+        task_id: '12334',
+        p_order_id: 2020202,
+        goods_name: '商品名称',
+        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
+        orderPrice: 200.0,
+        state: '0',
+        ordered_datetime: '2019-02-10 00:00:00',
+        harvest_time: '2019-02-10 00:00:00',
+        proof_time: '',
       },
       {
         key: '2',
-        dnumber: '13245',
-        number: '12334',
-        product: {
-          img:
-            'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-          title: '商品名称1行的商品名称',
-        },
-        date: '2016-09-21  08:50:08',
-        price: '￥20.00',
-        status: 1,
-        count: {
-          a: 100,
-          b: 200,
-          c: 300,
-        },
+        task_id: '12334',
+        p_order_id: 2020202,
+        goods_name: '商品名称',
+        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
+        orderPrice: 200.0,
+        state: '1',
+        ordered_datetime: '2019-02-10 00:00:00',
+        harvest_time: '2019-02-10 00:00:00',
+        proof_time: '',
       },
       {
         key: '3',
-        number: '12334',
-        dnumber: '13245',
-        product: {
-          img:
-            'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-          title: '商品名称1行的商品名称',
-        },
-        date: '2016-09-21  08:50:08',
-        price: '￥20.00',
-        status: 2,
-        count: {
-          a: 100,
-          b: 200,
-          c: 300,
-        },
+        task_id: '12334',
+        p_order_id: 2020202,
+        goods_name: '商品名称',
+        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
+        orderPrice: 200.0,
+        state: '2',
+        ordered_datetime: '2019-02-10 00:00:00',
+        harvest_time: '2019-02-10 00:00:00',
+        proof_time: '',
       },
     ];
 
-    // const modalFooter = done
-    //   ? { footer: null, onCancel: this.handleDone }
-    //   : { okText: '保存', onOk: this.handleSubmit, onCancel: this.handleCancel };
+    const orderNumInfo = {
+      pay_num: 200,
+      finish_num: 50,
+      wait_proof_num: 500,
+    };
+    const pageInfo = {
+      total_num: 100,
+      total_page: 5,
+    };
 
     const Info = ({ title, value, bordered }) => (
       <div className={styles.headerInfo}>
@@ -202,16 +263,16 @@ class BasicList extends PureComponent {
           <Card bordered={false}>
             <Row>
               <Col sm={6} xs={24}>
-                <Info title="已下单" value="8个" bordered />
+                <Info title="已下单" value={orderNumInfo.pay_num} bordered />
               </Col>
               <Col sm={6} xs={24}>
-                <Info title="待评价" value="32个" bordered />
+                <Info title="待评价" value={orderNumInfo.wait_proof_num} bordered />
               </Col>
               <Col sm={6} xs={24}>
-                <Info title="待返现" value="24个" />
+                <Info title="待返现" value={orderNumInfo.finish_num} />
               </Col>
               <Col sm={6} xs={24}>
-                <Info title="已完成" value="24个" />
+                <Info title="已完成" value={orderNumInfo.finish_num} />
               </Col>
             </Row>
           </Card>
@@ -226,12 +287,14 @@ class BasicList extends PureComponent {
                 className={styles.tableMargin}
               />
               <div className={styles.pageBottom}>
-                <p>共400条记录 第1/50页</p>
+                <p>
+                  共{pageInfo.total_num}条记录 第1/{pageInfo.total_page}页
+                </p>
                 <Pagination
                   showSizeChanger
                   showQuickJumper
                   defaultCurrent={1}
-                  total={90}
+                  total={pageInfo.total_num}
                   onChange={onChange}
                 />
               </div>
@@ -243,4 +306,4 @@ class BasicList extends PureComponent {
   }
 }
 
-export default BasicList;
+export default OrderList;

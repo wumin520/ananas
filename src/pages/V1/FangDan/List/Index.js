@@ -7,8 +7,8 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './Index.less';
 
 const FormItem = Form.Item;
-const statusMap = ['processing', 'warning', 'success', 'default', 'default', 'error', 'success'];
-const status = ['审核中', '审核驳回', '进行中', '已完成', '已终止', '已下架', '结算中'];
+const statusMap = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
+const status = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已完成'];
 const { Option } = Select;
 
 @connect(({ task, loading }) => ({
@@ -16,13 +16,8 @@ const { Option } = Select;
   loading: loading.effects['task/fetchBasic'],
 }))
 @Form.create()
-class BasicList extends PureComponent {
+class FdList extends PureComponent {
   state = {};
-
-  formLayout = {
-    labelCol: { span: 7 },
-    wrapperCol: { span: 13 },
-  };
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -30,9 +25,10 @@ class BasicList extends PureComponent {
       type: 'task/fetchBasic',
       payload: {
         page: 1,
-        task_id: '222',
+        task_id: '2222',
         goods_id: '222',
         state: 0,
+        type: -1,
       },
     });
   }
@@ -45,27 +41,84 @@ class BasicList extends PureComponent {
     });
   };
 
+  // 查询
+  handleSearch = e => {
+    e.preventDefault();
+
+    const { dispatch, form } = this.props;
+
+    form.validateFields((err, fieldsValue) => {
+      if (err) return;
+
+      const values = {
+        ...fieldsValue,
+        updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
+      };
+
+      // this.setState({
+      //   formValues: values,
+      // });
+
+      dispatch({
+        type: 'rule/fetch',
+        payload: values,
+      });
+    });
+  };
+
+  // 重置
+  handleFormReset = () => {
+    const { form, dispatch } = this.props;
+    form.resetFields();
+    // this.setState({
+    //   formValues: {},
+    // });
+    dispatch({
+      type: 'task/fetch',
+      payload: {},
+    });
+  };
+
+  // 搜索
   renderSimpleForm() {
-    const { getFieldDecorator } = this.props;
+    const {
+      form: { getFieldDecorator },
+    } = this.props;
+    // const { type_select, state_select } = this.props;
+    const typeSelect = [{ name: '全部', value: '-1' }, { name: '好评全返', value: '0' }];
+    const stateSelect = [
+      { name: '全部', value: '-1' },
+      { name: '待支付', value: '0' },
+      { name: '审核中', value: '1' },
+      { name: '进行中', value: '2' },
+      { name: '审核驳回', value: '3' },
+      { name: '清算中', value: '4' },
+      { name: '已结算', value: '5' },
+    ];
     return (
+      // console.log('state_select:',state_select),
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
           <Col md={5} sm={24}>
             <FormItem label="推广编号">
-              {getFieldDecorator('name')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('number')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
             <FormItem label="商品id">
-              {getFieldDecorator('name')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('productId')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
             <FormItem label="推广类型">
-              {getFieldDecorator('abc')(
-                <Select placeholder="全部" style={{ width: '100%' }}>
-                  <Option value="0">好评全返</Option>
-                  <Option value="1">大额券</Option>
+              {getFieldDecorator('type')(
+                <Select style={{ width: 120 }} placeholder="全部" onChange={this.selectTypeChange}>
+                  {typeSelect.length &&
+                    typeSelect.map(e => (
+                      <Option key={e.value} value={e.value}>
+                        {e.name}
+                      </Option>
+                    ))}
                 </Select>
               )}
             </FormItem>
@@ -73,13 +126,13 @@ class BasicList extends PureComponent {
           <Col md={5} sm={24}>
             <FormItem label="状态">
               {getFieldDecorator('status')(
-                <Select placeholder="全部" style={{ width: '100%' }}>
-                  <Option value="0">审核中</Option>
-                  <Option value="1">审核驳回</Option>
-                  <Option value="2">进行中</Option>
-                  <Option value="3">已完成</Option>
-                  <Option value="4">已下架</Option>
-                  <Option value="5">结算中</Option>
+                <Select style={{ width: 120 }} placeholder="全部" onChange={this.selectTypeChange}>
+                  {stateSelect.length &&
+                    stateSelect.map(e => (
+                      <Option key={e.value} value={e.value}>
+                        {e.name}
+                      </Option>
+                    ))}
                 </Select>
               )}
             </FormItem>
@@ -104,19 +157,30 @@ class BasicList extends PureComponent {
   }
 
   render() {
-    const goDetail = '/fangdan/list/generalizeDetail';
+    // 表格数据
+    // const { list ,task_info, state_select,type_select,page_info} = this.props;
+    // 跳转路径
+    const goDetail = `/fangdan/list/generalizeDetail`;
     const goOrder = '/fangdan/list/order';
+
+    const taskInfo = {
+      running_num: 10, // 进行中
+      verifying_num: 100, // 审核中
+      finish_num: 100, // 已完成数
+    };
+    const pageInfo = {
+      total_num: 100, // 总数
+      total_page: 5, // 页数
+    };
+
     const columns = [
       {
         title: '推广编号',
-        dataIndex: 'number',
-        key: 'number',
-        render: text => <a href="">{text}</a>,
+        dataIndex: 'task_id',
+        key: 'task_id',
       },
       {
         title: '商品',
-        dataIndex: 'product',
-        key: 'product',
         render: val => {
           return (
             <p>
@@ -128,8 +192,8 @@ class BasicList extends PureComponent {
       },
       {
         title: '提交时间',
-        dataIndex: 'date',
-        key: 'date',
+        dataIndex: 'created_at',
+        key: 'created_at',
       },
       {
         title: '价格',
@@ -138,124 +202,136 @@ class BasicList extends PureComponent {
       },
       {
         title: '状态',
-        dataIndex: 'status',
+        dataIndex: 'state',
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
       },
       {
         title: '推广份数',
-        dataIndex: 'count',
-        key: 'count',
-        render: val => {
+        render: item => {
           return (
             <p>
-              <span>发放份数 {val.a}</span>
-              <span>&nbsp;&nbsp;评价人数 {val.b}</span>
+              <span>发放份数 {item.total_amount}</span>
+              <span>&nbsp;&nbsp;评价人数 {item.order_num}</span>
               <br />
-              <span>下单人数 {val.c}</span>
-              <span>&nbsp;&nbsp;售后人数 {val.d}</span>
+              <span>下单人数 {item.comment_num}</span>
+              <span>&nbsp;&nbsp;售后人数 {item.sale_back_num}</span>
             </p>
           );
         },
       },
       {
         title: '操作',
-        key: 'action',
-        render: (text, record) => (
-          <span>
-            <a href={goDetail}>查看 {record.name}</a>
-            {/* <Divider type="vertical" /> */}
-            <a href={goOrder}>订单明细 </a>
-            <br />
-            <a href="">下架 </a>
-            {/* <Divider type="vertical" /> */}
-            <a href="">终止 </a>
-            <br />
-            <a href="">上架 </a>
-            <a href="">编辑 </a>
-          </span>
-        ),
+        render: item => {
+          let operation;
+          // if(state != 0){
+          //   operation = (<a href={goDetail}>查看 </a>)
+          // }
+          // if(state!=1&&state!=3){
+          //   operation = (<a href="">编辑 </a>)
+          // }
+          // if(state == 2){
+          //   operation = (<a href="">终止 </a>)
+          // }
+          // if(state == 0){
+          //   operation = (<a href="">支付 </a>)
+          // }
+          // if(state != 0&&state != 1&&state != 3){
+          //   operation = (<a href={goOrder}>订单明细 </a>)
+          // }
+          if (item.state === 0) {
+            operation = <a href="">支付 </a>;
+            // operation = (<a href={goDetail}>查看 </a>)
+          }
+          if (item.state === 1) {
+            operation = <a href={goDetail}>查看 </a>;
+          }
+          if (item.state === 2) {
+            operation = (
+              <span>
+                <a href={goDetail}>查看 </a>
+                <a href={goOrder}>订单明细 </a>
+                <br />
+                <a href="">终止 </a>
+              </span>
+            );
+          }
+          if (item.state === 3) {
+            operation = (
+              <span>
+                <a href={goDetail}>查看 </a>
+                <a href="">编辑 </a>
+              </span>
+            );
+          }
+          if (item.state === 4 || item.state === 5) {
+            operation = (
+              <span>
+                <a href={goDetail}>查看 </a>
+                <a href={goOrder}>订单明细 </a>
+              </span>
+            );
+          }
+          return <span>{operation}</span>;
+        },
       },
     ];
-    const data = [
+    const list = [
       {
         key: '1',
-        number: '12334',
-        product: {
-          img:
-            'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-          title: '商品名称1行的商品名称',
-        },
-        date: '2016-09-21  08:50:08',
+        task_id: '12334',
+        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
+        title: '商品名称1行的商品名称',
+        created_at: '2016-09-21  08:50:08',
         price: '￥20.00',
-        status: 0,
-        count: {
-          a: '100',
-          b: '200',
-          c: '300',
-          d: '0',
-        },
-        action: 0,
+        state: 0,
+        total_amount: 200,
+        order_num: 100,
+        comment_num: 80,
+        sale_back_num: 10,
       },
       {
         key: '2',
-        number: '12334',
-        product: {
-          img:
-            'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-          title: '商品名称1行的商品名称',
-        },
-        date: '2016-09-21  08:50:08',
+        task_id: '12334',
+        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
+        title: '商品名称1行的商品名称',
+        created_at: '2016-09-21  08:50:08',
         price: '￥20.00',
-        status: 1,
-        count: {
-          a: '100',
-          b: '200',
-          c: '300',
-          d: '0',
-        },
-        action: 1,
+        state: 1,
+        total_amount: 200,
+        order_num: 100,
+        comment_num: 80,
+        sale_back_num: 10,
       },
       {
         key: '3',
-        number: '12334',
-        product: {
-          img:
-            'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-          title: '商品名称1行的商品名称',
-        },
-        date: '2016-09-21  08:50:08',
+        task_id: '12334',
+        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
+        title: '商品名称1行的商品名称',
+        created_at: '2016-09-21  08:50:08',
         price: '￥20.00',
-        status: 2,
-        count: {
-          a: '100',
-          b: '200',
-          c: '300',
-          d: '0',
-        },
-        action: 2,
+        state: 2,
+        total_amount: 200,
+        order_num: 100,
+        comment_num: 80,
+        sale_back_num: 10,
       },
       {
         key: '4',
-        number: '12334',
-        product: {
-          img:
-            'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-          title: '商品名称1行的商品名称',
-        },
-        date: '2016-09-21  08:50:08',
+        task_id: '12334',
+        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
+        title: '商品名称1行的商品名称',
+        created_at: '2016-09-21  08:50:08',
         price: '￥20.00',
-        status: 3,
-        count: {
-          a: '100',
-          b: '200',
-          c: '300',
-          d: '0',
-        },
-        action: 3,
+        state: 3,
+        total_amount: 200,
+        order_num: 100,
+        comment_num: 80,
+        sale_back_num: 10,
       },
     ];
+
     const Info = ({ title, value, bordered }) => (
       <div className={styles.headerInfo}>
         <span>{title}</span>
@@ -270,19 +346,21 @@ class BasicList extends PureComponent {
     function onChange(pageNumber) {
       console.log('Page: ', pageNumber);
     }
+
+    // card
     return (
       <PageHeaderWrapper title=" " content={content}>
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
               <Col sm={8} xs={24}>
-                <Info title="进行中" value="8个" bordered />
+                <Info title="进行中" value={taskInfo.running_num} bordered />
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="审核中" value="32个" bordered />
+                <Info title="审核中" value={taskInfo.verifying_num} bordered />
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="已完成" value="24个" />
+                <Info title="已完成" value={taskInfo.finish_num} />
               </Col>
             </Row>
           </Card>
@@ -292,17 +370,19 @@ class BasicList extends PureComponent {
               <div className={styles.tableListForm}>{this.renderForm()}</div>
               <Table
                 columns={columns}
-                dataSource={data}
+                dataSource={list}
                 pagination={false}
                 className={styles.tableMargin}
               />
               <div className={styles.pageBottom}>
-                <p>共90条记录 第1/50页</p>
+                <p>
+                  共{pageInfo.total_num}条记录 第1/{pageInfo.total_page}页
+                </p>
                 <Pagination
                   showSizeChanger
                   showQuickJumper
                   defaultCurrent={1}
-                  total={90}
+                  total={pageInfo.total_num}
                   onChange={onChange}
                 />
               </div>
@@ -314,4 +394,4 @@ class BasicList extends PureComponent {
   }
 }
 
-export default BasicList;
+export default FdList;

@@ -77,7 +77,7 @@ export default {
   },
   proxy: {
     '/v1/': {
-      target: 'https://youlianhuan.com/',
+      target: 'http://test.chaoduoke.com/cdk',
       changeOrigin: true,
       // pathRewrite: { '^/server': '' },
     },

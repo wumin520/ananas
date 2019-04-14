@@ -97,45 +97,12 @@ export default [
               },
             ],
           },
-        ],
-      },
-      // forms
-      {
-        path: '/form',
-        icon: 'form',
-        name: 'form',
-        hideInMenu: true,
-        routes: [
           {
             path: '/fangdan/list',
             name: 'myList',
             component: './V1/FangDan/List',
           },
           {
-            path: '/form/step-form',
-            name: 'stepform',
-            component: './Forms/StepForm',
-            routes: [
-              {
-                path: '/form/step-form',
-                redirect: '/form/step-form/info',
-              },
-              {
-                path: '/form/step-form/info',
-                name: 'info',
-                component: './Forms/StepForm/Step1',
-              },
-              {
-                path: '/form/step-form/confirm',
-                name: 'confirm',
-                component: './Forms/StepForm/Step2',
-              },
-              {
-                path: '/form/step-form/result',
-                name: 'result',
-                component: './Forms/StepForm/Step3',
-              },
-            ],
             path: '/fangdan/list/GeneralizeDetail',
             name: 'generalizeDetail',
             component: './V1/FangDan/List/GeneralizeDetail',
@@ -149,6 +116,56 @@ export default [
           },
         ],
       },
+      // forms
+      // {
+      //   path: '/form',
+      //   icon: 'form',
+      //   name: 'form',
+      //   hideInMenu: true,
+      //   routes: [
+      //     {
+      //       path: '/fangdan/list',
+      //       name: 'myList',
+      //       component: './V1/FangDan/List',
+      //     },
+      //     {
+      //       path: '/form/step-form',
+      //       name: 'stepform',
+      //       component: './Forms/StepForm',
+      //       routes: [
+      //         {
+      //           path: '/form/step-form',
+      //           redirect: '/form/step-form/info',
+      //         },
+      //         {
+      //           path: '/form/step-form/info',
+      //           name: 'info',
+      //           component: './Forms/StepForm/Step1',
+      //         },
+      //         {
+      //           path: '/form/step-form/confirm',
+      //           name: 'confirm',
+      //           component: './Forms/StepForm/Step2',
+      //         },
+      //         {
+      //           path: '/form/step-form/result',
+      //           name: 'result',
+      //           component: './Forms/StepForm/Step3',
+      //         },
+      //       ],
+      //       path: '/fangdan/list/GeneralizeDetail',
+      //       name: 'generalizeDetail',
+      //       component: './V1/FangDan/List/GeneralizeDetail',
+      //       hideInMenu: true,
+      //     },
+      //     {
+      //       path: '/fangdan/list/order',
+      //       name: 'order',
+      //       component: './V1/FangDan/List/order',
+      //       hideInMenu: true,
+      //     },
+      //   ],
+      // },
       {
         path: '/list',
         icon: 'table',
