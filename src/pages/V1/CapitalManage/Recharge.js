@@ -1,12 +1,15 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Card, Button, Form, Select, Input } from 'antd';
+import router from 'umi/router';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 // import Result from '@/components/Result';
-import styles from './Recharge.less';
+import styles from './styles.less';
 
 const { Option } = Select;
+
+let money = 0;
 
 function handleChange() {}
 
@@ -20,12 +23,35 @@ const content = <div />;
 class Recharge extends PureComponent {
   state = {};
 
+  handleChange = e => {
+    e.preventDefault();
+    const { form } = this.props;
+    form.validateFieldsAndScroll((errors, values) => {
+      if (!errors) {
+        money = values.rechargeMoney;
+      }
+    });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     const { form } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
+        const { dispatch } = this.props;
+        dispatch({
+          type: 'capital/rechargeSubmit',
+          payload: values.rechargeMoney,
+        });
+        dispatch(
+          router.push({
+            pathname: '/CapitalManage/RechargePay',
+            params: {
+              payment_id: 1,
+            },
+          })
+        );
       }
     });
   };
@@ -68,32 +94,22 @@ class Recharge extends PureComponent {
                 rules: [
                   {
                     required: true,
-                    message: 'Please input your rechargeMoney!',
+                    message: '请输入充值金额!',
                   },
                   {
                     validator: this.validateToNextPassword,
                   },
                 ],
-              })(<Input style={{ width: 200 }} type=" number" />)}{' '}
+              })(<Input style={{ width: 200 }} type="number" onChange={this.handleChange} />)}{' '}
               元
             </Form.Item>
             <Form.Item label="支付类型">
-              {getFieldDecorator('type', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please confirm your password!',
-                  },
-                ],
-              })(
-                <Select defaultValue="lucy" style={{ width: 200 }} onChange={handleChange}>
-                  <Option value="jack">Jack</Option>
-                  <Option value="lucy">Lucy</Option>
-                </Select>
-              )}
+              <Select defaultValue="1" style={{ width: 200 }} onChange={handleChange}>
+                <Option value="1">充值</Option>
+              </Select>
             </Form.Item>
             <Form.Item label="应付">
-              <span className={styles.payMoney}>123</span>&nbsp;
+              <span className={styles.payMoney}>{money}</span>&nbsp;
               <span className={styles.unit}>元</span>
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>

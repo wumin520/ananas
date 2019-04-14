@@ -4,19 +4,32 @@ import { Card, Form } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 // import Result from '@/components/Result';
-import styles from './RechargePay.less';
+import styles from './styles.less';
 
 const content = <div />;
 
 @connect(({ list, loading }) => ({
-  list,
+  recharge: list.recharge,
   loading: loading.models.list,
 }))
 @Form.create()
 class RechargePay extends PureComponent {
   state = {};
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    // console.log('loaction', loaction);
+    dispatch({
+      type: 'capital/frozenTaskList',
+      payload: {
+        payment_id: 1,
+      },
+    });
+  }
+
   render() {
+    const { recharge } = this.props;
+
     return (
       <PageHeaderWrapper title="我要充值" content={content}>
         <Card>
@@ -24,7 +37,7 @@ class RechargePay extends PureComponent {
           <div className={styles.payBlock}>
             <div className={styles.payBlock_top}>
               <span>费用名称：活动费用100元</span>
-              <span>￥100元</span>
+              <span>￥{recharge.money}元</span>
             </div>
             <div className={styles.payBlock_center}>
               <p>
@@ -34,10 +47,7 @@ class RechargePay extends PureComponent {
                 <p>
                   请认准账户名称：<span style={{ color: '#fa8c16' }}>极单信息科技有限公司</span>
                 </p>
-                <img
-                  src="https://cdn.youlianyc.com/image/avatar/6e5ecf04b320bda76932dbaa0973912c20ccddfe.jpg"
-                  alt=""
-                />
+                <img src="{recharge.imgCode}" alt="" />
                 <p>打开手机微信</p>
                 <p>扫一扫完成支付</p>
               </div>

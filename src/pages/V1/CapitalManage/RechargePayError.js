@@ -5,7 +5,7 @@ import router from 'umi/router';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import Result from '@/components/Result';
-import styles from './RechargePay.less';
+import styles from './styles.less';
 
 const content = <div />;
 

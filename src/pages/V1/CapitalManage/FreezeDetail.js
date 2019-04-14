@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Card, Row, Col, Button, Form, Select, Table } from 'antd';
+import { Card, Row, Col, Button, Form, Select, Table, Badge } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 // import Result from '@/components/Result';
@@ -9,34 +9,20 @@ import styles from './styles.less';
 
 const { Option } = Select;
 
-function handleChange() {}
-
-const data = [
-  {
-    no: '001',
-    time: '2016-09-21  08:50:08',
-    type: '提现',
-    money: '-￥20',
-    product: {
-      imgUrl:
-        'http://c.hiphotos.baidu.com/image/pic/item/f2deb48f8c5494ee72f03e6d23f5e0fe98257ef7.jpg',
-      proName: '商品名称',
-    },
-  },
-];
+let param = {
+  page: 1,
+  type: 1,
+};
 
 const content = <div />;
 
 @connect(({ list, loading }) => ({
-  list,
+  freezeData: list.freezeData,
   loading: loading.models.list,
 }))
 @Form.create()
 class FreezeDetail extends PureComponent {
-  state = {
-    filteredInfo: null,
-    sortedInfo: null,
-  };
+  state = {};
 
   formLayout = {
     labelCol: { span: 7 },
@@ -46,10 +32,8 @@ class FreezeDetail extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'list/fetch',
-      payload: {
-        count: 5,
-      },
+      type: 'recharge/frozenTaskList',
+      payload: param,
     });
   }
 
@@ -58,35 +42,75 @@ class FreezeDetail extends PureComponent {
     this.setState({ [type]: key });
   };
 
-  handleChange = (pagination, filters, sorter) => {
-    // console.log('Various parameters', pagination, filters, sorter);
-    this.setState({
-      filteredInfo: filters,
-      sortedInfo: sorter,
-    });
-  };
-
-  clearFilters = () => {
-    this.setState({ filteredInfo: null });
-  };
-
   clearAll = () => {
-    this.setState({
-      filteredInfo: null,
-      sortedInfo: null,
-    });
+    param = {
+      page: 1,
+      type: -1,
+    };
   };
 
   setAgeSort = () => {
-    this.setState({
-      sortedInfo: {
-        order: 'descend',
-        columnKey: 'age',
-      },
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'capital/frozenTaskList',
+      payload: param,
     });
   };
 
+  // 交易类型切换
+  selectTypeChange = value => {
+    param = {
+      page: 1,
+      type: value,
+    };
+  };
+
   render() {
+    // const { freezeData } = this.props;
+    const freezeData = {
+      list: [
+        {
+          frozen_at: '2019-03-03 00:00:00',
+          task_id: 2222,
+          title: '商品名称',
+          state: 1,
+          type: 0,
+          img: 'http://xxx.jpg',
+          forzen_money: '￥20 ',
+        },
+        {
+          frozen_at: '2019-03-03 00:00:00',
+          task_id: 2222,
+          title: '商品名称',
+          state: 1,
+          type: 0,
+          img: 'http://xxx.jpg',
+          forzen_money: '￥20 ',
+        },
+      ],
+      head_info: {
+        forzen_balance: '5',
+        forzen_num: 2000.0,
+      },
+      type_select: [
+        {
+          name: '全部',
+          value: '-1',
+        },
+        {
+          name: '好评全返',
+          value: '0',
+        },
+      ],
+      page_info: {
+        total_num: 100,
+        total_page: 5,
+      },
+    };
+
+    const statusMap = ['', 'processing', 'success', 'default'];
+    const status = ['', '审核中', '进行中', '清算中'];
+
     const Info = ({ title, value, bordered }) => (
       <div className={styles.headerInfo}>
         <span>{title}</span>
@@ -95,55 +119,48 @@ class FreezeDetail extends PureComponent {
       </div>
     );
 
-    let { sortedInfo, filteredInfo } = this.state;
-
-    sortedInfo = sortedInfo || {};
-    filteredInfo = filteredInfo || {};
-
     const columns = [
       {
         title: '推广编号',
-        dataIndex: 'no',
-        key: 'no',
-        sorter: (a, b) => a.name.length - b.name.length,
-        sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
+        dataIndex: 'task_id',
+        key: 'task_id',
       },
       {
         title: '冻结时间',
-        dataIndex: 'time',
-        key: 'time',
-        sorter: (a, b) => a.age - b.age,
-        sortOrder: sortedInfo.columnKey === 'age' && sortedInfo.order,
+        dataIndex: 'frozen_at',
+        key: 'frozen_at',
       },
       {
         title: '商品',
-        dataIndex: 'product',
-        key: 'product',
-        sorter: (a, b) => a.age - b.age,
-        sortOrder: sortedInfo.columnKey === 'age' && sortedInfo.order,
-        render(item) {
-          return (
-            <div className={styles.FreezePro}>
-              <img className={styles.proImg} src={item.imgUrl} alt="" />
-              <span>{item.proName}</span>
-            </div>
-          );
-        },
+        dataIndex: 'title',
+        key: 'title',
       },
       {
         title: '放单类型',
-        dataIndex: 'type',
-        key: 'type',
-        filters: [{ text: 'London', value: 'London' }, { text: 'New York', value: 'New York' }],
-        filteredValue: filteredInfo.address || null,
-        onFilter: (value, record) => record.address.includes(value),
-        sorter: (a, b) => a.address.length - b.address.length,
-        sortOrder: sortedInfo.columnKey === 'address' && sortedInfo.order,
+        dataIndex: 'state',
+        key: 'state',
+        filters: [
+          {
+            text: status[1],
+            value: 1,
+          },
+          {
+            text: status[2],
+            value: 2,
+          },
+          {
+            text: status[3],
+            value: 3,
+          },
+        ],
+        render(val) {
+          return <Badge status={statusMap[val]} text={status[val]} />;
+        },
       },
       {
         title: '冻结金额',
-        dataIndex: 'money',
-        key: 'money',
+        dataIndex: 'forzen_money',
+        key: 'forzen_money',
       },
     ];
 
@@ -153,10 +170,10 @@ class FreezeDetail extends PureComponent {
           <Card bordered={false}>
             <Row>
               <Col sm={8} xs={24}>
-                <Info title="担保中的任务" value="5个" bordered />
+                <Info title="担保中的任务" value={freezeData.head_info.forzen_balance} bordered />
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="冻结金额" value="￥20000.00" bordered />
+                <Info title="冻结金额" value={freezeData.head_info.forzen_num} bordered />
               </Col>
             </Row>
           </Card>
@@ -164,13 +181,13 @@ class FreezeDetail extends PureComponent {
           <Card style={{ width: '100%' }}>
             <div>
               放单类型：
-              <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange}>
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-                <Option value="disabled" disabled>
-                  Disabled
-                </Option>
-                <Option value="Yiminghe">yiminghe</Option>
+              <Select style={{ width: 120 }} defaultValue="全部" onChange={this.selectTypeChange}>
+                {freezeData.type_select.length &&
+                  freezeData.type_select.map(e => (
+                    <Option key={e.value} value={e.value}>
+                      {e.name}
+                    </Option>
+                  ))}
               </Select>
               <Button style={{ marginLeft: 8 }} type="primary" onClick={this.setAgeSort}>
                 查询
@@ -180,7 +197,7 @@ class FreezeDetail extends PureComponent {
               </Button>
             </div>
             <br />
-            <Table columns={columns} dataSource={data} onChange={this.handleChange} />
+            <Table columns={columns} dataSource={freezeData.list} onChange={this.handleChange} />
           </Card>
         </div>
       </PageHeaderWrapper>

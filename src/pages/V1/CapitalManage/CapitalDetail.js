@@ -10,37 +10,17 @@ import styles from './styles.less';
 const { TabPane } = Tabs;
 const { Option } = Select;
 
-function handleChange(value) {
-  console.log(value); // { key: "lucy", label: "Lucy (101)" }
-}
-
-function selectChange(value) {
-  console.log(value);
-}
-// const data = [
-//   {
-//     created_at: '2016-09-21  08:50:08',
-//     type_desc: '充值',
-//     money: '-￥20',
-//     desc: '提现至尾号1234的中国农业银行卡',
-//   },
-// ];
-
-const data2 = [
-  {
-    key: '001',
-    time: '2016-09-21  08:50:08',
-    type: '提现',
-    money: '-￥20',
-    status: 1,
-    explain: '提现至尾号1234的中国农业银行卡',
-  },
-];
+let param = {
+  page: 1,
+  tradeType: -1,
+  page_no: 1,
+};
 
 const content = <div />;
 
 @connect(({ capital, loading }) => ({
-  assetData: capital.data,
+  assetData: capital.assetData,
+  exchangeData: capital.exchangeData,
   loading: loading.models.capital,
 }))
 @Form.create()
@@ -52,18 +32,66 @@ class CapitalDetail extends PureComponent {
   };
 
   componentDidMount() {
+    this.getAssetList(param);
+    // this.getAssetList({page: 1, type: -1})
+  }
+
+  getAssetList = p => {
     const { dispatch } = this.props;
     dispatch({
       type: 'capital/getAssetList',
       payload: {
-        page: 1,
-        type: -1,
+        page: p.page,
+        type: p.tradeType,
       },
     });
-  }
+  };
+
+  // getAssetList = (page = 1, type = -1) => {
+  //   const { dispatch } = this.props;
+  //   dispatch({
+  //     type: 'capital/getAssetList',
+  //     payload: {
+  //       page: page,
+  //       type: type,
+  //     },
+  //   });
+  // }
+
+  // function handleChange(value) {
+  //   console.log(value); // { key: "lucy", label: "Lucy (101)" }
+  // }
+
+  // 交易记录&提现记录切换
+  tabsClick = value => {
+    const { dispatch } = this.props;
+    param = {
+      page: 1,
+      tradeType: -1,
+      page_no: 1,
+    };
+    if (value === 2) {
+      dispatch({
+        type: 'capital/getExchangeList',
+        payload: {
+          page: param.page_no,
+        },
+      });
+    } else if (value === 1) {
+      this.getAssetList(param);
+    }
+  };
+
+  // 交易类型切换
+  selectTypeChange = value => {
+    param = {
+      page: 1,
+      type: value,
+    };
+  };
 
   handleChange = (pagination, filters, sorter) => {
-    console.log('Various parameters', pagination, filters, sorter);
+    // console.log('Various parameters', pagination, filters, sorter);
     this.setState({
       filteredInfo: filters,
       sortedInfo: sorter,
@@ -75,6 +103,10 @@ class CapitalDetail extends PureComponent {
   };
 
   clearAll = () => {
+    param = {
+      page: 1,
+      type: -1,
+    };
     this.setState({
       filteredInfo: null,
       sortedInfo: null,
@@ -97,11 +129,15 @@ class CapitalDetail extends PureComponent {
     });
   };
 
+  setAgeSort = () => {
+    this.getAssetList(param);
+  };
+
   render() {
     const statusMap = ['default', 'processing', 'success', 'error'];
-    const status = ['关闭', '运行中', '成功', '异常'];
+    const status = ['', '审核中', '提现成功', '提现失败'];
 
-    // const { assetData } = this.props;
+    // const { assetData, exchangeData } = this.props;
     const assetData = {
       list: [
         {
@@ -141,8 +177,9 @@ class CapitalDetail extends PureComponent {
         total_page: 5,
       },
     };
-    console.log(this.props);
-    console.log(assetData);
+    const exchangeData = {};
+    // console.log('this.props', this.props);
+    // console.log('assetData', assetData);
 
     // const toFreeze = () => {
     //   router.push('CapitalManage/FreezeDetail');
@@ -188,13 +225,13 @@ class CapitalDetail extends PureComponent {
     const columns2 = [
       {
         title: '时间',
-        dataIndex: 'time',
-        key: 'time',
+        dataIndex: 'created_at',
+        key: 'created_at',
       },
       {
         title: '交易类型',
-        dataIndex: 'type',
-        key: 'type',
+        dataIndex: 'type_desc',
+        key: 'type_desc',
       },
       {
         title: '交易金额',
@@ -203,13 +240,9 @@ class CapitalDetail extends PureComponent {
       },
       {
         title: '状态',
-        dataIndex: 'status',
-        key: 'status',
+        dataIndex: 'state',
+        key: 'state',
         filters: [
-          {
-            text: status[0],
-            value: 0,
-          },
           {
             text: status[1],
             value: 1,
@@ -233,8 +266,8 @@ class CapitalDetail extends PureComponent {
       },
       {
         title: '说明',
-        dataIndex: 'explain',
-        key: 'explain',
+        dataIndex: 'desc',
+        key: 'desc',
       },
     ];
 
@@ -268,26 +301,21 @@ class CapitalDetail extends PureComponent {
           </Card>
           <br />
           <Card>
-            <Tabs>
+            <Tabs onTabClick={this.tabsClick}>
               <TabPane tab="交易明细" key="1">
                 <div>
                   交易类型：
-                  <Select style={{ width: 120 }} defaultValue="全部" onChange={selectChange}>
+                  <Select
+                    style={{ width: 120 }}
+                    defaultValue="全部"
+                    onChange={this.selectTypeChange}
+                  >
                     {assetData.type_select.length &&
                       assetData.type_select.map(e => (
                         <Option key={e.value} value={e.value}>
                           {e.name}
                         </Option>
                       ))}
-                  </Select>
-                  <Select
-                    labelInValue
-                    defaultValue={{ key: 'lucy' }}
-                    style={{ width: 120 }}
-                    onChange={handleChange}
-                  >
-                    <Option value="jack">Jack (100)</Option>
-                    <Option value="lucy">Lucy (101)</Option>
                   </Select>
                   <Button style={{ marginLeft: 8 }} type="primary" onClick={this.setAgeSort}>
                     查询
@@ -307,17 +335,27 @@ class CapitalDetail extends PureComponent {
               <TabPane tab="提现记录" key="2">
                 <div>
                   交易类型：
-                  <Select defaultValue="withdraw" style={{ width: 120 }} onChange={handleChange}>
+                  <Select
+                    defaultValue="withdraw"
+                    style={{ width: 120 }}
+                    onChange={this.handleChange}
+                  >
                     <Option key="withdraw" value="withdraw">
                       提现
                     </Option>
                   </Select>
+                  <Button style={{ marginLeft: 8 }} type="primary" onClick={this.setAgeSort}>
+                    查询
+                  </Button>
+                  <Button style={{ marginLeft: 8 }} onClick={this.clearAll}>
+                    重置
+                  </Button>
                 </div>
                 <br />
                 <Table
                   columns={columns2}
-                  dataSource={data2}
-                  pagination={assetData.page_info}
+                  dataSource={exchangeData.list}
+                  pagination={exchangeData.page_info}
                   onChange={this.handleChange}
                 />
               </TabPane>
