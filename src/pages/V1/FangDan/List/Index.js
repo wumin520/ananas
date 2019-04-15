@@ -112,7 +112,11 @@ class FdList extends PureComponent {
           <Col md={5} sm={24}>
             <FormItem label="推广类型">
               {getFieldDecorator('type')(
-                <Select style={{ width: 120 }} placeholder="全部" onChange={this.selectTypeChange}>
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="全部"
+                  onChange={this.selectTypeChange}
+                >
                   {typeSelect.length &&
                     typeSelect.map(e => (
                       <Option key={e.value} value={e.value}>
@@ -126,7 +130,11 @@ class FdList extends PureComponent {
           <Col md={5} sm={24}>
             <FormItem label="状态">
               {getFieldDecorator('status')(
-                <Select style={{ width: 120 }} placeholder="全部" onChange={this.selectTypeChange}>
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="全部"
+                  onChange={this.selectTypeChange}
+                >
                   {stateSelect.length &&
                     stateSelect.map(e => (
                       <Option key={e.value} value={e.value}>
@@ -225,24 +233,8 @@ class FdList extends PureComponent {
         title: '操作',
         render: item => {
           let operation;
-          // if(state != 0){
-          //   operation = (<a href={goDetail}>查看 </a>)
-          // }
-          // if(state!=1&&state!=3){
-          //   operation = (<a href="">编辑 </a>)
-          // }
-          // if(state == 2){
-          //   operation = (<a href="">终止 </a>)
-          // }
-          // if(state == 0){
-          //   operation = (<a href="">支付 </a>)
-          // }
-          // if(state != 0&&state != 1&&state != 3){
-          //   operation = (<a href={goOrder}>订单明细 </a>)
-          // }
           if (item.state === 0) {
             operation = <a href="">支付 </a>;
-            // operation = (<a href={goDetail}>查看 </a>)
           }
           if (item.state === 1) {
             operation = <a href={goDetail}>查看 </a>;
@@ -339,6 +331,10 @@ class FdList extends PureComponent {
         {bordered && <em />}
       </div>
     );
+
+    // function taskFinish(){
+
+    // }
     const content = <div />;
     // function onShowSizeChange(current, pageSize) {
     //   console.log(current, pageSize);

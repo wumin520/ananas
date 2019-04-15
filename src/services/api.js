@@ -19,7 +19,10 @@ export async function taskDetail(params) {
 export async function orderList(params) {
   return request(`/v1/web/order/list?${stringify(params)}`);
 }
-
+// 终止
+export async function taskFinish(params) {
+  return request(`/v1/web/task/finish?${stringify(params)}`);
+}
 // 资金明细
 export async function getAssetList(params) {
   return request(`/web/account/asset_list?${stringify(params)}`);
