@@ -13,7 +13,7 @@ const dateFormat = 'YYYY-MM-DD';
   startTime: form.startTime,
   endTime: form.endTime,
   goodsDetail: form.goodsDetail,
-  submitting: loading.effects['form/submitStepForm'],
+  submitting: loading.effects['form/publishTask'],
 }))
 class Step3 extends React.PureComponent {
   state = {};
@@ -42,7 +42,7 @@ class Step3 extends React.PureComponent {
 
     for (let i = 0; i < schedules.length; i += 1) {
       const item = schedules[i];
-      this.schedulesHash[item.date] = item.num;
+      this.schedulesHash[item.day] = item.amount;
     }
     const arr = [];
     const a = moment(startTime);
@@ -56,8 +56,8 @@ class Step3 extends React.PureComponent {
       const value = this.schedulesHash[key];
       obj[key] = value;
       arr.push({
-        date: key,
-        num: value,
+        day: key,
+        amount: value,
       });
       a.add(1, 'days');
     }
@@ -82,9 +82,9 @@ class Step3 extends React.PureComponent {
       return;
     }
     const schedule = schedules.find(item => {
-      return item.date === date;
+      return item.day === date;
     });
-    schedule.num = value;
+    schedule.amount = value;
     this.schedulesHash[date] = value;
     dispatch({
       type: 'form/setScheduleTime',
@@ -115,6 +115,19 @@ class Step3 extends React.PureComponent {
       message.error('你还有投放数量没有填写完成哦～');
       return;
     }
+    const { dispatch, goodsDetail, startTime, endTime, schedules } = this.props;
+    dispatch({
+      type: 'form/publishTask',
+      payload: {
+        title: goodsDetail.title,
+        goods_id: goodsDetail.goods_id,
+        category_id: goodsDetail.category_id,
+        images: goodsDetail.detailImgRecordUrl,
+        start_time: startTime,
+        end_time: endTime,
+        plan_info: schedules,
+      },
+    });
     router.push('/fangdan/step-form/pay');
   };
 
@@ -175,7 +188,7 @@ class Step3 extends React.PureComponent {
         1、想权重大，单量一定要设计为稳定增长趋势（递增）。
         <br />
         2、建议投放周期为3~7天 <br />
-        注意：请记住上面个两个重点，让自己的店铺快速提升转化率和人气销量。
+        注意：请记住上面的两个重点，让自己的店铺快速提升转化率和人气销量。
       </div>
     );
 

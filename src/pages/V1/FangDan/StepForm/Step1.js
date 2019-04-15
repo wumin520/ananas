@@ -13,20 +13,21 @@ const formItemLayout = {
   },
 };
 
-@connect(({ form }) => ({
+@connect(({ form, loading }) => ({
   data: form.step,
   pddGoodUrl: form.pddGoodUrl,
+  submitting: loading.effects['form/queryGoodsDetail'],
 }))
 @Form.create()
 class Step1 extends React.PureComponent {
   render() {
-    const { form, dispatch, pddGoodUrl } = this.props;
+    const { form, dispatch, pddGoodUrl, submitting } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const onValidateForm = () => {
       validateFields((err, values) => {
         if (!err) {
           dispatch({
-            type: 'form/saveStepFormData',
+            type: 'form/queryGoodsDetail',
             payload: values,
           });
           router.push('/fangdan/step-form/confirm');
@@ -42,7 +43,7 @@ class Step1 extends React.PureComponent {
           hideRequiredMark
         >
           <Form.Item {...formItemLayout} label="拼多多商品链接">
-            {getFieldDecorator('goodsUrl', {
+            {getFieldDecorator('goods_id', {
               initialValue: pddGoodUrl,
               rules: [{ required: true, message: '请粘贴商品链接进行校验' }],
             })(<Input placeholder="请粘贴商品链接进行校验" />)}
@@ -57,7 +58,7 @@ class Step1 extends React.PureComponent {
             }}
             label=""
           >
-            <Button type="primary" size="large" onClick={onValidateForm}>
+            <Button loading={submitting} type="primary" size="large" onClick={onValidateForm}>
               开始校验
             </Button>
           </Form.Item>
