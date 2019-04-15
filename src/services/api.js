@@ -71,7 +71,10 @@ export async function exchange(params) {
     data: params,
   });
 }
-
+// 获取商品分类
+export async function getCategoryList(params) {
+  return request(api_pre + `task/category?${stringify(params)}`);
+}
 export async function queryGoodsDetail(params) {
   return request(api_pre + `get_goods_detail?${stringify(params)}`);
 }
@@ -87,7 +90,7 @@ export async function publishTask(params) {
   });
 }
 export async function pay(params) {
-  return request(api_pre + `pay`, {
+  return request(api_pre + `task/pay`, {
     method: 'POST',
     data: {
       ...params,

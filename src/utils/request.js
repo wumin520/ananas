@@ -30,7 +30,6 @@ const errorHandler = error => {
   const { response = {} } = error;
   const errortext = codeMessage[response.status] || response.statusText;
   const { status, url } = response;
-
   if (status === 401) {
     notification.error({
       message: '未登录或登录已过期，请重新登录。',
@@ -64,7 +63,7 @@ const errorHandler = error => {
  * 配置request请求时的默认参数
  */
 const request = extend({
-  headers: { token: '', timestamp: Date.now(), platform: 'web' },
+  headers: { token: 'REJuQ6UXbJlwNzewxQDOpNOwUaTuDaOi', timestamp: Date.now(), platform: 'web' },
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
 });
@@ -82,9 +81,11 @@ const request = extend({
 request.interceptors.response.use(async response => {
   // response.headers.append('interceptors', 'yes yo');
   const { status } = response;
-  const res = await response.clone().json();
-  if (status === 200 && res.code === 40000) {
-    message.error(res.message);
+  if (status === 200) {
+    const res = await response.clone().json();
+    if (res.code >= 40000) {
+      message.error(res.message);
+    }
   }
   return response;
 });

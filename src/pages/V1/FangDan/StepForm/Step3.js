@@ -33,13 +33,21 @@ class Step3 extends React.PureComponent {
   };
 
   toSchedule = () => {
+    if (!this.startTimeTemp) {
+      message.warning('请先选择合适的推广日期');
+      return;
+    }
     this.makeScheduleData(this.startTimeTemp, this.endTimeTemp);
   };
 
   makeScheduleData = (startTime, endTime) => {
     const { dispatch, schedules } = this.props;
     this.schedulesHash = this.schedulesHash || {};
-
+    //
+    if (startTime) {
+      this.startTimeTemp = startTime;
+      this.endTimeTemp = endTime;
+    }
     for (let i = 0; i < schedules.length; i += 1) {
       const item = schedules[i];
       this.schedulesHash[item.day] = item.amount;
@@ -78,7 +86,7 @@ class Step3 extends React.PureComponent {
     const { schedules, dispatch, startTime, endTime } = this.props;
     const { value } = e.target;
     // 数据没改变
-    if (this.schedulesHash[date] === value) {
+    if (this.schedulesHash[date] === value || /[^\d]/gi.test(value)) {
       return;
     }
     const schedule = schedules.find(item => {
@@ -128,7 +136,7 @@ class Step3 extends React.PureComponent {
         plan_info: schedules,
       },
     });
-    router.push('/fangdan/step-form/pay');
+    // router.push('/fangdan/step-form/pay');
   };
 
   componentWillMount = () => {
@@ -161,6 +169,7 @@ class Step3 extends React.PureComponent {
               <Col span={24}>
                 <Input
                   type="number"
+                  min={1}
                   value={num}
                   className="col-16"
                   placeholder="请输入"
@@ -231,7 +240,7 @@ class Step3 extends React.PureComponent {
           </Col>
         </Row>
         <Row style={{ marginTop: 20 }}>
-          <Col span={2}>推广数量：{countPlanSum()}</Col>
+          <Col span={6}>推广数量：{countPlanSum()}</Col>
         </Row>
         {startDate ? (
           <Calendar

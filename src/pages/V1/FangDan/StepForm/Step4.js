@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'dva';
 import { Button, Row, Col, Table, Alert } from 'antd';
 import router from 'umi/router';
+import { Link } from 'umi';
 // import styles from './style.less';
 
 @connect(({ form }) => ({
@@ -10,11 +11,30 @@ import router from 'umi/router';
 }))
 class Step4 extends React.PureComponent {
   toPay = () => {
-    router.push('/fangdan/step-form/result');
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'form/pay',
+      payload: {
+        task_id: this.taskId,
+      },
+    });
+    // router.push('/fangdan/step-form/result');
   };
 
   goBack = () => {
     router.push('/fangdan/step-form/schedule');
+  };
+
+  componentDidMount = () => {
+    const { dispatch, taskPayInfo, location } = this.props;
+    const { query } = location;
+    this.taskId = taskPayInfo.task_id || query.task_id || 3;
+    dispatch({
+      type: 'form/queryPayInfoByTaskId',
+      payload: {
+        task_id: this.taskId,
+      },
+    });
   };
 
   render() {
@@ -47,6 +67,7 @@ class Step4 extends React.PureComponent {
 
     const data = [
       {
+        id: 1,
         reward_type: '用户返款',
         ...taskPayInfo,
       },
@@ -70,7 +91,13 @@ class Step4 extends React.PureComponent {
         </Row>
         <Row>
           <Col push={6} span={12}>
-            <Table bordered pagination={false} columns={columns} dataSource={data} />
+            <Table
+              rowKey={item => item.id}
+              bordered
+              pagination={false}
+              columns={columns}
+              dataSource={data}
+            />
           </Col>
         </Row>
         <Row>
@@ -83,7 +110,14 @@ class Step4 extends React.PureComponent {
             需支付：￥{taskPayInfo.wait_pay}
           </Col>
           <Col push={4} span={6}>
-            余额：￥{taskPayInfo.balance} <a style={{ marginLeft: 10 }}>{'余额不足,去充值>'}</a>
+            余额：￥{taskPayInfo.balance}{' '}
+            {taskPayInfo.can_pay ? (
+              ''
+            ) : (
+              <Link to="/CapitalManage/Recharge" style={{ marginLeft: 10 }}>
+                {'余额不足,去充值>'}
+              </Link>
+            )}
           </Col>
         </Row>
         <Row>
