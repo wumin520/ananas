@@ -3,7 +3,7 @@
  * 更详细的api文档: https://bigfish.alipay.com/doc/api#request
  */
 import { extend } from 'umi-request';
-import { notification } from 'antd';
+import { notification, message } from 'antd';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -68,5 +68,24 @@ const request = extend({
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
 });
+// request interceptor, change url or options.
+// request.interceptors.request.use((url, options) => {
+//   return (
+//     {
+//       url: `${url}&interceptors=yes`,
+//       options: { ...options, interceptors: true },
+//     }
+//   );
+// });
 
+// response interceptor, handling response
+request.interceptors.response.use(async response => {
+  // response.headers.append('interceptors', 'yes yo');
+  const { status } = response;
+  const res = await response.clone().json();
+  if (status === 200 && res.code === 40000) {
+    message.error(res.message);
+  }
+  return response;
+});
 export default request;

@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
 import { Form, Input, Button, Divider } from 'antd';
-import router from 'umi/router';
 import styles from './style.less';
 
 const formItemLayout = {
@@ -30,7 +29,7 @@ class Step1 extends React.PureComponent {
             type: 'form/queryGoodsDetail',
             payload: values,
           });
-          router.push('/fangdan/step-form/confirm');
+          // router.push('/fangdan/step-form/confirm');
         }
       });
     };
