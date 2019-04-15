@@ -3,7 +3,7 @@
  * 更详细的api文档: https://bigfish.alipay.com/doc/api#request
  */
 import { extend } from 'umi-request';
-import { notification } from 'antd';
+import { notification, message } from 'antd';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -30,7 +30,6 @@ const errorHandler = error => {
   const { response = {} } = error;
   const errortext = codeMessage[response.status] || response.statusText;
   const { status, url } = response;
-
   if (status === 401) {
     notification.error({
       message: '未登录或登录已过期，请重新登录。',
@@ -64,9 +63,30 @@ const errorHandler = error => {
  * 配置request请求时的默认参数
  */
 const request = extend({
-  headers: { token: '', timestamp: Date.now(), platform: 'web' },
+  headers: { token: 'REJuQ6UXbJlwNzewxQDOpNOwUaTuDaOi', timestamp: Date.now(), platform: 'web' },
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
 });
+// request interceptor, change url or options.
+// request.interceptors.request.use((url, options) => {
+//   return (
+//     {
+//       url: `${url}&interceptors=yes`,
+//       options: { ...options, interceptors: true },
+//     }
+//   );
+// });
 
+// response interceptor, handling response
+request.interceptors.response.use(async response => {
+  // response.headers.append('interceptors', 'yes yo');
+  const { status } = response;
+  if (status === 200) {
+    const res = await response.clone().json();
+    if (res.code >= 40000) {
+      message.error(res.message);
+    }
+  }
+  return response;
+});
 export default request;

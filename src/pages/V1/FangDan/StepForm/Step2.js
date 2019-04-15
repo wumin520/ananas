@@ -40,6 +40,13 @@ class Step2 extends React.PureComponent {
     });
   };
 
+  componentDidMount = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'form/queryCategoryList',
+    });
+  };
+
   render() {
     /* eslint-disable */
     const { form, dispatch, submitting, goodsDetail, category_list } = this.props;
@@ -101,7 +108,6 @@ class Step2 extends React.PureComponent {
           })(
             <Select placeholder="请选择商品分类" style={{ maxWidth: 200, width: '100%' }}>
               {category_list.map((item, index) => {
-                console.log(item, '1');
                 return (
                   <Option key={item.id} value={item.id}>
                     {item.cate_name}
@@ -151,9 +157,13 @@ class Step2 extends React.PureComponent {
           />
         </Form.Item>
         <Divider style={{ margin: '24px 0' }} />
-        <Form.Item {...formItemLayout} className={styles.stepFormText} label="优惠券">
-          {coupon_info.coupon_discount}元
-        </Form.Item>
+        {coupon_info.coupon_discount ? (
+          <Form.Item {...formItemLayout} className={styles.stepFormText} label="优惠券">
+            {coupon_info.coupon_discount}元
+          </Form.Item>
+        ) : (
+          ''
+        )}
         <Form.Item {...formItemLayout} className={styles.stepFormText} label="券后价">
           <span className={styles.money}>{coupon_price}</span>
           <span className={styles.uppercase}>（{digitUppercase(coupon_price)}）</span>

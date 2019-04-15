@@ -6,30 +6,28 @@ import {
   queryPayInfoByTaskId,
   publishTask,
   pay,
+  getCategoryList,
 } from '@/services/api';
 
 export default {
   namespace: 'form',
 
   state: {
-    pddGoodUrl: 'http://',
+    pddGoodUrl: '',
     goodsDetail: {
       goods_id: '',
       cate_name: '',
-      title: 'd',
-      detailImgRecordUrl: [
-        'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-        'https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png',
-      ],
+      title: '',
+      detailImgRecordUrl: [],
       coupon_info: {
         coupon_discount: 0,
       }, // 优惠券信息
       commission_rate: '', // 佣金比率
-      commission: 12,
+      commission: '',
       price: '',
       coupon_price: 0, // 券后价
     },
-    category_list: [{ id: 1, cate_name: '汽车', key: 1 }], // 商品分类
+    category_list: [], // 商品分类
     taskPayInfo: {
       rebate_money: '',
       num: '',
@@ -38,13 +36,7 @@ export default {
       balance: '',
       can_pay: '',
     },
-    step: {
-      payAccount: 'ant-design@alipay.com',
-      receiverAccount: 'test@example.com',
-      receiverName: 'Alex',
-      amount: '500',
-    },
-    schedules: [{ day: '2019-04-11', amount: 12 }],
+    schedules: [],
     startTime: '',
     endTime: '',
     taskId: '',
@@ -55,13 +47,12 @@ export default {
       const res = yield call(queryGoodsDetail, payload);
       console.log('queryGoodsDetail -> res ', res);
       if (res && res.status === 'ok') {
-        yield put(routerRedux.push('/fangdan/form-step/confirm'));
+        yield put(routerRedux.push('/fangdan/step-form/confirm'));
       }
       yield put({
         type: 'saveState',
         payload: {
           goodsDetail: res.payload.goods_detail,
-          category_list: res.payload.category_list,
         },
       });
     },
@@ -70,13 +61,16 @@ export default {
       yield put({
         type: 'saveState',
         payload: {
-          taskPayInfo: res.payload,
+          taskPayInfo: res.payload.data,
         },
       });
     },
     *publishTask({ payload }, { call, put }) {
       console.log('publishTask -> payload -> ', payload);
       const res = yield call(publishTask, payload);
+      if (res && res.status === 'ok') {
+        routerRedux.push('/fangdan/step-form/pay');
+      }
       yield put({
         type: 'saveState',
         payload: {
@@ -85,10 +79,20 @@ export default {
       });
     },
     *pay({ payload }, { call }) {
+      console.log('payload -> 1', payload);
       const res = yield call(pay, payload);
       if (res && res.status === 'ok') {
         routerRedux.push('/fangdan/step-form/result');
       }
+    },
+    *queryCategoryList({ payload }, { call, put }) {
+      const res = yield call(getCategoryList, payload);
+      yield put({
+        type: 'saveState',
+        payload: {
+          category_list: res.payload.category_list,
+        },
+      });
     },
     *submitRegularForm({ payload }, { call }) {
       yield call(fakeSubmitForm, payload);

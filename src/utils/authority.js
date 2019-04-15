@@ -16,7 +16,7 @@ export function getAuthority(str) {
   if (!authority && APP_TYPE === 'site') {
     return ['admin'];
   }
-  return authority;
+  return authority || ['admin'];
 }
 export function setAuthority(authority) {
   const proAuthority = typeof authority === 'string' ? [authority] : authority;
