@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Alert, Divider, List } from 'antd';
+import { Form, Input, Button, Alert, Divider, List, Select } from 'antd';
 import router from 'umi/router';
 import { digitUppercase } from '@/utils/utils';
 import styles from './style.less';
@@ -18,6 +18,7 @@ const formItemLayout = {
   submitting: loading.effects['form/submitStepForm'],
   data: form.step,
   goodsDetail: form.goodsDetail,
+  category_list: form.category_list,
 }))
 @Form.create()
 class Step2 extends React.PureComponent {
@@ -40,8 +41,11 @@ class Step2 extends React.PureComponent {
   };
 
   render() {
-    const { form, dispatch, submitting, goodsDetail } = this.props;
+    /* eslint-disable */
+    const { form, dispatch, submitting, goodsDetail, category_list } = this.props;
     const { getFieldDecorator, validateFields } = form;
+    const { Option } = Select;
+
     const onPrev = () => {
       router.push('/fangdan/step-form/info');
     };
@@ -51,11 +55,15 @@ class Step2 extends React.PureComponent {
         if (!err) {
           console.log('values -> ', values);
           dispatch({
-            type: 'form/submitStepForm',
+            type: 'form/updateState',
             payload: {
-              ...values,
+              goodsDetail: {
+                ...goodsDetail,
+                ...values,
+              },
             },
           });
+          router.push('/fangdan/step-form/schedule');
         }
       });
     };
@@ -82,7 +90,26 @@ class Step2 extends React.PureComponent {
           {goods_id}
         </Form.Item>
         <Form.Item {...formItemLayout} className={styles.stepFormText} label="商品分类">
-          {cate_name}
+          {getFieldDecorator('category_id', {
+            initialValue: '',
+            rules: [
+              {
+                required: true,
+                message: '请选择商品分类',
+              },
+            ],
+          })(
+            <Select placeholder="请选择商品分类" style={{ maxWidth: 200, width: '100%' }}>
+              {category_list.map((item, index) => {
+                console.log(item, '1');
+                return (
+                  <Option key={item.id} value={item.id}>
+                    {item.cate_name}
+                  </Option>
+                );
+              })}
+            </Select>
+          )}
         </Form.Item>
         <Form.Item {...formItemLayout} label="商品标题">
           {getFieldDecorator('title', {

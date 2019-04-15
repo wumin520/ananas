@@ -6,6 +6,7 @@ import router from 'umi/router';
 
 @connect(({ form }) => ({
   data: form.step,
+  taskPayInfo: form.taskPayInfo,
 }))
 class Step4 extends React.PureComponent {
   toPay = () => {
@@ -17,54 +18,37 @@ class Step4 extends React.PureComponent {
   };
 
   render() {
-    // const { data } = this.props;
+    const { taskPayInfo } = this.props;
     // const onFinish = () => {
     //   router.push('/form/step-form/info');
     // };
     const columns = [
       {
         title: '分类',
-        dataIndex: 'name',
+        dataIndex: 'reward_type',
         key: 'reward_type',
       },
       {
         title: '金额',
-        dataIndex: 'age',
-        key: 'reward',
+        dataIndex: 'rebate_money',
+        key: 'rebate_money',
       },
       {
         title: '数量',
-        dataIndex: 'address',
-        key: 'count',
+        dataIndex: 'num',
+        key: 'num',
       },
       {
         title: '合计',
-        key: 'sum',
-        dataIndex: 'tags',
+        key: 'total_money',
+        dataIndex: 'total_money',
       },
     ];
 
     const data = [
       {
-        key: '1',
-        name: '用户返款',
-        age: 32,
-        address: '11111',
-        tags: ['nice', 'developer'],
-      },
-      {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: '11111',
-        tags: ['loser'],
-      },
-      {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: '11111',
-        tags: ['cool', 'teacher'],
+        reward_type: '用户返款',
+        ...taskPayInfo,
       },
     ];
     return (
@@ -91,15 +75,15 @@ class Step4 extends React.PureComponent {
         </Row>
         <Row>
           <Col style={{ textAlign: 'right', marginTop: 10 }} push={6} span={12}>
-            费用总计：￥10340.00元{' '}
+            费用总计：￥{taskPayInfo.total_money}元
           </Col>
         </Row>
         <Row style={{ margin: '40px 0' }}>
           <Col offset={6} span={3}>
-            需支付：￥10000
+            需支付：￥{taskPayInfo.wait_pay}
           </Col>
           <Col push={4} span={6}>
-            余额：￥20000.00 <a style={{ marginLeft: 10 }}>{'余额不足,去充值>'}</a>
+            余额：￥{taskPayInfo.balance} <a style={{ marginLeft: 10 }}>{'余额不足,去充值>'}</a>
           </Col>
         </Row>
         <Row>

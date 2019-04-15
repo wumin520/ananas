@@ -1,5 +1,8 @@
 import { stringify } from 'qs';
 import request from '@/utils/request';
+/* eslint-disable */
+const api_pre = `/v1/web/`;
+
 // server api
 export async function queryServerTest(params) {
   return request(`/v1/wechat/register/reward?${stringify(params)}`);
@@ -66,6 +69,28 @@ export async function exchange(params) {
   });
 }
 
+export async function queryGoodsDetail(params) {
+  return request(api_pre + `get_goods_detail?${stringify(params)}`);
+}
+export async function queryPayInfoByTaskId(params) {
+  return request(api_pre + `task/topay_info?${stringify(params)}`);
+}
+export async function publishTask(params) {
+  return request(api_pre + `task/publish`, {
+    method: 'POST',
+    data: {
+      ...params,
+    },
+  });
+}
+export async function pay(params) {
+  return request(api_pre + `pay`, {
+    method: 'POST',
+    data: {
+      ...params,
+    },
+  });
+}
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }

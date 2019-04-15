@@ -1,6 +1,12 @@
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
-import { fakeSubmitForm } from '@/services/api';
+import {
+  fakeSubmitForm,
+  queryGoodsDetail,
+  queryPayInfoByTaskId,
+  publishTask,
+  pay,
+} from '@/services/api';
 
 export default {
   namespace: 'form',
@@ -23,23 +29,66 @@ export default {
       price: '',
       coupon_price: 0, // 券后价
     },
+    category_list: [{ id: 1, cate_name: '汽车', key: 1 }], // 商品分类
+    taskPayInfo: {
+      rebate_money: '',
+      num: '',
+      total_money: '',
+      wait_pay: '',
+      balance: '',
+      can_pay: '',
+    },
     step: {
       payAccount: 'ant-design@alipay.com',
       receiverAccount: 'test@example.com',
       receiverName: 'Alex',
       amount: '500',
     },
-    schedules: [{ date: '2019-04-11', num: 12 }],
+    schedules: [{ day: '2019-04-11', amount: 12 }],
     startTime: '',
     endTime: '',
+    taskId: '',
   },
 
   effects: {
-    *updateState({ payload }, { put }) {
+    *queryGoodsDetail({ payload }, { call, put }) {
+      const res = yield call(queryGoodsDetail, payload);
+      console.log('queryGoodsDetail -> res ', res);
+      if (res && res.status === 'ok') {
+        yield put(routerRedux.push('/fangdan/form-step/confirm'));
+      }
       yield put({
         type: 'saveState',
-        payload,
+        payload: {
+          goodsDetail: res.payload.goods_detail,
+          category_list: res.payload.category_list,
+        },
       });
+    },
+    *queryPayInfoByTaskId({ payload }, { call, put }) {
+      const res = yield call(queryPayInfoByTaskId, payload);
+      yield put({
+        type: 'saveState',
+        payload: {
+          taskPayInfo: res.payload,
+        },
+      });
+    },
+    *publishTask({ payload }, { call, put }) {
+      console.log('publishTask -> payload -> ', payload);
+      const res = yield call(publishTask, payload);
+      yield put({
+        type: 'saveState',
+        payload: {
+          taskId: res.payload.task_id,
+        },
+      });
+    },
+    *pay({ payload }, { call }) {
+      const res = yield call(pay, payload);
+      if (res && res.status === 'ok') {
+        routerRedux.push('/fangdan/step-form/result');
+      }
     },
     *submitRegularForm({ payload }, { call }) {
       yield call(fakeSubmitForm, payload);
@@ -66,6 +115,12 @@ export default {
     *setScheduleTime({ payload }, { put }) {
       yield put({
         type: 'saveScheduleTime',
+        payload,
+      });
+    },
+    *updateState({ payload }, { put }) {
+      yield put({
+        type: 'saveState',
         payload,
       });
     },
