@@ -17,6 +17,55 @@ export async function orderList(params) {
   return request(`/v1/web/order/list?${stringify(params)}`);
 }
 
+// 资金明细
+export async function getAssetList(params) {
+  return request(`/web/account/asset_list?${stringify(params)}`);
+}
+
+// 提现明细
+export async function getExchangeList(page) {
+  return request(`/web/account/exchange_list?page=${page}`);
+}
+
+// 冻结明细
+export async function frozenTaskList(params) {
+  return request(`/web/account/frozen_task_list?${stringify(params)}`);
+}
+
+// 充值提交
+export async function rechargeSubmit(params) {
+  return request('/web/account/recharge_submit', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+// 获得支付二维码
+export async function rechargeGetQrcode(paymentId) {
+  return request(`/web/account/recharge_get_qrcode?payment_id=${paymentId}`);
+}
+
+// 检测是否充值成功
+export async function rechargeCheck(params) {
+  return request('/api/forms', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+// 提现页面信息获取
+export async function exchangePage() {
+  return request(`/web/account/exchangePage`);
+}
+
+// 申请提现
+export async function exchange(params) {
+  return request('/web/account/exchange', {
+    method: 'POST',
+    data: params,
+  });
+}
+
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }
