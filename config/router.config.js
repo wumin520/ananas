@@ -199,6 +199,7 @@ export default [
         path: '/list',
         icon: 'table',
         name: 'list',
+        hideInMenu: true,
         routes: [
           {
             path: '/list/table-list',
@@ -247,6 +248,7 @@ export default [
         path: '/profile',
         name: 'profile',
         icon: 'profile',
+        hideInMenu: true,
         routes: [
           // profile
           {
@@ -257,7 +259,6 @@ export default [
           {
             path: '/profile/basic/:id',
             name: 'basic',
-            hideInMenu: true,
             component: './Profile/BasicProfile',
           },
           {
@@ -272,6 +273,7 @@ export default [
         name: 'result',
         icon: 'check-circle-o',
         path: '/result',
+        hideInMenu: true,
         routes: [
           // result
           {

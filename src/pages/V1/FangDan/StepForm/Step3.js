@@ -115,7 +115,7 @@ class Step3 extends React.PureComponent {
       }
     }
     console.log(arr, valid, this.props);
-    if (!this.startTimeTemp) {
+    if (!this.startTimeTemp || arr.length < 1) {
       message.error('请先选择推广日期进行排期');
       return;
     }

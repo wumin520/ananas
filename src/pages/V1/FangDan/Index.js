@@ -15,13 +15,13 @@ import styles from './Index.less';
 }))
 class Index extends PureComponent {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'list/fetch',
-      payload: {
-        count: 8,
-      },
-    });
+    // const { dispatch } = this.props;
+    // dispatch({
+    //   type: 'list/fetch',
+    //   payload: {
+    //     count: 8,
+    //   },
+    // });
   }
 
   render() {

@@ -8,6 +8,7 @@ import { Link } from 'umi';
 @connect(({ form }) => ({
   data: form.step,
   taskPayInfo: form.taskPayInfo,
+  taskId: form.taskId,
 }))
 class Step4 extends React.PureComponent {
   toPay = () => {
@@ -26,9 +27,9 @@ class Step4 extends React.PureComponent {
   };
 
   componentDidMount = () => {
-    const { dispatch, taskPayInfo, location } = this.props;
+    const { dispatch, taskId, location } = this.props;
     const { query } = location;
-    this.taskId = taskPayInfo.task_id || query.task_id || 3;
+    this.taskId = taskId || query.task_id || 3;
     dispatch({
       type: 'form/queryPayInfoByTaskId',
       payload: {
