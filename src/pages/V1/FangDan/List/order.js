@@ -12,7 +12,7 @@ const FormItem = Form.Item;
 const statusMap = ['error', 'processing', 'warning', 'success'];
 const status = ['无效', '已下单', '待评价', '已完成'];
 @connect(({ task, loading }) => ({
-  task,
+  orderData: task.orderData,
   loading: loading.models.task,
 }))
 @Form.create()
@@ -70,13 +70,8 @@ class OrderList extends PureComponent {
     const {
       form: { getFieldDecorator },
     } = this.props;
-    const stateSelect = [
-      { name: '全部', value: '-1' },
-      { name: '无效', value: '0' },
-      { name: '已下单', value: '1' },
-      { name: '待评价', value: '2' },
-      { name: '已完成', value: '3' },
-    ];
+    const { orderData } = this.props;
+    const stateSelect = orderData.state_select;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
@@ -128,7 +123,11 @@ class OrderList extends PureComponent {
   }
 
   render() {
-    // const { data, order_num_info, state_select,page_info} = this.props;
+    const goDetail = `/fangdan/list/generalizeDetail`;
+    const { orderData } = this.props;
+    const orderNumInfo = orderData.order_num_info;
+    const pageInfo = orderData.page_info;
+    // const { list } = orderData;
     const columns = [
       {
         title: '推广编号',
@@ -187,7 +186,7 @@ class OrderList extends PureComponent {
         key: 'action',
         render: () => (
           <span>
-            <a href="">查看</a>
+            <a href={goDetail}>查看</a>
           </span>
         ),
       },
@@ -231,16 +230,6 @@ class OrderList extends PureComponent {
       },
     ];
 
-    const orderNumInfo = {
-      pay_num: 200,
-      finish_num: 50,
-      wait_proof_num: 500,
-    };
-    const pageInfo = {
-      total_num: 100,
-      total_page: 5,
-    };
-
     const Info = ({ title, value, bordered }) => (
       <div className={styles.headerInfo}>
         <span>{title}</span>
@@ -262,16 +251,14 @@ class OrderList extends PureComponent {
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
-              <Col sm={6} xs={24}>
+              <Col sm={8} xs={24}>
                 <Info title="已下单" value={orderNumInfo.pay_num} bordered />
               </Col>
-              <Col sm={6} xs={24}>
+              <Col sm={8} xs={24}>
                 <Info title="待评价" value={orderNumInfo.wait_proof_num} bordered />
               </Col>
-              <Col sm={6} xs={24}>
-                <Info title="待返现" value={orderNumInfo.finish_num} />
-              </Col>
-              <Col sm={6} xs={24}>
+
+              <Col sm={8} xs={24}>
                 <Info title="已完成" value={orderNumInfo.finish_num} />
               </Col>
             </Row>

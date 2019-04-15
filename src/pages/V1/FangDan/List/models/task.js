@@ -1,6 +1,6 @@
 // import { routerRedux } from 'dva/router';
 // import { message } from 'antd';
-import { taskList, taskDetail, orderList } from '@/services/api';
+import { taskList, taskDetail, orderList, taskFinish } from '@/services/api';
 
 export default {
   namespace: 'task',
@@ -12,41 +12,72 @@ export default {
       receiverName: 'Alex',
       amount: '500',
     },
-    list: [],
-    task_info: {},
-    state_select: {},
-    type_select: [],
-    page_info: [],
-    order_num_info: {},
-    data: {},
-    plan_list: [],
+    listData: {
+      list: [],
+      type_select: [],
+      state_select: [],
+      task_info: {},
+      page_info: {},
+    },
+    detailData: {
+      data: {},
+      plan_list: [],
+    },
+    orderData: {
+      list: [],
+      order_num_info: {},
+      state_select: [],
+      page_info: {},
+    },
+    finishData: {},
   },
 
   effects: {
     *fetchBasic({ payload }, { call, put }) {
-      const response = yield call(taskList, payload);
+      const res = yield call(taskList, payload);
       yield put({
-        type: 'show',
-        payload: response,
+        type: 'saveState',
+        payload: {
+          listData: res.payload,
+        },
       });
     },
     *detailData({ payload }, { call, put }) {
-      const response = yield call(taskDetail, payload);
+      const res = yield call(taskDetail, payload);
       yield put({
-        type: 'show',
-        payload: response,
+        type: 'saveState',
+        payload: {
+          detailData: res.payload,
+        },
       });
     },
     *orderData({ payload }, { call, put }) {
-      const response = yield call(orderList, payload);
+      const res = yield call(orderList, payload);
       yield put({
-        type: 'show',
-        payload: response,
+        type: 'saveState',
+        payload: {
+          orderData: res.payload,
+        },
+      });
+    },
+    *finishMessage({ payload }, { call, put }) {
+      const res = yield call(taskFinish, payload);
+      yield put({
+        type: 'saveState',
+        payload: {
+          finishData: res.finishData,
+        },
       });
     },
   },
 
   reducers: {
+    saveState(state, { payload }) {
+      return {
+        ...state,
+        ...payload,
+      };
+    },
     saveStepFormData(state, { payload }) {
       return {
         ...state,
