@@ -5,30 +5,37 @@ import router from 'umi/router';
 import Result from '@/components/Result';
 import styles from './style.less';
 
-@connect(({ form }) => ({
+@connect(({ form, user }) => ({
   data: form.step,
+  taskId: form.taskId,
+  currentUser: user.currentUser,
 }))
 class Step5 extends React.PureComponent {
   render() {
-    const onFinish = () => {
-      router.push('/fangdan/step-form/pay');
+    const { taskId, currentUser } = this.props;
+    const goDetail = () => {
+      router.push(`/fangdan/list/GeneralizeDetail?task_id=${taskId}`);
+    };
+    const goBackList = () => {
+      router.push('/fangdan/index');
     };
 
     const actions = (
       <Fragment>
-        <Button size="large" type="primary" onClick={onFinish}>
+        <Button size="large" type="primary" onClick={goDetail}>
           查看详情
         </Button>
-        <Button onClick={onFinish} style={{ margin: '40px 0' }} size="large">
+        <Button onClick={goBackList} style={{ margin: '40px 0' }} size="large">
           返回列表
         </Button>
       </Fragment>
     );
+    const phoneStr = `${currentUser.phone.substr(0, 3)}****${currentUser.phone.substr(7)}`;
     const description = (
       <div style={{ whiteSpace: 'pre-wrap' }}>
         我们将在24小时内审核完毕
         <br />
-        审核结果以短信形式发送到186****7707的手机上
+        审核结果以短信形式发送到{phoneStr}的手机上
       </div>
     );
     return (

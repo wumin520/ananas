@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Divider } from 'antd';
+import { Form, Input, Button } from 'antd';
 import styles from './style.less';
 
 const formItemLayout = {
@@ -62,8 +62,8 @@ class Step1 extends React.PureComponent {
             </Button>
           </Form.Item>
         </Form>
-        <Divider style={{ margin: '140px 0 24px' }} />
-        <div className={styles.desc}>
+        {/* <Divider style={{ margin: '140px 0 24px' }} /> */}
+        {/* <div className={styles.desc}>
           <h3>说明</h3>
           <h4>转账到支付宝账户</h4>
           <p>
@@ -73,7 +73,7 @@ class Step1 extends React.PureComponent {
           <p>
             如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。
           </p>
-        </div>
+        </div> */}
       </Fragment>
     );
   }

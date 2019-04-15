@@ -66,23 +66,23 @@ export default {
       });
     },
     *publishTask({ payload }, { call, put }) {
-      console.log('publishTask -> payload -> ', payload);
       const res = yield call(publishTask, payload);
+      console.log('publishTask -> res -> ', res);
       if (res && res.status === 'ok') {
-        routerRedux.push('/fangdan/step-form/pay');
+        const taskId = res.payload.task_id;
+        yield put(routerRedux.push(`/fangdan/step-form/pay?taskId=${taskId}`));
+        yield put({
+          type: 'saveState',
+          payload: {
+            taskId,
+          },
+        });
       }
-      yield put({
-        type: 'saveState',
-        payload: {
-          taskId: res.payload.task_id,
-        },
-      });
     },
-    *pay({ payload }, { call }) {
-      console.log('payload -> 1', payload);
+    *pay({ payload }, { call, put }) {
       const res = yield call(pay, payload);
       if (res && res.status === 'ok') {
-        routerRedux.push('/fangdan/step-form/result');
+        yield put(routerRedux.push('/fangdan/step-form/result'));
       }
     },
     *queryCategoryList({ payload }, { call, put }) {
