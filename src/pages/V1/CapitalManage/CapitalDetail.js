@@ -1,10 +1,8 @@
 import React, { PureComponent } from 'react';
-
 import { connect } from 'dva';
 import { Card, Row, Col, Button, Form, Select, Table, Tabs, Badge } from 'antd';
-
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-
+import router from 'umi/router';
 import styles from './styles.less';
 
 const { TabPane } = Tabs;
@@ -27,8 +25,6 @@ const content = <div />;
 class CapitalDetail extends PureComponent {
   state = {
     pagination: {},
-    filteredInfo: null,
-    sortedInfo: null,
   };
 
   componentDidMount() {
@@ -70,14 +66,15 @@ class CapitalDetail extends PureComponent {
       tradeType: -1,
       page_no: 1,
     };
-    if (value === 2) {
+    if (value === 'withdraw') {
+      console.log(param.page_no);
       dispatch({
         type: 'capital/getExchangeList',
         payload: {
           page: param.page_no,
         },
       });
-    } else if (value === 1) {
+    } else if (value === 'trade') {
       this.getAssetList(param);
     }
   };
@@ -90,27 +87,11 @@ class CapitalDetail extends PureComponent {
     };
   };
 
-  handleChange = (pagination, filters, sorter) => {
-    // console.log('Various parameters', pagination, filters, sorter);
-    this.setState({
-      filteredInfo: filters,
-      sortedInfo: sorter,
-    });
-  };
-
-  clearFilters = () => {
-    this.setState({ filteredInfo: null });
-  };
-
   clearAll = () => {
     param = {
       page: 1,
       type: -1,
     };
-    this.setState({
-      filteredInfo: null,
-      sortedInfo: null,
-    });
   };
 
   handleTableChange = (pagination, filters, sorter) => {
@@ -133,53 +114,18 @@ class CapitalDetail extends PureComponent {
     this.getAssetList(param);
   };
 
+  toGo = url => {
+    router.push(url);
+  };
+
   render() {
     const statusMap = ['default', 'processing', 'success', 'error'];
     const status = ['', '审核中', '提现成功', '提现失败'];
 
-    // const { assetData, exchangeData } = this.props;
-    const assetData = {
-      list: [
-        {
-          created_at: '2019-03-03 00:00:00',
-          type_desc: '充值',
-          money: '+ 20 ',
-          desc: '描述信息',
-        },
-        {
-          created_at: '2019-03-03 00:00:00',
-          type_desc: '充值',
-          money: '+ 20 ',
-          desc: '描述信息',
-        },
-      ],
-      asset_info: {
-        balance: '200',
-        forzen_balance: '200',
-        expend_balance: '300',
-      },
-      type_select: [
-        {
-          name: '全部',
-          value: '-1',
-        },
-        {
-          name: '充值',
-          value: '1',
-        },
-        {
-          name: '冻结',
-          value: '2',
-        },
-      ],
-      page_info: {
-        total_num: 100,
-        total_page: 5,
-      },
-    };
-    const exchangeData = {};
-    // console.log('this.props', this.props);
-    // console.log('assetData', assetData);
+    const stateMap = ['success', 'error'];
+    const state = ['成功', '失败'];
+
+    const { assetData, exchangeData } = this.props;
 
     // const toFreeze = () => {
     //   router.push('CapitalManage/FreezeDetail');
@@ -194,11 +140,6 @@ class CapitalDetail extends PureComponent {
       </div>
     );
 
-    let { sortedInfo, filteredInfo } = this.state;
-
-    sortedInfo = sortedInfo || {};
-    filteredInfo = filteredInfo || {};
-
     const columns = [
       {
         title: '创建时间',
@@ -209,6 +150,14 @@ class CapitalDetail extends PureComponent {
         title: '交易类型',
         dataIndex: 'type_desc',
         key: 'type_desc',
+      },
+      {
+        title: '状态',
+        dataIndex: 'state',
+        key: 'state',
+        render(val) {
+          return <Badge status={stateMap[val - 1]} text={state[val - 1]} />;
+        },
       },
       {
         title: '交易金额',
@@ -259,10 +208,6 @@ class CapitalDetail extends PureComponent {
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
-        filteredValue: filteredInfo.address || null,
-        onFilter: (value, record) => record.address.includes(value),
-        sorter: (a, b) => a.address.length - b.address.length,
-        sortOrder: sortedInfo.columnKey === 'address' && sortedInfo.order,
       },
       {
         title: '说明',
@@ -302,7 +247,7 @@ class CapitalDetail extends PureComponent {
           <br />
           <Card>
             <Tabs onTabClick={this.tabsClick}>
-              <TabPane tab="交易明细" key="1">
+              <TabPane tab="交易明细" key="trade">
                 <div>
                   交易类型：
                   <Select
@@ -332,26 +277,7 @@ class CapitalDetail extends PureComponent {
                   onChange={this.handleChange}
                 />
               </TabPane>
-              <TabPane tab="提现记录" key="2">
-                <div>
-                  交易类型：
-                  <Select
-                    defaultValue="withdraw"
-                    style={{ width: 120 }}
-                    onChange={this.handleChange}
-                  >
-                    <Option key="withdraw" value="withdraw">
-                      提现
-                    </Option>
-                  </Select>
-                  <Button style={{ marginLeft: 8 }} type="primary" onClick={this.setAgeSort}>
-                    查询
-                  </Button>
-                  <Button style={{ marginLeft: 8 }} onClick={this.clearAll}>
-                    重置
-                  </Button>
-                </div>
-                <br />
+              <TabPane tab="提现记录" key="withdraw">
                 <Table
                   columns={columns2}
                   dataSource={exchangeData.list}

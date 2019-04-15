@@ -29,8 +29,8 @@ export async function getAssetList(params) {
 }
 
 // 提现明细
-export async function getExchangeList(page) {
-  return request(`/v1/web/account/exchange_list?page=${page}`);
+export async function getExchangeList(params) {
+  return request(`/v1/web/account/exchange_list?${stringify(params)}`);
 }
 
 // 冻结明细
@@ -47,13 +47,13 @@ export async function rechargeSubmit(params) {
 }
 
 // 获得支付二维码
-export async function rechargeGetQrcode(paymentId) {
-  return request(`/v1/web/account/recharge_get_qrcode?payment_id=${paymentId}`);
+export async function rechargeGetQrcode(params) {
+  return request(`/v1/web/account/recharge_get_qrcode?${stringify(params)}`);
 }
 
 // 检测是否充值成功
 export async function rechargeCheck(params) {
-  return request('/api/forms', {
+  return request('/v1/web/account/recharge_check', {
     method: 'POST',
     data: params,
   });
@@ -61,12 +61,12 @@ export async function rechargeCheck(params) {
 
 // 提现页面信息获取
 export async function exchangePage() {
-  return request(`/web/account/exchangePage`);
+  return request(`/v1/web/account/exchangePage`);
 }
 
 // 申请提现
 export async function exchange(params) {
-  return request('/web/account/exchange', {
+  return request('/v1/web/account/exchange', {
     method: 'POST',
     data: params,
   });

@@ -4,48 +4,78 @@ export default {
   namespace: 'capital',
 
   state: {
-    assetData: {},
-    exchangeData: {},
-    freezeData: {},
+    assetData: {
+      asset_info: {
+        balance: 0,
+        forzen_balance: 0,
+        expend_balance: 0,
+      },
+      list: [],
+      type_select: [],
+      page_info: {},
+    },
+    exchangeData: {
+      asset_info: {
+        balance: 0,
+        forzen_balance: 0,
+        expend_balance: 0,
+      },
+      list: [],
+      type_select: [],
+      page_info: {},
+    },
+    freezeData: {
+      head_info: {
+        forzen_balance: 0,
+        forzen_num: 0,
+      },
+      list: [],
+      type_select: [],
+      page_info: {},
+    },
   },
 
   effects: {
-    *getAssetList({ payload }, { call }) {
-      yield call(getAssetList, payload);
+    *getAssetList({ payload }, { call, put }) {
+      const res = yield call(getAssetList, payload);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'saveData',
+          payload: {
+            assetData: res.payload,
+          },
+        });
+      }
     },
     *getExchangeList({ payload }, { call, put }) {
-      yield call(getExchangeList, payload);
-      yield put({
-        type: 'saveChangeFormData',
-        payload,
-      });
+      const res = yield call(getExchangeList, payload);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'saveData',
+          payload: {
+            exchangeData: res.payload,
+          },
+        });
+      }
     },
     *frozenTaskList({ payload }, { call, put }) {
-      yield call(frozenTaskList, payload);
-      yield put({
-        type: 'saveFrozenTaskList',
-        payload,
-      });
+      const res = yield call(frozenTaskList, payload);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'saveData',
+          payload: {
+            freezeData: res.payload,
+          },
+        });
+      }
     },
   },
 
   reducers: {
-    saveFormData(state, { payload }) {
+    saveData(state, { payload }) {
       return {
         ...state,
-        assetData: payload,
-      };
-    },
-    saveExchangeFormData(state, { payload }) {
-      return {
-        ...state,
-        exchangeData: payload,
-      };
-    },
-    saveFrozenTaskList(state, { payload }) {
-      return {
-        ...state,
-        freezeData: payload,
+        ...payload,
       };
     },
   },

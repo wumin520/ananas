@@ -16,8 +16,8 @@ let param = {
 
 const content = <div />;
 
-@connect(({ list, loading }) => ({
-  freezeData: list.freezeData,
+@connect(({ capital, loading }) => ({
+  freezeData: capital.freezeData,
   loading: loading.models.list,
 }))
 @Form.create()
@@ -32,7 +32,7 @@ class FreezeDetail extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'recharge/frozenTaskList',
+      type: 'capital/frozenTaskList',
       payload: param,
     });
   }
@@ -66,47 +66,7 @@ class FreezeDetail extends PureComponent {
   };
 
   render() {
-    // const { freezeData } = this.props;
-    const freezeData = {
-      list: [
-        {
-          frozen_at: '2019-03-03 00:00:00',
-          task_id: 2222,
-          title: '商品名称',
-          state: 1,
-          type: 0,
-          img: 'http://xxx.jpg',
-          forzen_money: '￥20 ',
-        },
-        {
-          frozen_at: '2019-03-03 00:00:00',
-          task_id: 2222,
-          title: '商品名称',
-          state: 1,
-          type: 0,
-          img: 'http://xxx.jpg',
-          forzen_money: '￥20 ',
-        },
-      ],
-      head_info: {
-        forzen_balance: '5',
-        forzen_num: 2000.0,
-      },
-      type_select: [
-        {
-          name: '全部',
-          value: '-1',
-        },
-        {
-          name: '好评全返',
-          value: '0',
-        },
-      ],
-      page_info: {
-        total_num: 100,
-        total_page: 5,
-      },
-    };
+    const { freezeData } = this.props;
 
     const statusMap = ['', 'processing', 'success', 'default'];
     const status = ['', '审核中', '进行中', '清算中'];
