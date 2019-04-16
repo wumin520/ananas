@@ -7,6 +7,7 @@ import {
   publishTask,
   pay,
   getCategoryList,
+  taskDetail,
 } from '@/services/api';
 
 export default {
@@ -53,6 +54,7 @@ export default {
         type: 'saveState',
         payload: {
           goodsDetail: res.payload.goods_detail,
+          taskId: payload.task_id || '',
         },
       });
     },
@@ -93,6 +95,18 @@ export default {
           category_list: res.payload.category_list,
         },
       });
+    },
+    *queryTaskDetail({ payload }, { call, put }) {
+      const res = yield call(taskDetail, payload);
+      if (res && res.status === 'ok') {
+        yield put({
+          type: 'saveState',
+          payload: {
+            start_time: res.data.start_time,
+            end_time: res.data.end_time,
+          },
+        });
+      }
     },
     *submitRegularForm({ payload }, { call }) {
       yield call(fakeSubmitForm, payload);

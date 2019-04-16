@@ -19,16 +19,33 @@ const formItemLayout = {
 }))
 @Form.create()
 class Step1 extends React.PureComponent {
+  fetchPddGoodsDetail = values => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'form/queryGoodsDetail',
+      payload: values,
+    });
+  };
+
+  componentDidMount = () => {
+    /* eslint-disable */
+    const { location } = this.props;
+    console.log(location, '1');
+    const { goods_id, task_id } = location.query;
+    goods_id &&
+      this.fetchPddGoodsDetail({
+        goods_id,
+        task_id,
+      });
+  };
+
   render() {
-    const { form, dispatch, pddGoodUrl, submitting } = this.props;
+    const { form, pddGoodUrl, submitting } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const onValidateForm = () => {
       validateFields((err, values) => {
         if (!err) {
-          dispatch({
-            type: 'form/queryGoodsDetail',
-            payload: values,
-          });
+          this.fetchPddGoodsDetail(values);
           // router.push('/fangdan/step-form/confirm');
         }
       });
