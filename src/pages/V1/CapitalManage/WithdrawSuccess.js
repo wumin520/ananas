@@ -9,17 +9,16 @@ import styles from './styles.less';
 
 const content = <div />;
 
-@connect(({ list, loading }) => ({
-  list,
-  loading: loading.models.list,
-  data: list,
+@connect(({ withdraw, loading }) => ({
+  withdrawInfo: withdraw.withdrawInfo,
+  loading: loading.models.withdraw,
 }))
 @Form.create()
 class RechargePaySuccess extends PureComponent {
   state = {};
 
   render() {
-    const { data } = this.props;
+    const { withdrawInfo } = this.props;
     const onFinish = () => {
       router.push('/CapitalManage/CapitalDetail');
     };
@@ -36,10 +35,10 @@ class RechargePaySuccess extends PureComponent {
       <div className={styles.information}>
         <Row>
           <Col xs={24} sm={8} className={styles.label}>
-            付款账户：
+            收款银行：
           </Col>
           <Col xs={24} sm={16}>
-            {data.payAccount}
+            {withdrawInfo.bank_name}
           </Col>
         </Row>
         <Row>
@@ -47,7 +46,7 @@ class RechargePaySuccess extends PureComponent {
             收款账户：
           </Col>
           <Col xs={24} sm={16}>
-            {data.receiverAccount}
+            {withdrawInfo.card_number}
           </Col>
         </Row>
         <Row>
@@ -55,15 +54,15 @@ class RechargePaySuccess extends PureComponent {
             收款人姓名：
           </Col>
           <Col xs={24} sm={16}>
-            {data.receiverName}
+            {withdrawInfo.real_name}
           </Col>
         </Row>
         <Row>
           <Col xs={24} sm={8} className={styles.label}>
-            转账金额：
+            提现金额：
           </Col>
           <Col xs={24} sm={16}>
-            <span className={styles.money}>{data.amount}</span> 元
+            <span className={styles.money}>{withdrawInfo.money}</span> 元
           </Col>
         </Row>
       </div>

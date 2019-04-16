@@ -1,6 +1,5 @@
-import { rechargeSubmit, rechargeGetQrcode } from '@/services/api';
-import router from 'umi/router';
-import { message } from 'antd';
+import { rechargeSubmit, rechargeGetQrcode, rechargeCheck } from '@/services/api';
+import { routerRedux } from 'dva/router';
 
 export default {
   namespace: 'recharge',
@@ -8,6 +7,7 @@ export default {
   state: {
     qrcodeInfo: {},
     paymentId: 0,
+    state: '',
   },
 
   effects: {
@@ -21,9 +21,7 @@ export default {
             paymentId: res.payload.payment_id,
           },
         });
-        router.push('/CapitalManage/RechargePay');
-      } else {
-        message.error(res.message);
+        yield put(routerRedux.push('/CapitalManage/RechargePay'));
       }
     },
     *rechargeGetQrcode({ payload }, { call, put }) {
@@ -35,6 +33,19 @@ export default {
             qrcodeInfo: res.payload,
           },
         });
+      }
+    },
+    *rechargeCheck({ payload }, { call, put }) {
+      const res = yield call(rechargeCheck, payload);
+      console.log('rechargeCheck', res);
+      if (res && res.code === 200) {
+        if (res.payload.state === 1) {
+          yield put(
+            routerRedux.push(`/CapitalManage/RechargePaySuccess?money=${res.payload.money}`)
+          );
+        }
+      } else {
+        yield put(routerRedux.push('/CapitalManage/RechargePayError'));
       }
     },
   },

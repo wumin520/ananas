@@ -9,15 +9,20 @@ import styles from './styles.less';
 
 const content = <div />;
 
-@connect(({ list, loading }) => ({
-  list,
-  loading: loading.models.list,
+@connect(({ recharge, loading }) => ({
+  recharge,
+  loading: loading.models.recharge,
 }))
 @Form.create()
 class RechargePaySuccess extends PureComponent {
   state = {};
 
   render() {
+    const { location } = this.props;
+    const { money } = location.query;
+
+    const desc = `推广费用${money}元已到账`;
+
     const onFinish = () => {
       router.push('/CapitalManage/CapitalDetail');
     };
@@ -36,7 +41,7 @@ class RechargePaySuccess extends PureComponent {
           <Result
             type="success"
             title="充值成功"
-            description="推广费用100元已到账"
+            description={desc}
             actions={actions}
             className={styles.result}
           />

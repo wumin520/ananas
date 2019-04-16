@@ -21,14 +21,25 @@ class RechargePay extends PureComponent {
   componentDidMount() {
     const { dispatch, paymentId } = this.props;
     console.log('paymentId:', paymentId);
-    // console.log('loaction', loaction);
     dispatch({
       type: 'recharge/rechargeGetQrcode',
       payload: {
-        // payment_id: paymentId
-        payment_id: 4,
+        payment_id: paymentId,
       },
     });
+    this.si = setInterval(() => {
+      dispatch({
+        type: 'recharge/rechargeCheck',
+        payload: {
+          payment_id: paymentId,
+        },
+      });
+    }, 2000);
+  }
+
+  componentWillUnmount() {
+    /* eslint-disable */
+    this.si && clearInterval(this.si);
   }
 
   render() {
