@@ -86,7 +86,6 @@ class Step2 extends React.PureComponent {
       commission,
       coupon_price,
     } = goodsDetail;
-    console.log('category_id -> ', category_id);
 
     return (
       <Form layout="horizontal" className={styles.stepForm}>
