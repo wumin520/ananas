@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from 'react';
-import moment from 'moment';
+import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Card, Row, Col, Button, Form, Select, Table, Badge, Divider } from 'antd';
+import { Card, Row, Col, Button, Form, Select, Table, Input } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import StandardFormRow from '@/components/StandardFormRow';
@@ -11,13 +10,16 @@ import styles from './CreditRecord.less';
 const FormItem = Form.Item;
 const { Option } = Select;
 
-const statusMap = ['default', 'processing', 'success', 'error'];
-const status = ['关闭', '运行中', '已上线', '异常'];
+const param = {
+  page: 1,
+  type: -1,
+  task_id: 0,
+};
 
 @connect(({ creditlist, list, loading }) => ({
-  creditlist: creditlist.data.payload,
+  creditlist,
   list,
-  loading: loading.models.list,
+  loading: loading.models.creditlist,
 }))
 @Form.create()
 class CreditRecord extends Component {
@@ -29,61 +31,27 @@ class CreditRecord extends Component {
   columns = [
     {
       title: '时间',
-      dataIndex: 'name',
-      render: text => <a onClick={() => this.previewItem(text)}>{text}</a>,
+      dataIndex: 'created_at',
     },
     {
       title: '推广编号',
-      dataIndex: 'desc',
+      dataIndex: 'task_id',
     },
     {
       title: '商品',
-      dataIndex: 'callNo',
-      sorter: true,
-      render: val => `${val} 万`,
-      // mark to display a total number
-      needTotal: true,
+      dataIndex: 'title',
     },
     {
       title: '扣分',
-      dataIndex: 'status',
-      filters: [
-        {
-          text: status[0],
-          value: 0,
-        },
-        {
-          text: status[1],
-          value: 1,
-        },
-        {
-          text: status[2],
-          value: 2,
-        },
-        {
-          text: status[3],
-          value: 3,
-        },
-      ],
-      render(val) {
-        return <Badge status={statusMap[val]} text={status[val]} />;
-      },
+      dataIndex: 'score',
     },
     {
       title: '扣分分类',
-      dataIndex: 'updatedAt',
-      sorter: true,
-      render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      dataIndex: 'type',
     },
     {
       title: '说明',
-      render: () => (
-        <Fragment>
-          <a>查看</a>
-          <Divider type="vertical" />
-          <a href="">订单明细</a>
-        </Fragment>
-      ),
+      dataIndex: 'desc',
     },
   ];
 
@@ -266,22 +234,48 @@ class CreditRecord extends Component {
   ];
 
   componentDidMount() {
+    this.getFormData(param);
+  }
+
+  getFormData = p => {
     const { dispatch } = this.props;
     dispatch({
       type: 'creditlist/getListData',
       payload: {
-        page: 1,
+        page: p.page,
+        type: p.type,
+        task_id: p.task_id,
       },
     });
-  }
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const { form } = this.props;
+    form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        param.type = values.type;
+        param.task_id = values.task_id;
+        this.getFormData(param);
+      }
+    });
+  };
+
+  handleFormReset = () => {
+    const { form } = this.props;
+    form.resetFields();
+    this.getFormData(param);
+  };
 
   render() {
     const {
       form: { getFieldDecorator },
     } = this.props;
+    const { loading } = this.props;
     const { creditlist } = this.props;
-    let shInfo = {};
-    if (creditlist) shInfo = creditlist.sh_info;
+
+    const shInfo = creditlist.sh_info;
+    const { list } = creditlist;
 
     const formItemLayout = {
       wrapperCol: {
@@ -305,10 +299,10 @@ class CreditRecord extends Component {
           <Card bordered={false}>
             <Row>
               <Col sm={8} xs={24}>
-                <Info title="当前积分" value={shInfo.credit_score} bordered />
+                <Info title="当前积分" value={shInfo ? shInfo.credit_score : ''} bordered />
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="账户限制" value={shInfo.limit_info} bordered />
+                <Info title="账户限制" value={shInfo ? shInfo.limit_info : ''} bordered />
               </Col>
               <Col sm={8} xs={24} />
             </Row>
@@ -320,24 +314,30 @@ class CreditRecord extends Component {
             style={{ marginTop: 24 }}
             bodyStyle={{ padding: '0 32px 40px 32px' }}
           >
-            <Form layout="inline">
+            <Form layout="inline" onSubmit={this.handleSubmit}>
               <StandardFormRow grid last>
                 <Row gutter={16} style={{ marginTop: 20, marginBottom: 30 }}>
                   <Col xl={8} lg={10} md={12} sm={24} xs={24}>
                     <FormItem {...formItemLayout} label="扣分分类">
-                      {getFieldDecorator('user', {})(
+                      {getFieldDecorator('type', {})(
                         <Select placeholder="不限" style={{ maxWidth: 200, width: '100%' }}>
-                          <Option value="lisa">李三</Option>
+                          {creditlist.type_select.length &&
+                            creditlist.type_select.map(e => (
+                              <Option key={e.value} value={e.value}>
+                                {e.name}
+                              </Option>
+                            ))}
                         </Select>
                       )}
                     </FormItem>
                   </Col>
                   <Col xl={8} lg={10} md={12} sm={24} xs={24}>
                     <FormItem {...formItemLayout} label="推广id">
-                      {getFieldDecorator('rate', {})(
-                        <Select placeholder="不限" style={{ maxWidth: 200, width: '100%' }}>
-                          <Option value="good">优秀</Option>
-                        </Select>
+                      {getFieldDecorator('task_id', {})(
+                        <Input
+                          placeholder="请输入推广id"
+                          style={{ maxWidth: 200, width: '100%' }}
+                        />
                       )}
                     </FormItem>
                   </Col>
@@ -355,7 +355,7 @@ class CreditRecord extends Component {
               </StandardFormRow>
             </Form>
 
-            {/* <Table loading={loading} dataSource={list} columns={this.columns} /> */}
+            <Table loading={loading} dataSource={list} columns={this.columns} />
           </Card>
           <Card>
             <Table
