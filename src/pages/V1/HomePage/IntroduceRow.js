@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Row, Col, Icon, Tooltip } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import styles from './index.less';
-import { ChartCard, MiniArea, MiniBar, MiniProgress, Field } from '@/components/Charts';
+import { ChartCard, MiniProgress, Field } from '@/components/Charts';
 import Trend from '@/components/Trend';
 import numeral from 'numeral';
 import Yuan from '@/utils/Yuan';
@@ -17,6 +17,7 @@ const topColResponsiveProps = {
 };
 
 const IntroduceRow = memo(function chart({ loading, visitData }) {
+  // console.log(visitData);
   return (
     <Row gutter={24}>
       <Col {...topColResponsiveProps}>
@@ -31,11 +32,16 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
               <Icon type="info-circle-o" />
             </Tooltip>
           }
-          total={numeral(1231).format('0,0')}
-          footer={<Field label={<span>总推广费用 ¥</span>} value={numeral(5341).format('0,0')} />}
+          total={numeral(visitData.task_info.task_amount).format('0,0')}
+          footer={
+            <Field
+              label={<span>总推广费用 ¥</span>}
+              value={numeral(visitData.task_info.total_money).format('0,0')}
+            />
+          }
           contentHeight={46}
         >
-          <MiniArea color="#975FE4" data={visitData} />
+          {/* <MiniArea color="#975FE4" data={visitData.task_info.statistics_info} /> */}
         </ChartCard>
       </Col>
 
@@ -53,9 +59,12 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
             </Tooltip>
           }
           loading={loading}
-          total={() => <Yuan>126560</Yuan>}
+          total={() => <Yuan>{visitData.order_info.total_order_num}</Yuan>}
           footer={
-            <Field label={<span>日均订单数</span>} value={`￥${numeral(12423).format('0,0')}`} />
+            <Field
+              label={<span>日均订单数</span>}
+              value={`￥${numeral(visitData.order_info.daily_order_num).format('0,0')}`}
+            />
           }
           contentHeight={46}
         >
@@ -84,11 +93,13 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
               <Icon type="info-circle-o" />
             </Tooltip>
           }
-          total={numeral(6560).format('0,0')}
-          footer={<Field label={<span>好评率</span>} value="60%" />}
+          total={numeral(visitData.comment_info.good_comment_num).format('0,0')}
+          footer={
+            <Field label={<span>好评率</span>} value={visitData.comment_info.good_comment_rate} />
+          }
           contentHeight={46}
         >
-          <MiniBar data={visitData} />
+          {/* <MiniBar data={visitData} /> */}
         </ChartCard>
       </Col>
       <Col {...topColResponsiveProps}>
@@ -108,21 +119,21 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
               <Icon type="info-circle-o" />
             </Tooltip>
           }
-          total="78%"
+          total={visitData.credit_info.credit_score}
           footer={
             <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
-              <span className={styles.trendText}>信用良好，无限制</span>
+              <span className={styles.trendText}>{visitData.credit_info.limit_info}</span>
             </div>
           }
           contentHeight={46}
         >
           <MiniProgress
-            percent={78}
+            percent={visitData.credit_info.credit_score}
             strokeWidth={8}
-            target={80}
+            target={100}
             targetLabel={`${formatMessage({ id: 'component.miniProgress.tooltipDefault' }).concat(
               ': '
-            )}80%`}
+            )}100%`}
             color="#3490ff"
           />
         </ChartCard>

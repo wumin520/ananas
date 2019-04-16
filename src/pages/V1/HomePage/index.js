@@ -6,7 +6,7 @@ import PageLoading from '@/components/PageLoading';
 import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Tabs } from 'antd';
 import styles from './index.less';
 
-// const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
+const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
 const OrderDetail = React.lazy(() => import('./OrderDetail'));
 const HotRankList = React.lazy(() => import('./HotRankList'));
 
@@ -129,7 +129,7 @@ class Index extends Component {
     const { loading } = this.props;
     const { homedata } = this.props;
 
-    // const headInfo = homedata.head_info;
+    const headInfo = homedata.head_info;
     const taskList = homedata.task_list;
     const hotRank = homedata.hot_rank;
     const orderList = homedata.order_list;
@@ -152,7 +152,7 @@ class Index extends Component {
     return (
       <GridContent>
         <Suspense fallback={<PageLoading />}>
-          {/* <IntroduceRow loading={loading} visitData={headInfo} /> */}
+          <IntroduceRow loading={loading} visitData={headInfo} />
         </Suspense>
         <Card fallback={null}>
           <Tabs
