@@ -1,30 +1,49 @@
 import { rechargeSubmit, rechargeGetQrcode } from '@/services/api';
+import router from 'umi/router';
+import { message } from 'antd';
 
 export default {
   namespace: 'recharge',
 
   state: {
-    recharge: {},
+    qrcodeInfo: {},
+    paymentId: 0,
   },
 
   effects: {
-    *rechargeSubmit({ payload }, { call }) {
-      yield call(rechargeSubmit, payload);
+    *rechargeSubmit({ payload }, { call, put }) {
+      const res = yield call(rechargeSubmit, payload);
+      console.log('rechargeSubmit', res);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'saveData',
+          payload: {
+            paymentId: res.payload.payment_id,
+          },
+        });
+        router.push('/CapitalManage/RechargePay');
+      } else {
+        message.error(res.message);
+      }
     },
     *rechargeGetQrcode({ payload }, { call, put }) {
-      yield call(rechargeGetQrcode, payload);
-      yield put({
-        type: 'saveRechargeGetQrcode',
-        payload,
-      });
+      const res = yield call(rechargeGetQrcode, payload);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'saveData',
+          payload: {
+            qrcodeInfo: res.payload,
+          },
+        });
+      }
     },
   },
 
   reducers: {
-    saveRechargeGetQrcode(state, { payload }) {
+    saveData(state, { payload }) {
       return {
         ...state,
-        recharge: payload,
+        ...payload,
       };
     },
   },

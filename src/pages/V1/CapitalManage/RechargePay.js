@@ -2,33 +2,38 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Card, Form } from 'antd';
 
+import CountDown from '@/components/V1/CountDown';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 // import Result from '@/components/Result';
 import styles from './styles.less';
 
 const content = <div />;
 
-@connect(({ list, loading }) => ({
-  recharge: list.recharge,
-  loading: loading.models.list,
+@connect(({ recharge, loading }) => ({
+  paymentId: recharge.paymentId,
+  qrcodeInfo: recharge.qrcodeInfo,
+  loading: loading.models.recharge,
 }))
 @Form.create()
 class RechargePay extends PureComponent {
   state = {};
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch, paymentId } = this.props;
+    console.log('paymentId:', paymentId);
     // console.log('loaction', loaction);
     dispatch({
-      type: 'capital/frozenTaskList',
+      type: 'recharge/rechargeGetQrcode',
       payload: {
-        payment_id: 1,
+        // payment_id: paymentId
+        payment_id: 4,
       },
     });
   }
 
   render() {
-    const { recharge } = this.props;
+    const { qrcodeInfo } = this.props;
+    const leftTime = 100000;
 
     return (
       <PageHeaderWrapper title="我要充值" content={content}>
@@ -36,18 +41,20 @@ class RechargePay extends PureComponent {
           <p className={styles.title}>充值</p>
           <div className={styles.payBlock}>
             <div className={styles.payBlock_top}>
-              <span>费用名称：活动费用100元</span>
-              <span>￥{recharge.money}元</span>
+              <span>费用名称：活动费用{qrcodeInfo.money}元</span>
+              <span>￥{qrcodeInfo.money}元</span>
             </div>
             <div className={styles.payBlock_center}>
               <p>
-                请在<span>03:46</span>内完成支付
+                请在
+                <CountDown target={leftTime} />
+                内完成支付
               </p>
               <div className={styles.payInfo}>
                 <p>
                   请认准账户名称：<span style={{ color: '#fa8c16' }}>极单信息科技有限公司</span>
                 </p>
-                <img src="{recharge.imgCode}" alt="" />
+                <img src={qrcodeInfo.imgCode} alt="" />
                 <p>打开手机微信</p>
                 <p>扫一扫完成支付</p>
               </div>

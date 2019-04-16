@@ -6,12 +6,11 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 // import Result from '@/components/Result';
 import styles from './styles.less';
 
-const { Option } = Select;
 const content = <div />;
 
-@connect(({ list, loading }) => ({
-  withdrawData: list.withdrawData,
-  loading: loading.models.list,
+@connect(({ withdraw, loading }) => ({
+  withdrawData: withdraw.withdrawData,
+  loading: loading.models.withdraw,
 }))
 @Form.create()
 class Withdraw extends PureComponent {
@@ -46,24 +45,10 @@ class Withdraw extends PureComponent {
   };
 
   render() {
-    // const { form, withdrawData } = this.props;
-    const { form } = this.props;
+    const { form, withdrawData } = this.props;
     const { getFieldDecorator } = form;
     const { visible } = this.state;
-
-    const withdrawData = {
-      balance: 2000,
-      bank_list: [
-        {
-          id: 20,
-          name: '中国银行',
-        },
-        {
-          id: 20,
-          name: '中国农业银行',
-        },
-      ],
-    };
+    const { Option } = Select;
 
     const formItemLayout = {
       labelCol: {
@@ -137,7 +122,8 @@ class Withdraw extends PureComponent {
                 })(<Input style={{ width: 200 }} type="text" placeholder="请输入银行卡号" />)}
               </Form.Item>
               <Form.Item label="开户行">
-                {Option.initialValue('card_number', {
+                {getFieldDecorator('card_number', {
+                  initialValue: ['全部'],
                   rules: [
                     {
                       required: true,
@@ -145,14 +131,10 @@ class Withdraw extends PureComponent {
                     },
                   ],
                 })(
-                  <Select
-                    style={{ width: 120 }}
-                    defaultValue="全部"
-                    onChange={this.selectTypeChange}
-                  >
+                  <Select style={{ width: 120 }} onChange={this.selectTypeChange}>
                     {withdrawData.bank_list.length &&
                       withdrawData.bank_list.map(e => (
-                        <Option key={e.value} value={e.value}>
+                        <Option key={e.id} value={e.id}>
                           {e.name}
                         </Option>
                       ))}

@@ -4,12 +4,24 @@ export default {
   namespace: 'withdraw',
 
   state: {
-    withdrawData: {},
+    withdrawData: {
+      balance: 0,
+      bank_list: [],
+    },
   },
 
   effects: {
-    *exchangePage({ payload }, { call }) {
-      yield call(exchangePage, payload);
+    *exchangePage({ call, put }) {
+      const res = yield call(exchangePage);
+      console.log('withdraw res', res);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'saveData',
+          payload: {
+            withdrawData: res.payload,
+          },
+        });
+      }
     },
     *exchange({ payload }, { call }) {
       yield call(exchange, payload);
@@ -17,10 +29,10 @@ export default {
   },
 
   reducers: {
-    saveRechargeGetQrcode(state, { payload }) {
+    saveData(state, { payload }) {
       return {
         ...state,
-        withdrawData: payload,
+        ...payload,
       };
     },
   },
