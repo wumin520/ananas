@@ -116,6 +116,19 @@ export default [
           },
         ],
       },
+      // myOrder
+      {
+        path: '/order',
+        icon: 'table',
+        name: 'order',
+        routes: [
+          {
+            path: '/order/Index',
+            name: 'index',
+            component: './V1/MyOrder/Index',
+          },
+        ],
+      },
       //capitalManage
       {
         path: '/capitalManage',
@@ -166,32 +179,6 @@ export default [
             name: 'withdrawSuccess',
             hideInMenu: true,
             component: './V1/CapitalManage/WithdrawSuccess',
-          },
-        ],
-      },
-      // forms
-      {
-        path: '/form',
-        icon: 'form',
-        name: 'form',
-        hideInMenu: true,
-        routes: [
-          {
-            path: '/fangdan/list',
-            name: 'myList',
-            component: './V1/FangDan/List',
-          },
-          {
-            path: '/fangdan/list/GeneralizeDetail',
-            name: 'generalizeDetail',
-            component: './V1/FangDan/List/GeneralizeDetail',
-            hideInMenu: true,
-          },
-          {
-            path: '/fangdan/list/order',
-            name: 'order',
-            component: './V1/FangDan/List/order',
-            hideInMenu: true,
           },
         ],
       },
