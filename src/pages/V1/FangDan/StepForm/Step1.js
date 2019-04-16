@@ -29,13 +29,19 @@ class Step1 extends React.PureComponent {
 
   componentDidMount = () => {
     /* eslint-disable */
-    const { location } = this.props;
+    const { location, dispatch } = this.props;
     console.log(location, '1');
     const { goods_id, task_id } = location.query;
+    task_id &&
+      dispatch({
+        type: 'form/queryTaskDetail',
+        payload: {
+          task_id,
+        },
+      });
     goods_id &&
       this.fetchPddGoodsDetail({
         goods_id,
-        task_id,
       });
   };
 

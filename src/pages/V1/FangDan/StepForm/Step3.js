@@ -8,7 +8,7 @@ import styles from './style.less';
 const dateFormat = 'YYYY-MM-DD';
 
 @connect(({ form, loading }) => ({
-  data: form.step,
+  taskId: form.taskId,
   schedules: form.schedules,
   startTime: form.startTime,
   endTime: form.endTime,
@@ -123,7 +123,7 @@ class Step3 extends React.PureComponent {
       message.error('你还有投放数量没有填写完成哦～');
       return;
     }
-    const { dispatch, goodsDetail, startTime, endTime, schedules } = this.props;
+    const { dispatch, goodsDetail, startTime, endTime, schedules, taskId } = this.props;
     dispatch({
       type: 'form/publishTask',
       payload: {
@@ -134,6 +134,7 @@ class Step3 extends React.PureComponent {
         start_time: startTime,
         end_time: endTime,
         plan_info: schedules,
+        task_id: taskId,
       },
     });
     // router.push('/fangdan/step-form/pay');
