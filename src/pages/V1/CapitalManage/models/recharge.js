@@ -5,23 +5,21 @@ export default {
   namespace: 'recharge',
 
   state: {
-    qrcodeInfo: {},
-    paymentId: 0,
+    qrcodeInfo: {
+      left_time: 0,
+      money: 0,
+      imgCode: '',
+    },
     state: '',
   },
 
   effects: {
     *rechargeSubmit({ payload }, { call, put }) {
       const res = yield call(rechargeSubmit, payload);
-      console.log('rechargeSubmit', res);
       if (res && res.code === 200) {
-        yield put({
-          type: 'saveData',
-          payload: {
-            paymentId: res.payload.payment_id,
-          },
-        });
-        yield put(routerRedux.push('/CapitalManage/RechargePay'));
+        yield put(
+          routerRedux.push(`/CapitalManage/RechargePay?paymentId=${res.payload.payment_id}`)
+        );
       }
     },
     *rechargeGetQrcode({ payload }, { call, put }) {
@@ -34,10 +32,10 @@ export default {
           },
         });
       }
+      return res;
     },
     *rechargeCheck({ payload }, { call, put }) {
       const res = yield call(rechargeCheck, payload);
-      console.log('rechargeCheck', res);
       if (res && res.code === 200) {
         if (res.payload.state === 1) {
           yield put(

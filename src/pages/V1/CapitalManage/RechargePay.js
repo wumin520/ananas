@@ -1,16 +1,16 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Card, Form } from 'antd';
+import { Card, Form, Statistic } from 'antd';
+import router from 'umi/router';
 
-import CountDown from '@/components/V1/CountDown';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 // import Result from '@/components/Result';
 import styles from './styles.less';
 
+const { Countdown } = Statistic;
 const content = <div />;
 
 @connect(({ recharge, loading }) => ({
-  paymentId: recharge.paymentId,
   qrcodeInfo: recharge.qrcodeInfo,
   loading: loading.models.recharge,
 }))
@@ -19,14 +19,22 @@ class RechargePay extends PureComponent {
   state = {};
 
   componentDidMount() {
-    const { dispatch, paymentId } = this.props;
-    console.log('paymentId:', paymentId);
+    const { dispatch, location } = this.props;
+    const { paymentId } = location.query;
+
     dispatch({
       type: 'recharge/rechargeGetQrcode',
       payload: {
         payment_id: paymentId,
       },
+    }).then(res => {
+      if (res.payload.left_time === 0) {
+        router.push(`/CapitalManage/RechargePayError`);
+      } else {
+        this.timeTemp = Date.now() + res.payload.left_time;
+      }
     });
+
     this.si = setInterval(() => {
       dispatch({
         type: 'recharge/rechargeCheck',
@@ -42,9 +50,14 @@ class RechargePay extends PureComponent {
     this.si && clearInterval(this.si);
   }
 
+  onFinish = () => {
+    // console.log('finished!');
+    router.push(`/CapitalManage/RechargePayError`);
+  };
+
   render() {
     const { qrcodeInfo } = this.props;
-    const leftTime = 100000;
+    const time = this.timeTemp || 0;
 
     return (
       <PageHeaderWrapper title="我要充值" content={content}>
@@ -56,11 +69,13 @@ class RechargePay extends PureComponent {
               <span>￥{qrcodeInfo.money}元</span>
             </div>
             <div className={styles.payBlock_center}>
-              <p>
+              <div>
                 请在
-                <CountDown target={leftTime} />
+                <div>
+                  <Countdown value={time} onFinish={this.onFinish} />
+                </div>
                 内完成支付
-              </p>
+              </div>
               <div className={styles.payInfo}>
                 <p>
                   请认准账户名称：<span style={{ color: '#fa8c16' }}>极单信息科技有限公司</span>
