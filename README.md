@@ -10,7 +10,7 @@ npm install
 ~~~
 npm start
 ~~~
-# 项目发布(build后文件在dist目录，用来发布) 
+# 项目发布 
 ~~~
-npm run build
+npm run build //生成文件在dist目录，用来发布
 ~~~
