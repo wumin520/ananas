@@ -30,7 +30,6 @@ class Step1 extends React.PureComponent {
   componentDidMount = () => {
     /* eslint-disable */
     const { location, dispatch } = this.props;
-    console.log(location, '1');
     const { goods_id, task_id } = location.query;
     task_id &&
       dispatch({
@@ -46,13 +45,23 @@ class Step1 extends React.PureComponent {
   };
 
   render() {
-    const { form, pddGoodUrl, submitting } = this.props;
+    const { form, pddGoodUrl, submitting, dispatch } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const onValidateForm = () => {
       validateFields((err, values) => {
         if (!err) {
           this.fetchPddGoodsDetail(values);
-          // router.push('/fangdan/step-form/confirm');
+          // 新增时reset state
+          dispatch({
+            type: 'form/updateState',
+            payload: {
+              category_id: '',
+              taskId: '',
+              schedules: [],
+              startTime: '',
+              endTime: '',
+            },
+          });
         }
       });
     };

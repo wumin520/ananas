@@ -41,6 +41,10 @@ const errorHandler = error => {
     });
     return;
   }
+  console.error('errorHandler -> ', error);
+  if (!status) {
+    return;
+  }
   notification.error({
     message: `请求错误 ${status}: ${url}`,
     description: errortext,
@@ -65,17 +69,18 @@ const errorHandler = error => {
 const request = extend({
   headers: { token: 'REJuQ6UXbJlwNzewxQDOpNOwUaTuDaOi', timestamp: Date.now(), platform: 'web' },
   errorHandler, // 默认错误处理
-  credentials: 'include', // 默认请求是否带上cookie
+  // credentials: 'include', // 默认请求是否带上cookie
 });
 // request interceptor, change url or options.
-// request.interceptors.request.use((url, options) => {
-//   return (
-//     {
-//       url: `${url}&interceptors=yes`,
-//       options: { ...options, interceptors: true },
-//     }
-//   );
-// });
+request.interceptors.request.use((url, options) => {
+  // const origin  = 'http://chaoduoke.com/cdk'
+  const origin = 'http://test.chaoduoke.com/cdk';
+  console.log('request -> url -> ', url);
+  return {
+    url: `${origin}${url}`,
+    options: { ...options, interceptors: true },
+  };
+});
 
 // response interceptor, handling response
 request.interceptors.response.use(async response => {
