@@ -2,8 +2,7 @@ import React, { memo } from 'react';
 import { Row, Col, Icon, Tooltip } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import styles from './index.less';
-import { ChartCard, MiniProgress, Field } from '@/components/Charts';
-import Trend from '@/components/Trend';
+import { ChartCard, MiniProgress, Field, MiniArea, MiniBar } from '@/components/Charts';
 import numeral from 'numeral';
 import Yuan from '@/utils/Yuan';
 
@@ -17,7 +16,6 @@ const topColResponsiveProps = {
 };
 
 const IntroduceRow = memo(function chart({ loading, visitData }) {
-  // console.log(visitData);
   return (
     <Row gutter={24}>
       <Col {...topColResponsiveProps}>
@@ -41,7 +39,15 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           }
           contentHeight={46}
         >
-          {/* <MiniArea color="#975FE4" data={visitData.task_info.statistics_info} /> */}
+          <MiniArea
+            color="#975FE4"
+            data={visitData.task_info.statistics_info.map(k => {
+              return {
+                x: k.day,
+                y: k.amount,
+              };
+            })}
+          />
         </ChartCard>
       </Col>
 
@@ -68,14 +74,17 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           }
           contentHeight={46}
         >
-          <Trend flag="up" style={{ marginRight: 16 }}>
-            <FormattedMessage id="app.analysis.week" defaultMessage="Weekly Changes" />
-            <span className={styles.trendText}>12%</span>
-          </Trend>
-          <Trend flag="down">
-            <FormattedMessage id="app.analysis.day" defaultMessage="Daily Changes" />
-            <span className={styles.trendText}>11%</span>
-          </Trend>
+          <MiniArea
+            animate={false}
+            line
+            borderWidth={2}
+            data={visitData.order_info.statistics_info.map(k => {
+              return {
+                x: k.day,
+                y: k.number,
+              };
+            })}
+          />
         </ChartCard>
       </Col>
 
@@ -99,7 +108,14 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           }
           contentHeight={46}
         >
-          {/* <MiniBar data={visitData} /> */}
+          <MiniBar
+            data={visitData.comment_info.statistics_info.map(k => {
+              return {
+                x: k.day,
+                y: k.number,
+              };
+            })}
+          />
         </ChartCard>
       </Col>
       <Col {...topColResponsiveProps}>
