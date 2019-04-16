@@ -7,6 +7,7 @@ import {
   publishTask,
   pay,
   getCategoryList,
+  taskDetail,
 } from '@/services/api';
 
 export default {
@@ -28,6 +29,7 @@ export default {
       coupon_price: 0, // 券后价
     },
     category_list: [], // 商品分类
+    category_id: '', // 分类id
     taskPayInfo: {
       rebate_money: '',
       num: '',
@@ -94,6 +96,36 @@ export default {
         },
       });
     },
+    *queryTaskDetail({ payload }, { call, put }) {
+      const res = yield call(taskDetail, payload);
+      if (res && res.status === 'ok') {
+        /* eslint-disable */
+        console.log('queryTaskDetail -> res -> ', res);
+        const { plan_list, data } = res.payload;
+        const arr = [];
+        const len = plan_list.length;
+        const start_time = len > 0 && plan_list[0].plan_time;
+        const end_time = len > 0 && plan_list[len - 1].plan_time;
+        for (let i = 0; i < len; i += 1) {
+          const item = plan_list[i];
+          arr.push({
+            day: item.plan_time,
+            amount: item.total_amount,
+          });
+        }
+
+        yield put({
+          type: 'saveState',
+          payload: {
+            taskId: data.task_id || '',
+            startTime: start_time,
+            endTime: end_time,
+            category_id: data.category_id,
+            schedules: arr,
+          },
+        });
+      }
+    },
     *submitRegularForm({ payload }, { call }) {
       yield call(fakeSubmitForm, payload);
       message.success('提交成功');
@@ -132,6 +164,7 @@ export default {
 
   reducers: {
     saveState(state, { payload }) {
+      console.log('saveState -> payload -> ', payload);
       return {
         ...state,
         ...payload,

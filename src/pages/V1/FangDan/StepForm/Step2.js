@@ -19,6 +19,7 @@ const formItemLayout = {
   data: form.step,
   goodsDetail: form.goodsDetail,
   category_list: form.category_list,
+  category_id: form.category_id,
 }))
 @Form.create()
 class Step2 extends React.PureComponent {
@@ -49,7 +50,7 @@ class Step2 extends React.PureComponent {
 
   render() {
     /* eslint-disable */
-    const { form, dispatch, submitting, goodsDetail, category_list } = this.props;
+    const { form, dispatch, submitting, goodsDetail, category_list, category_id } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const { Option } = Select;
 
@@ -68,6 +69,7 @@ class Step2 extends React.PureComponent {
                 ...goodsDetail,
                 ...values,
               },
+              category_id: values.category_id,
             },
           });
           router.push('/fangdan/step-form/schedule');
@@ -84,6 +86,7 @@ class Step2 extends React.PureComponent {
       commission,
       coupon_price,
     } = goodsDetail;
+    console.log('category_id -> ', category_id);
 
     return (
       <Form layout="horizontal" className={styles.stepForm}>
@@ -98,7 +101,7 @@ class Step2 extends React.PureComponent {
         </Form.Item>
         <Form.Item {...formItemLayout} className={styles.stepFormText} label="商品分类">
           {getFieldDecorator('category_id', {
-            initialValue: '',
+            initialValue: category_id,
             rules: [
               {
                 required: true,

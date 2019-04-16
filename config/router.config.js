@@ -100,7 +100,7 @@ export default [
           {
             path: '/fangdan/list',
             name: 'myList',
-            component: './V1/FangDan/List',
+            component: './V1/FangDan/List/Index',
           },
           {
             path: '/fangdan/list/GeneralizeDetail',
