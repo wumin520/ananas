@@ -162,6 +162,11 @@ export default [
             component: './V1/CapitalManage/CapitalDetail',
           },
           {
+            path: '/CapitalManage/creditRecord',
+            name: 'creditRecord',
+            component: './V1/CapitalManage/CreditRecord',
+          },
+          {
             path: '/CapitalManage/Withdraw',
             name: 'withdraw',
             component: './V1/CapitalManage/Withdraw',
@@ -269,12 +274,6 @@ export default [
             name: 'advanced',
             authority: ['admin'],
             component: './Profile/AdvancedProfile',
-          },
-          {
-            path: '/profile/creditRecord',
-            name: 'creditRecord',
-            authority: ['admin'],
-            component: './Profile/CreditRecord',
           },
         ],
       },

@@ -1,43 +1,39 @@
 import React, { memo } from 'react';
-import { Table, Card } from 'antd';
+import { Table, Card, Badge } from 'antd';
 import { FormattedMessage } from 'umi-plugin-react/locale';
-import Trend from '@/components/Trend';
 import styles from './index.less';
+
+const status = ['失效', '已下单', '待评价', '已完成'];
+const statusMap = ['error', 'processing', 'warning', 'success'];
 
 const columns = [
   {
     title: <FormattedMessage id="app.homePage.table.orderCode" defaultMessage="Rank" />,
-    dataIndex: 'index',
+    dataIndex: 'p_order_id',
     key: 'index',
   },
   {
     title: <FormattedMessage id="app.homePage.table.product" defaultMessage="Search keyword" />,
-    dataIndex: 'keyword',
+    dataIndex: 'title',
     key: 'keyword',
     render: text => <a href="/">{text}</a>,
   },
   {
     title: <FormattedMessage id="app.homePage.table.orderTime" defaultMessage="Users" />,
-    dataIndex: 'count',
+    dataIndex: 'ordered_datetime',
     key: 'count',
-    sorter: (a, b) => a.count - b.count,
     className: styles.alignRight,
   },
   {
     title: <FormattedMessage id="app.homePage.table.status" defaultMessage="Weekly Range" />,
-    dataIndex: 'range',
+    dataIndex: 'state',
     key: 'range',
-    sorter: (a, b) => a.range - b.range,
-    render: (text, record) => (
-      <Trend flag={record.status === 1 ? 'down' : 'up'}>
-        <span style={{ marginRight: 4 }}>{text}%</span>
-      </Trend>
-    ),
+    render: text => <Badge status={statusMap[text]} text={status[text]} />,
     align: 'right',
   },
 ];
 
-const OrderDetail = memo(({ loading, searchData }) => (
+const OrderDetail = memo(({ loading, data }) => (
   <Card
     loading={loading}
     bordered={false}
@@ -49,7 +45,7 @@ const OrderDetail = memo(({ loading, searchData }) => (
       rowKey={record => record.index}
       size="small"
       columns={columns}
-      dataSource={searchData}
+      dataSource={data}
       pagination={{
         style: { marginBottom: 0 },
         pageSize: 5,

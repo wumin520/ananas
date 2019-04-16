@@ -75,6 +75,17 @@ export async function exchange(params) {
 export async function getCategoryList(params) {
   return request(api_pre + `task/category?${stringify(params)}`);
 }
+
+// 主页数据
+export async function getHomeData() {
+  return request(`${api_pre}home`);
+}
+
+// 信用记录
+export async function creditRecord(params) {
+  return request(`${api_pre}credit_score/list?${stringify(params)}`);
+}
+
 export async function queryGoodsDetail(params) {
   return request(api_pre + `get_goods_detail?${stringify(params)}`);
 }
@@ -99,10 +110,6 @@ export async function pay(params) {
 }
 export async function queryProjectNotice() {
   return request('/api/project/notice');
-}
-
-export async function getHomeData() {
-  return request('/api/web/home');
 }
 
 export async function queryActivities() {

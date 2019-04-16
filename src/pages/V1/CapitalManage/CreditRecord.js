@@ -1,44 +1,26 @@
 import React, { Component, Fragment } from 'react';
 import moment from 'moment';
 import { connect } from 'dva';
-import {
-  Card,
-  Row,
-  Col,
-  Input,
-  Button,
-  Modal,
-  Form,
-  DatePicker,
-  Select,
-  Table,
-  Badge,
-  Divider,
-} from 'antd';
+import { Card, Row, Col, Button, Form, Select, Table, Badge, Divider } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import Result from '@/components/Result';
 import StandardFormRow from '@/components/StandardFormRow';
 
 import styles from './CreditRecord.less';
 
 const FormItem = Form.Item;
 const { Option } = Select;
-const SelectOption = Select.Option;
-const { TextArea } = Input;
 
 const statusMap = ['default', 'processing', 'success', 'error'];
 const status = ['关闭', '运行中', '已上线', '异常'];
 
-@connect(({ rule, list, loading }) => ({
-  rule,
+@connect(({ creditlist, list, loading }) => ({
+  creditlist: creditlist.data.payload,
   list,
   loading: loading.models.list,
 }))
 @Form.create()
 class CreditRecord extends Component {
-  state = { visible: false, done: false };
-
   formLayout = {
     labelCol: { span: 7 },
     wrapperCol: { span: 13 },
@@ -286,82 +268,20 @@ class CreditRecord extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'list/fetch',
+      type: 'creditlist/getListData',
       payload: {
-        count: 5,
+        page: 1,
       },
-    });
-    dispatch({
-      type: 'rule/fetch',
     });
   }
 
-  showModal = () => {
-    this.setState({
-      visible: true,
-      current: undefined,
-    });
-  };
-
-  showEditModal = item => {
-    this.setState({
-      visible: true,
-      current: item,
-    });
-  };
-
-  handleDone = () => {
-    setTimeout(() => this.addBtn.blur(), 0);
-    this.setState({
-      done: false,
-      visible: false,
-    });
-  };
-
-  handleCancel = () => {
-    setTimeout(() => this.addBtn.blur(), 0);
-    this.setState({
-      visible: false,
-    });
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const { dispatch, form } = this.props;
-    const { current } = this.state;
-    const id = current ? current.id : '';
-
-    setTimeout(() => this.addBtn.blur(), 0);
-    form.validateFields((err, fieldsValue) => {
-      if (err) return;
-      this.setState({
-        done: true,
-      });
-      dispatch({
-        type: 'list/submit',
-        payload: { id, ...fieldsValue },
-      });
-    });
-  };
-
-  deleteItem = id => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'list/submit',
-      payload: { id },
-    });
-  };
-
   render() {
-    const { loading } = this.props;
     const {
       form: { getFieldDecorator },
     } = this.props;
-    const { visible, done, current = {} } = this.state;
-    const { rule } = this.props;
-    const {
-      data: { list = [] },
-    } = rule;
+    const { creditlist } = this.props;
+    let shInfo = {};
+    if (creditlist) shInfo = creditlist.sh_info;
 
     const formItemLayout = {
       wrapperCol: {
@@ -371,10 +291,6 @@ class CreditRecord extends Component {
       },
     };
 
-    const modalFooter = done
-      ? { footer: null, onCancel: this.handleDone }
-      : { okText: '保存', onOk: this.handleSubmit, onCancel: this.handleCancel };
-
     const Info = ({ title, value, bordered }) => (
       <div className={styles.headerInfo}>
         <span>{title}</span>
@@ -383,73 +299,16 @@ class CreditRecord extends Component {
       </div>
     );
 
-    const getModalContent = () => {
-      if (done) {
-        return (
-          <Result
-            type="success"
-            title="操作成功"
-            description="一系列的信息描述，很短同样也可以带标点。"
-            actions={
-              <Button type="primary" onClick={this.handleDone}>
-                知道了
-              </Button>
-            }
-            className={styles.formResult}
-          />
-        );
-      }
-      return (
-        <Form onSubmit={this.handleSubmit}>
-          <FormItem label="任务名称" {...this.formLayout}>
-            {getFieldDecorator('title', {
-              rules: [{ required: true, message: '请输入任务名称' }],
-              initialValue: current.title,
-            })(<Input placeholder="请输入" />)}
-          </FormItem>
-          <FormItem label="开始时间" {...this.formLayout}>
-            {getFieldDecorator('createdAt', {
-              rules: [{ required: true, message: '请选择开始时间' }],
-              initialValue: current.createdAt ? moment(current.createdAt) : null,
-            })(
-              <DatePicker
-                showTime
-                placeholder="请选择"
-                format="YYYY-MM-DD HH:mm:ss"
-                style={{ width: '100%' }}
-              />
-            )}
-          </FormItem>
-          <FormItem label="任务负责人" {...this.formLayout}>
-            {getFieldDecorator('owner', {
-              rules: [{ required: true, message: '请选择任务负责人' }],
-              initialValue: current.owner,
-            })(
-              <Select placeholder="请选择">
-                <SelectOption value="付晓晓">付晓晓</SelectOption>
-                <SelectOption value="周毛毛">周毛毛</SelectOption>
-              </Select>
-            )}
-          </FormItem>
-          <FormItem {...this.formLayout} label="产品描述">
-            {getFieldDecorator('subDescription', {
-              rules: [{ message: '请输入至少五个字符的产品描述！', min: 5 }],
-              initialValue: current.subDescription,
-            })(<TextArea rows={4} placeholder="请输入至少五个字符" />)}
-          </FormItem>
-        </Form>
-      );
-    };
     return (
       <PageHeaderWrapper>
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
               <Col sm={8} xs={24}>
-                <Info title="当前积分" value="85" bordered />
+                <Info title="当前积分" value={shInfo.credit_score} bordered />
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="账户限制" value="无限制" bordered />
+                <Info title="账户限制" value={shInfo.limit_info} bordered />
               </Col>
               <Col sm={8} xs={24} />
             </Row>
@@ -496,7 +355,7 @@ class CreditRecord extends Component {
               </StandardFormRow>
             </Form>
 
-            <Table loading={loading} dataSource={list} columns={this.columns} />
+            {/* <Table loading={loading} dataSource={list} columns={this.columns} /> */}
           </Card>
           <Card>
             <Table
@@ -524,17 +383,6 @@ class CreditRecord extends Component {
             />
           </Card>
         </div>
-        <Modal
-          title={done ? null : `任务${current.id ? '编辑' : '添加'}`}
-          className={styles.standardListForm}
-          width={640}
-          bodyStyle={done ? { padding: '72px 0' } : { padding: '28px 0 0' }}
-          destroyOnClose
-          visible={visible}
-          {...modalFooter}
-        >
-          {getModalContent()}
-        </Modal>
       </PageHeaderWrapper>
     );
   }

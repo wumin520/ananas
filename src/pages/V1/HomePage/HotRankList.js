@@ -7,25 +7,25 @@ import styles from './index.less';
 const columns = [
   {
     title: <FormattedMessage id="app.homePage.table.rank" defaultMessage="Rank" />,
-    dataIndex: 'index',
+    dataIndex: 'rank',
     key: 'index',
   },
   {
     title: <FormattedMessage id="app.homePage.table.productName" defaultMessage="Search keyword" />,
-    dataIndex: 'keyword',
+    dataIndex: 'shop_name',
     key: 'keyword',
     render: text => <a href="/">{text}</a>,
   },
   {
     title: <FormattedMessage id="app.homePage.table.orderNum" defaultMessage="Users" />,
-    dataIndex: 'count',
+    dataIndex: 'order_num',
     key: 'count',
     sorter: (a, b) => a.count - b.count,
     className: styles.alignRight,
   },
   {
     title: <FormattedMessage id="app.homePage.table.dayly-range" defaultMessage="Weekly Range" />,
-    dataIndex: 'range',
+    dataIndex: 'day_up',
     key: 'range',
     sorter: (a, b) => a.range - b.range,
     render: (text, record) => (
@@ -37,7 +37,7 @@ const columns = [
   },
 ];
 
-const hotRankList = memo(({ loading, searchData, dropdownGroup }) => (
+const hotRankList = memo(({ loading, data, dropdownGroup }) => (
   <Card
     loading={loading}
     bordered={false}
@@ -45,7 +45,7 @@ const hotRankList = memo(({ loading, searchData, dropdownGroup }) => (
     extra={dropdownGroup}
     style={{ marginTop: 24 }}
   >
-    <Table rowKey={record => record.index} size="small" columns={columns} dataSource={searchData} />
+    <Table rowKey={record => record.index} size="small" columns={columns} dataSource={data} />
   </Card>
 ));
 
