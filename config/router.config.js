@@ -167,6 +167,12 @@ export default [
             component: './V1/CapitalManage/CreditRecord',
           },
           {
+            path: '/CapitalManage/rulecdk',
+            name: 'RuleCDk',
+            hideInMenu: true,
+            component: './V1/CapitalManage/RuleCDk',
+          },
+          {
             path: '/CapitalManage/Withdraw',
             name: 'withdraw',
             component: './V1/CapitalManage/Withdraw',

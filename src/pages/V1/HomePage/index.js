@@ -75,7 +75,7 @@ class Index extends Component {
       title: '操作',
       render: record => (
         <Fragment>
-          <a onClick={this.goOrderDetail.bind(this, record)}>查看</a>
+          <a onClick={this.goFangdanDetail.bind(this, record)}>查看</a>
           <Divider type="vertical" />
           <a onClick={this.goOrderDetail.bind(this, record)}>订单明细</a>
         </Fragment>
@@ -95,6 +95,10 @@ class Index extends Component {
   componentWillUnmount() {
     cancelAnimationFrame(this.reqRef);
   }
+
+  goFangdanDetail = item => {
+    router.push(`/fangdan/list/order?&task_id=${item.task_id}`);
+  };
 
   goOrderDetail = item => {
     router.push(`/fangdan/list/ProductDetail?order_id=${item.task_plan_id}`);

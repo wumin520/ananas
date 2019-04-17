@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Card, Row, Col, Button, Form, Select, Table, Input } from 'antd';
 
+import { router } from 'umi';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import StandardFormRow from '@/components/StandardFormRow';
 
@@ -15,6 +16,8 @@ const param = {
   type: -1,
   task_id: 0,
 };
+
+const content = <div />;
 
 @connect(({ creditlist, list, loading }) => ({
   creditlist,
@@ -146,7 +149,7 @@ class CreditRecord extends Component {
       dataIndex: 'require',
       render: (value, row, index) => {
         const obj = {
-          children: value,
+          children: <a onClick={this.goRule.bind(this)}>{value}</a>,
           row,
           props: {},
         };
@@ -172,28 +175,24 @@ class CreditRecord extends Component {
       key: '2',
       name: '任务过程',
       item: '上下架类',
-      require: '与 《超多客商家处罚规则一致》',
       punish: '每次扣2分',
     },
     {
       key: '3',
       name: '任务过程',
       item: '下单类',
-      require: '与 《超多客商家处罚规则一致》',
       punish: '每次扣2分',
     },
     {
       key: '4',
       name: '发货过程',
       item: '发货时间',
-      require: '与 《超多客商家处罚规则一致》',
       punish: '每次扣2分',
     },
     {
       key: '5',
       name: '发货过程',
       item: '商品质量',
-      require: '与 《超多客商家处罚规则一致》',
       punish: '每次扣3分',
     },
     {
@@ -207,7 +206,6 @@ class CreditRecord extends Component {
       key: '7',
       name: '发货过程',
       item: '收货评价',
-      require: '与 《超多客商家处罚规则一致》',
       punish: '每次扣2分',
     },
     {
@@ -221,14 +219,12 @@ class CreditRecord extends Component {
       key: '9',
       name: '平台规则',
       item: '商家规范',
-      require: '与 《超多客商家处罚规则一致》',
       punish: '每次扣2分',
     },
     {
       key: '10',
       name: '其他行为',
       item: '其他恶意行为',
-      require: '与 《超多客商家处罚规则一致》',
       punish: '根据情况每次扣1~12分',
     },
   ];
@@ -236,6 +232,10 @@ class CreditRecord extends Component {
   componentDidMount() {
     this.getFormData(param);
   }
+
+  goRule = () => {
+    router.push('/CapitalManage/rulecdk');
+  };
 
   getFormData = p => {
     const { dispatch } = this.props;
@@ -294,7 +294,7 @@ class CreditRecord extends Component {
     );
 
     return (
-      <PageHeaderWrapper>
+      <PageHeaderWrapper title="信用记录" content={content}>
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
