@@ -25,7 +25,7 @@ export default {
         limit_info: '',
       },
     },
-    task_list: [],
+    task_plan_list: [],
     hot_rank: [],
     order_list: [],
   },
@@ -37,7 +37,7 @@ export default {
         type: 'save',
         payload: {
           head_info: res.payload.head_info,
-          task_list: res.payload.task_list,
+          task_plan_list: res.payload.task_plan_list,
           hot_rank: res.payload.hot_rank,
           order_list: res.payload.order_list,
         },

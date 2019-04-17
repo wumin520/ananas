@@ -12,16 +12,11 @@ const HotRankList = React.lazy(() => import('./HotRankList'));
 
 const { TabPane } = Tabs;
 
-const getValue = obj =>
-  Object.keys(obj)
-    .map(key => obj[key])
-    .join(',');
 const statusMap = ['success', 'error'];
 const status = ['进行中', '已下架'];
 
-@connect(({ chart, loading, homedata }) => ({
+@connect(({ loading, homedata }) => ({
   homedata,
-  chart,
   loading: loading.models.homedata,
 }))
 class Index extends Component {
@@ -73,13 +68,17 @@ class Index extends Component {
     {
       key: '7',
       title: '操作',
-      render: () => (
+      render: (val, record) => (
         <Fragment>
           <a>查看</a>
           <Divider type="vertical" />
           <a href="">订单明细</a>
           <Divider type="vertical" />
-          <a href="">下架/上架</a>
+          {val === 0 ? (
+            <a onClick={() => this.planUp(record.task_plan_id)}>上架</a>
+          ) : (
+            <a onClick={() => this.planDown(record.task_plan_id)}>下架</a>
+          )}
         </Fragment>
       ),
     },
@@ -89,40 +88,17 @@ class Index extends Component {
     const { dispatch } = this.props;
     this.reqRef = requestAnimationFrame(() => {
       dispatch({
-        type: 'chart/fetch',
+        type: 'homedata/fetch',
       });
-    });
-    dispatch({
-      type: 'homedata/fetch',
     });
   }
 
   componentWillUnmount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'chart/clear',
-    });
     cancelAnimationFrame(this.reqRef);
   }
 
-  handleStandardTableChange = (pagination, filtersArg, sorter) => {
-    const { formValues } = this.state;
-
-    const filters = Object.keys(filtersArg).reduce((obj, key) => {
-      const newObj = { ...obj };
-      newObj[key] = getValue(filtersArg[key]);
-      return newObj;
-    }, {});
-
-    const params = {
-      currentPage: pagination.current,
-      pageSize: pagination.pageSize,
-      ...formValues,
-      ...filters,
-    };
-    if (sorter.field) {
-      params.sorter = `${sorter.field}_${sorter.order}`;
-    }
+  planDown = () => {
+    // console.log(s);
   };
 
   render() {
@@ -130,7 +106,7 @@ class Index extends Component {
     const { homedata } = this.props;
 
     const headInfo = homedata.head_info;
-    const taskList = homedata.task_list;
+    const taskList = homedata.task_plan_list;
     const hotRank = homedata.hot_rank;
     const orderList = homedata.order_list;
 
@@ -173,10 +149,10 @@ class Index extends Component {
               key="sales"
             >
               <Table
+                rowKey={record => record.id}
                 loading={loading}
                 dataSource={taskList}
                 columns={this.columns}
-                onChange={this.handleStandardTableChange}
               />
             </TabPane>
           </Tabs>
