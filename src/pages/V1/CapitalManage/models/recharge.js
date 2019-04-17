@@ -17,9 +17,13 @@ export default {
     *rechargeSubmit({ payload }, { call, put }) {
       const res = yield call(rechargeSubmit, payload);
       if (res && res.code === 200) {
-        yield put(
-          routerRedux.push(`/CapitalManage/RechargePay?paymentId=${res.payload.payment_id}`)
-        );
+        let url = `/CapitalManage/RechargePay?paymentId=${res.payload.payment_id}`;
+        if (payload.backTo) {
+          url = `/CapitalManage/RechargePay?paymentId=${
+            res.payload.payment_id
+          }&backTo=${encodeURIComponent(payload.backTo)}`;
+        }
+        yield put(routerRedux.push(url));
       }
     },
     *rechargeGetQrcode({ payload }, { call, put }) {
@@ -38,9 +42,11 @@ export default {
       const res = yield call(rechargeCheck, payload);
       if (res && res.code === 200) {
         if (res.payload.state === 1) {
-          yield put(
-            routerRedux.push(`/CapitalManage/RechargePaySuccess?money=${res.payload.money}`)
-          );
+          let url = `/CapitalManage/RechargePaySuccess?money=${res.payload.money}`;
+          if (payload.backTo) {
+            url = payload.backTo;
+          }
+          yield put(routerRedux.push(url));
         }
       } else {
         yield put(routerRedux.push('/CapitalManage/RechargePayError'));

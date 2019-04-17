@@ -8,10 +8,11 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './styles.less';
 
 const { Option } = Select;
+const FormItem = Form.Item;
 
 let param = {
   page: 1,
-  type: 1,
+  type: -1,
 };
 
 const content = <div />;
@@ -37,6 +38,14 @@ class FreezeDetail extends PureComponent {
     });
   }
 
+  getFreezeList = p => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'capital/frozenTaskList',
+      payload: p,
+    });
+  };
+
   onTabChange = (key, type) => {
     // console.log(key, type);
     this.setState({ [type]: key });
@@ -47,14 +56,13 @@ class FreezeDetail extends PureComponent {
       page: 1,
       type: -1,
     };
+    const { form } = this.props;
+    form.resetFields();
+    this.getFreezeList(param);
   };
 
   setAgeSort = () => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'capital/frozenTaskList',
-      payload: param,
-    });
+    this.getFreezeList(param);
   };
 
   // 交易类型切换
@@ -66,7 +74,10 @@ class FreezeDetail extends PureComponent {
   };
 
   render() {
-    const { freezeData } = this.props;
+    const {
+      freezeData,
+      form: { getFieldDecorator },
+    } = this.props;
 
     const statusMap = ['', 'processing', 'success', 'default'];
     const status = ['', '审核中', '进行中', '清算中'];
@@ -149,21 +160,34 @@ class FreezeDetail extends PureComponent {
           <br />
           <Card style={{ width: '100%' }}>
             <div>
-              放单类型：
-              <Select style={{ width: 120 }} defaultValue="全部" onChange={this.selectTypeChange}>
-                {freezeData.type_select.length &&
-                  freezeData.type_select.map(e => (
-                    <Option key={e.value} value={e.value}>
-                      {e.name}
-                    </Option>
-                  ))}
-              </Select>
-              <Button style={{ marginLeft: 8 }} type="primary" onClick={this.setAgeSort}>
-                查询
-              </Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.clearAll}>
-                重置
-              </Button>
+              <Form layout="inline">
+                <FormItem label="放单类型">
+                  {getFieldDecorator('type', {})(
+                    <Select
+                      style={{ width: 120 }}
+                      placeholder="全部"
+                      onChange={this.selectTypeChange}
+                    >
+                      {freezeData.type_select.length &&
+                        freezeData.type_select.map(e => (
+                          <Option key={e.value} value={e.value}>
+                            {e.name}
+                          </Option>
+                        ))}
+                    </Select>
+                  )}
+                </FormItem>
+                <Button
+                  style={{ marginLeft: 8, marginTop: 4 }}
+                  type="primary"
+                  onClick={this.setAgeSort}
+                >
+                  查询
+                </Button>
+                <Button style={{ marginLeft: 8, marginTop: 4 }} onClick={this.clearAll}>
+                  重置
+                </Button>
+              </Form>
             </div>
             <br />
             <Table columns={columns} dataSource={freezeData.list} onChange={this.handleChange} />

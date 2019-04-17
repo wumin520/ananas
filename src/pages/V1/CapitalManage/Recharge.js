@@ -19,7 +19,7 @@ class Recharge extends PureComponent {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { form } = this.props;
+    const { form, location } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values);
@@ -28,6 +28,7 @@ class Recharge extends PureComponent {
           type: 'recharge/rechargeSubmit',
           payload: {
             money: values.rechargeMoney,
+            backTo: location.query.backTo,
           },
         });
       }
@@ -45,7 +46,7 @@ class Recharge extends PureComponent {
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 6 },
+        sm: { span: 12 },
       },
     };
     const tailFormItemLayout = {
