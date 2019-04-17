@@ -8,21 +8,41 @@ import styles from './GeneralizeDetail.less';
 const { Description } = DescriptionList;
 const statusMap = ['processing', 'success', 'default', 'error'];
 const status = ['排期中', '进行中', '已结束', '已暂停'];
+const statusMap1 = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
+const status1 = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已完成'];
 
 @connect(({ task, loading }) => ({
   detailData: task.detailData,
+  listData: task.listData,
+
   loading: loading.effects['task/detailData'],
 }))
 class GeneralizeDetail extends Component {
   componentDidMount() {
-    const { dispatch } = this.props;
+    this.getDetailData();
+  }
+
+  getDetailData = () => {
+    const { dispatch, location } = this.props;
+    const { query } = location;
     dispatch({
       type: 'task/detailData',
       payload: {
-        task_id: 2,
+        task_id: query.task_id,
       },
     });
-  }
+  };
+
+  planDown = item => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'task/planDownData',
+      payload: {
+        task_plan_id: item.task_plan_id,
+      },
+    });
+    this.componentDidMount();
+  };
 
   render() {
     const { loading, detailData } = this.props;
@@ -62,44 +82,16 @@ class GeneralizeDetail extends Component {
       },
       {
         title: '操作',
-        render(item) {
+        render: item => {
           let operation;
-          if (item.state === 0 || item.state === 1) {
-            operation = <a href="">下架</a>;
+          if (item.state === 0) {
+            operation = <a onClick={this.planDown.bind(this, item)}>下架</a>;
           }
           return <span>{operation}</span>;
         },
       },
     ];
-    const planList = [
-      {
-        key: 1,
-        plan_time: '2019-03-01',
-        state: 0, // 0 排期中 1 进行中 2 已结束 3已暂停
-        total_amount: 2000, // 排期份数
-        proof_num: 1000, // 评价人数
-        order_num: 1500, // 下单人数
-        sale_back_num: 400, // 售后人数
-      },
-      {
-        key: 2,
-        plan_time: '2019-03-01',
-        state: 1,
-        total_amount: 2000,
-        comment_num: 1000,
-        order_num: 1500,
-        sale_back_num: 400,
-      },
-      {
-        key: 3,
-        plan_time: '2019-03-01',
-        state: 2,
-        total_amount: 2000,
-        comment_num: 1000,
-        order_num: 1500,
-        sale_back_num: 400,
-      },
-    ];
+    const planList = detailData.plan_list;
     const { data } = detailData;
     // const planList = detailData.plan_list;
     const content = <div />;
@@ -121,8 +113,7 @@ class GeneralizeDetail extends Component {
           <DescriptionList size="large" title="推广信息" style={{ marginBottom: 32 }}>
             <Description term="推广编号">{data.task_id}</Description>
             <Description term="推广状态">
-              <Badge status={statusMap[data.state]} text={status[data.state]} />
-              {/* <Badge status="processing" text="审核中" /> */}
+              <Badge status={statusMap1[data.state]} text={status1[data.state]} />
             </Description>
             <Description term="申请时间">{data.created_at}</Description>
             <Description term="推广份数">{data.total_amount}</Description>

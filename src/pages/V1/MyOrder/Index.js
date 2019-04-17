@@ -1,16 +1,20 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-// import router from 'umi/router';
 import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Pagination } from 'antd';
-// import StandardTable from '@/components/StandardTable';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-// import Result from '@/components/Result';
+import { router } from 'umi';
 import styles from './Index.less';
 
 const { Option } = Select;
 const FormItem = Form.Item;
 const statusMap = ['error', 'processing', 'warning', 'success'];
 const status = ['无效', '已下单', '待评价', '已完成'];
+// const param = {
+//   page: 1,
+//   task_id: '2222',
+//   goods_id: '222',
+//   state: 0,
+// };
 @connect(({ task, loading }) => ({
   orderData: task.orderData,
   loading: loading.models.task,
@@ -20,17 +24,19 @@ class OrderList extends PureComponent {
   state = {};
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    this.getOrderData();
+  }
+
+  getOrderData = () => {
+    const { dispatch, location } = this.props;
+    const { query } = location;
     dispatch({
       type: 'task/orderData',
       payload: {
-        page: 1,
-        task_id: '2222',
-        goods_id: '222',
-        state: 0,
+        task_id: query.task_id,
       },
     });
-  }
+  };
 
   // 查询
   handleSearch = e => {
@@ -42,10 +48,6 @@ class OrderList extends PureComponent {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
-      // this.setState({
-      //   formValues: values,
-      // });
-
       dispatch({
         type: 'task/orderData',
         payload: values,
@@ -55,15 +57,22 @@ class OrderList extends PureComponent {
 
   // 重置
   handleFormReset = () => {
-    const { form, dispatch } = this.props;
+    const { form, dispatch, location } = this.props;
+    const { query } = location;
     form.resetFields();
     // this.setState({
     //   formValues: {},
     // });
     dispatch({
-      type: 'task/fetch',
-      payload: {},
+      type: 'task/orderData',
+      payload: {
+        task_id: query.task_id,
+      },
     });
+  };
+
+  goOrderDetail = item => {
+    router.push(`/fangdan/list/ProductDetail?order_id=${item.order_id}`);
   };
 
   renderSimpleForm() {
@@ -77,17 +86,17 @@ class OrderList extends PureComponent {
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
           <Col md={5} sm={24}>
             <FormItem label="推广编号">
-              {getFieldDecorator('number')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('task_id')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
             <FormItem label="商品id">
-              {getFieldDecorator('productId')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
             <FormItem label="状态">
-              {getFieldDecorator('status')(
+              {getFieldDecorator('state')(
                 <Select
                   style={{ width: '100%' }}
                   placeholder="全部"
@@ -123,10 +132,10 @@ class OrderList extends PureComponent {
   }
 
   render() {
-    const goDetail = `/fangdan/list/generalizeDetail`;
     const { orderData } = this.props;
     const orderNumInfo = orderData.order_num_info;
     const pageInfo = orderData.page_info;
+    const { list } = orderData;
     const columns = [
       {
         title: '推广编号',
@@ -137,10 +146,10 @@ class OrderList extends PureComponent {
         title: '商品',
         render: val => {
           return (
-            <p>
-              <img src={val.img} alt="a" style={{ width: 50, heigth: 50 }} />
-              <span> {val.goods_name}</span>
-            </p>
+            <span className={styles.pro}>
+              <img src={val.img} alt="a" style={{ width: 50, heigth: 50, marginRight: 5 }} />
+              <span className={styles.goodsName}> {val.goods_name}</span>
+            </span>
           );
         },
       },
@@ -151,10 +160,8 @@ class OrderList extends PureComponent {
       },
       {
         title: '购买价格',
-        dataIndex: 'orderPrice',
-        key: 'orderPrice',
-        render(orderPrice) {
-          return <span>￥{orderPrice}</span>;
+        render(item) {
+          return <span>￥{item.order_price}</span>;
         },
       },
       {
@@ -166,66 +173,33 @@ class OrderList extends PureComponent {
       },
       {
         title: '时间',
-        render(val) {
+        render: val => {
+          /* eslint-disable */
+          const time = (
+            <span>
+              <span>{val.paid_datetime ? '付款: ' + val.paid_datetime : ''}</span>
+              <br />
+              <span> {val.harvest_time ? '确认收货: ' + val.harvest_time : ''}</span>
+              <br />
+              <span>{val.proof_time ? '好评: ' + val.proof_time : ''}</span>
+            </span>
+          );
           return (
             <span>
               <span>下单:{val.ordered_datetime}</span>
               <br />
-              <span>确认收货:{val.harvest_time}</span>
-              <br />
-              <span>好评:{val.proof_time}</span>
-              <br />
-              <span>售后:</span>
+              {time}
             </span>
           );
         },
       },
       {
         title: '操作',
-        key: 'action',
-        render: () => (
+        render: item => (
           <span>
-            <a href={goDetail}>查看</a>
+            <a onClick={this.goOrderDetail.bind(this, item)}>查看</a>
           </span>
         ),
-      },
-    ];
-    const data = [
-      {
-        key: '1',
-        task_id: '12334',
-        p_order_id: 2020202,
-        goods_name: '商品名称',
-        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-        orderPrice: 200.0,
-        state: '0',
-        ordered_datetime: '2019-02-10 00:00:00',
-        harvest_time: '2019-02-10 00:00:00',
-        proof_time: '',
-      },
-      {
-        key: '2',
-        task_id: '12334',
-        p_order_id: 2020202,
-        goods_name: '商品名称',
-        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-        orderPrice: 200.0,
-        state: '1',
-        ordered_datetime: '2019-02-10 00:00:00',
-        harvest_time: '2019-02-10 00:00:00',
-        proof_time: '',
-      },
-      {
-        key: '3',
-        task_id: '12334',
-        p_order_id: 2020202,
-        goods_name: '商品名称',
-        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-        orderPrice: 200.0,
-        state: '2',
-        ordered_datetime: '2019-02-10 00:00:00',
-        harvest_time: '2019-02-10 00:00:00',
-        proof_time: '',
       },
     ];
 
@@ -246,7 +220,7 @@ class OrderList extends PureComponent {
     }
     // 分页
     return (
-      <PageHeaderWrapper title=" " content={content}>
+      <PageHeaderWrapper title="订单明细" content={content}>
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
@@ -268,21 +242,22 @@ class OrderList extends PureComponent {
               <div className={styles.tableListForm}>{this.renderForm()}</div>
               <Table
                 columns={columns}
-                dataSource={data}
+                dataSource={list}
                 pagination={false}
                 className={styles.tableMargin}
               />
               <div className={styles.pageBottom}>
-                <p>
+                {/* <p>
                   共{pageInfo.total_num}条记录 第1/{pageInfo.total_page}页
-                </p>
-                <Pagination
+                </p> */}
+                <Pagination defaultCurrent={1} total={pageInfo.total_num} onChange={onChange} />
+                {/* <Pagination
                   showSizeChanger
                   showQuickJumper
                   defaultCurrent={1}
                   total={pageInfo.total_num}
                   onChange={onChange}
-                />
+                /> */}
               </div>
             </div>
           </Card>
