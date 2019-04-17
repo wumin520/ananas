@@ -69,7 +69,6 @@ class Recharge extends PureComponent {
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
             <Form.Item label="充值金额">
               {getFieldDecorator('rechargeMoney', {
-                initialValue: '1000',
                 rules: [
                   {
                     required: true,
@@ -79,7 +78,7 @@ class Recharge extends PureComponent {
                     validator: this.validateToNextPassword,
                   },
                 ],
-              })(<Input style={{ width: 200 }} type="number" />)}{' '}
+              })(<Input style={{ width: 200 }} type="number" placeholder="请输入充值金额" />)}{' '}
               元
             </Form.Item>
             <Form.Item label="支付类型">
