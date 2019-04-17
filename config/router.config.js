@@ -168,9 +168,9 @@ export default [
           },
           {
             path: '/CapitalManage/rulecdk',
-            name: 'RuleCDk',
+            name: 'ruleCDk',
             hideInMenu: true,
-            component: './V1/CapitalManage/RuleCDk',
+            component: './V1/CapitalManage/Rulecdk',
           },
           {
             path: '/CapitalManage/Withdraw',

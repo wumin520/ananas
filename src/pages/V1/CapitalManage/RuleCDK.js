@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Card, Table } from 'antd';
+import { connect } from 'dva';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 const content = <div />;
-
-class RuleCDk extends Component {
+@connect(({ loading }) => ({
+  loading: loading.models.creditlist,
+}))
+class Rulecdk extends Component {
   columns = [
     {
       title: '违规阶段',
@@ -83,4 +86,4 @@ class RuleCDk extends Component {
   }
 }
 
-export default RuleCDk;
+export default Rulecdk;
