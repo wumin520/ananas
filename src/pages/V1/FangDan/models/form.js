@@ -72,7 +72,9 @@ export default {
       console.log('publishTask -> res -> ', res);
       if (res && res.status === 'ok') {
         const taskId = res.payload.task_id;
-        yield put(routerRedux.push(`/fangdan/step-form/pay?taskId=${taskId}`));
+        yield put(
+          routerRedux.push(`/fangdan/step-form/pay?taskId=${taskId}&goods_id=${payload.goods_id}`)
+        );
         yield put({
           type: 'saveState',
           payload: {
