@@ -40,6 +40,7 @@ class RechargePay extends PureComponent {
         type: 'recharge/rechargeCheck',
         payload: {
           payment_id: paymentId,
+          backTo: location.query.backTo,
         },
       });
     }, 2000);
