@@ -143,7 +143,11 @@ class Withdraw extends PureComponent {
                     },
                   ],
                 })(
-                  <Select style={{ width: 120 }} onChange={this.selectTypeChange}>
+                  <Select
+                    placeholder="请选择"
+                    style={{ width: 120 }}
+                    onChange={this.selectTypeChange}
+                  >
                     {withdrawData.bank_list.length &&
                       withdrawData.bank_list.map(e => (
                         <Option key={e.id} value={e.id}>

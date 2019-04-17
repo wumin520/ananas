@@ -23,7 +23,9 @@ const content = <div />;
 }))
 @Form.create()
 class FreezeDetail extends PureComponent {
-  state = {};
+  state = {
+    filteredInfo: null,
+  };
 
   formLayout = {
     labelCol: { span: 7 },
@@ -43,6 +45,13 @@ class FreezeDetail extends PureComponent {
     dispatch({
       type: 'capital/frozenTaskList',
       payload: p,
+    });
+  };
+
+  handleChange = (pagination, filters, sorter) => {
+    console.log('Various parameters', pagination, filters, sorter);
+    this.setState({
+      filteredInfo: filters,
     });
   };
 
@@ -74,6 +83,8 @@ class FreezeDetail extends PureComponent {
   };
 
   render() {
+    let { filteredInfo } = this.state;
+    filteredInfo = filteredInfo || {};
     const {
       freezeData,
       form: { getFieldDecorator },
@@ -110,24 +121,26 @@ class FreezeDetail extends PureComponent {
         title: '放单类型',
         dataIndex: 'state',
         key: 'state',
-        width: 100,
-        // filters: [
-        //   {
-        //     text: status[1],
-        //     value: 1,
-        //   },
-        //   {
-        //     text: status[2],
-        //     value: 2,
-        //   },
-        //   {
-        //     text: status[3],
-        //     value: 3,
-        //   },
-        // ],
+        width: 150,
+        filters: [
+          {
+            text: status[1],
+            value: 1,
+          },
+          {
+            text: status[2],
+            value: 2,
+          },
+          {
+            text: status[3],
+            value: 3,
+          },
+        ],
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
+        filteredValue: filteredInfo.state || null,
+        onFilter: (value, record) => record.state === value,
       },
       {
         title: '冻结金额',
