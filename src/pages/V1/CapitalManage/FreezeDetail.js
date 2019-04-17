@@ -71,19 +71,12 @@ class FreezeDetail extends PureComponent {
     const statusMap = ['', 'processing', 'success', 'default'];
     const status = ['', '审核中', '进行中', '清算中'];
 
-    const Info = ({ title, value, bordered }) => (
-      <div className={styles.headerInfo}>
-        <span>{title}</span>
-        <p>{value}</p>
-        {bordered && <em />}
-      </div>
-    );
-
     const columns = [
       {
         title: '推广编号',
         dataIndex: 'task_id',
         key: 'task_id',
+        width: 100,
       },
       {
         title: '冻结时间',
@@ -106,6 +99,7 @@ class FreezeDetail extends PureComponent {
         title: '放单类型',
         dataIndex: 'state',
         key: 'state',
+        width: 100,
         // filters: [
         //   {
         //     text: status[1],
@@ -137,10 +131,18 @@ class FreezeDetail extends PureComponent {
           <Card bordered={false}>
             <Row>
               <Col sm={8} xs={24}>
-                <Info title="担保中的任务" value={freezeData.head_info.forzen_balance} bordered />
+                <div className={styles.headerInfo}>
+                  <span>担保中的任务</span>
+                  <p>{freezeData.head_info.forzen_num}个</p>
+                  <em />
+                </div>
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="冻结金额" value={freezeData.head_info.forzen_num} bordered />
+                <div className={styles.headerInfo}>
+                  <span>冻结金额</span>
+                  <p>￥{freezeData.head_info.forzen_balance}</p>
+                  <em />
+                </div>
               </Col>
             </Row>
           </Card>

@@ -133,11 +133,13 @@ class CapitalDetail extends PureComponent {
         title: '交易类型',
         dataIndex: 'type',
         key: 'type',
+        width: 100,
       },
       {
         title: '状态',
         dataIndex: 'state',
         key: 'state',
+        width: 100,
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
