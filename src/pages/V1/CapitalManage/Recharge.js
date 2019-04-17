@@ -17,25 +17,12 @@ const content = <div />;
 class Recharge extends PureComponent {
   state = {};
 
-  // handleChange = ( e )=> {
-  //   e.preventDefault();
-  //   const { form } = this.props;
-  //   form.validateFieldsAndScroll((errors, values) => {
-  //     console.log(values)
-  //     if (!errors) {
-  //       this.setState({
-  //         inputValue: values.rechargeMoney
-  //       })
-  //     }
-  //   });
-  // };
-
   handleSubmit = e => {
     e.preventDefault();
     const { form } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
         const { dispatch } = this.props;
         dispatch({
           type: 'recharge/rechargeSubmit',

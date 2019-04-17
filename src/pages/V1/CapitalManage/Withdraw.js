@@ -29,12 +29,24 @@ class Withdraw extends PureComponent {
     this.setState({ visible: false });
   };
 
+  selectTypeChange = value => {
+    this.triggerChange({ value });
+  };
+
+  triggerChange = changedValue => {
+    // Should provide an event to pass value to Form.
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange(Object.assign({}, this.state, changedValue));
+    }
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     const { form } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // console.log('Received values of form: ', values);
+        console.log('Received values of form: ', values);
         const { dispatch } = this.props;
         dispatch({
           type: 'withdraw/exchange',
@@ -60,6 +72,7 @@ class Withdraw extends PureComponent {
         sm: { span: 6 },
       },
     };
+
     const tailFormItemLayout = {
       wrapperCol: {
         xs: {
@@ -112,7 +125,7 @@ class Withdraw extends PureComponent {
                 })(<Input style={{ width: 200 }} type="text" placeholder="请输入真实姓名" />)}
               </Form.Item>
               <Form.Item label="银行卡号">
-                {getFieldDecorator('bank_id', {
+                {getFieldDecorator('card_number', {
                   rules: [
                     {
                       required: true,
@@ -122,12 +135,11 @@ class Withdraw extends PureComponent {
                 })(<Input style={{ width: 200 }} type="text" placeholder="请输入银行卡号" />)}
               </Form.Item>
               <Form.Item label="开户行">
-                {getFieldDecorator('card_number', {
-                  initialValue: ['全部'],
+                {getFieldDecorator('bank_id', {
                   rules: [
                     {
                       required: true,
-                      message: '请输入银行卡号!',
+                      message: '请选择!',
                     },
                   ],
                 })(
@@ -150,13 +162,13 @@ class Withdraw extends PureComponent {
           </div>
           <div>
             <ul>
-              <li style={{ marginBottom: '10px', 'font-weight': 'bold' }}>说明</li>
-              <li style={{ 'font-weight': 'bold' }}>申请提现需满足以下条件：</li>
+              <li style={{ marginBottom: '10px', fontWeight: 'bold' }}>说明</li>
+              <li style={{ fontWeight: 'bold' }}>申请提现需满足以下条件：</li>
               <li>1.账户余额≥100</li>
               <li>2.账号信息填写完整并已通过认证</li>
               <li>3.申请时间为每月1-20号</li>
               <li>4.上笔提现申请已审核</li>
-              <li style={{ marginTop: '10px', 'font-weight': 'bold' }}>
+              <li style={{ marginTop: '10px', fontWeight: 'bold' }}>
                 请如实填写银行卡信息，打款失败将退回余额中，若因信息不正确导致无法提现，超多客不承担由此产生的一切责任和费用。
               </li>
             </ul>

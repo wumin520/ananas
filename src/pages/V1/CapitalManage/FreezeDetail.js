@@ -92,27 +92,34 @@ class FreezeDetail extends PureComponent {
       },
       {
         title: '商品',
-        dataIndex: 'title',
         key: 'title',
+        render(item) {
+          return (
+            <div className={styles.FreezePro}>
+              <img className={styles.proImg} src={item.img} alt="" />
+              <span>{item.title}</span>
+            </div>
+          );
+        },
       },
       {
         title: '放单类型',
         dataIndex: 'state',
         key: 'state',
-        filters: [
-          {
-            text: status[1],
-            value: 1,
-          },
-          {
-            text: status[2],
-            value: 2,
-          },
-          {
-            text: status[3],
-            value: 3,
-          },
-        ],
+        // filters: [
+        //   {
+        //     text: status[1],
+        //     value: 1,
+        //   },
+        //   {
+        //     text: status[2],
+        //     value: 2,
+        //   },
+        //   {
+        //     text: status[3],
+        //     value: 3,
+        //   },
+        // ],
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },

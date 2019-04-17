@@ -10,8 +10,7 @@ const { Option } = Select;
 
 let param = {
   page: 1,
-  tradeType: -1,
-  page_no: 1,
+  type: -1,
 };
 
 const content = <div />;
@@ -29,7 +28,6 @@ class CapitalDetail extends PureComponent {
 
   componentDidMount() {
     this.getAssetList(param);
-    // this.getAssetList({page: 1, type: -1})
   }
 
   getAssetList = p => {
@@ -38,25 +36,10 @@ class CapitalDetail extends PureComponent {
       type: 'capital/getAssetList',
       payload: {
         page: p.page,
-        type: p.tradeType,
+        type: p.type,
       },
     });
   };
-
-  // getAssetList = (page = 1, type = -1) => {
-  //   const { dispatch } = this.props;
-  //   dispatch({
-  //     type: 'capital/getAssetList',
-  //     payload: {
-  //       page: page,
-  //       type: type,
-  //     },
-  //   });
-  // }
-
-  // function handleChange(value) {
-  //   console.log(value); // { key: "lucy", label: "Lucy (101)" }
-  // }
 
   // 交易记录&提现记录切换
   tabsClick = value => {
@@ -119,11 +102,11 @@ class CapitalDetail extends PureComponent {
   };
 
   render() {
-    const statusMap = ['default', 'processing', 'success', 'error'];
-    const status = ['', '审核中', '提现成功', '提现失败'];
+    const stateMap = ['processing', 'success', 'error'];
+    const state = ['审核中', '提现成功', '提现失败'];
 
-    const stateMap = ['success', 'error'];
-    const state = ['成功', '失败'];
+    const statusMap = ['error', 'success'];
+    const status = ['失败', '成功'];
 
     const { assetData, exchangeData } = this.props;
 
@@ -148,15 +131,15 @@ class CapitalDetail extends PureComponent {
       },
       {
         title: '交易类型',
-        dataIndex: 'type_desc',
-        key: 'type_desc',
+        dataIndex: 'type',
+        key: 'type',
       },
       {
         title: '状态',
         dataIndex: 'state',
         key: 'state',
         render(val) {
-          return <Badge status={stateMap[val - 1]} text={state[val - 1]} />;
+          return <Badge status={statusMap[val]} text={status[val]} />;
         },
       },
       {
@@ -177,11 +160,11 @@ class CapitalDetail extends PureComponent {
         dataIndex: 'created_at',
         key: 'created_at',
       },
-      {
-        title: '交易类型',
-        dataIndex: 'type_desc',
-        key: 'type_desc',
-      },
+      // {
+      //   title: '交易类型',
+      //   dataIndex: 'type_desc',
+      //   key: 'type_desc',
+      // },
       {
         title: '交易金额',
         dataIndex: 'money',
@@ -191,22 +174,8 @@ class CapitalDetail extends PureComponent {
         title: '状态',
         dataIndex: 'state',
         key: 'state',
-        filters: [
-          {
-            text: status[1],
-            value: 1,
-          },
-          {
-            text: status[2],
-            value: 2,
-          },
-          {
-            text: status[3],
-            value: 3,
-          },
-        ],
         render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+          return <Badge status={stateMap[val - 1]} text={state[val - 1]} />;
         },
       },
       {
