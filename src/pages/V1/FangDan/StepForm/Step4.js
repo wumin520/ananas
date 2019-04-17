@@ -27,15 +27,35 @@ class Step4 extends React.PureComponent {
   };
 
   componentDidMount = () => {
+    /* eslint-disable */
     const { dispatch, taskId, location } = this.props;
     const { query } = location;
-    this.taskId = taskId || query.task_id || 3;
+    const { task_id, goods_id, need_fetch } = query;
+    this.taskId = taskId || task_id;
+    let backTo = location.pathname + location.search;
+    this.chargeUrl = `/CapitalManage/Recharge?backTo=${encodeURIComponent(backTo)}`;
+    console.log(this, '1');
     dispatch({
       type: 'form/queryPayInfoByTaskId',
       payload: {
         task_id: this.taskId,
       },
     });
+
+    if (need_fetch) {
+      task_id &&
+        dispatch({
+          type: 'form/queryTaskDetail',
+          payload: {
+            task_id,
+          },
+        });
+      goods_id &&
+        dispatch({
+          type: 'form/queryGoodsDetail',
+          payload: values,
+        });
+    }
   };
 
   render() {
@@ -73,6 +93,7 @@ class Step4 extends React.PureComponent {
         ...taskPayInfo,
       },
     ];
+    const chargeUrl = this.chargeUrl || '';
     return (
       <Fragment>
         <Row>
@@ -115,7 +136,7 @@ class Step4 extends React.PureComponent {
             {taskPayInfo.can_pay ? (
               ''
             ) : (
-              <Link to="/CapitalManage/Recharge" style={{ marginLeft: 10 }}>
+              <Link to={chargeUrl} style={{ marginLeft: 10 }}>
                 {'余额不足,去充值>'}
               </Link>
             )}
