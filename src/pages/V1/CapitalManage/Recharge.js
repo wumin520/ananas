@@ -45,7 +45,7 @@ class Recharge extends PureComponent {
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 6 },
+        sm: { span: 12 },
       },
     };
     const tailFormItemLayout = {

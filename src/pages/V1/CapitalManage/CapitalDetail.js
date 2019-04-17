@@ -3,10 +3,12 @@ import { connect } from 'dva';
 import { Card, Row, Col, Button, Form, Select, Table, Tabs, Badge } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import router from 'umi/router';
+
 import styles from './styles.less';
 
 const { TabPane } = Tabs;
 const { Option } = Select;
+const FormItem = Form.Item;
 
 let param = {
   page: 1,
@@ -75,6 +77,9 @@ class CapitalDetail extends PureComponent {
       page: 1,
       type: -1,
     };
+    const { form } = this.props;
+    form.resetFields();
+    this.getAssetList(param);
   };
 
   handleTableChange = (pagination, filters, sorter) => {
@@ -108,7 +113,11 @@ class CapitalDetail extends PureComponent {
     const statusMap = ['error', 'success'];
     const status = ['失败', '成功'];
 
-    const { assetData, exchangeData } = this.props;
+    const {
+      assetData,
+      exchangeData,
+      form: { getFieldDecorator },
+    } = this.props;
 
     // const toFreeze = () => {
     //   router.push('CapitalManage/FreezeDetail');
@@ -219,27 +228,34 @@ class CapitalDetail extends PureComponent {
           <Card>
             <Tabs onTabClick={this.tabsClick}>
               <TabPane tab="交易明细" key="trade">
-                <div>
-                  交易类型：
-                  <Select
-                    style={{ width: 120 }}
-                    defaultValue="全部"
-                    onChange={this.selectTypeChange}
+                <Form layout="inline">
+                  <FormItem label="交易类型">
+                    {getFieldDecorator('type', {})(
+                      <Select
+                        placeholder="全部"
+                        style={{ width: 120 }}
+                        onChange={this.selectTypeChange}
+                      >
+                        {assetData.type_select.length &&
+                          assetData.type_select.map(e => (
+                            <Option key={e.value} value={e.value}>
+                              {e.name}
+                            </Option>
+                          ))}
+                      </Select>
+                    )}
+                  </FormItem>
+                  <Button
+                    style={{ marginLeft: 8, marginTop: 4 }}
+                    type="primary"
+                    onClick={this.setAgeSort}
                   >
-                    {assetData.type_select.length &&
-                      assetData.type_select.map(e => (
-                        <Option key={e.value} value={e.value}>
-                          {e.name}
-                        </Option>
-                      ))}
-                  </Select>
-                  <Button style={{ marginLeft: 8 }} type="primary" onClick={this.setAgeSort}>
                     查询
                   </Button>
-                  <Button style={{ marginLeft: 8 }} onClick={this.clearAll}>
+                  <Button style={{ marginLeft: 8, marginTop: 4 }} onClick={this.clearAll}>
                     重置
                   </Button>
-                </div>
+                </Form>
                 <br />
                 <Table
                   columns={columns}
