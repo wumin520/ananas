@@ -97,11 +97,11 @@ class Index extends Component {
   }
 
   goFangdanDetail = item => {
-    router.push(`/fangdan/list/order?&task_id=${item.task_id}`);
+    router.push(`/fangdan/list/generalizeDetail?&task_id=${item.task_id}`);
   };
 
   goOrderDetail = item => {
-    router.push(`/fangdan/list/ProductDetail?order_id=${item.task_plan_id}`);
+    router.push(`/fangdan/list/ProductDetail?order_id=${item.order_id}`);
   };
 
   render() {
