@@ -49,7 +49,7 @@ export default {
         type: 'changeLoginStatus',
         payload: {
           status: false,
-          currentAuthority: 'guest',
+          currentAuthority: 'admin',
         },
       });
       reloadAuthorized();

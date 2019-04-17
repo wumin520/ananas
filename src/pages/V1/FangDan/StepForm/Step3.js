@@ -19,12 +19,13 @@ class Step3 extends React.PureComponent {
   state = {};
 
   rangePicker = (date, dateString) => {
-    const startDate = date && date[0];
+    // const startDate = date && date[0];
     const endDate = date && date[1];
     const startTime = dateString[0];
     const endTime = dateString[1];
+    const sdate = moment(startTime);
 
-    if (endDate.date() > startDate.date() + 6) {
+    if (endDate > sdate.add(7, 'days')) {
       message.warning('最多选择7天进行排期');
       return;
     }
