@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Pagination } from 'antd';
+import { Table, Card, Row, Col, Input, Button, Form, Select, Badge } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { router } from 'umi';
 import styles from './Index.less';
@@ -9,15 +9,10 @@ const { Option } = Select;
 const FormItem = Form.Item;
 const statusMap = ['error', 'processing', 'warning', 'success'];
 const status = ['无效', '已下单', '待评价', '已完成'];
-// const param = {
-//   page: 1,
-//   task_id: '2222',
-//   goods_id: '222',
-//   state: 0,
-// };
-@connect(({ task, loading }) => ({
-  orderData: task.orderData,
-  loading: loading.models.task,
+
+@connect(({ order, loading }) => ({
+  orderData: order.orderData,
+  loading: loading.models.order,
 }))
 @Form.create()
 class OrderList extends PureComponent {
@@ -30,8 +25,9 @@ class OrderList extends PureComponent {
   getOrderData = () => {
     const { dispatch, location } = this.props;
     const { query } = location;
+    console.log('this.props:', query);
     dispatch({
-      type: 'task/orderData',
+      type: 'order/orderData',
       payload: {
         task_id: query.task_id,
       },
@@ -49,7 +45,7 @@ class OrderList extends PureComponent {
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
       dispatch({
-        type: 'task/orderData',
+        type: 'order/orderData',
         payload: values,
       });
     });
@@ -60,11 +56,8 @@ class OrderList extends PureComponent {
     const { form, dispatch, location } = this.props;
     const { query } = location;
     form.resetFields();
-    // this.setState({
-    //   formValues: {},
-    // });
     dispatch({
-      type: 'task/orderData',
+      type: 'order/orderData',
       payload: {
         task_id: query.task_id,
       },
@@ -72,7 +65,7 @@ class OrderList extends PureComponent {
   };
 
   goOrderDetail = item => {
-    router.push(`/fangdan/list/ProductDetail?order_id=${item.order_id}`);
+    router.push(`/order/productDetail?order_id=${item.order_id}`);
   };
 
   renderSimpleForm() {
@@ -132,6 +125,7 @@ class OrderList extends PureComponent {
   }
 
   render() {
+    /* eslint-disable */
     const { orderData } = this.props;
     const orderNumInfo = orderData.order_num_info;
     const pageInfo = orderData.page_info;
@@ -141,6 +135,7 @@ class OrderList extends PureComponent {
         title: '推广编号',
         dataIndex: 'task_id',
         key: 'task_id',
+        width: 91,
       },
       {
         title: '商品',
@@ -157,9 +152,11 @@ class OrderList extends PureComponent {
         title: '订单编号',
         dataIndex: 'p_order_id',
         key: 'p_order_id',
+        width: 198,
       },
       {
         title: '购买价格',
+        width: 88,
         render(item) {
           return <span>￥{item.order_price}</span>;
         },
@@ -167,13 +164,15 @@ class OrderList extends PureComponent {
       {
         title: '状态',
         dataIndex: 'state',
+        width: 88,
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
       },
       {
         title: '时间',
-        render: val => {
+        width: 158,
+        render(val) {
           /* eslint-disable */
           const time = (
             <span>
@@ -195,6 +194,7 @@ class OrderList extends PureComponent {
       },
       {
         title: '操作',
+        width: 60,
         render: item => (
           <span>
             <a onClick={this.goOrderDetail.bind(this, item)}>查看</a>
@@ -218,7 +218,7 @@ class OrderList extends PureComponent {
     function onChange(pageNumber) {
       console.log('Page: ', pageNumber);
     }
-    // 分页
+
     return (
       <PageHeaderWrapper title="订单明细" content={content}>
         <div className={styles.standardList}>
@@ -240,25 +240,19 @@ class OrderList extends PureComponent {
           <Card>
             <div className={styles.tableList}>
               <div className={styles.tableListForm}>{this.renderForm()}</div>
-              <Table
-                columns={columns}
-                dataSource={list}
-                pagination={false}
-                className={styles.tableMargin}
-              />
-              <div className={styles.pageBottom}>
-                {/* <p>
+              <Table columns={columns} dataSource={list} pagination={orderData.page_info} />
+              {/* <div className={styles.pageBottom}> */}
+              {/* <p>
                   共{pageInfo.total_num}条记录 第1/{pageInfo.total_page}页
                 </p> */}
-                <Pagination defaultCurrent={1} total={pageInfo.total_num} onChange={onChange} />
-                {/* <Pagination
+              {/* <Pagination
                   showSizeChanger
                   showQuickJumper
                   defaultCurrent={1}
                   total={pageInfo.total_num}
                   onChange={onChange}
                 /> */}
-              </div>
+              {/* </div> */}
             </div>
           </Card>
         </div>

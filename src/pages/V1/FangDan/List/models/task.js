@@ -1,6 +1,5 @@
-// import { routerRedux } from 'dva/router';
-// import { message } from 'antd';
-import { taskList, taskDetail, orderList, taskFinish, planDown, orderDetail } from '@/services/api';
+import { taskList, taskDetail, taskFinish, planDown } from '@/services/api';
+import { message } from 'antd';
 
 export default {
   namespace: 'task',
@@ -42,9 +41,6 @@ export default {
     },
     finishData: {},
     planDownData: {},
-    orderDetail: {
-      data: {},
-    },
   },
 
   effects: {
@@ -66,15 +62,6 @@ export default {
         },
       });
     },
-    *orderData({ payload }, { call, put }) {
-      const res = yield call(orderList, payload);
-      yield put({
-        type: 'saveState',
-        payload: {
-          orderData: res.payload,
-        },
-      });
-    },
     *finishMessage({ payload }, { call, put }) {
       const res = yield call(taskFinish, payload);
       yield put({
@@ -83,6 +70,9 @@ export default {
           finishData: res.finishData,
         },
       });
+      if (res.code === 200) {
+        message.success(res.message);
+      }
     },
     *planDownData({ payload }, { call, put }) {
       const res = yield call(planDown, payload);
@@ -92,16 +82,9 @@ export default {
           planDownData: res.planDownData,
         },
       });
-    },
-    *orderDetail({ payload }, { call, put }) {
-      const res = yield call(orderDetail, payload);
-      console.log('res', res);
-      yield put({
-        type: 'saveState',
-        payload: {
-          orderDetail: res.payload,
-        },
-      });
+      if (res.code === 200) {
+        message.success(res.message);
+      }
     },
   },
 

@@ -124,18 +124,6 @@ export default [
             component: './V1/FangDan/List/GeneralizeDetail',
             hideInMenu: true,
           },
-          {
-            path: '/fangdan/list/order',
-            name: 'order',
-            component: './V1/FangDan/List/order',
-            hideInMenu: true,
-          },
-          {
-            path: '/fangdan/list/productDetail',
-            name: 'detail',
-            component: './V1/FangDan/List/ProductDetail',
-            hideInMenu: true,
-          },
         ],
       },
       // myOrder
@@ -148,6 +136,12 @@ export default [
             path: '/order/Index',
             name: 'index',
             component: './V1/MyOrder/Index',
+          },
+          {
+            path: '/order/productDetail',
+            name: 'detail',
+            component: './V1/MyOrder/ProductDetail',
+            hideInMenu: true,
           },
         ],
       },
