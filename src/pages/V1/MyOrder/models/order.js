@@ -1,8 +1,7 @@
-import { orderList } from '@/services/api';
+import { orderList, orderDetail } from '@/services/api';
 
 export default {
-  namespace: 'task',
-
+  namespace: 'order',
   state: {
     step: {
       payAccount: 'ant-design@alipay.com',
@@ -23,6 +22,9 @@ export default {
       state_select: [],
       page_info: {},
     },
+    orderDetail: {
+      data: {},
+    },
   },
 
   effects: {
@@ -32,6 +34,16 @@ export default {
         type: 'saveState',
         payload: {
           orderData: res.payload,
+        },
+      });
+    },
+    *orderDetail({ payload }, { call, put }) {
+      const res = yield call(orderDetail, payload);
+      console.log('res', res);
+      yield put({
+        type: 'saveState',
+        payload: {
+          orderDetail: res.payload,
         },
       });
     },

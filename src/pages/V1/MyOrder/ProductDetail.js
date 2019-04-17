@@ -3,15 +3,14 @@ import { connect } from 'dva';
 import { Card, Badge, Divider } from 'antd';
 import DescriptionList from '@/components/DescriptionList';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import styles from './GeneralizeDetail.less';
+import styles from './ProductDetail.less';
 
 const { Description } = DescriptionList;
-const statusMap1 = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
-const status1 = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已完成'];
-
-@connect(({ task, loading }) => ({
-  orderDetail: task.orderDetail,
-  loading: loading.effects['task/orderDetail'],
+const statusMap = ['error', 'processing', 'warning', 'success'];
+const status = ['无效', '已下单', '待评价', '已完成'];
+@connect(({ order, loading }) => ({
+  orderDetail: order.orderDetail,
+  loading: loading.effects['order/orderDetail'],
 }))
 class ProductDetail extends Component {
   componentDidMount() {
@@ -21,9 +20,8 @@ class ProductDetail extends Component {
   getDetailData = () => {
     const { dispatch, location } = this.props;
     const { query } = location;
-    console.log('this.props:', query.task_id);
     dispatch({
-      type: 'task/orderDetail',
+      type: 'order/orderDetail',
       payload: {
         order_id: query.order_id,
       },
@@ -54,7 +52,7 @@ class ProductDetail extends Component {
           <DescriptionList size="large" title="订单信息" style={{ marginBottom: 32 }}>
             <Description term="订单编号">{data.p_order_id}</Description>
             <Description term="订单状态">
-              <Badge status={statusMap1[data.state]} text={status1[data.state]} />
+              <Badge status={statusMap[data.state]} text={status[data.state]} />
             </Description>
             <Description term="来源">推广编号{data.task_id}</Description>
             <Description term="订单价格">{data.order_price}</Description>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Card, Badge, Table, Divider } from 'antd';
+import { Card, Badge, Table, Divider, Modal } from 'antd';
 import DescriptionList from '@/components/DescriptionList';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './GeneralizeDetail.less';
@@ -10,11 +10,9 @@ const statusMap = ['processing', 'success', 'default', 'error'];
 const status = ['排期中', '进行中', '已结束', '已暂停'];
 const statusMap1 = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
 const status1 = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已完成'];
-
+const { confirm } = Modal;
 @connect(({ task, loading }) => ({
   detailData: task.detailData,
-  listData: task.listData,
-
   loading: loading.effects['task/detailData'],
 }))
 class GeneralizeDetail extends Component {
@@ -35,10 +33,17 @@ class GeneralizeDetail extends Component {
 
   planDown = item => {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'task/planDownData',
-      payload: {
-        task_plan_id: item.task_plan_id,
+    confirm({
+      title: '确定下架此商品？',
+      okText: '确定',
+      cancelText: '取消',
+      onOk() {
+        dispatch({
+          type: 'task/planDownData',
+          payload: {
+            task_plan_id: item.task_plan_id,
+          },
+        });
       },
     });
     this.componentDidMount();
@@ -93,7 +98,6 @@ class GeneralizeDetail extends Component {
     ];
     const planList = detailData.plan_list;
     const { data } = detailData;
-    // const planList = detailData.plan_list;
     const content = <div />;
     return (
       <PageHeaderWrapper title="推广详情" loading={loading} content={content}>

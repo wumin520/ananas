@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import router from 'umi/router';
-import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Pagination } from 'antd';
+import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Modal } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './Index.less';
 
@@ -9,13 +9,8 @@ const FormItem = Form.Item;
 const statusMap = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
 const status = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已完成'];
 const { Option } = Select;
-const param = {
-  page: 1,
-  task_id: '2222',
-  goods_id: '222',
-  state: 0,
-  type: -1,
-};
+
+const { confirm } = Modal;
 @connect(({ task, loading }) => ({
   listData: task.listData,
   loading: loading.effects['task/fetchBasic'],
@@ -25,18 +20,15 @@ class FdList extends PureComponent {
   state = {};
 
   componentDidMount() {
-    this.getListData(param);
+    this.getListData();
   }
 
   // 接口
-  getListData = p => {
+  getListData = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'task/fetchBasic',
-      payload: {
-        page: p.page,
-        type: p.type,
-      },
+      payload: {},
     });
   };
 
@@ -69,7 +61,6 @@ class FdList extends PureComponent {
   handleFormReset = () => {
     const { form, dispatch } = this.props;
     form.resetFields();
-
     dispatch({
       type: 'task/fetch',
       payload: {},
@@ -78,13 +69,20 @@ class FdList extends PureComponent {
 
   taskFinish = item => {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'task/finishMessage',
-      payload: {
-        task_id: item.task_id,
+    confirm({
+      title: '确定终止此商品？',
+      okText: '确定',
+      cancelText: '取消',
+      onOk() {
+        dispatch({
+          type: 'task/finishMessage',
+          payload: {
+            task_id: item.task_id,
+          },
+        });
+        this.componentDidMount();
       },
     });
-    this.componentDidMount();
   };
 
   goDetail = item => {
@@ -92,13 +90,15 @@ class FdList extends PureComponent {
   };
 
   goPay = item => {
-    router.push(`/fangdan/step-form/pay?task_id=${item.task_id}`);
+    router.push(
+      `/fangdan/step-form/pay?task_id=${item.task_id}&goods_id=${item.goods_id}&need_fetch=1`
+    );
   };
 
   // 订单明细
   goOrder = item => {
     console.log('this:', item.task_id);
-    router.push(`/fangdan/list/order?&task_id=${item.task_id}`);
+    router.push(`/order/Index?&task_id=${item.task_id}`);
   };
 
   // 编辑
@@ -187,16 +187,16 @@ class FdList extends PureComponent {
     const taskInfo = listData.task_info;
     const { list } = listData;
     // 跳转路径
-    const pageInfo = listData.page_info;
+    // const pageInfo = listData.page_info;
     const columns = [
       {
         title: '推广编号',
         dataIndex: 'task_id',
         key: 'task_id',
+        width: 91,
       },
       {
         title: '商品',
-        width: '20%',
         render: val => {
           return (
             <span className={styles.pro}>
@@ -210,6 +210,7 @@ class FdList extends PureComponent {
         title: '提交时间',
         dataIndex: 'created_at',
         key: 'created_at',
+        width: 222,
       },
       {
         title: '价格',
@@ -222,12 +223,14 @@ class FdList extends PureComponent {
       {
         title: '状态',
         dataIndex: 'state',
+        width: 110,
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
       },
       {
         title: '推广份数',
+        width: 182,
         render: item => {
           return (
             <p>
@@ -242,6 +245,7 @@ class FdList extends PureComponent {
       },
       {
         title: '操作',
+        width: 120,
         render: item => {
           let operation;
           if (item.state === 0) {
@@ -292,10 +296,9 @@ class FdList extends PureComponent {
     // function onShowSizeChange(current, pageSize) {
     //   console.log(current, pageSize);
     // }
-    function onChange(pageNumber) {
-      console.log('Page: ', pageNumber);
-    }
-
+    // function onChange(pageNumber) {
+    //   console.log('Page: ', pageNumber);
+    // }
     // card
     return (
       <PageHeaderWrapper title="放单列表" content={content}>
@@ -317,25 +320,19 @@ class FdList extends PureComponent {
           <Card>
             <div className={styles.tableList}>
               <div className={styles.tableListForm}>{this.renderForm()}</div>
-              <Table
-                columns={columns}
-                dataSource={list}
-                pagination={false}
-                className={styles.tableMargin}
-              />
-              <div className={styles.pageBottom}>
-                {/* <p>
+              <Table columns={columns} dataSource={list} pagination={listData.page_info} />
+              {/* <div className={styles.pageBottom}> */}
+              {/* <p>
                   共{pageInfo.total_num}条记录 第1/{pageInfo.total_page}页
                 </p> */}
-                <Pagination defaultCurrent={1} total={pageInfo.total_num} onChange={onChange} />
-                {/* <Pagination
+              {/* <Pagination
                   showSizeChanger
                   showQuickJumper
                   defaultCurrent={1}
                   total={pageInfo.total_num}
                   onChange={onChange}
                 /> */}
-              </div>
+              {/* </div> */}
             </div>
           </Card>
         </div>
