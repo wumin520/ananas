@@ -1,4 +1,5 @@
-import { getHomeData } from '@/services/api';
+import { getHomeData, taskPlanUp, taskPlanDown } from '@/services/api';
+import { message } from 'antd';
 
 export default {
   namespace: 'homedata',
@@ -42,6 +43,18 @@ export default {
           order_list: res.payload.order_list,
         },
       });
+    },
+    *toPlanUp({ payload }, { call }) {
+      const res = yield call(taskPlanUp, payload);
+      if (res && res.status === 'ok') {
+        message.success('操作成功');
+      }
+    },
+    *toPlanDown({ payload }, { call }) {
+      const res = yield call(taskPlanDown, payload);
+      if (res && res.status === 'ok') {
+        message.success('操作成功');
+      }
     },
   },
 

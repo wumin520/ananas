@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import PageLoading from '@/components/PageLoading';
-import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Tabs } from 'antd';
+import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Tabs, Modal } from 'antd';
 import styles from './index.less';
 
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
@@ -11,9 +11,10 @@ const OrderDetail = React.lazy(() => import('./OrderDetail'));
 const HotRankList = React.lazy(() => import('./HotRankList'));
 
 const { TabPane } = Tabs;
+const { confirm } = Modal;
 
-const statusMap = ['success', 'error'];
-const status = ['进行中', '已下架'];
+const statusMap = ['error', 'success'];
+const status = ['已下架', '进行中'];
 
 @connect(({ loading, homedata }) => ({
   homedata,
@@ -24,13 +25,17 @@ class Index extends Component {
     {
       key: '1',
       title: '推广编号',
-      dataIndex: 'task_id',
-      render: text => <a onClick={() => this.previewItem(text)}>{text}</a>,
+      dataIndex: 'task_plan_id',
     },
     {
       key: '2',
       title: '商品',
-      dataIndex: 'title',
+      render: val => (
+        <p>
+          <img src={val.img} alt="a" style={{ width: 50, heigth: 50 }} />
+          <span> {val.title}</span>
+        </p>
+      ),
     },
     {
       key: '3',
@@ -97,8 +102,38 @@ class Index extends Component {
     cancelAnimationFrame(this.reqRef);
   }
 
-  planDown = () => {
-    // console.log(s);
+  planUp = s => {
+    const { dispatch } = this.props;
+    confirm({
+      title: '确定上架此商品？',
+      okText: '确定',
+      cancelText: '取消',
+      onOk() {
+        dispatch({
+          type: 'homedata/toPlanUp',
+          payload: {
+            task_plan_id: s,
+          },
+        });
+      },
+    });
+  };
+
+  planDown = s => {
+    const { dispatch } = this.props;
+    confirm({
+      title: '确定下架此商品？',
+      okText: '确定',
+      cancelText: '取消',
+      onOk() {
+        dispatch({
+          type: 'homedata/toPlanDown',
+          payload: {
+            task_plan_id: s,
+          },
+        });
+      },
+    });
   };
 
   render() {
