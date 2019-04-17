@@ -24,28 +24,44 @@ export default [
     Routes: ['src/pages/Authorized'],
     routes: [
       // dashboard
-      { path: '/', redirect: '/dashboard/analysis', authority: ['admin', 'user'] },
+      { path: '/', redirect: '/homePage', authority: ['admin', 'user'] },
+      // {
+      //   path: '/dashboard',
+      //   name: 'dashboard1',
+      //   icon: 'dashboard',
+      //   component: './Dashboard/Analysis',
+      //   hideChildrenInMenu: true,
+      //   routes: [
+      //     {
+      //       path: '/dashboard/analysis',
+      //       name: 'analysis',
+      //       component: './Dashboard/Analysis',
+      //     },
+      //     {
+      //       path: '/dashboard/monitor',
+      //       name: 'monitor',
+      //       component: './Dashboard/Monitor',
+      //     },
+      //     {
+      //       path: '/dashboard/workplace',
+      //       name: 'workplace',
+      //       component: './Dashboard/Workplace',
+      //     },
+      //   ],
+      // },
+      // new homePage
+      // { path: '/', redirect: '/homePage/index', authority: ['admin', 'user'] },
       {
-        path: '/dashboard',
+        path: '/homePage',
         name: 'dashboard',
         icon: 'dashboard',
-        component: './Dashboard/Analysis',
+        component: './V1/HomePage/Index',
         hideChildrenInMenu: true,
         routes: [
           {
-            path: '/dashboard/analysis',
-            name: 'analysis',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/monitor',
-            name: 'monitor',
-            component: './Dashboard/Monitor',
-          },
-          {
-            path: '/dashboard/workplace',
-            name: 'workplace',
-            component: './Dashboard/Workplace',
+            path: '/homePage/Index',
+            name: 'index',
+            component: './V1/HomePage/Index',
           },
         ],
       },
@@ -144,6 +160,11 @@ export default [
             path: '/CapitalManage/CapitalDetail',
             name: 'detail',
             component: './V1/CapitalManage/CapitalDetail',
+          },
+          {
+            path: '/CapitalManage/creditRecord',
+            name: 'creditRecord',
+            component: './V1/CapitalManage/CreditRecord',
           },
           {
             path: '/CapitalManage/Withdraw',

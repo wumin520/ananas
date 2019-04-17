@@ -21,6 +21,7 @@ export default {
   'menu.capital.rechargePay': '我要充值',
   'menu.capital.success': '我要充值',
   'menu.capital.error': '我要充值',
+  'menu.capital.creditRecord': '信用记录',
   'menu.home': '首页',
   'menu.login': '登录',
   'menu.register': '注册',
