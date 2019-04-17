@@ -11,7 +11,14 @@ export default {
       amount: '500',
     },
     orderData: {
-      list: [],
+      list: [
+        {
+          ordered_datetime: '',
+          harvest_time: '',
+          proof_time: '',
+          paid_datetime: '',
+        },
+      ],
       order_num_info: {},
       state_select: [],
       page_info: {},

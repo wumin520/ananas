@@ -130,6 +130,12 @@ export default [
             component: './V1/FangDan/List/order',
             hideInMenu: true,
           },
+          {
+            path: '/fangdan/list/productDetail',
+            name: 'detail',
+            component: './V1/FangDan/List/ProductDetail',
+            hideInMenu: true,
+          },
         ],
       },
       // myOrder

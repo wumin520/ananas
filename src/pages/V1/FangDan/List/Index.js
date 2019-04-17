@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import router from 'umi/router';
 import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Pagination } from 'antd';
-// import StandardTable from '@/components/StandardTable';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './Index.less';
 
@@ -10,7 +9,13 @@ const FormItem = Form.Item;
 const statusMap = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
 const status = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已完成'];
 const { Option } = Select;
-
+const param = {
+  page: 1,
+  task_id: '2222',
+  goods_id: '222',
+  state: 0,
+  type: -1,
+};
 @connect(({ task, loading }) => ({
   listData: task.listData,
   loading: loading.effects['task/fetchBasic'],
@@ -20,18 +25,20 @@ class FdList extends PureComponent {
   state = {};
 
   componentDidMount() {
+    this.getListData(param);
+  }
+
+  // 接口
+  getListData = p => {
     const { dispatch } = this.props;
     dispatch({
       type: 'task/fetchBasic',
       payload: {
-        page: 1,
-        task_id: '2222',
-        goods_id: '222',
-        state: 0,
-        type: -1,
+        page: p.page,
+        type: p.type,
       },
     });
-  }
+  };
 
   deleteItem = id => {
     const { dispatch } = this.props;
@@ -44,23 +51,15 @@ class FdList extends PureComponent {
   // 查询
   handleSearch = e => {
     e.preventDefault();
-
     const { dispatch, form } = this.props;
-
     form.validateFields((err, fieldsValue) => {
       if (err) return;
-
       const values = {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
-
-      // this.setState({
-      //   formValues: values,
-      // });
-
       dispatch({
-        type: 'rule/fetch',
+        type: 'task/fetchBasic',
         payload: values,
       });
     });
@@ -70,16 +69,43 @@ class FdList extends PureComponent {
   handleFormReset = () => {
     const { form, dispatch } = this.props;
     form.resetFields();
-    // this.setState({
-    //   formValues: {},
-    // });
+
     dispatch({
       type: 'task/fetch',
       payload: {},
     });
   };
 
-  // 搜索
+  taskFinish = item => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'task/finishMessage',
+      payload: {
+        task_id: item.task_id,
+      },
+    });
+    this.componentDidMount();
+  };
+
+  goDetail = item => {
+    router.push(`/fangdan/list/generalizeDetail?task_id=${item.task_id}`);
+  };
+
+  goPay = item => {
+    router.push(`/fangdan/step-form/pay?task_id=${item.task_id}`);
+  };
+
+  // 订单明细
+  goOrder = item => {
+    console.log('this:', item.task_id);
+    router.push(`/fangdan/list/order?&task_id=${item.task_id}`);
+  };
+
+  // 编辑
+  goRedact = item => {
+    router.push(`/fangdan/step-form/info?task_id=${item.task_id}&goods_id=${item.goods_id}`);
+  };
+
   renderSimpleForm() {
     const {
       form: { getFieldDecorator },
@@ -92,12 +118,12 @@ class FdList extends PureComponent {
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
           <Col md={5} sm={24}>
             <FormItem label="推广编号">
-              {getFieldDecorator('number')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('task_id')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
             <FormItem label="商品id">
-              {getFieldDecorator('productId')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
@@ -120,7 +146,7 @@ class FdList extends PureComponent {
           </Col>
           <Col md={5} sm={24}>
             <FormItem label="状态">
-              {getFieldDecorator('status')(
+              {getFieldDecorator('state')(
                 <Select
                   style={{ width: '100%' }}
                   placeholder="全部"
@@ -159,21 +185,9 @@ class FdList extends PureComponent {
     // 表格数据
     const { listData } = this.props;
     const taskInfo = listData.task_info;
+    const { list } = listData;
     // 跳转路径
-    const goOrder = `/fangdan/list/order`;
-    // const goDetail = `/fangdan/list/generalizeDetail?task_id=${taskId}`;
-    // const goOrder = `/fangdan/list/order?page=1&task_id=${taskId}&goods_id=${goodsId}&state=${state}`;
     const pageInfo = listData.page_info;
-    // const taskFinish = () => {
-    //   this.props.dispatch({
-    //     type: 'task/finishMessage',
-    //     payload: {
-    //       task_id: '2222',
-    //     },
-    //   });
-    const goDetail = () => {
-      router.push('/fangdan/list/generalizeDetail');
-    };
     const columns = [
       {
         title: '推广编号',
@@ -182,12 +196,13 @@ class FdList extends PureComponent {
       },
       {
         title: '商品',
+        width: '20%',
         render: val => {
           return (
-            <p>
-              <img src={val.img} alt="a" style={{ width: 50, heigth: 50 }} />
-              <span> {val.title}</span>
-            </p>
+            <span className={styles.pro}>
+              <img src={val.img} alt="a" style={{ width: 50, heigth: 50, marginRight: 5 }} />
+              <span className={styles.goodsName}> {val.goods_name}</span>
+            </span>
           );
         },
       },
@@ -200,6 +215,9 @@ class FdList extends PureComponent {
         title: '价格',
         dataIndex: 'price',
         key: 'price',
+        render: item => {
+          return <span>￥{item}</span>;
+        },
       },
       {
         title: '状态',
@@ -227,94 +245,39 @@ class FdList extends PureComponent {
         render: item => {
           let operation;
           if (item.state === 0) {
-            operation = <a href="">支付 </a>;
+            operation = <a onClick={this.goPay.bind(this, item)}>支付 </a>;
           }
           if (item.state === 1) {
-            operation = <a onClick={goDetail}>查看 </a>;
+            operation = <a onClick={this.goDetail.bind(this, item)}>查看 </a>;
           }
           if (item.state === 2) {
             operation = (
               <span>
-                <a onClick={goDetail}>查看 </a>
-                <a href={goOrder}>订单明细 </a>
+                <a onClick={this.goDetail.bind(this, item)}>查看 </a>
+                <a onClick={this.goOrder.bind(this, item)}>订单明细 </a>
                 <br />
-                {/* <a onClick={taskFinish}>终止 </a> */}
-                <a>终止 </a>
+                <a onClick={this.taskFinish.bind(this, item)}>终止 </a>
               </span>
             );
           }
           if (item.state === 3) {
             operation = (
               <span>
-                <a onClick={goDetail}>查看 </a>
-                <a href="">编辑 </a>
+                <a onClick={this.goDetail.bind(this, item)}>查看 </a>
+                <a onClick={this.goRedact.bind(this, item)}>编辑 </a>
               </span>
             );
           }
           if (item.state === 4 || item.state === 5) {
             operation = (
               <span>
-                <a onClick={goDetail}>查看 </a>
-                <a href={goOrder}>订单明细 </a>
+                <a onClick={this.goDetail.bind(this, item)}>查看 </a>
+                <a onClick={this.goOrder.bind(this, item)}>订单明细 </a>
               </span>
             );
           }
           return <span>{operation}</span>;
         },
-      },
-    ];
-    const list = [
-      {
-        key: '1',
-        task_id: '12334',
-        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-        title: '商品名称1行的商品名称',
-        created_at: '2016-09-21  08:50:08',
-        price: '￥20.00',
-        state: 0,
-        total_amount: 200,
-        order_num: 100,
-        comment_num: 80,
-        sale_back_num: 10,
-      },
-      {
-        key: '2',
-        task_id: '12334',
-        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-        title: '商品名称1行的商品名称',
-        created_at: '2016-09-21  08:50:08',
-        price: '￥20.00',
-        state: 1,
-        total_amount: 200,
-        order_num: 100,
-        comment_num: 80,
-        sale_back_num: 10,
-      },
-      {
-        key: '3',
-        task_id: '12334',
-        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-        title: '商品名称1行的商品名称',
-        created_at: '2016-09-21  08:50:08',
-        price: '￥20.00',
-        state: 2,
-        total_amount: 200,
-        order_num: 100,
-        comment_num: 80,
-        sale_back_num: 10,
-      },
-      {
-        key: '4',
-        task_id: '12334',
-        img: 'https://cdn.youlianyc.com/image/static/52f7920ea62f13d30565a38c5786aeb63b82c453.jpg',
-        title: '商品名称1行的商品名称',
-        created_at: '2016-09-21  08:50:08',
-        price: '￥20.00',
-        state: 3,
-        total_amount: 200,
-        order_num: 100,
-        comment_num: 80,
-        sale_back_num: 10,
       },
     ];
 
@@ -335,7 +298,7 @@ class FdList extends PureComponent {
 
     // card
     return (
-      <PageHeaderWrapper title=" " content={content}>
+      <PageHeaderWrapper title="放单列表" content={content}>
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
@@ -361,16 +324,17 @@ class FdList extends PureComponent {
                 className={styles.tableMargin}
               />
               <div className={styles.pageBottom}>
-                <p>
+                {/* <p>
                   共{pageInfo.total_num}条记录 第1/{pageInfo.total_page}页
-                </p>
-                <Pagination
+                </p> */}
+                <Pagination defaultCurrent={1} total={pageInfo.total_num} onChange={onChange} />
+                {/* <Pagination
                   showSizeChanger
                   showQuickJumper
                   defaultCurrent={1}
                   total={pageInfo.total_num}
                   onChange={onChange}
-                />
+                /> */}
               </div>
             </div>
           </Card>

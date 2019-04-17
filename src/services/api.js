@@ -19,10 +19,22 @@ export async function taskDetail(params) {
 export async function orderList(params) {
   return request(`/v1/web/order/list?${stringify(params)}`);
 }
+
 // 终止
 export async function taskFinish(params) {
   return request(`/v1/web/task/finish?${stringify(params)}`);
 }
+
+// 下架
+export async function planDown(params) {
+  return request(`/v1/web/task/plan/down?${stringify(params)}`);
+}
+
+//订单详情
+export async function orderDetail(params) {
+  return request(`/v1/web/order/detail?${stringify(params)}`);
+}
+
 // 资金明细
 export async function getAssetList(params) {
   return request(`/v1/web/account/asset_list?${stringify(params)}`);
