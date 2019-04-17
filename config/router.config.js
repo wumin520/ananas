@@ -55,13 +55,13 @@ export default [
         path: '/homePage',
         name: 'dashboard',
         icon: 'dashboard',
-        component: './V1/HomePage/Index',
+        component: './V1/HomePage/index',
         hideChildrenInMenu: true,
         routes: [
           {
-            path: '/homePage/Index',
+            path: '/homePage/index',
             name: 'index',
-            component: './V1/HomePage/Index',
+            component: './V1/HomePage/index',
           },
         ],
       },
