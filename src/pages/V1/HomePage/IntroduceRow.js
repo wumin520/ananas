@@ -111,7 +111,7 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           <MiniBar
             data={visitData.comment_info.statistics_info.map(k => {
               return {
-                x: k.day,
+                x: k.day.toString(),
                 y: k.number,
               };
             })}
