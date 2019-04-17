@@ -98,6 +98,16 @@ export async function creditRecord(params) {
   return request(`${api_pre}credit_score/list?${stringify(params)}`);
 }
 
+// 上架排期
+export async function taskPlanUp(params) {
+  return request(`${api_pre}task/plan/up?${stringify(params)}`);
+}
+
+// 下架排期
+export async function taskPlanDown(params) {
+  return request(`${api_pre}task/plan/down?${stringify(params)}`);
+}
+
 export async function queryGoodsDetail(params) {
   return request(api_pre + `get_goods_detail?${stringify(params)}`);
 }
