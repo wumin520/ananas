@@ -220,7 +220,7 @@ class OrderList extends PureComponent {
     }
 
     return (
-      <PageHeaderWrapper title="订单明细" content={content}>
+      <PageHeaderWrapper title="订单列表" content={content}>
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
