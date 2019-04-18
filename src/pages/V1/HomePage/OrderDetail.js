@@ -38,7 +38,7 @@ const OrderDetail = memo(({ loading, data }) => (
     loading={loading}
     bordered={false}
     title={<FormattedMessage id="app.homePage.orderDetail" defaultMessage="" />}
-    extra={<FormattedMessage id="app.homePage.findMore" defaultMessage="" />}
+    extra={<a href="/order/Index">{'查看更多>'}</a>}
     style={{ marginTop: 24 }}
   >
     <Table

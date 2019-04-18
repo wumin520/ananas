@@ -16,6 +16,7 @@ export default {
   'app.homePage.orderDetail': '订单明细',
   'app.homePage.table.orderCode': '订单编号',
   'app.homePage.table.productName': '商品名',
+  'app.homePage.table.shopName': '店铺名',
   'app.homePage.table.orderTime': '下单时间',
   'app.homePage.todayPromotion': '今日推广',
   'app.homePage.fangdanList': '放单列表>',

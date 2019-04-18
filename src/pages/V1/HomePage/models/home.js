@@ -29,6 +29,7 @@ export default {
     task_plan_list: [],
     hot_rank: [],
     order_list: [],
+    notice_info: '',
   },
 
   effects: {
@@ -41,6 +42,7 @@ export default {
           task_plan_list: res.payload.task_plan_list,
           hot_rank: res.payload.hot_rank,
           order_list: res.payload.order_list,
+          notice_info: res.payload.notice_info,
         },
       });
     },
