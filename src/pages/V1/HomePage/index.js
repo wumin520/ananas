@@ -14,7 +14,6 @@ const HotRankList = React.lazy(() => import('./HotRankList'));
 const { TabPane } = Tabs;
 
 const statusMap = ['error', 'success'];
-const status = ['已下架', '进行中'];
 
 @connect(({ loading, homedata }) => ({
   homedata,
@@ -52,8 +51,7 @@ class Index extends Component {
     {
       key: '5',
       title: '状态',
-      dataIndex: 'state',
-      render: val => <Badge status={statusMap[val]} text={status[val]} />,
+      render: val => <Badge status={statusMap[val.state]} text={val.state_desc} />,
     },
     {
       key: '6',
@@ -140,7 +138,7 @@ class Index extends Component {
             tabBarExtraContent={
               <div className={styles.salesExtraWrap}>
                 <div className={styles.salesExtra}>
-                  <a href="/fangdan/list">{'放单列表>'}</a>
+                  <a href="/fangdan/schedule-list">{'排期列表>'}</a>
                 </div>
               </div>
             }

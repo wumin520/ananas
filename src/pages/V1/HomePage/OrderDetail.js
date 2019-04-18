@@ -3,7 +3,6 @@ import { Table, Card, Badge } from 'antd';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import styles from './index.less';
 
-const status = ['失效', '已下单', '待评价', '已完成'];
 const statusMap = ['error', 'processing', 'warning', 'success'];
 
 const columns = [
@@ -26,9 +25,8 @@ const columns = [
   },
   {
     title: <FormattedMessage id="app.homePage.table.status" defaultMessage="Weekly Range" />,
-    dataIndex: 'state',
     key: 'range',
-    render: text => <Badge status={statusMap[text]} text={status[text]} />,
+    render: text => <Badge status={statusMap[text.state]} text={text.state_desc} />,
     align: 'right',
   },
 ];
