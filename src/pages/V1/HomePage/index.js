@@ -1,9 +1,10 @@
 import React, { Component, Suspense, Fragment } from 'react';
 import { connect } from 'dva';
+import { router } from 'umi';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import PageLoading from '@/components/PageLoading';
-import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Tabs, Modal } from 'antd';
+import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Tabs } from 'antd';
 import styles from './index.less';
 
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
@@ -11,7 +12,6 @@ const OrderDetail = React.lazy(() => import('./OrderDetail'));
 const HotRankList = React.lazy(() => import('./HotRankList'));
 
 const { TabPane } = Tabs;
-const { confirm } = Modal;
 
 const statusMap = ['error', 'success'];
 const status = ['已下架', '进行中'];
@@ -73,17 +73,11 @@ class Index extends Component {
     {
       key: '7',
       title: '操作',
-      render: (val, record) => (
+      render: record => (
         <Fragment>
-          <a>查看</a>
+          <a onClick={this.goFangdanDetail.bind(this, record)}>查看</a>
           <Divider type="vertical" />
-          <a href="">订单明细</a>
-          <Divider type="vertical" />
-          {val === 0 ? (
-            <a onClick={() => this.planUp(record.task_plan_id)}>上架</a>
-          ) : (
-            <a onClick={() => this.planDown(record.task_plan_id)}>下架</a>
-          )}
+          <a onClick={this.goOrderDetail.bind(this, record)}>订单明细</a>
         </Fragment>
       ),
     },
@@ -102,38 +96,12 @@ class Index extends Component {
     cancelAnimationFrame(this.reqRef);
   }
 
-  planUp = s => {
-    const { dispatch } = this.props;
-    confirm({
-      title: '确定上架此商品？',
-      okText: '确定',
-      cancelText: '取消',
-      onOk() {
-        dispatch({
-          type: 'homedata/toPlanUp',
-          payload: {
-            task_plan_id: s,
-          },
-        });
-      },
-    });
+  goFangdanDetail = item => {
+    router.push(`/fangdan/list/generalizeDetail?&task_id=${item.task_id}`);
   };
 
-  planDown = s => {
-    const { dispatch } = this.props;
-    confirm({
-      title: '确定下架此商品？',
-      okText: '确定',
-      cancelText: '取消',
-      onOk() {
-        dispatch({
-          type: 'homedata/toPlanDown',
-          payload: {
-            task_plan_id: s,
-          },
-        });
-      },
-    });
+  goOrderDetail = item => {
+    router.push(`/fangdan/list/ProductDetail?order_id=${item.order_id}`);
   };
 
   render() {
