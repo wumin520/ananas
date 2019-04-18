@@ -25,7 +25,12 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           title={<FormattedMessage id="app.homePage.chart.fangdanAmount" defaultMessage="Visits" />}
           action={
             <Tooltip
-              title={<FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />}
+              title={
+                <div className={styles.toolP}>
+                  <p>1.总放单量：推广数量之和</p>
+                  <p>2.总推广费用：推广费用之和</p>
+                </div>
+              }
             >
               <Icon type="info-circle-o" />
             </Tooltip>
@@ -59,7 +64,12 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           }
           action={
             <Tooltip
-              title={<FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />}
+              title={
+                <div className={styles.toolP}>
+                  <p>1.总订单数：推广订单之和</p>
+                  <p>2.日均订单数：总订单数/推广排期总天数</p>
+                </div>
+              }
             >
               <Icon type="info-circle-o" />
             </Tooltip>
@@ -97,7 +107,12 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           }
           action={
             <Tooltip
-              title={<FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />}
+              title={
+                <div className={styles.toolP}>
+                  <p>1.总好评数：所有推广产生的好评数</p>
+                  <p>2.好评率总评价数/总订单数</p>
+                </div>
+              }
             >
               <Icon type="info-circle-o" />
             </Tooltip>
@@ -130,7 +145,11 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           }
           action={
             <Tooltip
-              title={<FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />}
+              title={
+                <div className={styles.toolP}>
+                  <p>当前的信用情况，请保证信用良好，以防影响您的正常使用</p>
+                </div>
+              }
             >
               <Icon type="info-circle-o" />
             </Tooltip>
