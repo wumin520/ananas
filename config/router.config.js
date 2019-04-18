@@ -167,7 +167,7 @@ export default [
             component: './V1/CapitalManage/CreditRecord',
           },
           {
-            path: '/CapitalManage/rulecdk',
+            path: '/CapitalManage/Rulecdk',
             name: 'rulecdk',
             hideInMenu: true,
             component: './V1/CapitalManage/Rulecdk',
