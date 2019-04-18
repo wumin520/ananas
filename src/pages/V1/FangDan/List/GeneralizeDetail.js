@@ -6,8 +6,8 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './GeneralizeDetail.less';
 
 const { Description } = DescriptionList;
-const statusMap = ['processing', 'success', 'default', 'error'];
-const status = ['排期中', '进行中', '已结束', '已暂停'];
+const statusMap = ['processing', 'success', 'default', 'error', 'processing'];
+const status = ['排期中', '进行中', '已结束', '已暂停', '审核中'];
 const statusMap1 = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
 const status1 = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已完成'];
 const { confirm } = Modal;
@@ -31,8 +31,10 @@ class GeneralizeDetail extends Component {
     });
   };
 
+  // 下架
   planDown = item => {
     const { dispatch } = this.props;
+    const thises = this;
     confirm({
       title: '确定下架此商品？',
       okText: '确定',
@@ -43,10 +45,32 @@ class GeneralizeDetail extends Component {
           payload: {
             task_plan_id: item.task_plan_id,
           },
+        }).then(() => {
+          thises.getDetailData();
         });
       },
     });
-    this.componentDidMount();
+  };
+
+  // 上架
+  planUp = item => {
+    const { dispatch } = this.props;
+    const thises = this;
+    confirm({
+      title: '确定上架此商品？',
+      okText: '确定',
+      cancelText: '取消',
+      onOk() {
+        dispatch({
+          type: 'task/planUpData',
+          payload: {
+            task_plan_id: item.task_plan_id,
+          },
+        }).then(() => {
+          thises.getDetailData();
+        });
+      },
+    });
   };
 
   render() {
@@ -91,6 +115,9 @@ class GeneralizeDetail extends Component {
           let operation;
           if (item.state === 0) {
             operation = <a onClick={this.planDown.bind(this, item)}>下架</a>;
+          }
+          if (item.state === 3) {
+            operation = <a onClick={this.planUp.bind(this, item)}>上架</a>;
           }
           return <span>{operation}</span>;
         },

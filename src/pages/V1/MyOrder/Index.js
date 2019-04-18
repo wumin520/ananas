@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Table, Card, Row, Col, Input, Button, Form, Select, Badge } from 'antd';
+import { Table, Card, Row, Col, Modal, Input, Button, Form, Select, Badge } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { router } from 'umi';
 import styles from './Index.less';
@@ -15,7 +15,7 @@ const status = ['无效', '已下单', '待评价', '已完成'];
   loading: loading.models.order,
 }))
 @Form.create()
-class OrderList extends PureComponent {
+class orderList extends PureComponent {
   state = {};
 
   componentDidMount() {
@@ -66,6 +66,27 @@ class OrderList extends PureComponent {
 
   goOrderDetail = item => {
     router.push(`/order/productDetail?order_id=${item.order_id}`);
+  };
+
+  showModal = item => {
+    Modal.info({
+      title: '好评凭证',
+      width: 500,
+      okText: '关闭',
+      content: (
+        <div>
+          {item.proof_images.length > 0 &&
+            item.proof_images.map(e => (
+              <img
+                src={e}
+                alt=""
+                style={{ width: 100, height: 100, marginRight: 10, marginBottom: 20 }}
+              />
+            ))}
+        </div>
+      ),
+      onOk() {},
+    });
   };
 
   renderSimpleForm() {
@@ -171,7 +192,7 @@ class OrderList extends PureComponent {
       },
       {
         title: '时间',
-        width: 158,
+        width: 200,
         render(val) {
           /* eslint-disable */
           const time = (
@@ -194,12 +215,19 @@ class OrderList extends PureComponent {
       },
       {
         title: '操作',
-        width: 60,
-        render: item => (
-          <span>
-            <a onClick={this.goOrderDetail.bind(this, item)}>查看</a>
-          </span>
-        ),
+        width: 130,
+        render: item => {
+          let option;
+          if (item.proof_images.length > 0) {
+            option = <a onClick={this.showModal.bind(this, item)}>好评凭证</a>;
+          }
+          return (
+            <span>
+              <a onClick={this.goOrderDetail.bind(this, item)}>查看 </a>
+              {option}
+            </span>
+          );
+        },
       },
     ];
 
@@ -261,4 +289,4 @@ class OrderList extends PureComponent {
   }
 }
 
-export default OrderList;
+export default orderList;

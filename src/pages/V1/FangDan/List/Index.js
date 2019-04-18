@@ -7,7 +7,7 @@ import styles from './Index.less';
 
 const FormItem = Form.Item;
 const statusMap = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
-const status = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已完成'];
+const status = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已结算'];
 const { Option } = Select;
 
 const { confirm } = Modal;
@@ -69,6 +69,7 @@ class FdList extends PureComponent {
 
   taskFinish = item => {
     const { dispatch } = this.props;
+    const thises = this;
     confirm({
       title: '确定终止此商品？',
       okText: '确定',
@@ -79,8 +80,9 @@ class FdList extends PureComponent {
           payload: {
             task_id: item.task_id,
           },
+        }).then(() => {
+          thises.getListData();
         });
-        this.componentDidMount();
       },
     });
   };
@@ -235,9 +237,9 @@ class FdList extends PureComponent {
           return (
             <p>
               <span>发放份数 {item.total_amount}</span>
-              <span>&nbsp;&nbsp;评价人数 {item.order_num}</span>
+              <span>&nbsp;&nbsp;评价人数 {item.comment_num}</span>
               <br />
-              <span>下单人数 {item.comment_num}</span>
+              <span>下单人数 {item.order_num}</span>
               <span>&nbsp;&nbsp;售后人数 {item.sale_back_num}</span>
             </p>
           );

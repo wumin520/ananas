@@ -45,7 +45,7 @@ class ProductDetail extends Component {
             <Description term="商品主图">
               <img src={data.img} alt="img" style={{ width: 65, heigth: 65 }} />
             </Description>
-            <Description term="优惠券">￥{data.coupon}</Description>
+            <Description term="优惠券">{data.coupon ? '￥' + data.coupon : '无'}</Description>
             <Description term="商品价格">￥{data.price}</Description>
           </DescriptionList>
           <Divider style={{ marginBottom: 32 }} />
@@ -58,14 +58,25 @@ class ProductDetail extends Component {
             <Description term="订单价格">{data.order_price}</Description>
             <Description term="返现金额">￥{data.rebate_price}</Description>
           </DescriptionList>
+          <p>
+            好评凭证:
+            {data.proof_images.length === 0
+              ? '未上传'
+              : data.proof_images.length > 0 &&
+                data.proof_images.map(e => (
+                  <img
+                    src={e}
+                    style={{ width: 100, height: 100, marginLeft: 10, marginBottom: 20 }}
+                  />
+                ))}
+          </p>
           <Divider style={{ marginBottom: 32 }} />
-
           <DescriptionList size="large" title="订单进度" style={{ marginBottom: 32 }}>
             <div style={{ paddingLeft: 16 }}>
-              <p>{data.paid_datetime ? '下单时间:' + data.paid_datetime : ''}</p>
-              <p>{data.ordered_datetime ? '支付时间:' + data.ordered_datetime : ''}</p>
-              <p>{data.harvest_time ? '收货时间:' + data.harvest_time : ''}</p>
-              <p>{data.harvest_time ? '好评时间:' + data.harvest_time : ''}</p>
+              <p>{data.paid_datetime ? '下单时间: ' + data.paid_datetime : ''}</p>
+              <p>{data.ordered_datetime ? '支付时间: ' + data.ordered_datetime : ''}</p>
+              <p>{data.harvest_time ? '收货时间: ' + data.harvest_time : ''}</p>
+              <p>{data.harvest_time ? '好评时间: ' + data.harvest_time : ''}</p>
             </div>
           </DescriptionList>
         </Card>
