@@ -99,7 +99,7 @@ class Index extends Component {
   };
 
   goOrderDetail = item => {
-    router.push(`/fangdan/list/ProductDetail?order_id=${item.order_id}`);
+    router.push(`/order/ProductDetail?order_id=${item.order_id}`);
   };
 
   render() {
