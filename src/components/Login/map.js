@@ -62,4 +62,17 @@ export default {
       },
     ],
   },
+  ImgCaptcha: {
+    props: {
+      size: 'large',
+      prefix: <Icon type="mail" className={styles.prefixIcon} />,
+      placeholder: 'captcha',
+    },
+    rules: [
+      {
+        required: true,
+        message: 'Please enter Captcha!',
+      },
+    ],
+  },
 };

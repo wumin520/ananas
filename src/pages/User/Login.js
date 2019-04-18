@@ -6,7 +6,7 @@ import { Checkbox, Alert, message, Icon } from 'antd';
 import Login from '@/components/Login';
 import styles from './Login.less';
 
-const { Tab, UserName, Password, Mobile, Captcha, Submit } = Login;
+const { Tab, UserName, Password, Mobile, Captcha, Submit, ImgCaptcha } = Login;
 
 @connect(({ login, loading }) => ({
   login,
@@ -41,6 +41,7 @@ class LoginPage extends Component {
     });
 
   handleSubmit = (err, values) => {
+    console.log(values, '1');
     const { type } = this.state;
     if (!err) {
       const { dispatch } = this.props;
@@ -67,6 +68,8 @@ class LoginPage extends Component {
   render() {
     const { login, submitting } = this.props;
     const { type, autoLogin } = this.state;
+
+    const imgCaptchaUrl = `http://test.chaoduoke.com/cdk/v1/web/phrase?_version=1555494981375.1372`;
     return (
       <div className={styles.main}>
         <Login
@@ -84,7 +87,7 @@ class LoginPage extends Component {
               this.renderMessage(formatMessage({ id: 'app.login.message-invalid-credentials' }))}
             <UserName
               name="userName"
-              placeholder={`${formatMessage({ id: 'app.login.userName' })}: admin or user`}
+              placeholder={`${formatMessage({ id: 'app.login.userName' })}`}
               rules={[
                 {
                   required: true,
@@ -94,7 +97,7 @@ class LoginPage extends Component {
             />
             <Password
               name="password"
-              placeholder={`${formatMessage({ id: 'app.login.password' })}: ant.design`}
+              placeholder={`${formatMessage({ id: 'app.login.password' })}`}
               rules={[
                 {
                   required: true,
@@ -105,6 +108,17 @@ class LoginPage extends Component {
                 e.preventDefault();
                 this.loginForm.validateFields(this.handleSubmit);
               }}
+            />
+            <ImgCaptcha
+              name="phrase"
+              placeholder={`${formatMessage({ id: 'app.login.phrase' })}`}
+              imgCaptchaUrl={imgCaptchaUrl}
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'validation.phrase.required' }),
+                },
+              ]}
             />
           </Tab>
           <Tab key="mobile" tab={formatMessage({ id: 'app.login.tab-login-mobile' })}>
