@@ -170,7 +170,7 @@ export default [
             path: '/CapitalManage/Rulecdk',
             name: 'rulecdk',
             hideInMenu: true,
-            component: './V1/CapitalManage/Rulecdk',
+            component: './V1/CapitalManage/RuleCDK',
           },
           {
             path: '/CapitalManage/Withdraw',
