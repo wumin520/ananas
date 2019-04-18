@@ -53,7 +53,7 @@ class Step4 extends React.PureComponent {
       goods_id &&
         dispatch({
           type: 'form/queryGoodsDetail',
-          payload: values,
+          payload: { goods_id },
         });
     }
   };
