@@ -1,4 +1,6 @@
 export default {
+  'app.login.phrase': '请输入图片验证码',
+  'validation.phrase.required': '请输入图片验证码',
   'app.login.userName': '用户名',
   'app.login.password': '密码',
   'app.login.message-invalid-credentials': '账户或密码错误（admin/ant.design）',
