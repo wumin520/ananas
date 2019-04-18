@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Card, Table } from 'antd';
 import { connect } from 'dva';
 
@@ -8,7 +8,7 @@ const content = <div />;
 @connect(({ loading }) => ({
   loading: loading.models.creditlist,
 }))
-class Rulecdk extends Component {
+class Rulecdk extends PureComponent {
   columns = [
     {
       title: '违规阶段',

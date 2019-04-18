@@ -4,7 +4,7 @@ import { router } from 'umi';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import PageLoading from '@/components/PageLoading';
-import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Tabs } from 'antd';
+import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Tabs, Alert } from 'antd';
 import styles from './index.less';
 
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
@@ -112,6 +112,7 @@ class Index extends Component {
     const taskList = homedata.task_plan_list;
     const hotRank = homedata.hot_rank;
     const orderList = homedata.order_list;
+    const noticeInfo = homedata.notice_info;
 
     const menu = (
       <Menu>
@@ -130,6 +131,7 @@ class Index extends Component {
 
     return (
       <GridContent>
+        <Alert message={noticeInfo} type="info" showIcon style={{ marginBottom: 20 }} />
         <Suspense fallback={<PageLoading />}>
           <IntroduceRow loading={loading} visitData={headInfo} />
         </Suspense>
@@ -138,9 +140,7 @@ class Index extends Component {
             tabBarExtraContent={
               <div className={styles.salesExtraWrap}>
                 <div className={styles.salesExtra}>
-                  <a>
-                    <FormattedMessage id="app.homePage.fangdanList" defaultMessage="All Day" />
-                  </a>
+                  <a href="/fangdan/list">{'放单列表>'}</a>
                 </div>
               </div>
             }
