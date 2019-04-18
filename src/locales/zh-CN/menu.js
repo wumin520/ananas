@@ -11,7 +11,7 @@ export default {
   'menu.fangdan.generalizeDetail': '推广详情',
   'menu.order': '我的订单',
   'menu.order.detail': '订单详情',
-  'menu.order.index': '订单明细',
+  'menu.order.index': '订单列表',
   'menu.capital': '资金管理',
   'menu.capital.detail': '资金明细',
   'menu.capital.freeze': '冻结明细',

@@ -23,11 +23,11 @@ const columns = [
   },
   {
     title: <FormattedMessage id="app.homePage.table.dayly-range" defaultMessage="Weekly Range" />,
-    dataIndex: 'day_up',
+    dataIndex: 'day_rate',
     key: 'range',
     render: (text, record) => (
-      <Trend flag={record.status === 1 ? 'down' : 'up'}>
-        <span style={{ marginRight: 4 }}>{text}%</span>
+      <Trend flag={record.day_up === 0 ? 'down' : 'up'}>
+        <span style={{ marginRight: 4 }}>{text}</span>
       </Trend>
     ),
     align: 'right',
