@@ -26,7 +26,7 @@ const columns = [
     dataIndex: 'day_rate',
     key: 'range',
     render: (text, record) => (
-      <Trend flag={record.day_up === 0 ? 'down' : 'up'}>
+      <Trend flag={record.day_up === 0 ? 'down' : 'up'} reverseColor>
         <span style={{ marginRight: 4 }}>{text}</span>
       </Trend>
     ),
