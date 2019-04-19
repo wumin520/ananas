@@ -43,13 +43,14 @@ class LoginPage extends Component {
   handleSubmit = (err, values) => {
     console.log(values, '1');
     const { type } = this.state;
+    const typeValue = type === 'account' ? 0 : 1;
     if (!err) {
       const { dispatch } = this.props;
       dispatch({
         type: 'login/login',
         payload: {
           ...values,
-          type,
+          type: typeValue,
         },
       });
     }
@@ -69,7 +70,7 @@ class LoginPage extends Component {
     const { login, submitting } = this.props;
     const { type, autoLogin } = this.state;
 
-    const imgCaptchaUrl = `http://test.chaoduoke.com/cdk/v1/web/phrase?_version=1555494981375.1372`;
+    const imgCaptchaUrl = `http://test.chaoduoke.com/cdk/phrase?_version=1555494981375.1372`;
     return (
       <div className={styles.main}>
         <Login

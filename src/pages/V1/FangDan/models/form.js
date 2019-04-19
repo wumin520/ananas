@@ -49,14 +49,16 @@ export default {
       const res = yield call(queryGoodsDetail, payload);
       console.log('queryGoodsDetail -> res ', res);
       if (res && res.status === 'ok') {
-        yield put(routerRedux.push('/fangdan/step-form/confirm'));
+        if (payload.auto_redirect !== 0) {
+          yield put(routerRedux.push('/fangdan/step-form/confirm'));
+        }
+        yield put({
+          type: 'saveState',
+          payload: {
+            goodsDetail: res.payload.goods_detail,
+          },
+        });
       }
-      yield put({
-        type: 'saveState',
-        payload: {
-          goodsDetail: res.payload.goods_detail,
-        },
-      });
     },
     *queryPayInfoByTaskId({ payload }, { call, put }) {
       const res = yield call(queryPayInfoByTaskId, payload);
@@ -73,7 +75,7 @@ export default {
       if (res && res.status === 'ok') {
         const taskId = res.payload.task_id;
         yield put(
-          routerRedux.push(`/fangdan/step-form/pay?taskId=${taskId}&goods_id=${payload.goods_id}`)
+          routerRedux.push(`/fangdan/step-form/pay?task_id=${taskId}&goods_id=${payload.goods_id}`)
         );
         yield put({
           type: 'saveState',
@@ -86,7 +88,7 @@ export default {
     *pay({ payload }, { call, put }) {
       const res = yield call(pay, payload);
       if (res && res.status === 'ok') {
-        yield put(routerRedux.push('/fangdan/step-form/result'));
+        yield put(routerRedux.push(`/fangdan/step-form/result?task_id=${payload.task_id}`));
       }
     },
     *queryCategoryList({ payload }, { call, put }) {

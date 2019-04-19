@@ -27,22 +27,7 @@ class Step1 extends React.PureComponent {
     });
   };
 
-  componentDidMount = () => {
-    /* eslint-disable */
-    const { location, dispatch } = this.props;
-    const { goods_id, task_id } = location.query;
-    task_id &&
-      dispatch({
-        type: 'form/queryTaskDetail',
-        payload: {
-          task_id,
-        },
-      });
-    goods_id &&
-      this.fetchPddGoodsDetail({
-        goods_id,
-      });
-  };
+  componentDidMount = () => {};
 
   render() {
     const { form, pddGoodUrl, submitting, dispatch } = this.props;
