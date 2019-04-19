@@ -29,8 +29,9 @@ class Index extends Component {
     {
       key: '2',
       title: '商品',
+      className: styles.resultColumns,
       render: val => (
-        <p>
+        <p className={styles.resultColumnsDiv}>
           <img src={val.img} alt="a" style={{ width: 50, heigth: 50 }} />
           <span> {val.title}</span>
         </p>

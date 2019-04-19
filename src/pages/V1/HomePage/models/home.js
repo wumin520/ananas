@@ -24,6 +24,7 @@ export default {
       credit_info: {
         credit_score: 0,
         limit_info: '',
+        credit_level: 0,
       },
     },
     task_plan_list: [],
