@@ -1,6 +1,22 @@
 @import '~antd/lib/style/themes/default.less';
 @import '~@/utils/utils.less';
 
+table {
+  table-layout: fixed;
+}
+
+.resultColumns {
+  overflow: hidden;
+}
+
+.resultColumnsDiv {
+  width: 92%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: keep-all;
+}
+
 .taskInfo {
   p {
     margin-bottom: 0;
@@ -166,9 +182,29 @@
   }
 }
 
-.trendText {
+.trendT0 {
   margin-left: 8px;
-  color: #218000;
+}
+
+.trendT01 {
+  margin-left: 8px;
+  color: #52c41a;
+}
+.trendT02 {
+  margin-left: 8px;
+  color: #3490ff;
+}
+.trendT03 {
+  margin-left: 8px;
+  color: #f9ad15;
+}
+.trendT04 {
+  margin-left: 8px;
+  color: #f5222d;
+}
+.trendT05 {
+  margin-left: 8px;
+  color: gray;
 }
 
 @media screen and (max-width: @screen-lg) {

@@ -157,7 +157,9 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           total={visitData.credit_info.credit_score}
           footer={
             <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
-              <span className={styles.trendText}>{visitData.credit_info.limit_info}</span>
+              <span className={styles.trendT0 + visitData.credit_info.credit_level}>
+                {visitData.credit_info.limit_info}
+              </span>
             </div>
           }
           contentHeight={46}

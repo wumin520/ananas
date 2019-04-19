@@ -13,9 +13,14 @@ const columns = [
   },
   {
     title: <FormattedMessage id="app.homePage.table.product" defaultMessage="Search keyword" />,
-    dataIndex: 'title',
     key: 'keyword',
-    render: text => <a href="/">{text}</a>,
+    className: styles.resultColumns,
+    render: val => (
+      <p className={styles.resultColumnsDiv}>
+        <img src={val.img} alt="a" style={{ width: 50, heigth: 50 }} />
+        <span> {val.title}</span>
+      </p>
+    ),
   },
   {
     title: <FormattedMessage id="app.homePage.table.orderTime" defaultMessage="Users" />,
