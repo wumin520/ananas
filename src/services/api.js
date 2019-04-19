@@ -30,6 +30,11 @@ export async function planDown(params) {
   return request(`/v1/web/task/plan/down?${stringify(params)}`);
 }
 
+//上架
+export async function planUp(params) {
+  return request(`/v1/web/task/plan/up?${stringify(params)}`);
+}
+
 //订单详情
 export async function orderDetail(params) {
   return request(`/v1/web/order/detail?${stringify(params)}`);

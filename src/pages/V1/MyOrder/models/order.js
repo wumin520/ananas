@@ -16,6 +16,7 @@ export default {
           harvest_time: '',
           proof_time: '',
           paid_datetime: '',
+          proof_images: [],
         },
       ],
       order_num_info: {},
@@ -23,7 +24,9 @@ export default {
       page_info: {},
     },
     orderDetail: {
-      data: {},
+      data: {
+        proof_images: [],
+      },
     },
   },
 
