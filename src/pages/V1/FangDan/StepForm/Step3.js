@@ -107,17 +107,25 @@ class Step3 extends React.PureComponent {
 
   onValidateForm = () => {
     let valid = true;
+    let isLtZero = false;
     const arr = Object.keys(this.schedulesHash);
     for (let i = 0; i < arr.length; i += 1) {
       const key = arr[i];
-      if (!this.schedulesHash[key]) {
+      const value = this.schedulesHash[key];
+      if (!value) {
         valid = false;
         break;
+      } else if (value < 1) {
+        isLtZero = true;
       }
     }
     console.log(arr, valid, this.props);
     if (!this.startTimeTemp || arr.length < 1) {
       message.error('请先选择推广日期进行排期');
+      return;
+    }
+    if (isLtZero) {
+      message.error('你填写的投放数量必须 > 0');
       return;
     }
     if (!valid) {

@@ -12,9 +12,10 @@ import styles from './style.less';
 }))
 class Step5 extends React.PureComponent {
   render() {
-    const { taskId, currentUser } = this.props;
+    /* eslint-disable */
+    const { taskId, currentUser, location } = this.props;
     const goDetail = () => {
-      router.push(`/fangdan/list/GeneralizeDetail?task_id=${taskId}`);
+      router.push(`/fangdan/list/GeneralizeDetail?task_id=${location.query.task_id}`);
     };
     const goBackList = () => {
       router.push('/fangdan/index');

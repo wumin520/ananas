@@ -42,7 +42,24 @@ class Step2 extends React.PureComponent {
   };
 
   componentDidMount = () => {
-    const { dispatch } = this.props;
+    /* eslint-disable */
+    const { dispatch, location } = this.props;
+    const { goods_id, task_id, action } = location.query;
+    this.actionType = action;
+    if (action === 'edit') {
+      task_id &&
+        dispatch({
+          type: 'form/queryTaskDetail',
+          payload: {
+            task_id,
+          },
+        });
+      goods_id &&
+        dispatch({
+          type: 'form/queryGoodsDetail',
+          payload: { goods_id, auto_redirect: 0 },
+        });
+    }
     dispatch({
       type: 'form/queryCategoryList',
     });
@@ -172,14 +189,14 @@ class Step2 extends React.PureComponent {
         </Form.Item>
         <Form.Item {...formItemLayout} label="单笔返现金额" required={false}>
           {getFieldDecorator('commission', {
-            initialValue: commission,
+            initialValue: coupon_price,
             rules: [
               {
                 required: false,
                 message: '',
               },
             ],
-          })(<Input type="number" autoComplete="off" style={{ width: '80%' }} />)}
+          })(<Input disabled type="number" autoComplete="off" style={{ width: '80%' }} />)}
         </Form.Item>
         <Form.Item
           style={{ marginBottom: 8 }}
@@ -195,9 +212,13 @@ class Step2 extends React.PureComponent {
           <Button type="primary" onClick={onValidateForm} loading={submitting}>
             下一步
           </Button>
-          <Button onClick={onPrev} style={{ marginLeft: 8 }}>
-            上一步
-          </Button>
+          {this.actionType === 'edit' ? (
+            ''
+          ) : (
+            <Button onClick={onPrev} style={{ marginLeft: 8 }}>
+              上一步
+            </Button>
+          )}
         </Form.Item>
       </Form>
     );

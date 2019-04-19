@@ -53,8 +53,9 @@ class Step4 extends React.PureComponent {
       goods_id &&
         dispatch({
           type: 'form/queryGoodsDetail',
-          payload: { goods_id },
+          payload: { goods_id, auto_redirect: 0 },
         });
+      this.actionType = 'pay';
     }
   };
 
@@ -147,9 +148,13 @@ class Step4 extends React.PureComponent {
             <Button onClick={this.toPay} disabled={false} size="default" type="primary">
               确认支付
             </Button>
-            <Button onClick={this.goBack} style={{ marginLeft: 20 }} size="default">
-              上一步
-            </Button>
+            {this.actionType === 'pay' ? (
+              ''
+            ) : (
+              <Button onClick={this.goBack} style={{ marginLeft: 20 }} size="default">
+                上一步
+              </Button>
+            )}
           </Col>
         </Row>
       </Fragment>
