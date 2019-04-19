@@ -26,6 +26,7 @@ const content = <div />;
 class CapitalDetail extends PureComponent {
   state = {
     pagination: {},
+    changeType: -1,
   };
 
   componentDidMount() {
@@ -70,6 +71,7 @@ class CapitalDetail extends PureComponent {
       page: 1,
       type: value,
     };
+    this.state.changeType = value;
   };
 
   clearAll = () => {
@@ -104,6 +106,15 @@ class CapitalDetail extends PureComponent {
 
   toGo = url => {
     router.push(url);
+  };
+
+  changePage = p => {
+    const { changeType } = this.state;
+    param = {
+      page: p,
+      type: changeType,
+    };
+    this.getAssetList(param);
   };
 
   render() {
@@ -260,16 +271,24 @@ class CapitalDetail extends PureComponent {
                 <Table
                   columns={columns}
                   dataSource={assetData.list}
-                  pagination={assetData.page_info}
-                  onChange={this.handleChange}
+                  pagination={{
+                    defaultCurrent: 1,
+                    pageSize: assetData.page_info.per_page,
+                    total: assetData.page_info.total_num,
+                    onChange: this.changePage,
+                  }}
                 />
               </TabPane>
               <TabPane tab="提现记录" key="withdraw">
                 <Table
                   columns={columns2}
                   dataSource={exchangeData.list}
-                  pagination={exchangeData.page_info}
-                  onChange={this.handleChange}
+                  pagination={{
+                    defaultCurrent: 1,
+                    pageSize: exchangeData.page_info.per_page,
+                    total: exchangeData.page_info.total_num,
+                    onChange: this.changePage,
+                  }}
                 />
               </TabPane>
             </Tabs>

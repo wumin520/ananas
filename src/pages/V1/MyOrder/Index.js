@@ -16,19 +16,23 @@ const status = ['无效', '已下单', '待评价', '已完成'];
 }))
 @Form.create()
 class orderList extends PureComponent {
-  state = {};
+  state = {
+    page: 1,
+  };
 
   componentDidMount() {
-    this.getOrderData();
+    const { page } = this.state;
+    this.getOrderData(page);
   }
 
-  getOrderData = () => {
+  getOrderData = p => {
     const { dispatch, location } = this.props;
     const { query } = location;
     console.log('this.props:', query);
     dispatch({
       type: 'order/orderData',
       payload: {
+        page: p,
         task_id: query.task_id,
       },
     });
@@ -89,18 +93,30 @@ class orderList extends PureComponent {
     });
   };
 
+  onChange = page => {
+    const params = {
+      currentPage: page,
+    };
+    this.getOrderData(params.currentPage);
+  };
+
   renderSimpleForm() {
     const {
       form: { getFieldDecorator },
     } = this.props;
     const { orderData } = this.props;
     const stateSelect = orderData.state_select;
+    const { location } = this.props;
+    const { query } = location;
+    const defaultValue = query.task_id;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
           <Col md={5} sm={24}>
             <FormItem label="推广编号">
-              {getFieldDecorator('task_id')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('task_id', { initialValue: defaultValue })(
+                <Input placeholder="请输入" />
+              )}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
@@ -243,13 +259,6 @@ class orderList extends PureComponent {
       </div>
     );
     const content = <div />;
-    // 分页
-    // function onShowSizeChange(current, pageSize) {
-    //   console.log(current, pageSize);
-    // }
-    function onChange(pageNumber) {
-      console.log('Page: ', pageNumber);
-    }
 
     return (
       <PageHeaderWrapper title="订单列表" content={content}>
@@ -272,19 +281,17 @@ class orderList extends PureComponent {
           <Card>
             <div className={styles.tableList}>
               <div className={styles.tableListForm}>{this.renderForm()}</div>
-              <Table columns={columns} dataSource={list} pagination={orderData.page_info} />
-              {/* <div className={styles.pageBottom}> */}
-              {/* <p>
-                  共{pageInfo.total_num}条记录 第1/{pageInfo.total_page}页
-                </p> */}
-              {/* <Pagination
-                  showSizeChanger
-                  showQuickJumper
-                  defaultCurrent={1}
-                  total={pageInfo.total_num}
-                  onChange={onChange}
-                /> */}
-              {/* </div> */}
+              <Table
+                rowKey={item => item.id}
+                columns={columns}
+                dataSource={list}
+                pagination={{
+                  defaultCurrent: 1,
+                  pageSize: orderData.page_info.per_page,
+                  total: orderData.page_info.total_num,
+                  onChange: this.onChange,
+                }}
+              />
             </div>
           </Card>
         </div>
