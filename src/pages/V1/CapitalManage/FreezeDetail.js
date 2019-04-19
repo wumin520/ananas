@@ -25,6 +25,7 @@ const content = <div />;
 class FreezeDetail extends PureComponent {
   state = {
     filteredInfo: null,
+    changeType: -1,
   };
 
   formLayout = {
@@ -80,6 +81,16 @@ class FreezeDetail extends PureComponent {
       page: 1,
       type: value,
     };
+    this.state.changeType = value;
+  };
+
+  onChange = p => {
+    const { changeType } = this.state;
+    param = {
+      page: p,
+      type: changeType,
+    };
+    this.getFreezeList(param);
   };
 
   render() {
@@ -203,7 +214,17 @@ class FreezeDetail extends PureComponent {
               </Form>
             </div>
             <br />
-            <Table columns={columns} dataSource={freezeData.list} onChange={this.handleChange} />
+            <Table
+              columns={columns}
+              dataSource={freezeData.list}
+              onChange={this.handleChange}
+              pagination={{
+                defaultCurrent: 1,
+                pageSize: freezeData.page_info.per_page,
+                total: freezeData.page_info.total_num,
+                onChange: this.onChange,
+              }}
+            />
           </Card>
         </div>
       </PageHeaderWrapper>

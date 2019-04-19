@@ -11,32 +11,30 @@ const status = ['待支付', '审核中', '进行中', '审核驳回', '清算�
 const { Option } = Select;
 
 const { confirm } = Modal;
+
 @connect(({ task, loading }) => ({
   listData: task.listData,
   loading: loading.effects['task/fetchBasic'],
 }))
 @Form.create()
 class FdList extends PureComponent {
-  state = {};
+  state = {
+    page: 1,
+  };
 
   componentDidMount() {
-    this.getListData();
+    const { page } = this.state;
+    this.getListData(page);
   }
 
   // 接口
-  getListData = () => {
+  getListData = p => {
     const { dispatch } = this.props;
     dispatch({
       type: 'task/fetchBasic',
-      payload: {},
-    });
-  };
-
-  deleteItem = id => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'task/submit',
-      payload: { id },
+      payload: {
+        page: p,
+      },
     });
   };
 
@@ -78,6 +76,7 @@ class FdList extends PureComponent {
         dispatch({
           type: 'task/finishMessage',
           payload: {
+            page: 1,
             task_id: item.task_id,
           },
         }).then(() => {
@@ -108,6 +107,14 @@ class FdList extends PureComponent {
     router.push(
       `/fangdan/step-form/confirm?task_id=${item.task_id}&goods_id=${item.goods_id}&action=edit`
     );
+  };
+
+  onChange = page => {
+    const params = {
+      currentPage: page,
+      pageSize: 10,
+    };
+    this.getListData(params.currentPage);
   };
 
   renderSimpleForm() {
@@ -189,9 +196,6 @@ class FdList extends PureComponent {
     // 表格数据
     const { listData } = this.props;
     const taskInfo = listData.task_info;
-    const { list } = listData;
-    // 跳转路径
-    // const pageInfo = listData.page_info;
     const columns = [
       {
         title: '推广编号',
@@ -302,13 +306,6 @@ class FdList extends PureComponent {
       </div>
     );
     const content = <div />;
-    // function onShowSizeChange(current, pageSize) {
-    //   console.log(current, pageSize);
-    // }
-    // function onChange(pageNumber) {
-    //   console.log('Page: ', pageNumber);
-    // }
-    // card
     return (
       <PageHeaderWrapper title="放单列表" content={content}>
         <div className={styles.standardList}>
@@ -329,19 +326,17 @@ class FdList extends PureComponent {
           <Card>
             <div className={styles.tableList}>
               <div className={styles.tableListForm}>{this.renderForm()}</div>
-              <Table columns={columns} dataSource={list} pagination={listData.page_info} />
-              {/* <div className={styles.pageBottom}> */}
-              {/* <p>
-                  共{pageInfo.total_num}条记录 第1/{pageInfo.total_page}页
-                </p> */}
-              {/* <Pagination
-                  showSizeChanger
-                  showQuickJumper
-                  defaultCurrent={1}
-                  total={pageInfo.total_num}
-                  onChange={onChange}
-                /> */}
-              {/* </div> */}
+              <Table
+                rowKey={item => item.id}
+                columns={columns}
+                dataSource={listData.list}
+                pagination={{
+                  defaultCurrent: 1,
+                  pageSize: listData.page_info.per_page,
+                  total: listData.page_info.total_num,
+                  onChange: this.onChange,
+                }}
+              />
             </div>
           </Card>
         </div>
