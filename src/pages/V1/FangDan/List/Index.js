@@ -105,7 +105,9 @@ class FdList extends PureComponent {
 
   // 编辑
   goRedact = item => {
-    router.push(`/fangdan/step-form/info?task_id=${item.task_id}&goods_id=${item.goods_id}`);
+    router.push(
+      `/fangdan/step-form/confirm?task_id=${item.task_id}&goods_id=${item.goods_id}&action=edit`
+    );
   };
 
   renderSimpleForm() {
@@ -251,7 +253,12 @@ class FdList extends PureComponent {
         render: item => {
           let operation;
           if (item.state === 0) {
-            operation = <a onClick={this.goPay.bind(this, item)}>支付 </a>;
+            operation = (
+              <span>
+                <a onClick={this.goDetail.bind(this, item)}>查看 </a>
+                <a onClick={this.goPay.bind(this, item)}>支付 </a>
+              </span>
+            );
           }
           if (item.state === 1) {
             operation = <a onClick={this.goDetail.bind(this, item)}>查看 </a>;
