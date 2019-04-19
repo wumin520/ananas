@@ -219,7 +219,11 @@ class orderList extends PureComponent {
         render: item => {
           let option;
           if (item.proof_images.length > 0) {
-            option = <a onClick={this.showModal.bind(this, item)}>好评凭证</a>;
+            option = (
+              <a href={item.proof_images} target="_Blank">
+                好评凭证
+              </a>
+            );
           }
           return (
             <span>
