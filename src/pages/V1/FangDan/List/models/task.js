@@ -72,6 +72,8 @@ export default {
         },
       });
       if (res.code === 200) {
+        message.success(res.msg);
+      } else {
         message.success(res.message);
       }
     },
@@ -84,6 +86,8 @@ export default {
         },
       });
       if (res.code === 200) {
+        message.success(res.payload.msg);
+      } else {
         message.success(res.message);
       }
     },
@@ -96,6 +100,8 @@ export default {
         },
       });
       if (res.code === 200) {
+        message.success(res.payload.msg);
+      } else {
         message.success(res.message);
       }
     },
