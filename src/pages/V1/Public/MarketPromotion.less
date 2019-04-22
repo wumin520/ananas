@@ -1,0 +1,224 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/utils/utils.less';
+
+.marketPromotion {
+  text-align: center;
+  background: #f6f7f8;
+
+  .bgColor {
+    background: #13c2c2;
+
+    .mp_banner {
+      width: 1128px;
+      height: 400px;
+      margin: 0 auto;
+      overflow: hidden;
+      color: #fff;
+      background: url('https://cdn.youlianyc.com/image/static/7f1adea1fb61d654906516e59d470d1ca467ab2a.jpg');
+      background-size: 100% 100%;
+
+      & > .title {
+        margin-top: 80px;
+        font-weight: 100;
+        font-size: 64px;
+        font-family: PingFangSC-Thin, sans-serif;
+        line-height: 90px;
+      }
+
+      & > .subtitle {
+        margin-top: 16px;
+        font-weight: 400;
+        font-size: 24px;
+        font-family: PingFang-SC-Regular, sans-serif;
+        line-height: 32px;
+      }
+    }
+  }
+
+  .mp_center {
+    position: relative;
+    top: -100px;
+    z-index: 2;
+    width: 1128px;
+    margin: 0 auto;
+    padding: 80px 0;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+
+    & > .title {
+      color: rgba(0, 0, 0, 0.85);
+      font-weight: 400;
+      font-size: 32px;
+      font-family: PingFang-SC-Regular, sans-serif;
+      line-height: 40px;
+    }
+
+    & > .subtitle {
+      margin-top: 16px;
+      color: rgba(0, 0, 0, 0.45);
+      font-weight: 400;
+      font-size: 16px;
+      font-family: PingFang-SC-Regular, sans-serif;
+      line-height: 24px;
+    }
+
+    .programs {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 64px;
+
+      .program {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & > img {
+          width: 120px;
+          height: 120px;
+          background: rgba(255, 255, 255, 1);
+          border-radius: 60px;
+          box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.09);
+        }
+
+        & > span {
+          margin-top: 32px;
+          color: rgba(0, 0, 0, 0.65);
+          font-weight: 400;
+          font-size: 24px;
+          font-family: PingFang-SC-Regular, sans-serif;
+          line-height: 32px;
+        }
+      }
+    }
+  }
+
+  .advantage_block {
+    width: 1128px;
+    margin: 0 auto 120px;
+    overflow: hidden;
+
+    & > .title {
+      margin-bottom: 64px;
+      color: rgba(0, 0, 0, 0.85);
+      font-weight: 400;
+      font-size: 32px;
+      font-family: PingFang-SC-Regular, sans-serif;
+      line-height: 40px;
+    }
+
+    .advantages {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .advantage {
+        overflow: hidden;
+        background: #fff;
+        border-radius: 4px;
+
+        & > .imgWord {
+          width: 344px;
+          height: 240px;
+          color: #fff;
+          font-weight: 400;
+          font-size: 24px;
+          font-family: PingFang-SC-Regular, sans-serif;
+          line-height: 240px;
+          background: url('https://cdn.youlianyc.com/image/static/2f94f6c6051e322b7f5bac11ae8d5c7df4263526.jpg');
+          background-size: 100% 100%;
+        }
+
+        & > .desc {
+          padding: 32px 0;
+          color: rgba(0, 0, 0, 0.65);
+          font-weight: 400;
+          font-size: 16px;
+          font-family: PingFang-SC-Regular, sans-serif;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+
+  .case_block {
+    padding: 80px 0 120px;
+    overflow: hidden;
+    background: #13c2c2;
+
+    & > .title {
+      color: #fff;
+      font-weight: 400;
+      font-size: 32px;
+      font-family: PingFang-SC-Regular, sans-serif;
+      line-height: 40px;
+    }
+
+    & > .subtitle {
+      margin-top: 16px;
+      color: #fff;
+      font-weight: 400;
+      font-size: 16px;
+      font-family: PingFang-SC-Regular, sans-serif;
+      line-height: 24px;
+    }
+
+    .businesses {
+      width: 1128px;
+      margin: 64px auto 0;
+      text-align: center;
+
+      .business {
+        float: left;
+        width: 22%;
+        margin-right: 32px;
+        margin-bottom: 32px;
+        padding: 32px;
+        overflow: hidden;
+        background: #fff;
+        border-radius: 4px;
+
+        &:nth-child(4) {
+          margin-right: 0;
+        }
+
+        .logoImg {
+          box-sizing: border-box;
+          width: 120px;
+          height: 120px;
+          margin: 0 auto;
+          border: 1px solid #d9d9d9;
+          border-radius: 60px;
+        }
+
+        .businessName {
+          margin: 24px 0 16px;
+          font-weight: 400;
+          font-size: 16px;
+          font-family: PingFang-SC-Regular, sans-serif;
+          line-height: 24px;
+        }
+
+        .businessDesc {
+          font-weight: 400;
+          font-size: 14px;
+          font-family: PingFang-SC-Regular, sans-serif;
+          line-height: 22px;
+
+          & > span {
+            position: relative;
+            top: 2px;
+            padding: 0 8px;
+            color: #13c2c2;
+            font-weight: 500;
+            font-size: 24px;
+            font-family: PingFang-SC-Medium, sans-serif;
+            line-height: 32px;
+          }
+        }
+      }
+    }
+  }
+}

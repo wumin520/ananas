@@ -17,6 +17,23 @@ export default [
       },
     ],
   },
+  // public
+  {
+    path: '/market',
+    routes: [
+      { path: '/market', redirect: '/market/marketPromotion' },
+      {
+        path: '/market/marketPromotion',
+        name: 'marketPromotion',
+        component: './V1/Public/MarketPromotion',
+      },
+      {
+        path: '/market/MerchantsSettled',
+        name: 'merchantsSettled',
+        component: './V1/Public/MerchantsSettled',
+      },
+    ],
+  },
   // app
   {
     path: '/',
