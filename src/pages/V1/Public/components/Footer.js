@@ -50,7 +50,7 @@ class Footer extends PureComponent {
               <div className={styles.title}>微信服务号</div>
               <div className={styles.eleImg}>
                 <img
-                  src="https://cdn.youlianyc.com/image/static/2f94f6c6051e322b7f5bac11ae8d5c7df4263526.jpg"
+                  src="https://cdn.youlianyc.com/image/static/3462247bd9fc80e155274995e8085d4b953bf968.jpg"
                   alt=""
                 />
               </div>
