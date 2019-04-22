@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Carousel } from 'antd';
 import styles from './MarketPromotion.less';
 
 import Footer from './components/Footer';
 
-class MarketPromotion extends PureComponent {
+class MarketPromotion extends Component {
   state = {};
 
   render() {

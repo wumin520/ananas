@@ -1,0 +1,86 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/utils/utils.less';
+
+.merchantsSettled {
+  text-align: center;
+
+  .ms_top {
+    position: relative;
+    width: 100%;
+    height: 672px;
+    overflow: hidden;
+
+    .ms_banner {
+      position: absolute;
+      z-index: 1;
+      width: 100%;
+      height: 672px;
+      font-size: 0;
+      text-align: center;
+      background: url('https://cdn.youlianyc.com/image/static/ad9f5eeff71f770d41f537c5334b91077c321050.jpg')
+        top center no-repeat;
+      background-size: cover;
+      filter: brightness(45%);
+    }
+
+    .ms_word {
+      position: relative;
+      z-index: 3;
+      overflow: hidden;
+      color: #fff;
+      text-align: center;
+
+      & > .title {
+        margin-top: 267px;
+        font-weight: 100;
+        font-size: 64px;
+        font-family: PingFangSC-Thin, sans-serif;
+        line-height: 90px;
+      }
+
+      & > .subtitle {
+        margin-top: 16px;
+        font-weight: 400;
+        font-size: 24px;
+        font-family: PingFang-SC-Regular, sans-serif;
+        line-height: 32px;
+      }
+    }
+  }
+
+  .effect_block {
+    overflow: hidden;
+    font-weight: 400;
+    font-family: PingFang-SC-Regular, sans-serif;
+
+    & > .title {
+      margin-top: 80px;
+      margin-bottom: 32px;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 32px;
+      line-height: 40px;
+    }
+
+    .eb_list {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 1128px;
+      margin: 0 auto 120px;
+
+      .eb_item {
+        & > img {
+          width: 344px;
+          height: 272px;
+        }
+
+        & > .mb_word {
+          margin-top: 24px;
+          color: rgba(0, 0, 0, 0.65);
+          font-size: 24px;
+          line-height: 32px;
+        }
+      }
+    }
+  }
+}
