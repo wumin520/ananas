@@ -10,14 +10,27 @@ p {
 }
 
 .content0 {
-  line-height: 640px;
+  position: relative;
+  padding: 208px 0 288px;
   text-align: center;
   background: url('https://cdn.youlianyc.com/image/static/2d88eb9e6b7b73ab5c019d568ee3c9aea32571ea.jpg')
     no-repeat;
   background-position: center;
   background-size: cover;
 
+  .mask {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: rgba(47, 84, 235, 1);
+    opacity: 0.85;
+  }
+
   .p1 {
+    position: relative;
+    z-index: 2;
     color: rgba(255, 255, 255, 1);
     font-weight: 100;
     font-size: 80px;
@@ -26,6 +39,8 @@ p {
   }
 
   .p2 {
+    position: relative;
+    z-index: 2;
     color: rgba(255, 255, 255, 0.85);
     font-weight: 400;
     font-size: 24px;
@@ -210,7 +225,7 @@ p {
     .float2 {
       position: absolute;
       top: 70px;
-      left: 26%;
+      right: 57%;
     }
 
     .float3 {
@@ -222,7 +237,7 @@ p {
     .float4 {
       position: absolute;
       top: 290px;
-      left: 25%;
+      right: 55%;
     }
 
     .float5 {

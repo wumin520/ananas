@@ -69,6 +69,7 @@ class Index extends Component {
 
         {/* {con0} */}
         <div className={styles.content0}>
+          <div className={styles.mask} />
           <p className={styles.p1}>一站式导购服务</p>
           <p className={styles.p2}>打造导购内容生态</p>
         </div>
