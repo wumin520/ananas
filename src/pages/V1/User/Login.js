@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import Link from 'umi/link';
-import { Checkbox, Alert } from 'antd';
+import { Alert } from 'antd';
 import Login from '@/components/Login';
 import styles from './Login.less';
 
@@ -16,7 +16,6 @@ const { Tab, UserName, Password, Mobile, Captcha, Submit, ImgCaptcha } = Login;
 class LoginPage extends Component {
   state = {
     type: 'account',
-    autoLogin: true,
   };
 
   onTabChange = type => {
@@ -64,19 +63,13 @@ class LoginPage extends Component {
     }
   };
 
-  changeAutoLogin = e => {
-    this.setState({
-      autoLogin: e.target.checked,
-    });
-  };
-
   renderMessage = content => (
     <Alert style={{ marginBottom: 24 }} message={content} type="error" showIcon />
   );
 
   render() {
     const { login, submitting, setting } = this.props;
-    const { type, autoLogin } = this.state;
+    const { type } = this.state;
 
     const imgCaptchaUrl = `${setting.backend}/cdk/phrase?_version=`;
     console.log('render -> ', 1);
@@ -154,7 +147,7 @@ class LoginPage extends Component {
               ]}
             />
             <Captcha
-              name="captcha"
+              name="verification_code"
               placeholder={formatMessage({ id: 'form.verification-code.placeholder' })}
               countDown={120}
               onGetCaptcha={this.onGetCaptcha}
@@ -180,21 +173,20 @@ class LoginPage extends Component {
               ]}
             />
           </Tab>
-          <div>
+          {/* <div>
             <Checkbox checked={autoLogin} onChange={this.changeAutoLogin}>
               <FormattedMessage id="app.login.remember-me" />
             </Checkbox>
             <a style={{ float: 'right' }} href="">
               <FormattedMessage id="app.login.forgot-password" />
             </a>
-          </div>
+          </div> */}
           <Submit loading={submitting}>
             <FormattedMessage id="app.login.login" />
           </Submit>
           <div className={styles.other}>
-            <Link className={styles.register} to="/user/register">
-              <FormattedMessage id="app.login.signup" />
-            </Link>
+            还没有超多客账号？
+            <Link to="/user/register">立即注册</Link>
           </div>
         </Login>
       </div>

@@ -76,7 +76,7 @@ class UserLayout extends Component {
                 <span className={styles.slogan}>一站式导购服务</span>
               </Col>
               <Col pull={2} span={12}>
-                <Link to="/public/">
+                <Link to="/web/index">
                   <Button style={{ float: 'right' }} type="primary" ghost>
                     返回首页
                   </Button>
