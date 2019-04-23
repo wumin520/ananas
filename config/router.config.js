@@ -34,7 +34,21 @@ export default [
       },
     ],
   },
-
+  {
+    path: '/public',
+    routes: [
+      {
+        path: '/public/matrix',
+        name: 'index',
+        component: './V1/Public/Index',
+      },
+      {
+        path: '/public/helpCenter',
+        name: 'help',
+        component: './V1/Public/HelpCenter',
+      },
+    ],
+  },
   {
     path: '/web',
     routes: [
