@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button } from 'antd';
+import { Button, Menu, Dropdown, Icon } from 'antd';
 import Link from 'umi/link';
 import styles from './MarketNav.less';
 
@@ -7,6 +7,16 @@ class MarketNav extends PureComponent {
   state = {};
 
   render() {
+    const menu = (
+      <Menu>
+        <Menu.Item>
+          <a target="_blank" rel="noopener noreferrer" href="/">
+            退出
+          </a>
+        </Menu.Item>
+      </Menu>
+    );
+
     return (
       <div className={styles.marketNav}>
         <div className={styles.nav}>
@@ -33,9 +43,17 @@ class MarketNav extends PureComponent {
             </Link>
           </div>
           <div className={styles.nav_right}>
-            <div className={styles.btn_block}>
+            <div style={{ display: 'none' }} className={styles.btn_block}>
               <Button className={`${styles.btn} ${styles.btn_register}`}>注册</Button>
               <Button className={`${styles.btn} ${styles.btn_login}`}>登录</Button>
+            </div>
+            <div className={styles.after_login}>
+              <Dropdown overlay={menu}>
+                <div className="ant-dropdown-link">
+                  183****1234 <Icon type="down" />
+                </div>
+              </Dropdown>
+              <Button className={styles.btn_apply}>申请入驻</Button>
             </div>
           </div>
         </div>
