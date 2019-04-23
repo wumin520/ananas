@@ -34,6 +34,18 @@ export default [
       },
     ],
   },
+
+  {
+    path: '/web',
+    routes: [
+      { path: '/web', redirect: '/web/index' },
+      {
+        path: '/web/index',
+        name: 'index',
+        component: './V1/Public/WebsiteHome/index',
+      },
+    ],
+  },
   // app
   {
     path: '/',
