@@ -140,6 +140,10 @@ export async function pay(params) {
     },
   });
 }
+// 检测是否有权
+export async function checkPrivige(params) {
+  return request(api_pre + `check_privige?${stringify(params)}`);
+}
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }
@@ -249,8 +253,8 @@ export async function login(params) {
   });
 }
 
-export async function fakeRegister(params) {
-  return request('/api/register', {
+export async function register(params) {
+  return request(api_pre + 'sign_up', {
     method: 'POST',
     data: params,
   });
@@ -259,7 +263,24 @@ export async function fakeRegister(params) {
 export async function queryNotices(params = {}) {
   return request(`/api/notices?${stringify(params)}`);
 }
-
-export async function getFakeCaptcha(mobile) {
-  return request(`/api/captcha?mobile=${mobile}`);
+// 获取短信验证码
+export async function getCaptcha(params) {
+  return request(api_pre + `send_sms`, {
+    method: 'POST',
+    data: params,
+  });
+}
+// 入驻
+export async function settleIn(params) {
+  return request(api_pre + 'settle_in', {
+    method: 'POST',
+    data: params,
+  });
+}
+// 登出
+export async function signout(params) {
+  return request(api_pre + 'sign_out', {
+    method: 'POST',
+    data: params,
+  });
 }

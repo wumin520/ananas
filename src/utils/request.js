@@ -3,7 +3,10 @@
  * 更详细的api文档: https://bigfish.alipay.com/doc/api#request
  */
 import { extend } from 'umi-request';
+import router from 'umi/router';
 import { notification, message } from 'antd';
+import { backend } from '@/defaultSettings';
+import { getStorage } from './authority';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -67,14 +70,14 @@ const errorHandler = error => {
  * 配置request请求时的默认参数
  */
 const request = extend({
-  headers: { token: 'REJuQ6UXbJlwNzewxQDOpNOwUaTuDaOi', timestamp: Date.now(), platform: 'web' },
+  headers: { token: getStorage('token'), timestamp: Date.now(), platform: 'web' },
   errorHandler, // 默认错误处理
   // credentials: 'include', // 默认请求是否带上cookie
 });
 // request interceptor, change url or options.
 request.interceptors.request.use((url, options) => {
   // const origin  = 'http://chaoduoke.com/cdk'
-  const origin = 'http://test.chaoduoke.com/cdk';
+  const origin = `${backend}/cdk`;
   console.log('request -> url -> ', url);
   return {
     url: `${origin}${url}`,
@@ -88,7 +91,10 @@ request.interceptors.response.use(async response => {
   const { status } = response;
   if (status === 200) {
     const res = await response.clone().json();
-    if (res.code >= 40000) {
+    if (res.code === 40301) {
+      message.error('请先登录');
+      router.push('/user/login');
+    } else if (res.code >= 40000) {
       message.error(res.message);
     }
   }

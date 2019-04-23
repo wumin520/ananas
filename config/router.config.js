@@ -5,12 +5,13 @@ export default [
     component: '../layouts/UserLayout',
     routes: [
       { path: '/user', redirect: '/user/login' },
-      { path: '/user/login', name: 'login', component: './User/Login' },
-      { path: '/user/register', name: 'register', component: './User/Register' },
+      { path: '/user/login', name: 'login', component: './V1/User/Login' },
+      { path: '/user/register', name: 'register', component: './V1/User/Register' },
+      { path: '/user/settlein', name: 'settlein', component: './V1/User/SettleIn' },
       {
         path: '/user/register-result',
         name: 'register.result',
-        component: './User/RegisterResult',
+        component: './V1/User/RegisterResult',
       },
       {
         component: '404',

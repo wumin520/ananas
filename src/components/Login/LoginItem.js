@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col, Icon } from 'antd';
 import omit from 'omit.js';
 import styles from './index.less';
 import ItemMap from './map';
@@ -17,11 +17,19 @@ class WrapFormItem extends Component {
     super(props);
     this.state = {
       count: 0,
+      imgCaptcha: '',
     };
   }
 
   componentDidMount() {
-    const { updateActive, name } = this.props;
+    const { updateActive, name, imgCaptchaUrl, onCaptchaChange } = this.props;
+    this.imgCaptchaUrl = imgCaptchaUrl;
+    // this.setState({
+    //   imgCaptcha: imgCaptchaUrl
+    // })
+    if (onCaptchaChange) {
+      this.changeImgCaptcha();
+    }
     if (updateActive) {
       updateActive(name);
     }
@@ -70,8 +78,17 @@ class WrapFormItem extends Component {
     }, 1000);
   };
 
+  changeImgCaptcha = () => {
+    const { onCaptchaChange } = this.props;
+    const rand = `${Math.random() * 10000}`;
+    this.setState({
+      imgCaptcha: `${this.imgCaptchaUrl}${rand}`,
+    });
+    onCaptchaChange(rand);
+  };
+
   render() {
-    const { count } = this.state;
+    const { count, imgCaptcha } = this.state;
 
     const {
       form: { getFieldDecorator },
@@ -91,7 +108,7 @@ class WrapFormItem extends Component {
       imgCaptchaUrl,
       ...restProps
     } = this.props;
-
+    console.log('changeImgCaptcha -> ', imgCaptcha, this.props);
     // get getFieldDecorator props
     const options = this.getFormItemOptions(this.props);
 
@@ -119,19 +136,22 @@ class WrapFormItem extends Component {
       );
     }
     if (type === 'ImgCaptcha') {
-      const inputProps = omit(otherProps, []);
+      const inputProps = omit(otherProps, ['onCaptchaChange']);
       return (
         <FormItem>
-          <Row gutter={8}>
+          <Row type="flex" justify="space-around" align="middle" gutter={8}>
             <Col span={16}>
               {getFieldDecorator(name, options)(<Input {...customprops} {...inputProps} />)}
             </Col>
-            <Col span={8}>
+            <Col span={6}>
               <img
                 style={{ width: '100%', height: 'auto', display: 'block' }}
                 alt=""
-                src={imgCaptchaUrl}
+                src={imgCaptcha}
               />
+            </Col>
+            <Col span={2}>
+              <Icon onClick={this.changeImgCaptcha} type="sync" />
             </Col>
           </Row>
         </FormItem>

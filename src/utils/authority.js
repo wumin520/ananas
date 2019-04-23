@@ -1,8 +1,8 @@
 // use localStorage to store the authority info, which might be sent from server in actual project.
 export function getAuthority(str) {
-  // return localStorage.getItem('antd-pro-authority') || ['admin', 'user'];
+  // return localStorage.getItem('chaoduoke-authority') || ['admin', 'user'];
   const authorityString =
-    typeof str === 'undefined' ? localStorage.getItem('antd-pro-authority') : str;
+    typeof str === 'undefined' ? localStorage.getItem('chaoduoke-authority') : str;
   // authorityString could be admin, "admin", ["admin"]
   let authority;
   try {
@@ -16,15 +16,27 @@ export function getAuthority(str) {
   if (!authority && APP_TYPE === 'site') {
     return ['admin'];
   }
-  return authority || ['admin'];
+  return authority;
 }
 export function setAuthority(authority) {
   const proAuthority = typeof authority === 'string' ? [authority] : authority;
-  return localStorage.setItem('antd-pro-authority', JSON.stringify(proAuthority));
+  return localStorage.setItem('chaoduoke-authority', JSON.stringify(proAuthority));
+}
+export function setShState(state) {
+  return localStorage.setItem('sh_state', state);
+}
+export function getShState(state = 0) {
+  return localStorage.getItem('sh_state', state || 0);
 }
 export function setUserToken(token) {
-  return localStorage.setItem('token', token);
+  return localStorage.setItem('token', token || '');
 }
 export function getUserToken() {
   return localStorage.getItem('token');
+}
+export function setStorage(key, val) {
+  return localStorage.setItem(key, val);
+}
+export function getStorage(key) {
+  return localStorage.getItem(key);
 }
