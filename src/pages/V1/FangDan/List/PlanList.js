@@ -71,10 +71,11 @@ class PlanList extends PureComponent {
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
       param = {
-        state: values.state,
-        task_id: values.task_id,
-        goods_id: values.goods_id,
-        type: values.type,
+        page: 1,
+        task_id: values.task_id || 0,
+        goods_id: values.goods_id || 0,
+        state: values.state || -1,
+        type: values.type || -1,
       };
       console.log(param);
       dispatch({
