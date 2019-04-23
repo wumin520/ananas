@@ -41,6 +41,8 @@ export default {
   'menu.form.stepform.result': '分步表单（完成）',
   'menu.form.advancedform': '放单列表',
   'menu.list': '我的订单',
+  'menu.index': '流量矩阵',
+  'menu.help': '帮助中心',
   'menu.list.searchtable': '查询表格',
   'menu.list.basiclist': '标准列表',
   'menu.list.cardlist': '卡片列表',

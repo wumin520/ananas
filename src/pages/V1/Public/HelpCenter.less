@@ -1,0 +1,102 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/utils/utils.less';
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+}
+
+.pages {
+  .help_top {
+    width: 100%;
+    background-color: rgba(24, 144, 255, 1);
+    .help_banner {
+      width: 1128px;
+      height: 320px;
+      margin: 0 auto;
+      background: url('https://cdn.youlianyc.com/image/static/45065199bea00a86c1e43a791fac3e479bf1eaa0.jpg')
+        no-repeat;
+      background-size: 1128px auto;
+      .help_notice {
+        width: 1128px;
+        margin: 0 auto;
+        padding-top: 80px;
+        .notice_title {
+          margin-bottom: 64px;
+          color: rgba(255, 255, 255, 1);
+          font-weight: 400;
+          font-size: 32px;
+          // font-family: PingFang-SC-Regular;
+          text-align: center;
+        }
+        .notice_content {
+          display: flex;
+          justify-content: space-between;
+          .introduction {
+            box-sizing: border-box;
+            width: 344px;
+            padding: 32px 24px;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 4px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+            .intr_title {
+              margin-bottom: 26px;
+              .intr_img {
+                display: inline-block;
+                width: 32px;
+                height: 32px;
+                margin-right: 8px;
+              }
+              .intr_title > span {
+                color: rgba(0, 0, 0, 0.65);
+                font-weight: 400;
+                font-size: 20px;
+                // font-family: PingFang-SC-Regular;
+              }
+            }
+            .list {
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 16px;
+              .list_intro {
+                color: rgba(0, 0, 0, 0.45);
+                font-weight: 400;
+                font-size: 14px;
+                // font-family: PingFang-SC-Regular;
+              }
+              .list_time {
+                color: rgba(0, 0, 0, 0.25);
+                font-weight: 400;
+                font-size: 14px;
+                // font-family: PingFang-SC-Regular;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .help_problem {
+    padding-top: 208px;
+    .problem {
+      width: 1128px;
+      margin: 0 auto;
+      .title {
+        margin-bottom: 64px;
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: 400;
+        font-size: 32px;
+        // font-family: PingFang-SC-Regular;
+        text-align: center;
+      }
+      .panel {
+        margin-bottom: 24px;
+      }
+    }
+  }
+}
