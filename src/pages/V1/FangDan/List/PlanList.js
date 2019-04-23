@@ -77,7 +77,6 @@ class PlanList extends PureComponent {
         state: values.state || -1,
         type: values.type || -1,
       };
-      console.log(param);
       dispatch({
         type: 'task/planList',
         payload: param,
@@ -293,6 +292,7 @@ class PlanList extends PureComponent {
                 dataSource={planData.list}
                 pagination={{
                   defaultCurrent: 1,
+                  current: planData.page_info.current_page,
                   pageSize: planData.page_info.per_page,
                   total: planData.page_info.total_num,
                   onChange: this.onChange,
