@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import styles from './index.less';
 
+import Footer from '../components/Footer';
+import HeadNav from '../components/HeadNav';
+
 class Index extends Component {
   componentDidMount() {
     const ele1 = document.getElementById('canvas1');
@@ -62,6 +65,13 @@ class Index extends Component {
   render() {
     return (
       <div className={styles.main}>
+        <HeadNav />
+
+        {/* {con0} */}
+        <div className={styles.content0}>
+          <p className={styles.p1}>一站式导购服务</p>
+          <p className={styles.p2}>打造导购内容生态</p>
+        </div>
         {/* {con1} */}
         <div className={styles.content1}>
           <p className={styles.titled}>多客推广、流量变现、一站式解决方案</p>
@@ -235,6 +245,9 @@ class Index extends Component {
         <div className={styles.content4}>
           <p>携手超多客，为商业赋能</p>
         </div>
+
+        {/* foot */}
+        <Footer />
       </div>
     );
   }
