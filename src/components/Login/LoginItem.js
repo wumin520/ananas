@@ -108,7 +108,7 @@ class WrapFormItem extends Component {
       imgCaptchaUrl,
       ...restProps
     } = this.props;
-    console.log('changeImgCaptcha -> ', imgCaptcha, this.props);
+    // console.log('changeImgCaptcha -> ', imgCaptcha, this.props);
     // get getFieldDecorator props
     const options = this.getFormItemOptions(this.props);
 
