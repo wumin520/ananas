@@ -107,10 +107,6 @@ class LoginPage extends Component {
                   message: formatMessage({ id: 'validation.password.required' }),
                 },
               ]}
-              onPressEnter={e => {
-                e.preventDefault();
-                this.loginForm.validateFields(this.handleSubmit);
-              }}
             />
             <ImgCaptcha
               name="phrase"
@@ -123,6 +119,10 @@ class LoginPage extends Component {
                   message: formatMessage({ id: 'validation.phrase.required' }),
                 },
               ]}
+              onPressEnter={e => {
+                e.preventDefault();
+                this.loginForm.validateFields(this.handleSubmit);
+              }}
             />
           </Tab>
           <Tab key="mobile" tab={formatMessage({ id: 'app.login.tab-login-mobile' })}>
