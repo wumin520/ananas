@@ -3,12 +3,19 @@ import Redirect from 'umi/redirect';
 import pathToRegexp from 'path-to-regexp';
 import { connect } from 'dva';
 import Authorized from '@/utils/Authorized';
-import { getAuthority } from '@/utils/authority';
+import { getAuthority, getShState } from '@/utils/authority';
 import Exception403 from '@/pages/Exception/403';
 
 function AuthComponent({ children, location, routerData }) {
   const auth = getAuthority();
   const isLogin = auth && auth[0] !== 'guest';
+  const isValid = getShState();
+  let redirectTo = '/user/login';
+  // 信息没有完善
+  if (isValid === 0) {
+    redirectTo = '/user/settlein';
+  }
+  console.log(isValid, 'isValid -> ');
   const getRouteAuthority = (path, routeData) => {
     let authorities;
     routeData.forEach(route => {
@@ -27,7 +34,7 @@ function AuthComponent({ children, location, routerData }) {
   return (
     <Authorized
       authority={getRouteAuthority(location.pathname, routerData)}
-      noMatch={isLogin ? <Exception403 /> : <Redirect to="/user/login" />}
+      noMatch={isLogin ? <Exception403 /> : <Redirect to={redirectTo} />}
     >
       {children}
     </Authorized>

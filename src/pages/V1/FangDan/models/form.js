@@ -8,6 +8,7 @@ import {
   pay,
   getCategoryList,
   taskDetail,
+  checkPrivige,
 } from '@/services/api';
 
 export default {
@@ -47,17 +48,18 @@ export default {
   effects: {
     *queryGoodsDetail({ payload }, { call, put }) {
       const res = yield call(queryGoodsDetail, payload);
-      console.log('queryGoodsDetail -> res ', res);
+      console.log('queryGoodsDetail -> res ', res, payload);
       if (res && res.status === 'ok') {
-        if (payload.auto_redirect !== 0) {
-          yield put(routerRedux.push('/fangdan/step-form/confirm'));
-        }
         yield put({
           type: 'saveState',
           payload: {
             goodsDetail: res.payload.goods_detail,
+            pddGoodUrl: payload.goods_id,
           },
         });
+        if (payload.auto_redirect !== 0) {
+          yield put(routerRedux.push('/fangdan/step-form/confirm'));
+        }
       }
     },
     *queryPayInfoByTaskId({ payload }, { call, put }) {
@@ -90,6 +92,10 @@ export default {
       if (res && res.status === 'ok') {
         yield put(routerRedux.push(`/fangdan/step-form/result?task_id=${payload.task_id}`));
       }
+    },
+    *checkPrivige({ payload }, { call }) {
+      const res = yield call(checkPrivige, payload);
+      return res;
     },
     *queryCategoryList({ payload }, { call, put }) {
       const res = yield call(getCategoryList, payload);

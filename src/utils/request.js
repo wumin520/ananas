@@ -4,6 +4,7 @@
  */
 import { extend } from 'umi-request';
 import { notification, message } from 'antd';
+import { getStorage } from './authority';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -67,7 +68,7 @@ const errorHandler = error => {
  * 配置request请求时的默认参数
  */
 const request = extend({
-  headers: { token: 'REJuQ6UXbJlwNzewxQDOpNOwUaTuDaOi', timestamp: Date.now(), platform: 'web' },
+  headers: { token: getStorage('token'), timestamp: Date.now(), platform: 'web' },
   errorHandler, // 默认错误处理
   // credentials: 'include', // 默认请求是否带上cookie
 });

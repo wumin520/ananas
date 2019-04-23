@@ -97,8 +97,18 @@ DSR评分≥4.8分
       if (!item.state) {
         return;
       }
+      const { dispatch } = this.props;
+      dispatch({
+        type: 'form/checkPrivige',
+        payload: {
+          type: 0,
+        },
+      }).then(res => {
+        if (res && res.status === 'ok') {
+          router.push('/fangdan/step-form');
+        }
+      });
       console.log('onTabChange', 1, index);
-      router.push('/fangdan/step-form');
     };
 
     return (

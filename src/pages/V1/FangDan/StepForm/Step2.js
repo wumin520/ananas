@@ -63,6 +63,7 @@ class Step2 extends React.PureComponent {
     dispatch({
       type: 'form/queryCategoryList',
     });
+    console.log(window, 'window -> ');
   };
 
   render() {
