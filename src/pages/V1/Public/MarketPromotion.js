@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Carousel } from 'antd';
 import styles from './MarketPromotion.less';
 
+import MarketNav from './components/MarketNav';
 import Footer from './components/Footer';
 
 class MarketPromotion extends Component {
@@ -10,6 +11,8 @@ class MarketPromotion extends Component {
   render() {
     return (
       <div className={styles.marketPromotion}>
+        <MarketNav />
+
         {/* banner */}
         <div className={styles.bgColor}>
           <div className={styles.mp_banner}>

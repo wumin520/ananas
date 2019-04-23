@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import styles from './MerchantsSettled.less';
 
+import MarketNav from './components/MarketNav';
 import Footer from './components/Footer';
 
 class MerchantsSettled extends PureComponent {
@@ -9,6 +10,8 @@ class MerchantsSettled extends PureComponent {
   render() {
     return (
       <div className={styles.merchantsSettled}>
+        <MarketNav />
+
         {/* banner */}
         <div className={styles.ms_top}>
           <div className={styles.ms_banner}>pic</div>
