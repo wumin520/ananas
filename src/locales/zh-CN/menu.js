@@ -8,6 +8,7 @@ export default {
   'menu.fangdan.stepform.pay': '支付',
   'menu.fangdan.stepform.result': '完成',
   'menu.fangdan.myList': '放单列表',
+  'menu.fangdan.plan': '排期列表',
   'menu.fangdan.generalizeDetail': '推广详情',
   'menu.order': '我的订单',
   'menu.order.detail': '订单详情',

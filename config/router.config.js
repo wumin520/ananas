@@ -148,6 +148,11 @@ export default [
             component: './V1/FangDan/List/Index',
           },
           {
+            path: '/fangdan/plan',
+            name: 'plan',
+            component: './V1/FangDan/List/PlanList',
+          },
+          {
             path: '/fangdan/list/GeneralizeDetail',
             name: 'generalizeDetail',
             component: './V1/FangDan/List/GeneralizeDetail',

@@ -1,4 +1,4 @@
-import { taskList, taskDetail, taskFinish, planDown, planUp } from '@/services/api';
+import { taskList, taskDetail, taskFinish, planDown, planUp, planList } from '@/services/api';
 import { message } from 'antd';
 
 export default {
@@ -42,6 +42,13 @@ export default {
     finishData: {},
     planDownData: {},
     planUpData: {},
+    planData: {
+      list: [],
+      header_info: {},
+      state_select: [],
+      type_select: [],
+      page_info: {},
+    },
   },
 
   effects: {
@@ -104,6 +111,15 @@ export default {
       } else {
         message.success(res.message);
       }
+    },
+    *planList({ payload }, { call, put }) {
+      const res = yield call(planList, payload);
+      yield put({
+        type: 'saveState',
+        payload: {
+          planData: res.payload,
+        },
+      });
     },
   },
 

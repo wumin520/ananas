@@ -1,39 +1,61 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Table, Card, Row, Col, Modal, Input, Button, Form, Select, Badge } from 'antd';
+import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Modal } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import { router } from 'umi';
 import styles from './Index.less';
 
-const { Option } = Select;
 const FormItem = Form.Item;
-const statusMap = ['error', 'processing', 'warning', 'success'];
-const status = ['无效', '已下单', '待评价', '已完成'];
+const statusMap = ['processing', 'success', 'default', 'error'];
+const status = ['排期中', '进行中', '已结束', '已暂停'];
+const { Option } = Select;
+const { confirm } = Modal;
 
-@connect(({ order, loading }) => ({
-  orderData: order.orderData,
-  loading: loading.models.order,
+let param = {
+  page: 1,
+  task_id: 0,
+  goods_id: 0,
+  state: -1,
+  type: -1,
+};
+
+@connect(({ task, loading }) => ({
+  planData: task.planData,
+  loading: loading.effects['task/planList'],
 }))
 @Form.create()
-class orderList extends PureComponent {
-  state = {
-    page: 1,
-  };
+class PlanList extends PureComponent {
+  state = {};
 
   componentDidMount() {
-    const { page } = this.state;
-    this.getOrderData(page);
+    this.getListData(param);
   }
 
-  getOrderData = p => {
-    const { dispatch, location } = this.props;
-    const { query } = location;
-    console.log('this.props:', query);
+  // 接口
+  getListData = p => {
+    const { dispatch } = this.props;
     dispatch({
-      type: 'order/orderData',
-      payload: {
-        page: p,
-        task_id: query.task_id,
+      type: 'task/planList',
+      payload: p,
+    });
+  };
+
+  // 下架
+  planDown = item => {
+    const { dispatch } = this.props;
+    const thises = this;
+    confirm({
+      title: '确定下架此商品？',
+      okText: '确定',
+      cancelText: '取消',
+      onOk() {
+        dispatch({
+          type: 'task/planDownData',
+          payload: {
+            task_plan_id: item.task_plan_id,
+          },
+        }).then(() => {
+          thises.getListData(param);
+        });
       },
     });
   };
@@ -48,80 +70,79 @@ class orderList extends PureComponent {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
+      param = {
+        state: values.state,
+        task_id: values.task_id,
+        goods_id: values.goods_id,
+        type: values.type,
+      };
+      console.log(param);
       dispatch({
-        type: 'order/orderData',
-        payload: values,
+        type: 'task/planList',
+        payload: param,
       });
     });
   };
 
   // 重置
   handleFormReset = () => {
-    const { form, dispatch, location } = this.props;
-    const { query } = location;
+    const { form, dispatch } = this.props;
     form.resetFields();
     dispatch({
-      type: 'order/orderData',
+      type: 'task/planList',
       payload: {
-        task_id: query.task_id,
+        page: 1,
+        task_id: 0,
+        goods_id: 0,
+        state: -1,
+        type: -1,
       },
     });
   };
 
-  goOrderDetail = item => {
-    router.push(`/order/productDetail?order_id=${item.order_id}`);
-  };
-
-  showModal = item => {
-    Modal.info({
-      title: '好评凭证',
-      width: 500,
-      okText: '关闭',
-      content: (
-        <div>
-          {item.proof_images.length > 0 &&
-            item.proof_images.map(e => (
-              <img
-                src={e}
-                alt=""
-                style={{ width: 100, height: 100, marginRight: 10, marginBottom: 20 }}
-              />
-            ))}
-        </div>
-      ),
-      onOk() {},
-    });
-  };
-
-  onChange = page => {
-    const params = {
-      currentPage: page,
+  onChange = currPage => {
+    param = {
+      page: currPage,
     };
-    this.getOrderData(params.currentPage);
+    this.getListData(param);
   };
 
   renderSimpleForm() {
     const {
       form: { getFieldDecorator },
     } = this.props;
-    const { orderData } = this.props;
-    const stateSelect = orderData.state_select;
-    const { location } = this.props;
-    const { query } = location;
-    const defaultValue = query.task_id;
+    const { planData } = this.props;
+    const stateSelect = planData.state_select;
+    const typeSelect = planData.type_select;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
           <Col md={5} sm={24}>
             <FormItem label="推广编号">
-              {getFieldDecorator('task_id', { initialValue: defaultValue })(
-                <Input placeholder="请输入" />
-              )}
+              {getFieldDecorator('task_id')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
             <FormItem label="商品id">
               {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
+            </FormItem>
+          </Col>
+          <Col md={5} sm={24}>
+            <FormItem label="推广类型">
+              {getFieldDecorator('type')(
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="全部"
+                  onChange={this.selectTypeChange}
+                >
+                  {typeSelect.length > 0 &&
+                    typeSelect.map(e => (
+                      <Option key={e.value} value={e.value}>
+                        {e.name}
+                      </Option>
+                    ))}
+                </Select>
+              )}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
@@ -162,11 +183,9 @@ class orderList extends PureComponent {
   }
 
   render() {
-    /* eslint-disable */
-    const { orderData } = this.props;
-    const orderNumInfo = orderData.order_num_info;
-    const pageInfo = orderData.page_info;
-    const { list } = orderData;
+    // 表格数据
+    const { planData } = this.props;
+    const headerInfo = planData.header_info;
     const columns = [
       {
         title: '推广编号',
@@ -186,67 +205,55 @@ class orderList extends PureComponent {
         },
       },
       {
-        title: '订单编号',
-        dataIndex: 'p_order_id',
-        key: 'p_order_id',
-        width: 198,
+        title: '提交时间',
+        dataIndex: 'plan_time',
+        key: 'plan_time',
+        width: 222,
       },
       {
-        title: '购买价格',
-        width: 88,
-        render(item) {
-          return <span>￥{item.order_price}</span>;
+        title: '价格',
+        dataIndex: 'price',
+        key: 'price',
+        render: item => {
+          return <span>￥{item}</span>;
         },
       },
       {
         title: '状态',
         dataIndex: 'state',
-        width: 88,
+        width: 110,
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
       },
       {
-        title: '时间',
+        title: '推广份数',
         width: 200,
-        render(val) {
-          /* eslint-disable */
-          const time = (
-            <span>
-              <span>{val.paid_datetime ? '付款: ' + val.paid_datetime : ''}</span>
-              <br />
-              <span> {val.harvest_time ? '确认收货: ' + val.harvest_time : ''}</span>
-              <br />
-              <span>{val.proof_time ? '好评: ' + val.proof_time : ''}</span>
-            </span>
-          );
+        render: item => {
           return (
-            <span>
-              <span>下单:{val.ordered_datetime}</span>
+            <p>
+              <span>发放份数 {item.total_amount}</span>
+              <span>&nbsp;&nbsp;评价人数 {item.comment_num}</span>
               <br />
-              {time}
-            </span>
+              <span>下单人数 {item.order_num}</span>
+              <span>&nbsp;&nbsp;售后人数 {item.sale_back_num}</span>
+            </p>
           );
         },
       },
       {
         title: '操作',
-        width: 130,
+        width: 120,
         render: item => {
-          let option;
-          if (item.proof_images.length > 0) {
-            option = (
-              <a href={item.proof_images} target="_Blank">
-                好评凭证
-              </a>
+          let operation;
+          if (item.state === 0) {
+            operation = (
+              <span>
+                <a onClick={this.planDown.bind(this, item)}>下架</a>
+              </span>
             );
           }
-          return (
-            <span>
-              <a onClick={this.goOrderDetail.bind(this, item)}>查看 </a>
-              {option}
-            </span>
-          );
+          return <span>{operation}</span>;
         },
       },
     ];
@@ -259,21 +266,19 @@ class orderList extends PureComponent {
       </div>
     );
     const content = <div />;
-
     return (
-      <PageHeaderWrapper title="订单列表" content={content}>
+      <PageHeaderWrapper title="排期列表" content={content}>
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
               <Col sm={8} xs={24}>
-                <Info title="已下单" value={orderNumInfo.pay_num} bordered />
+                <Info title="今日" value={headerInfo.day_num} bordered />
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="待评价" value={orderNumInfo.wait_proof_num} bordered />
+                <Info title="本周" value={headerInfo.week_num} bordered />
               </Col>
-
               <Col sm={8} xs={24}>
-                <Info title="已完成" value={orderNumInfo.finish_num} />
+                <Info title="本月" value={headerInfo.month_num} />
               </Col>
             </Row>
           </Card>
@@ -284,11 +289,11 @@ class orderList extends PureComponent {
               <Table
                 rowKey={item => item.id}
                 columns={columns}
-                dataSource={list}
+                dataSource={planData.list}
                 pagination={{
                   defaultCurrent: 1,
-                  pageSize: orderData.page_info.per_page,
-                  total: orderData.page_info.total_num,
+                  pageSize: planData.page_info.per_page,
+                  total: planData.page_info.total_num,
                   onChange: this.onChange,
                 }}
               />
@@ -300,4 +305,4 @@ class orderList extends PureComponent {
   }
 }
 
-export default orderList;
+export default PlanList;
