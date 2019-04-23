@@ -40,6 +40,11 @@ export async function orderDetail(params) {
   return request(`/v1/web/order/detail?${stringify(params)}`);
 }
 
+// 排期列表
+export async function planList(params) {
+  return request(`/v1/web/task/plan_list?${stringify(params)}`);
+}
+
 // 资金明细
 export async function getAssetList(params) {
   return request(`/v1/web/account/asset_list?${stringify(params)}`);

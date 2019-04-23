@@ -209,7 +209,7 @@ class FdList extends PureComponent {
           return (
             <span className={styles.pro}>
               <img src={val.img} alt="a" style={{ width: 50, heigth: 50, marginRight: 5 }} />
-              <span className={styles.goodsName}> {val.goods_name}</span>
+              <span className={styles.goodsName}> {val.title}</span>
             </span>
           );
         },
