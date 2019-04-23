@@ -244,6 +244,7 @@ class Index extends Component {
         </div>
         {/* {con4} */}
         <div className={styles.content4}>
+          <div className={styles.mask} />
           <p>携手超多客，为商业赋能</p>
         </div>
 
