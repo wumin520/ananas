@@ -68,7 +68,7 @@ class MarketNav extends PureComponent {
             </div>
           </div>
           <div className={styles.nav_center}>
-            <Link className={styles.nav_link} to="/market">
+            <Link className={styles.nav_link} to="/web">
               首页
             </Link>
             <Link className={styles.nav_link} to="/market/MerchantsSettled">

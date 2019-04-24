@@ -40,8 +40,10 @@ class HeadNav extends PureComponent {
   render() {
     const { isLogin } = this.state;
     const { currentUser } = this.props;
-    const { state } = currentUser;
-
+    const { state, phone } = currentUser;
+    const phoneStr = phone
+      ? `${currentUser.phone.substr(0, 3)}****${currentUser.phone.substr(7)}`
+      : '';
     const menu = (
       <Menu>
         <Menu.Item>
@@ -65,7 +67,7 @@ class HeadNav extends PureComponent {
             {isLogin ? (
               <Dropdown overlay={menu}>
                 <p>
-                  {currentUser.phone} <Icon type="down" />
+                  {phoneStr} <Icon type="down" />
                 </p>
               </Dropdown>
             ) : (
@@ -76,7 +78,7 @@ class HeadNav extends PureComponent {
             {isLogin ? (
               <div>
                 {state === 0 ? (
-                  <a href="/user/settlein">商家中心</a>
+                  <a href="/user/settlein">商家入驻</a>
                 ) : (
                   <a href="/homePage">放单中心</a>
                 )}
@@ -87,7 +89,9 @@ class HeadNav extends PureComponent {
           </div>
         </div>
         <div className={styles.navRight}>
-          <div>帮助中心</div>
+          <div>
+            <a href="/public/helpCenter">帮助中心</a>
+          </div>
           <div>联系我们</div>
         </div>
       </div>
