@@ -72,8 +72,6 @@ const errorHandler = error => {
 console.log('request -> init -> ');
 const request = extend({
   headers: {
-    token: getStorage('token') || window.cdk_token,
-    timestamp: Date.now(),
     platform: 'web',
   },
   errorHandler, // 默认错误处理
@@ -83,10 +81,18 @@ const request = extend({
 request.interceptors.request.use((url, options) => {
   // const origin  = 'http://chaoduoke.com/cdk'
   const origin = `${backend}/cdk`;
-  console.log('request -> url -> ', url, 'options -> ', options);
+  const token = window.cdk_token || getStorage('token');
+  console.log('request -> url -> ', url, 'options -> ', options, token);
   return {
     url: `${origin}${url}`,
-    options: { ...options, interceptors: true },
+    options: {
+      ...options,
+      headers: {
+        ...options.headers,
+        token,
+        timestamp: Date.now(),
+      },
+    },
   };
 });
 

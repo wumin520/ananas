@@ -283,15 +283,10 @@ class Register extends Component {
                   rules: [
                     {
                       required: true,
-                      message: formatMessage({ id: 'validation.verification-code.required' }),
+                      message: '请输入图片验证码',
                     },
                   ],
-                })(
-                  <Input
-                    size="large"
-                    placeholder={formatMessage({ id: 'form.verification-code.placeholder' })}
-                  />
-                )}
+                })(<Input size="large" placeholder="图片验证码" />)}
               </Col>
               <Col span={6}>
                 <img
