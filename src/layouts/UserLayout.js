@@ -28,7 +28,7 @@ const links = [
 
 const copyright = (
   <Fragment>
-    Copyright <Icon type="copyright" /> 2019 有练产品超多客出品
+    Copyright <Icon type="copyright" /> 2019 有练网络科技产品超多客出品
   </Fragment>
 );
 
@@ -68,11 +68,13 @@ class UserLayout extends Component {
             </div> */}
             <Row className={styles.topMenu}>
               <Col push={2} span={12}>
-                <img
-                  className={styles.logo}
-                  alt="logo"
-                  src="https://cdn.youlianyc.com/image/static/80177b5561be4401729b60666c74a07e5e459d34.jpg"
-                />
+                <Link to="/web/index">
+                  <img
+                    className={styles.logo}
+                    alt="logo"
+                    src="https://cdn.youlianyc.com/image/static/80177b5561be4401729b60666c74a07e5e459d34.jpg"
+                  />
+                </Link>
                 <span className={styles.slogan}>一站式导购服务</span>
               </Col>
               <Col pull={2} span={12}>
