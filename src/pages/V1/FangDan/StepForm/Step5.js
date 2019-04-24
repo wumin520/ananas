@@ -18,7 +18,7 @@ class Step5 extends React.PureComponent {
       router.push(`/fangdan/list/GeneralizeDetail?task_id=${location.query.task_id}`);
     };
     const goBackList = () => {
-      router.push('/fangdan/index');
+      router.push('/fangdan/list');
     };
 
     const actions = (
@@ -31,7 +31,9 @@ class Step5 extends React.PureComponent {
         </Button>
       </Fragment>
     );
-    const phoneStr = `${currentUser.phone.substr(0, 3)}****${currentUser.phone.substr(7)}`;
+    const phoneStr = currentUser.phone
+      ? `${currentUser.phone.substr(0, 3)}****${currentUser.phone.substr(7)}`
+      : '';
     const description = (
       <div style={{ whiteSpace: 'pre-wrap' }}>
         我们将在24小时内审核完毕

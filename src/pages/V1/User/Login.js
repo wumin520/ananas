@@ -72,7 +72,6 @@ class LoginPage extends Component {
     const { type } = this.state;
 
     const imgCaptchaUrl = `${setting.backend}/cdk/phrase?_version=`;
-    console.log('render -> ', 1);
     return (
       <div className={styles.main}>
         <Login

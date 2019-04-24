@@ -26,6 +26,7 @@ export default {
   'menu.home': '首页',
   'menu.login': '登录',
   'menu.register': '注册',
+  'menu.settlein': '商家入驻',
   'menu.register.result': '注册结果',
   'menu.marketPromotion': '营销推广',
   'menu.merchantsSettled': '商家入驻',
