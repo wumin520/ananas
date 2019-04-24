@@ -113,7 +113,7 @@ class Header extends PureComponent {
         className={`${styles.nav} ${fixTop ? styles.navFixtop : ''} ${
           bgWhite ? styles.navBgWhite : ''
         }`}
-        style={{ backgroundColor: this.props.bgColor, opacity: this.props.opacity }}
+        // style={{ backgroundColor: this.props.bgColor, opacity: this.props.opacity }}
       >
         <div className={styles.content}>
           <Row type="flex" justify="space-between">
