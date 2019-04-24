@@ -30,7 +30,7 @@ export default {
           type: 'registerHandle',
           payload: response,
         });
-        yield put(routerRedux.push('/user/settlein'));
+        yield put(routerRedux.push('/web/index'));
       }
     },
   },
