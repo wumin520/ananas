@@ -3,7 +3,7 @@ import { setAuthority, setUserToken, setShState } from '@/utils/authority';
 import { reloadAuthorized } from '@/utils/Authorized';
 import { routerRedux } from 'dva/router';
 
-const homePath = '/home/index';
+const homePath = '/web/index';
 
 export default {
   namespace: 'register',
