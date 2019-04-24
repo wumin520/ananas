@@ -3,6 +3,8 @@ import { setAuthority, setUserToken, setShState } from '@/utils/authority';
 import { reloadAuthorized } from '@/utils/Authorized';
 import { routerRedux } from 'dva/router';
 
+const homePath = '/web/index';
+
 export default {
   namespace: 'register',
 
@@ -20,7 +22,7 @@ export default {
             sh_state: 1,
           },
         });
-        yield put(routerRedux.push('/'));
+        yield put(routerRedux.push(homePath));
       }
     },
     *submit({ payload }, { call, put }) {
@@ -30,7 +32,7 @@ export default {
           type: 'registerHandle',
           payload: response,
         });
-        yield put(routerRedux.push('/web/index'));
+        yield put(routerRedux.push(homePath));
       }
     },
   },

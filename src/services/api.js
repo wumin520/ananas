@@ -284,3 +284,10 @@ export async function signout(params) {
     data: params,
   });
 }
+// 自动登录
+export async function autoLogin(params) {
+  return request(api_pre + 'sign_in/interior', {
+    method: 'POST',
+    data: params,
+  });
+}
