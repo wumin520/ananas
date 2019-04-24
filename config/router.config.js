@@ -41,7 +41,7 @@ export default [
       {
         path: '/public/matrix',
         name: 'index',
-        component: './V1/Public/Index',
+        component: './V1/Public/Matrix',
       },
       {
         path: '/public/helpCenter',

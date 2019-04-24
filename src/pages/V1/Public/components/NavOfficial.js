@@ -4,7 +4,9 @@ import { Row, Col, Dropdown, Icon, Button } from 'antd';
 import styles from './NavOfficial.less';
 
 class Header extends PureComponent {
-  state = {};
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     /* eslint-disable */
@@ -74,7 +76,10 @@ class Header extends PureComponent {
       </div>
     );
     return (
-      <div className={styles.nav}>
+      <div
+        className={styles.nav}
+        style={{ backgroundColor: this.props.bgColor, opacity: this.props.opacity }}
+      >
         <div className={styles.content}>
           <Row type="flex" justify="space-between">
             <Col span={4}>
