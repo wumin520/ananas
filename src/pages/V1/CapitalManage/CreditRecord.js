@@ -267,6 +267,11 @@ class CreditRecord extends Component {
     this.getFormData(param);
   };
 
+  changePage = p => {
+    param.page = p;
+    this.getFormData(param);
+  };
+
   render() {
     const {
       form: { getFieldDecorator },
@@ -355,7 +360,18 @@ class CreditRecord extends Component {
               </StandardFormRow>
             </Form>
 
-            <Table loading={loading} dataSource={list} columns={this.columns} />
+            <Table
+              loading={loading}
+              dataSource={list}
+              columns={this.columns}
+              pagination={{
+                defaultCurrent: 1,
+                current: creditlist.page_info.current_page,
+                pageSize: creditlist.page_info.per_page,
+                total: creditlist.page_info.total_num,
+                onChange: this.changePage,
+              }}
+            />
           </Card>
           <Card>
             <Table

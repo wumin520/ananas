@@ -220,6 +220,7 @@ class FreezeDetail extends PureComponent {
               onChange={this.handleChange}
               pagination={{
                 defaultCurrent: 1,
+                current: freezeData.page_info.current_page,
                 pageSize: freezeData.page_info.per_page,
                 total: freezeData.page_info.total_num,
                 onChange: this.onChange,

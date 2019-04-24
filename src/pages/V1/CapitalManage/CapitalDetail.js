@@ -273,6 +273,7 @@ class CapitalDetail extends PureComponent {
                   dataSource={assetData.list}
                   pagination={{
                     defaultCurrent: 1,
+                    current: assetData.page_info.current_page,
                     pageSize: assetData.page_info.per_page,
                     total: assetData.page_info.total_num,
                     onChange: this.changePage,
@@ -285,6 +286,7 @@ class CapitalDetail extends PureComponent {
                   dataSource={exchangeData.list}
                   pagination={{
                     defaultCurrent: 1,
+                    current: exchangeData.page_info.current_page,
                     pageSize: exchangeData.page_info.per_page,
                     total: exchangeData.page_info.total_num,
                     onChange: this.changePage,
