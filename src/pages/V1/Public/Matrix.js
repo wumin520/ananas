@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import HeadNav from './components/HeadNav';
 import NavOfficial from './components/NavOfficial';
 import Footer from './components/Footer';
 import styles from './Matrix.less';
@@ -16,6 +17,7 @@ class TrafficMatrix extends PureComponent {
     /* eslint-disable */
     return (
       <div className={styles.page}>
+        <HeadNav />
         <NavOfficial bgColor={this.state.bgColor} opacity={this.state.opacity} />
         <div className={styles.cdk_top}>
           <div className={styles.box}>
