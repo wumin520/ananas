@@ -58,6 +58,7 @@ export default {
           payload: {
             status: false,
             currentAuthority: 'guest',
+            delToken: 1,
           },
         });
         reloadAuthorized();
@@ -85,6 +86,9 @@ export default {
         window.cdk_token = token;
         setUserToken(token);
         setShState(sh_state);
+      } else if (payload.delToken) {
+        setUserToken('');
+        setShState('');
       }
       setAuthority(payload.currentAuthority);
       return {

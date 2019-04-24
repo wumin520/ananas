@@ -52,9 +52,9 @@ class Register extends Component {
   componentWillMount() {
     const state = getShState();
     console.log('reigister -> componentWillMount -> sh_state -> ', state, typeof state);
-    if (state === '0') {
-      router.push('/user/settlein');
-    }
+    // if (state === '0') {
+    //   router.push('/user/settlein');
+    // }
   }
 
   componentDidMount() {

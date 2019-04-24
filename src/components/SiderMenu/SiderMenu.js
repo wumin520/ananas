@@ -5,7 +5,7 @@ import Link from 'umi/link';
 import styles from './index.less';
 import PageLoading from '../PageLoading';
 import { getDefaultCollapsedSubMenus } from './SiderMenuUtils';
-import { title } from '../../defaultSettings';
+// import { title } from '../../defaultSettings';
 
 const BaseMenu = React.lazy(() => import('./BaseMenu'));
 const { Sider } = Layout;
@@ -54,7 +54,7 @@ export default class SiderMenu extends PureComponent {
   };
 
   render() {
-    const { logo, collapsed, onCollapse, fixSiderbar, theme, isMobile } = this.props;
+    const { logo, smallLogo, collapsed, onCollapse, fixSiderbar, theme, isMobile } = this.props;
     const { openKeys } = this.state;
     const defaultProps = collapsed ? {} : { openKeys };
 
@@ -62,6 +62,10 @@ export default class SiderMenu extends PureComponent {
       [styles.fixSiderBar]: fixSiderbar,
       [styles.light]: theme === 'light',
     });
+    let showLogo = logo;
+    if (collapsed) {
+      showLogo = smallLogo;
+    }
     return (
       <Sider
         trigger={null}
@@ -79,8 +83,8 @@ export default class SiderMenu extends PureComponent {
       >
         <div className={styles.logo} id="logo">
           <Link to="/">
-            <img src={logo} alt="logo" />
-            <h1>{title}</h1>
+            <img src={showLogo} alt="logo" />
+            {/* <h1>{title}</h1> */}
           </Link>
         </div>
         <Suspense fallback={<PageLoading />}>
