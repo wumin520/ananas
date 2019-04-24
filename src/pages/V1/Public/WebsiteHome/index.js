@@ -7,75 +7,85 @@ import HeadNav from '../components/HeadNav';
 class Index extends Component {
   componentDidMount() {
     const ele1 = document.getElementById('canvas1');
-    const ctx1 = ele1.getContext('2d');
-    ctx1.beginPath();
-    ctx1.arc(265, 20, 6, 0, 2 * Math.PI);
-    ctx1.fillStyle = '#2f54eb';
-    ctx1.fill();
-    ctx1.strokeStyle = '#38a1dc';
-    ctx1.lineWidth = 3;
-    ctx1.moveTo(-200, 340);
-    ctx1.lineTo(110, 20);
-    ctx1.lineTo(260, 20);
-    ctx1.stroke();
-    ctx1.closePath();
+    const data1 = {
+      lr: 'r',
+      x1: -200,
+      y1: 340,
+      x2: 110,
+      y2: 20,
+      x3: 260,
+      y3: 20,
+    };
+    this.goCanvas(ele1, data1);
 
     const ele2 = document.getElementById('canvas2');
-    const ctx2 = ele2.getContext('2d');
-    ctx2.beginPath();
-    ctx2.arc(8, 20, 5, 0, 2 * Math.PI);
-    ctx2.fillStyle = '#2f54eb';
-    ctx2.fill();
-    ctx2.strokeStyle = '#38a1dc';
-    ctx2.lineWidth = 3;
-    ctx2.moveTo(500, 300);
-    ctx2.lineTo(150, 20);
-    ctx2.lineTo(12, 20);
-    ctx2.stroke();
-    ctx2.closePath();
+    const data2 = {
+      lr: 'l',
+      x1: 500,
+      y1: 300,
+      x2: 150,
+      y2: 20,
+      x3: 12,
+      y3: 20,
+    };
+    this.goCanvas(ele2, data2);
 
     const ele3 = document.getElementById('canvas3');
-    const ctx3 = ele3.getContext('2d');
-    ctx3.beginPath();
-    ctx3.arc(286, 20, 5, 0, 2 * Math.PI);
-    ctx3.fillStyle = '#2f54eb';
-    ctx3.fill();
-    ctx3.strokeStyle = '#38a1dc';
-    ctx3.lineWidth = 3;
-    ctx3.moveTo(-150, 150);
-    ctx3.lineTo(150, 20);
-    ctx3.lineTo(280, 20);
-    ctx3.stroke();
-    ctx3.closePath();
+    const data3 = {
+      lr: 'r',
+      x1: -150,
+      y1: 150,
+      x2: 150,
+      y2: 20,
+      x3: 280,
+      y3: 20,
+    };
+    this.goCanvas(ele3, data3);
 
     const ele4 = document.getElementById('canvas4');
-    const ctx4 = ele4.getContext('2d');
-    ctx4.beginPath();
-    ctx4.arc(6, 130, 5, 0, 2 * Math.PI);
-    ctx4.fillStyle = '#2f54eb';
-    ctx4.fill();
-    ctx4.strokeStyle = '#38a1dc';
-    ctx4.lineWidth = 3;
-    ctx4.moveTo(290, 0);
-    ctx4.lineTo(100, 130);
-    ctx4.lineTo(12, 130);
-    ctx4.stroke();
-    ctx4.closePath();
+    const data4 = {
+      lr: 'l',
+      x1: 290,
+      y1: 0,
+      x2: 100,
+      y2: 130,
+      x3: 12,
+      y3: 130,
+    };
+    this.goCanvas(ele4, data4);
 
     const ele5 = document.getElementById('canvas5');
-    const ctx5 = ele5.getContext('2d');
-    ctx5.beginPath();
-    ctx5.arc(286, 130, 5, 0, 2 * Math.PI);
-    ctx5.fillStyle = '#2f54eb';
-    ctx5.fill();
-    ctx5.strokeStyle = '#38a1dc';
-    ctx5.lineWidth = 3;
-    ctx5.moveTo(0, 0);
-    ctx5.lineTo(150, 130);
-    ctx5.lineTo(280, 130);
-    ctx5.stroke();
-    ctx5.closePath();
+    const data5 = {
+      lr: 'r',
+      x1: 0,
+      y1: 0,
+      x2: 150,
+      y2: 130,
+      x3: 280,
+      y3: 130,
+    };
+    this.goCanvas(ele5, data5);
   }
+
+  goCanvas = (ele, item) => {
+    const obj = ele.getContext('2d');
+    obj.beginPath();
+    if (item.lr === 'r') {
+      obj.arc(item.x3 + 6, item.y3, 5, 0, 2 * Math.PI);
+    } else {
+      obj.arc(item.x3 - 6, item.y3, 5, 0, 2 * Math.PI);
+    }
+    obj.fillStyle = '#2f54eb';
+    obj.fill();
+    obj.strokeStyle = '#38a1dc';
+    obj.lineWidth = 3;
+    obj.moveTo(item.x1, item.y1);
+    obj.lineTo(item.x2, item.y2);
+    obj.lineTo(item.x3, item.y3);
+    obj.stroke();
+    obj.closePath();
+    return obj;
+  };
 
   render() {
     return (
