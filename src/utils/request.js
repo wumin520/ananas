@@ -69,8 +69,13 @@ const errorHandler = error => {
 /**
  * 配置request请求时的默认参数
  */
+console.log('request -> init -> ');
 const request = extend({
-  headers: { token: getStorage('token'), timestamp: Date.now(), platform: 'web' },
+  headers: {
+    token: getStorage('token') || window.cdk_token,
+    timestamp: Date.now(),
+    platform: 'web',
+  },
   errorHandler, // 默认错误处理
   // credentials: 'include', // 默认请求是否带上cookie
 });
@@ -78,7 +83,7 @@ const request = extend({
 request.interceptors.request.use((url, options) => {
   // const origin  = 'http://chaoduoke.com/cdk'
   const origin = `${backend}/cdk`;
-  console.log('request -> url -> ', url);
+  console.log('request -> url -> ', url, 'options -> ', options);
   return {
     url: `${origin}${url}`,
     options: { ...options, interceptors: true },
