@@ -5,8 +5,9 @@ import { Icon, Dropdown, Menu } from 'antd';
 
 import styles from './HeadNav.less';
 
-@connect(({ user }) => ({
+@connect(({ user, login }) => ({
   currentUser: user.currentUser,
+  login,
 }))
 class HeadNav extends PureComponent {
   constructor() {
@@ -29,14 +30,27 @@ class HeadNav extends PureComponent {
     }
   }
 
+  loginOut = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'login/logout',
+    });
+  };
+
   render() {
     const { isLogin } = this.state;
     const { currentUser } = this.props;
+    const { state } = currentUser;
 
     const menu = (
       <Menu>
         <Menu.Item>
-          <a className={styles.menuA} target="_blank" rel="noopener noreferrer" href="/">
+          <a
+            className={styles.menuA}
+            onClick={this.loginOut.bind(this)}
+            rel="noopener noreferrer"
+            href="/"
+          >
             退出登录
           </a>
         </Menu.Item>
@@ -60,7 +74,13 @@ class HeadNav extends PureComponent {
           </div>
           <div>
             {isLogin ? (
-              <a href="/user/settlein">商家中心</a>
+              <div>
+                {state === 0 ? (
+                  <a href="/user/settlein">商家中心</a>
+                ) : (
+                  <a href="/homePage">放单中心</a>
+                )}
+              </div>
             ) : (
               <a href="/user/register">我要注册</a>
             )}

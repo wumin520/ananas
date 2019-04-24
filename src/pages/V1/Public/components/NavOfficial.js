@@ -98,7 +98,7 @@ class Header extends PureComponent {
                   </Col>
                 </Dropdown>
                 <Col span={4} style={{ textAlign: 'right' }}>
-                  <a href="">营销推广</a>
+                  <a href="/market">营销推广</a>
                 </Col>
                 <Col span={3} style={{ textAlign: 'right' }}>
                   <a href="">关于我们</a>
