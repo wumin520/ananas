@@ -90,13 +90,13 @@ class Header extends PureComponent {
                 <Col span={4} style={{ textAlign: 'right' }}>
                   <a href="/web/index">首页</a>
                 </Col>
-                <Col span={4} style={{ textAlign: 'right' }}>
-                  <Dropdown overlay={menu} overlayStyle={{ width: '100%' }}>
+                <Dropdown overlay={menu} overlayStyle={{ width: '100%' }}>
+                  <Col span={4} style={{ textAlign: 'right' }}>
                     <a className="ant-dropdown-link" href="/public/matrix">
                       浏量矩阵 <Icon type="down" />
                     </a>
-                  </Dropdown>
-                </Col>
+                  </Col>
+                </Dropdown>
                 <Col span={4} style={{ textAlign: 'right' }}>
                   <a href="">营销推广</a>
                 </Col>

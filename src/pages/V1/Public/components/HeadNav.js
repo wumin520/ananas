@@ -1,8 +1,13 @@
 import React, { PureComponent } from 'react';
-import { Icon } from 'antd';
+import { connect } from 'dva';
+import { getUserToken } from '@/utils/authority';
+import { Icon, Dropdown, Menu } from 'antd';
 
 import styles from './HeadNav.less';
 
+@connect(({ user }) => ({
+  currentUser: user.currentUser,
+}))
 class HeadNav extends PureComponent {
   constructor() {
     super();
@@ -11,8 +16,32 @@ class HeadNav extends PureComponent {
     };
   }
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    const token = getUserToken();
+    if (token) {
+      dispatch({
+        type: 'user/fetchCurrent',
+      });
+      this.setState({
+        isLogin: true,
+      });
+    }
+  }
+
   render() {
     const { isLogin } = this.state;
+    const { currentUser } = this.props;
+
+    const menu = (
+      <Menu>
+        <Menu.Item>
+          <a className={styles.menuA} target="_blank" rel="noopener noreferrer" href="/">
+            退出登录
+          </a>
+        </Menu.Item>
+      </Menu>
+    );
 
     return (
       <div className={styles.nav}>
@@ -20,22 +49,22 @@ class HeadNav extends PureComponent {
           <div>一站式导购服务</div>
           <div className={styles.loginInfo}>
             {isLogin ? (
-              <p>
-                181****4321 <Icon type="down" />
-              </p>
+              <Dropdown overlay={menu}>
+                <p>
+                  {currentUser.phone} <Icon type="down" />
+                </p>
+              </Dropdown>
             ) : (
-              <a
-                onClick={() => {
-                  this.setState({
-                    isLogin: true,
-                  });
-                }}
-              >
-                Hi~ 请登录
-              </a>
+              <a href="/user/login">Hi~ 请登录</a>
             )}
           </div>
-          <div>我要注册</div>
+          <div>
+            {isLogin ? (
+              <a href="/user/settlein">商家中心</a>
+            ) : (
+              <a href="/user/register">我要注册</a>
+            )}
+          </div>
         </div>
         <div className={styles.navRight}>
           <div>帮助中心</div>
