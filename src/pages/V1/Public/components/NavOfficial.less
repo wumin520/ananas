@@ -12,8 +12,10 @@ p {
 }
 .nav {
   position: fixed;
+  z-index: 999;
   width: 100%;
-  padding: 16px 0;
+  line-height: 64px;
+  // padding: 16px 0;
   // background: rgba(47, 84, 235, 1);
   border-bottom: 1px solid #fff;
   .content {
@@ -22,6 +24,7 @@ p {
     .nav_img {
       width: 110px;
       height: 32px;
+      margin: 16px 0;
       background: url('https://cdn.youlianyc.com/image/static/c23de9fafe5c6847b5792bb72726e399971d6517.jpg')
         no-repeat;
       background-size: 110px 32px;
@@ -29,13 +32,14 @@ p {
   }
 }
 
-.nav:hover {
-  background: #fff;
-  border-bottom: 1px solid #fff;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+.nav:hover,
+.nav:focus,
+.nav:focus-within {
+  background: #fff !important;
+  border-bottom: 1px solid #fff !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04) !important;
+  opacity: 1 !important;
   .nav_img {
-    width: 110px;
-    height: 32px;
     background: url('https://cdn.youlianyc.com/image/static/80177b5561be4401729b60666c74a07e5e459d34.jpg')
       no-repeat;
     background-size: 110px 32px;
@@ -49,11 +53,12 @@ p {
 }
 .menu_box {
   position: absolute;
-  top: 25px;
+  top: -3px;
   left: 0;
   width: 100%;
   padding: 40px 156px;
   background-color: #fff;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04) inset;
   .menu_content {
     display: flex;
     justify-content: space-between;

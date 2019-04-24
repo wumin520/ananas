@@ -3,8 +3,17 @@ import styles from './index.less';
 
 import Footer from '../components/Footer';
 import HeadNav from '../components/HeadNav';
+import NavOfficial from '../components/NavOfficial';
 
 class Index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      bgColor: '#2F54EB',
+      opacity: 0.85,
+    };
+  }
+
   componentDidMount() {
     const ele1 = document.getElementById('canvas1');
     const data1 = {
@@ -88,9 +97,13 @@ class Index extends Component {
   };
 
   render() {
+    const { bgColor, opacity } = this.state;
+
     return (
       <div className={styles.main}>
         <HeadNav />
+
+        <NavOfficial bgColor={bgColor} opacity={opacity} />
 
         {/* {con0} */}
         <div className={styles.content0}>
