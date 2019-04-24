@@ -88,20 +88,26 @@ class Header extends PureComponent {
             <Col span={15}>
               <Row type="flex" justify="end">
                 <Col span={4} style={{ textAlign: 'right' }}>
-                  <a href="/web/index">首页</a>
+                  <a className={`${styles.a_nav}`} href="/web/index">
+                    首页
+                  </a>
                 </Col>
                 <Dropdown overlay={menu} overlayStyle={{ width: '100%' }}>
                   <Col span={4} style={{ textAlign: 'right' }}>
-                    <a className="ant-dropdown-link" href="/public/matrix">
+                    <a className={`ant-dropdown-link ${styles.a_nav}`} href="/public/matrix">
                       浏量矩阵 <Icon type="down" />
                     </a>
                   </Col>
                 </Dropdown>
                 <Col span={4} style={{ textAlign: 'right' }}>
-                  <a href="/market">营销推广</a>
+                  <a className={`${styles.a_nav}`} href="/market">
+                    营销推广
+                  </a>
                 </Col>
                 <Col span={3} style={{ textAlign: 'right' }}>
-                  <a href="">关于我们</a>
+                  <a className={`${styles.a_nav}`} href="">
+                    关于我们
+                  </a>
                 </Col>
               </Row>
             </Col>
