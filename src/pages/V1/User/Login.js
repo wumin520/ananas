@@ -18,6 +18,21 @@ class LoginPage extends Component {
     type: 'account',
   };
 
+  componentWillMount() {
+    const {
+      location: { query },
+      dispatch,
+    } = this.props;
+    if (query.mobile && query.password) {
+      dispatch({
+        type: 'login/autoLogin',
+        payload: {
+          ...query,
+        },
+      });
+    }
+  }
+
   onTabChange = type => {
     this.setState({ type });
   };
@@ -148,7 +163,7 @@ class LoginPage extends Component {
             <Captcha
               name="verification_code"
               placeholder={formatMessage({ id: 'form.verification-code.placeholder' })}
-              countDown={120}
+              countDown={60}
               onGetCaptcha={this.onGetCaptcha}
               getCaptchaButtonText={formatMessage({ id: 'form.get-captcha' })}
               getCaptchaSecondText={formatMessage({ id: 'form.captcha.second' })}

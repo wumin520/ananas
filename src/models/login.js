@@ -1,9 +1,29 @@
 import { routerRedux } from 'dva/router';
 import { stringify } from 'qs';
-import { login, getCaptcha, signout } from '@/services/api';
+import { login, getCaptcha, signout, autoLogin } from '@/services/api';
 import { setUserToken, setAuthority, setShState } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
+
+const getRedirectUrl = () => {
+  reloadAuthorized();
+  const urlParams = new URL(window.location.href);
+  const params = getPageQuery();
+  let { redirect } = params;
+  if (redirect) {
+    const redirectUrlParams = new URL(redirect);
+    if (redirectUrlParams.origin === urlParams.origin) {
+      redirect = redirect.substr(urlParams.origin.length);
+      if (redirect.match(/^\/.*#/)) {
+        redirect = redirect.substr(redirect.indexOf('#') + 1);
+      }
+    } else {
+      redirect = null;
+    }
+  }
+  return redirect;
+};
+const homePath = '/web/index';
 
 export default {
   namespace: 'login',
@@ -27,22 +47,16 @@ export default {
             setToken: 1,
           },
         });
-        reloadAuthorized();
-        const urlParams = new URL(window.location.href);
-        const params = getPageQuery();
-        let { redirect } = params;
-        if (redirect) {
-          const redirectUrlParams = new URL(redirect);
-          if (redirectUrlParams.origin === urlParams.origin) {
-            redirect = redirect.substr(urlParams.origin.length);
-            if (redirect.match(/^\/.*#/)) {
-              redirect = redirect.substr(redirect.indexOf('#') + 1);
-            }
-          } else {
-            redirect = null;
-          }
-        }
-        yield put(routerRedux.replace(redirect || '/'));
+        const redirect = getRedirectUrl();
+        yield put(routerRedux.replace(redirect || homePath));
+      }
+    },
+
+    *autoLogin({ payload }, { call, put }) {
+      const response = yield call(autoLogin, payload);
+      if (response && response.status === 'ok') {
+        const redirect = getRedirectUrl();
+        yield put(routerRedux.replace(redirect || homePath));
       }
     },
 
