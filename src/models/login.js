@@ -1,7 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { stringify } from 'qs';
 import { login, getCaptcha, signout } from '@/services/api';
-import { setUserToken, setAuthority } from '@/utils/authority';
+import { setUserToken, setAuthority, setShState } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
 
@@ -80,9 +80,11 @@ export default {
     changeLoginStatus(state, { payload }) {
       console.log('reducers -> changeLoginStatus -> payload -> ', payload);
       if (payload.setToken) {
-        const { token } = payload.res.payload;
+        /* eslint-disable */
+        const { token, sh_state } = payload.res.payload;
         window.cdk_token = token;
         setUserToken(token);
+        setShState(sh_state);
       }
       setAuthority(payload.currentAuthority);
       return {
