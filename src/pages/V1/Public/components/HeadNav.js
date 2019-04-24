@@ -20,12 +20,17 @@ class HeadNav extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     const token = getUserToken();
-    if (token) {
+
+    if (token !== '') {
       dispatch({
         type: 'user/fetchCurrent',
       });
       this.setState({
         isLogin: true,
+      });
+    } else {
+      this.setState({
+        isLogin: false,
       });
     }
   }
@@ -47,52 +52,59 @@ class HeadNav extends PureComponent {
     const menu = (
       <Menu>
         <Menu.Item>
-          <a
-            className={styles.menuA}
-            onClick={this.loginOut.bind(this)}
-            rel="noopener noreferrer"
-            href="/"
-          >
+          <div className={styles.menuA} onClick={this.loginOut}>
             退出登录
-          </a>
+          </div>
         </Menu.Item>
       </Menu>
     );
 
     return (
-      <div className={styles.nav}>
-        <div className={styles.navLeft}>
-          <div>一站式导购服务</div>
-          <div className={styles.loginInfo}>
-            {isLogin ? (
-              <Dropdown overlay={menu}>
-                <p>
-                  {phoneStr} <Icon type="down" />
-                </p>
-              </Dropdown>
-            ) : (
-              <a href="/user/login">Hi~ 请登录</a>
-            )}
+      <div className={styles.nav_block}>
+        <div className={styles.nav}>
+          <div className={styles.navLeft}>
+            <div>一站式导购服务</div>
+            <div className={styles.loginInfo}>
+              {isLogin ? (
+                <Dropdown overlay={menu}>
+                  <p>
+                    {phoneStr} <Icon type="down" />
+                  </p>
+                </Dropdown>
+              ) : (
+                <a className={styles.loginHello} href="/user/login">
+                  Hi~ 请登录
+                </a>
+              )}
+            </div>
+            <div>
+              {isLogin ? (
+                <div>
+                  {state === 0 ? (
+                    <a className={styles.headNavWord} href="/user/settlein">
+                      商家入驻
+                    </a>
+                  ) : (
+                    <a className={styles.headNavWord} href="/homePage">
+                      放单中心
+                    </a>
+                  )}
+                </div>
+              ) : (
+                <a className={styles.headNavWord} href="/user/register">
+                  我要注册
+                </a>
+              )}
+            </div>
           </div>
-          <div>
-            {isLogin ? (
-              <div>
-                {state === 0 ? (
-                  <a href="/user/settlein">商家入驻</a>
-                ) : (
-                  <a href="/homePage">放单中心</a>
-                )}
-              </div>
-            ) : (
-              <a href="/user/register">我要注册</a>
-            )}
+          <div className={styles.navRight}>
+            <div>
+              <a className={styles.headNavWord} href="/public/helpCenter">
+                帮助中心
+              </a>
+            </div>
+            <div>联系我们</div>
           </div>
-        </div>
-        <div className={styles.navRight}>
-          <div>
-            <a href="/public/helpCenter">帮助中心</a>
-          </div>
-          <div>联系我们</div>
         </div>
       </div>
     );

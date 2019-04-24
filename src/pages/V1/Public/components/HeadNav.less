@@ -1,12 +1,17 @@
 @import '~antd/lib/style/themes/default.less';
 @import '~@/utils/utils.less';
 
+.nav_block {
+  width: 100%;
+  background: #001529;
+}
+
 .nav {
   display: flex;
   justify-content: space-between;
+  width: 1128px;
   height: 32px;
-  padding: 0 8%;
-  background: #001529;
+  margin: 0 auto;
 
   > div {
     display: flex;
@@ -15,19 +20,23 @@
     font-size: 12px;
     font-family: PingFang-SC-Regular, sans-serif;
     line-height: 32px;
+
+    a.headNavWord {
+      color: rgba(255, 255, 255, 0.85);
+    }
   }
 
   .loginInfo {
     margin: 0 18px 0 60px;
 
-    a {
+    a.loginHello {
       color: #13c2c2;
     }
   }
 
   .navRight {
     div {
-      margin-right: 24px;
+      margin-left: 24px;
     }
   }
 }
@@ -39,5 +48,5 @@
   font-size: 12px;
   font-family: PingFang-SC-Regular, sans-serif;
   line-height: 20px;
-  background: #000;
+  // background: #000;
 }

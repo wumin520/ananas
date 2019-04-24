@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Dropdown, Icon, Button } from 'antd';
-// import { router } from 'umi';
+import router from 'umi/router';
 import styles from './NavOfficial.less';
 
 class Header extends PureComponent {
@@ -9,6 +9,7 @@ class Header extends PureComponent {
     this.state = {
       fixTop: false,
       bgWhite: false,
+      visible: false,
     };
   }
 
@@ -36,6 +37,17 @@ class Header extends PureComponent {
         bgWhite: false,
       });
     }
+    this.setState({ visible: false });
+  };
+
+  handleVisibleChange = flag => {
+    this.setState({ visible: flag });
+    const { visible } = this.state;
+    console.log(visible);
+  };
+
+  forwardTo = url => {
+    router.push(url);
   };
 
   render() {
@@ -43,13 +55,13 @@ class Header extends PureComponent {
     const menu = (
       <div className={styles.menu_box}>
         <div className={styles.menu_content}>
-          <div className={styles.menu_wx + ' ' + styles.wx}>
+          <div className={styles.menu_wx}>
             <img
               className={styles.menu_img}
               src="https://cdn.youlianyc.com/image/static/3d7c612c5ceb53bf830d54dee065473797a63fde.jpg"
               alt=""
             />
-            <div className={styles.hint}>
+            <div className={styles.hint} onClick={this.forwardTo()}>
               <p className={styles.title}>微信小程序</p>
               <p className={styles.desc}>超级流量池，快速裂变增长粉丝</p>
             </div>
@@ -106,14 +118,14 @@ class Header extends PureComponent {
       </div>
     );
 
-    const { fixTop, bgWhite } = this.state;
+    const { fixTop, bgWhite, visible } = this.state;
 
     return (
       <div
         className={`${styles.nav} ${fixTop ? styles.navFixtop : ''} ${
-          bgWhite ? styles.navBgWhite : ''
+          bgWhite || visible ? styles.navBgWhite : ''
         }`}
-        style={{ backgroundColor: this.props.bgColor, opacity: this.props.opacity }}
+        // style={{ backgroundColor: this.props.bgColor, opacity: this.props.opacity }}
       >
         <div className={styles.content}>
           <Row type="flex" justify="space-between">
@@ -127,11 +139,15 @@ class Header extends PureComponent {
                     首页
                   </a>
                 </Col>
-                <Dropdown overlay={menu} overlayStyle={{ width: '100%' }}>
+                <Dropdown
+                  overlay={menu}
+                  overlayStyle={{ width: '100%' }}
+                  onVisibleChange={this.handleVisibleChange}
+                >
                   <Col span={4} style={{ textAlign: 'right' }}>
-                    <a className={`ant-dropdown-link ${styles.a_nav}`} href="/public/matrix">
-                      浏量矩阵 <Icon type="down" />
-                    </a>
+                    <div className={`ant-dropdown-link ${styles.a_nav}`}>
+                      流量矩阵 <Icon type="down" />
+                    </div>
                   </Col>
                 </Dropdown>
                 <Col span={4} style={{ textAlign: 'right' }}>

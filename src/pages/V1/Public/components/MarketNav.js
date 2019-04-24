@@ -20,7 +20,7 @@ class MarketNav extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     const token = getUserToken();
-    if (token) {
+    if (token !== '') {
       dispatch({
         type: 'user/fetchCurrent',
       });
@@ -39,7 +39,10 @@ class MarketNav extends PureComponent {
 
   render() {
     const { isLogin } = this.state;
-    const { currentUser } = this.props;
+    const {
+      currentUser: { state },
+      currentUser,
+    } = this.props;
 
     const phoneStr = currentUser.phone
       ? `${currentUser.phone.substr(0, 3)}****${currentUser.phone.substr(7)}`
@@ -86,9 +89,16 @@ class MarketNav extends PureComponent {
                     {phoneStr} <Icon type="down" />
                   </div>
                 </Dropdown>
-                <Link to="/user/settlein" className={styles.btn_apply}>
-                  申请入驻
-                </Link>
+
+                {state === 0 ? (
+                  <Link to="/user/settlein" className={styles.btn_apply}>
+                    申请入驻
+                  </Link>
+                ) : (
+                  <Link to="/homePage" className={styles.btn_apply}>
+                    放单中心
+                  </Link>
+                )}
               </div>
             ) : (
               <div className={styles.btn_block}>
