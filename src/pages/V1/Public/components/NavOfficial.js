@@ -4,9 +4,39 @@ import { Row, Col, Dropdown, Icon, Button } from 'antd';
 import styles from './NavOfficial.less';
 
 class Header extends PureComponent {
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      fixTop: false,
+      bgWhite: false,
+    };
+  }
+
+  componentWillMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll = () => {
+    const { scrollTop } = document.documentElement;
+    if (scrollTop > 32) {
+      this.setState({
+        fixTop: true,
+      });
+    } else {
+      this.setState({
+        fixTop: false,
+      });
+    }
+    if (scrollTop > 600) {
+      this.setState({
+        bgWhite: true,
+      });
+    } else {
+      this.setState({
+        bgWhite: false,
+      });
+    }
+  };
 
   render() {
     /* eslint-disable */
@@ -75,9 +105,14 @@ class Header extends PureComponent {
         </div>
       </div>
     );
+
+    const { fixTop, bgWhite } = this.state;
+
     return (
       <div
-        className={styles.nav}
+        className={`${styles.nav} ${fixTop ? styles.navFixtop : ''} ${
+          bgWhite ? styles.navBgWhite : ''
+        }`}
         style={{ backgroundColor: this.props.bgColor, opacity: this.props.opacity }}
       >
         <div className={styles.content}>
