@@ -1,16 +1,22 @@
 import React, { PureComponent } from 'react';
 import NavOfficial from './components/NavOfficial';
 import Footer from './components/Footer';
-import styles from './Index.less';
+import styles from './Matrix.less';
 
 class TrafficMatrix extends PureComponent {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      bgColor: '#2F54EB',
+      opacity: 1,
+    };
+  }
 
   render() {
     /* eslint-disable */
     return (
       <div className={styles.page}>
-        <NavOfficial />
+        <NavOfficial bgColor={this.state.bgColor} opacity={this.state.opacity} />
         <div className={styles.cdk_top}>
           <div className={styles.box}>
             <div className={styles.title}>
