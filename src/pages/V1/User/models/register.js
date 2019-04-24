@@ -45,8 +45,8 @@ export default {
     },
     registerHandle(state, { payload }) {
       // setAuthority('user');
-      setUserToken(payload.token);
-      setShState(payload.sh_state);
+      setUserToken(payload.payload.token);
+      setShState(payload.payload.sh_state);
       reloadAuthorized();
       return {
         ...state,
