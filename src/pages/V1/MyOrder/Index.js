@@ -287,6 +287,7 @@ class orderList extends PureComponent {
                 dataSource={list}
                 pagination={{
                   defaultCurrent: 1,
+                  current: orderData.page_info.current_page,
                   pageSize: orderData.page_info.per_page,
                   total: orderData.page_info.total_num,
                   onChange: this.onChange,

@@ -332,6 +332,7 @@ class FdList extends PureComponent {
                 dataSource={listData.list}
                 pagination={{
                   defaultCurrent: 1,
+                  current: listData.page_info.current_page,
                   pageSize: listData.page_info.per_page,
                   total: listData.page_info.total_num,
                   onChange: this.onChange,
