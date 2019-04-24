@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 // import { router } from 'umi';
 import { Collapse, Icon } from 'antd';
+import MarketNav from './components/MarketNav';
 import Footer from './components/Footer';
 import 'antd/dist/antd.css';
 import styles from './HelpCenter.less';
@@ -76,6 +77,8 @@ class Header extends PureComponent {
     const { problem, enter, produtRule, illegal } = this.state;
     return (
       <div className={styles.pages}>
+        <MarketNav />
+
         <div className={styles.help_top}>
           <div className={styles.help_banner}>
             <div className={styles.help_notice}>

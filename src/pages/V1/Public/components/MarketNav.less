@@ -2,8 +2,12 @@
 @import '~@/utils/utils.less';
 
 .marketNav {
+  position: fixed;
+  z-index: 10;
   width: 100%;
+  text-align: center;
   background: #fff;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
 
   .nav {
     display: flex;
@@ -114,9 +118,9 @@
           width: 88px;
           height: 32px;
           margin-left: 25px;
-          padding: 0;
           color: #fff;
           font-size: 14px;
+          line-height: 32px;
           background: #2f54eb;
           border-radius: 4px;
         }

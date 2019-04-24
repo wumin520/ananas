@@ -1,18 +1,54 @@
 import React, { PureComponent } from 'react';
-import { Button, Menu, Dropdown, Icon } from 'antd';
+import { Menu, Dropdown, Icon } from 'antd';
+import { getUserToken } from '@/utils/authority';
+import { connect } from 'dva';
 import Link from 'umi/link';
 import styles from './MarketNav.less';
 
+@connect(({ user, login }) => ({
+  currentUser: user.currentUser,
+  login,
+}))
 class MarketNav extends PureComponent {
-  state = {};
+  constructor() {
+    super();
+    this.state = {
+      isLogin: false,
+    };
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    const token = getUserToken();
+    if (token) {
+      dispatch({
+        type: 'user/fetchCurrent',
+      });
+      this.setState({
+        isLogin: true,
+      });
+    }
+  }
+
+  logout = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'login/logout',
+    });
+  };
 
   render() {
+    const { isLogin } = this.state;
+    const { currentUser } = this.props;
+
+    const phoneStr = currentUser.phone
+      ? `${currentUser.phone.substr(0, 3)}****${currentUser.phone.substr(7)}`
+      : '';
+
     const menu = (
       <Menu>
         <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="/">
-            退出
-          </a>
+          <div onClick={this.logout}>退出</div>
         </Menu.Item>
       </Menu>
     );
@@ -43,18 +79,27 @@ class MarketNav extends PureComponent {
             </Link>
           </div>
           <div className={styles.nav_right}>
-            <div style={{ display: 'none' }} className={styles.btn_block}>
-              <Button className={`${styles.btn} ${styles.btn_register}`}>注册</Button>
-              <Button className={`${styles.btn} ${styles.btn_login}`}>登录</Button>
-            </div>
-            <div className={styles.after_login}>
-              <Dropdown overlay={menu}>
-                <div className="ant-dropdown-link">
-                  183****1234 <Icon type="down" />
-                </div>
-              </Dropdown>
-              <Button className={styles.btn_apply}>申请入驻</Button>
-            </div>
+            {isLogin ? (
+              <div className={styles.after_login}>
+                <Dropdown overlay={menu}>
+                  <div className="ant-dropdown-link">
+                    {phoneStr} <Icon type="down" />
+                  </div>
+                </Dropdown>
+                <Link to="/user/settlein" className={styles.btn_apply}>
+                  申请入驻
+                </Link>
+              </div>
+            ) : (
+              <div className={styles.btn_block}>
+                <Link className={`${styles.btn} ${styles.btn_register}`} to="/user/register">
+                  注册
+                </Link>
+                <Link className={`${styles.btn} ${styles.btn_login}`} to="/user/login">
+                  登录
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
