@@ -80,7 +80,9 @@ export default {
     changeLoginStatus(state, { payload }) {
       console.log('reducers -> changeLoginStatus -> payload -> ', payload);
       if (payload.setToken) {
-        setUserToken(payload.res.payload.token);
+        const { token } = payload.res.payload;
+        window.cdk_token = token;
+        setUserToken(token);
       }
       setAuthority(payload.currentAuthority);
       return {
