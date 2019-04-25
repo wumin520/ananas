@@ -47,7 +47,9 @@ class Index extends Component {
       key: '4',
       title: '优惠券',
       dataIndex: 'coupon',
-      render: val => `￥ ${val}`,
+      render: val => {
+        return <span>{val ? `￥ ${val}` : '无'}</span>;
+      },
     },
     {
       key: '5',

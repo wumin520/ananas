@@ -42,7 +42,14 @@ class CreditRecord extends Component {
     },
     {
       title: '商品',
-      dataIndex: 'title',
+      render: val => {
+        return (
+          <span className={styles.pro}>
+            <img src={val.img} alt="" style={{ width: 50, heigth: 50, marginRight: 5 }} />
+            <span className={styles.goodsName}> {val.title}</span>
+          </span>
+        );
+      },
     },
     {
       title: '扣分',
@@ -304,7 +311,7 @@ class CreditRecord extends Component {
           <Card bordered={false}>
             <Row>
               <Col sm={8} xs={24}>
-                <Info title="当前积分" value={shInfo ? shInfo.credit_score : ''} bordered />
+                <Info title="当前信用分" value={shInfo ? shInfo.credit_score : ''} bordered />
               </Col>
               <Col sm={8} xs={24}>
                 <Info title="账户限制" value={shInfo ? shInfo.limit_info : ''} bordered />

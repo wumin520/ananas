@@ -1,10 +1,9 @@
 import React, { memo } from 'react';
 import { Row, Col, Icon, Tooltip } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
+import numeral from 'numeral';
 import styles from './index.less';
 import { ChartCard, MiniProgress, Field, MiniArea, MiniBar } from '@/components/Charts';
-import numeral from 'numeral';
-import Yuan from '@/utils/Yuan';
 
 const topColResponsiveProps = {
   xs: 24,
@@ -75,11 +74,11 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
             </Tooltip>
           }
           loading={loading}
-          total={() => <Yuan>{visitData.order_info.total_order_num}</Yuan>}
+          total={() => <p>{visitData.order_info.total_order_num}</p>}
           footer={
             <Field
               label={<span>日均订单数</span>}
-              value={`￥${numeral(visitData.order_info.daily_order_num).format('0,0')}`}
+              value={`${numeral(visitData.order_info.daily_order_num).format('0,0')}`}
             />
           }
           contentHeight={46}
