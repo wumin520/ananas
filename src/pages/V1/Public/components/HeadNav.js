@@ -63,7 +63,7 @@ class HeadNav extends PureComponent {
       <div className={styles.nav_block}>
         <div className={styles.nav}>
           <div className={styles.navLeft}>
-            <div>一站式导购服务</div>
+            <div>打造社交内容导购新生态</div>
             <div className={styles.loginInfo}>
               {isLogin ? (
                 <Dropdown overlay={menu}>

@@ -56,7 +56,8 @@ class settleIn extends Component {
               rules: [
                 {
                   required: true,
-                  message: '请输入拼多多后台店铺编号',
+                  message: '仅能输入数字',
+                  pattern: /^[0-9]*$/,
                 },
               ],
             })(<Input size="large" placeholder="拼多多后台店铺编号" />)}

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Dropdown, Icon, Button } from 'antd';
-import router from 'umi/router';
+import Link from 'umi/link';
 import styles from './NavOfficial.less';
 
 class Header extends PureComponent {
@@ -39,10 +39,6 @@ class Header extends PureComponent {
     // console.log(visible);
   };
 
-  forwardTo = url => {
-    router.push(url);
-  };
-
   render() {
     /* eslint-disable */
     const menu = (
@@ -54,10 +50,10 @@ class Header extends PureComponent {
               src="https://cdn.youlianyc.com/image/static/3d7c612c5ceb53bf830d54dee065473797a63fde.jpg"
               alt=""
             />
-            <div className={styles.hint} onClick={this.forwardTo()}>
+            <Link className={styles.hint} to="/public/matrix">
               <p className={styles.title}>微信小程序</p>
               <p className={styles.desc}>超级流量池，快速裂变增长粉丝</p>
-            </div>
+            </Link>
           </div>
           <div className={styles.menu_wx}>
             <img
@@ -139,12 +135,12 @@ class Header extends PureComponent {
                 >
                   <Col span={4} style={{ textAlign: 'right' }}>
                     <div className={`ant-dropdown-link ${styles.a_nav}`}>
-                      流量矩阵 <Icon type="down" />
+                      导购推广 <Icon type="down" />
                     </div>
                   </Col>
                 </Dropdown>
                 <Col span={3} style={{ textAlign: 'right' }}>
-                  <a className={`${styles.a_nav}`} href="/market">
+                  <a className={`${styles.a_nav}`} target="_blank" href="/market">
                     营销推广
                   </a>
                 </Col>
