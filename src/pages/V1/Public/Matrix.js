@@ -35,8 +35,8 @@ class TrafficMatrix extends PureComponent {
         </div>
         <div className={styles.cdk_solution + ' ' + styles.cdk_business}>
           <div className={styles.sol_title}>
-            <div className={styles.sol_title_l}>超多客小程序电商解决方案</div>
-            <div className={styles.sol_title_s}>从经营流量到经营用户，尽享生态红利</div>
+            <div className={styles.sol_title_l}>打造电商生态，构建立体的用户行为链大数据</div>
+            <div className={styles.sol_title_s}>助力精准高效获取用户</div>
           </div>
           <div className={styles.cdk_circle}>
             <div className={styles.circle_l}>
