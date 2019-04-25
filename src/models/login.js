@@ -55,6 +55,14 @@ export default {
     *autoLogin({ payload }, { call, put }) {
       const response = yield call(autoLogin, payload);
       if (response && response.status === 'ok') {
+        yield put({
+          type: 'changeLoginStatus',
+          payload: {
+            res: response,
+            currentAuthority: 'admin',
+            setToken: 1,
+          },
+        });
         const redirect = getRedirectUrl();
         yield put(routerRedux.replace(redirect || homePath));
       }

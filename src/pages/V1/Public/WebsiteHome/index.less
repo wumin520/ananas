@@ -59,12 +59,18 @@ p {
 }
 
 .subtitled {
+  margin-top: 16px;
   color: rgba(0, 0, 0, 0.65);
   font-weight: 100;
   font-size: 16px;
   font-family: PingFangSC-Thin, sans-serif;
   line-height: 24px;
   text-align: center;
+}
+
+.title_block {
+  padding: 84px 0 64px;
+  border-bottom: 1px #f4f4f4 solid;
 }
 
 .content_block {
@@ -104,7 +110,7 @@ p {
         color: rgba(255, 255, 255, 1);
         font-weight: 400;
         font-size: 24px;
-        font-family: PingFangSC-Thin, sans-serif;
+        font-family: PingFang-SC-Regular, sans-serif;
         line-height: 32px;
         background-size: contain;
       }
@@ -154,63 +160,57 @@ p {
   padding: 80px 0 120px;
   background: #fff;
 
-  .vertical4 {
-    margin-top: 84px;
-    border-top: 1px #f4f4f4 solid;
+  .verDiv {
+    display: flex;
+    justify-content: space-around;
 
-    .verDiv {
+    .flexVertical {
       display: flex;
-      justify-content: space-around;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .p1 {
+      color: rgba(0, 0, 0, 0.65);
+      font-weight: 400;
+      font-size: 24px;
+      font-family: PingFang-SC-Regular, sans-serif;
+      line-height: 32px;
+    }
+
+    .p2 {
+      width: 480px;
+      margin-top: 24px;
+      color: rgba(0, 0, 0, 0.45);
+      font-weight: 400;
+      font-size: 14px;
+      font-family: PingFang-SC-Regular, sans-serif;
+      line-height: 22px;
+    }
+
+    .btn {
       margin-top: 64px;
+      padding: 8px 64px;
+      color: rgba(255, 255, 255, 1);
+      font-weight: 400;
+      font-size: 16px;
+      font-family: PingFang-SC-Regular, sans-serif;
+      line-height: 24px;
+      background: rgba(47, 84, 235, 1);
+      border-radius: 4px;
+    }
 
-      .flexVertical {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
+    .btnDisable {
+      color: rgba(0, 0, 0, 0.25);
+      background: rgba(245, 245, 245, 1);
+      border: 1px solid rgba(217, 217, 217, 1);
+    }
 
-      .p1 {
-        color: rgba(0, 0, 0, 0.65);
-        font-weight: 400;
-        font-size: 24px;
-        font-family: PingFang-SC-Regular, sans-serif;
-        line-height: 32px;
-      }
-
-      .p2 {
-        width: 480px;
-        margin-top: 24px;
-        color: rgba(0, 0, 0, 0.45);
-        font-weight: 400;
-        font-size: 14px;
-        font-family: PingFang-SC-Regular, sans-serif;
-        line-height: 22px;
-      }
-
-      .btn {
-        margin-top: 64px;
-        padding: 8px 64px;
-        color: rgba(255, 255, 255, 1);
-        font-weight: 400;
-        font-size: 16px;
-        font-family: PingFang-SC-Regular, sans-serif;
-        line-height: 24px;
-        background: rgba(47, 84, 235, 1);
-        border-radius: 4px;
-      }
-
-      .btnDisable {
-        color: rgba(0, 0, 0, 0.25);
-        background: rgba(245, 245, 245, 1);
-        border: 1px solid rgba(217, 217, 217, 1);
-      }
-
-      .adBg {
-        display: block;
-        width: 480px;
-        height: 480px;
-      }
+    .adBg {
+      display: block;
+      width: 480px;
+      height: 480px;
     }
   }
 }
