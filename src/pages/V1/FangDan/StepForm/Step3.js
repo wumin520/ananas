@@ -1,11 +1,94 @@
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { Button, Row, Col, Calendar, Input, DatePicker, message, Alert, Empty } from 'antd';
+import { Button, Row, Col, Input, DatePicker, message, Alert, Empty, Table, Form } from 'antd';
 import router from 'umi/router';
 import moment from 'moment';
-import styles from './style.less';
+// import styles from './style.less';
 
 const dateFormat = 'YYYY-MM-DD';
+
+const FormItem = Form.Item;
+const EditableContext = React.createContext();
+
+const EditableRow = ({ form, index, ...props }) => (
+  <EditableContext.Provider value={form}>
+    <tr {...props} />
+  </EditableContext.Provider>
+);
+
+const EditableFormRow = Form.create()(EditableRow);
+class EditableCell extends React.Component {
+  state = {
+    editing: false,
+  };
+
+  /* eslint-disable */
+  toggleEdit = () => {
+    const editing = !this.state.editing;
+    this.setState({ editing }, () => {
+      if (editing) {
+        this.input.focus();
+      }
+    });
+  };
+
+  save = e => {
+    const { record, handleSave } = this.props;
+    this.form.validateFields((error, values) => {
+      if (error && error[e.currentTarget.id]) {
+        return;
+      }
+      this.toggleEdit();
+      handleSave({ ...record, ...values });
+    });
+  };
+
+  render() {
+    const { editing } = this.state;
+    const { editable, dataIndex, title, record, index, handleSave, ...restProps } = this.props;
+    return (
+      <td {...restProps}>
+        {editable ? (
+          <EditableContext.Consumer>
+            {form => {
+              this.form = form;
+              return editing ? (
+                <FormItem style={{ margin: 0 }}>
+                  {form.getFieldDecorator(dataIndex, {
+                    rules: [
+                      {
+                        required: true,
+                        message: `${title} is required.`,
+                      },
+                    ],
+                    initialValue: record[dataIndex],
+                  })(
+                    <Input
+                      ref={node => (this.input = node)}
+                      onPressEnter={this.save}
+                      onBlur={this.save}
+                      placeholder="请输入数量"
+                    />
+                  )}
+                </FormItem>
+              ) : (
+                <div
+                  className="editable-cell-value-wrap"
+                  style={{ paddingRight: 24 }}
+                  onClick={this.toggleEdit}
+                >
+                  {restProps.children}
+                </div>
+              );
+            }}
+          </EditableContext.Consumer>
+        ) : (
+          restProps.children
+        )}
+      </td>
+    );
+  }
+}
 
 @connect(({ form, loading }) => ({
   taskId: form.taskId,
@@ -17,6 +100,26 @@ const dateFormat = 'YYYY-MM-DD';
 }))
 class Step3 extends React.PureComponent {
   state = {};
+
+  constructor(props) {
+    super(props);
+    this.columns = [
+      {
+        title: '推广排期',
+        dataIndex: 'date',
+        width: '40%',
+      },
+      {
+        title: '投放数量',
+        dataIndex: 'planCount',
+        editable: true,
+      },
+    ];
+    this.state = {
+      dataSource: [],
+      index: 1,
+    };
+  }
 
   rangePicker = (date, dateString) => {
     // const startDate = date && date[0];
@@ -31,6 +134,23 @@ class Step3 extends React.PureComponent {
     }
     this.startTimeTemp = startTime;
     this.endTimeTemp = endTime;
+    const minDate = moment(startTime);
+    const maxDate = moment(endTime);
+    let { index } = this.state;
+    const data = [];
+    while (minDate <= maxDate) {
+      data.push({
+        key: index,
+        date: minDate.format('L'),
+        planCount: '请输入数量',
+      });
+      minDate.add(1, 'days');
+      /* eslint-disable */
+      this.setState({
+        index: index++,
+      });
+    }
+    this.setState({ dataSource: data });
   };
 
   toSchedule = () => {
@@ -43,8 +163,9 @@ class Step3 extends React.PureComponent {
 
   makeScheduleData = (startTime, endTime) => {
     const { dispatch, schedules } = this.props;
+    // console.log('schedules', schedules);
     this.schedulesHash = this.schedulesHash || {};
-    //
+
     if (startTime) {
       this.startTimeTemp = startTime;
       this.endTimeTemp = endTime;
@@ -80,7 +201,7 @@ class Step3 extends React.PureComponent {
         schedules: arr,
       },
     });
-    console.log('makeScheduleData -> arr', arr);
+    // console.log('makeScheduleData -> arr', arr);
   };
 
   planNumChange = (e, date) => {
@@ -108,9 +229,12 @@ class Step3 extends React.PureComponent {
   onValidateForm = () => {
     let valid = true;
     let isLtZero = false;
+    const { dataSource } = this.state;
     const arr = Object.keys(this.schedulesHash);
-    for (let i = 0; i < arr.length; i += 1) {
-      const key = arr[i];
+    // console.log('this.schedulesHash', this.schedulesHash);
+    // console.log('dataSource==>', dataSource);
+    for (let i = 0; i < dataSource.length; i += 1) {
+      const key = dataSource[i].planCount;
       const value = this.schedulesHash[key];
       if (!value) {
         valid = false;
@@ -154,47 +278,82 @@ class Step3 extends React.PureComponent {
     const { startTime, endTime } = this.props;
     this.makeScheduleData(startTime, endTime);
   };
-
+  /* eslint-desable */
+  handleSave = row => {
+    const newData = [...this.state.dataSource];
+    const index = newData.findIndex(item => row.key === item.key);
+    const item = newData[index];
+    newData.splice(index, 1, {
+      ...item,
+      ...row,
+    });
+    // console.log('newData=>', newData);
+    this.setState({ dataSource: newData });
+  };
   render() {
     const { submitting, startTime, endTime } = this.props;
     const startDate = startTime && moment(startTime);
     const endDate = endTime && moment(endTime);
+    // const FormItem = Form.Item;
+    const { dataSource } = this.state;
+    const components = {
+      body: {
+        row: EditableFormRow,
+        cell: EditableCell,
+      },
+    };
+    const columns = this.columns.map(col => {
+      if (!col.editable) {
+        return col;
+      }
+      return {
+        ...col,
+        onCell: record => ({
+          record,
+          editable: col.editable,
+          dataIndex: col.dataIndex,
+          title: col.title,
+          handleSave: this.handleSave,
+        }),
+      };
+    });
 
-    const validRange = [startDate, endDate];
+    // const validRange = [startDate, endDate];
     console.log('render', this.props);
 
-    const dateFullCellRender = m => {
-      const date = m.date();
-      if (m > endDate || m < startDate) {
-        return '';
-      }
-      const key = m.format(dateFormat);
-      const num = this.schedulesHash[key] || '';
-      return (
-        <div style={{ padding: '10px' }}>
-          <div style={{ borderTop: '1px solid #e8e8e8', textAlign: 'right' }}>
-            <div>{date}</div>
-            <div style={{ textAlign: 'left', marginTop: '20px' }}>投放数量：</div>
-            <Row>
-              <Col span={24}>
-                <Input
-                  type="number"
-                  min={1}
-                  value={num}
-                  className="col-16"
-                  placeholder="请输入"
-                  size="small"
-                  addonAfter="份"
-                  onChange={e => {
-                    this.planNumChange(e, key);
-                  }}
-                />
-              </Col>
-            </Row>
-          </div>
-        </div>
-      );
-    };
+    // const dateFullCellRender = m => {
+    //   const date = m.date();
+    //   if (m > endDate || m < startDate) {
+    //     return '';
+    //   }
+    //   const key = m.format(dateFormat);
+    //   const num = this.schedulesHash[key] || '';
+
+    //   return (
+    //     <div style={{ padding: '10px' }}>
+    //       <div style={{ borderTop: '1px solid #e8e8e8', textAlign: 'right' }}>
+    //         <div>{date}</div>
+    //         <div style={{ textAlign: 'left', marginTop: '20px' }}>投放数量：</div>
+    //         <Row>
+    //           <Col span={24}>
+    //             <Input
+    //               type="number"
+    //               min={1}
+    //               value={num}
+    //               className="col-16"
+    //               placeholder="请输入"
+    //               size="small"
+    //               addonAfter="份"
+    //               onChange={e => {
+    //                 this.planNumChange(e, key);
+    //               }}
+    //             />
+    //           </Col>
+    //         </Row>
+    //       </div>
+    //     </div>
+    //   );
+    // };
     const disabledDate = date => {
       const now = moment().add(-1, 'days');
       if (date < now) {
@@ -252,12 +411,20 @@ class Step3 extends React.PureComponent {
         <Row style={{ marginTop: 20 }}>
           <Col span={6}>推广数量：{countPlanSum()}</Col>
         </Row>
+
         {startDate ? (
-          <Calendar
-            className={styles.calendarCdk}
-            value={startDate}
-            validRange={validRange}
-            dateFullCellRender={dateFullCellRender}
+          // <Calendar
+          //   className={styles.calendarCdk}
+          //   value={startDate}
+          //   validRange={validRange}
+          //   dateFullCellRender={dateFullCellRender}
+          // />
+          <Table
+            components={components}
+            bordered
+            dataSource={dataSource}
+            columns={columns}
+            pagination={false}
           />
         ) : (
           <Empty style={{ margin: '20px auto 120px' }} description="请选择推广日期后进行一键排期" />
