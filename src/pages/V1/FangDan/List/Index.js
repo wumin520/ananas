@@ -69,8 +69,7 @@ class FdList extends PureComponent {
     const { dispatch } = this.props;
     const thises = this;
     confirm({
-      title: '确认要终止吗？',
-      content: '推广终止后不能恢复，商品将立即下线，确认要终止吗？',
+      title: '确定终止此商品？',
       okText: '确定',
       cancelText: '取消',
       onOk() {
@@ -239,7 +238,7 @@ class FdList extends PureComponent {
       },
       {
         title: '推广份数',
-        width: 220,
+        width: 182,
         render: item => {
           return (
             <p>

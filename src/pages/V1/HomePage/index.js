@@ -139,7 +139,7 @@ class Index extends Component {
             tabBarExtraContent={
               <div className={styles.salesExtraWrap}>
                 <div className={styles.salesExtra}>
-                  <a href="/fangdan/plan">{'排期列表>'}</a>
+                  <a href="/fangdan/schedule-list">{'排期列表>'}</a>
                 </div>
               </div>
             }

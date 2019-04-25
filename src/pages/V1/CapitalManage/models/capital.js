@@ -7,7 +7,7 @@ export default {
     assetData: {
       asset_info: {
         balance: 0,
-        frozen_balance: 0,
+        forzen_balance: 0,
         expend_balance: 0,
       },
       list: [],
