@@ -11,63 +11,55 @@ class Header extends PureComponent {
     enter: [
       {
         list_intro: '系统检测商品硬性条件',
-        list_time: '2019-04-24',
+        list_time: '2019-04-25',
       },
       {
         list_intro: '商家放单推广要求及流程',
-        list_time: '2019-04-24',
+        list_time: '2019-04-25',
       },
       {
         list_intro: '超多客招商入驻要求',
-        list_time: '2019-04-24',
+        list_time: '2019-04-25',
       },
     ],
     produtRule: [
       {
         list_intro: '商品推广及上架规范',
-        list_time: '2019-04-24',
+        list_time: '2019-04-25',
       },
       {
         list_intro: '商品信息编辑说明',
-        list_time: '2019-04-24',
+        list_time: '2019-04-25',
       },
       {
         list_intro: '商品状态异常及保护规则',
-        list_time: '2019-04-24',
+        list_time: '2019-04-25',
       },
     ],
     illegal: [
       {
         list_intro: '放单信用分规则',
-        list_time: '2019-04-24',
+        list_time: '2019-04-25',
       },
       {
         list_intro: '商家违规限制及账号冻结',
-        list_time: '2019-04-24',
+        list_time: '2019-04-25',
       },
       {
         list_intro: '不良商家投诉流程',
-        list_time: '2019-04-24',
+        list_time: '2019-04-25',
       },
     ],
     problem: [
       {
         key: '1',
-        issue: 'This is panel header 1',
-        answer:
-          'A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.',
+        issue: '1.	提交的商品必须包邮吗？',
+        answer: '放单商品必须全国包邮（少数偏远地区、港澳台除外）。',
       },
       {
         key: '2',
-        issue: 'This is panel header 1',
-        answer:
-          'A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.',
-      },
-      {
-        key: '3',
-        issue: 'This is panel header 1',
-        answer:
-          'A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.',
+        issue: '2.	推广怎么收费？',
+        answer: '仅需支付返给用户的货款费用，服务费限时免费。',
       },
     ],
   };
@@ -100,7 +92,7 @@ class Header extends PureComponent {
                         <span className={styles.list_time}>{item.list_time}</span>
                       </p>
                     ))}
-                  <a href="">
+                  <a href="/public/helpDetail">
                     查看更多 <Icon type="right" />
                   </a>
                 </div>
@@ -120,7 +112,7 @@ class Header extends PureComponent {
                         <span className={styles.list_time}>{item.list_time}</span>
                       </p>
                     ))}
-                  <a href="">
+                  <a href="/public/helpDetail">
                     查看更多 <Icon type="right" />
                   </a>
                 </div>
@@ -140,7 +132,7 @@ class Header extends PureComponent {
                         <span className={styles.list_time}>{item.list_time}</span>
                       </p>
                     ))}
-                  <a href="">
+                  <a href="/public/helpDetail">
                     查看更多 <Icon type="right" />
                   </a>
                 </div>

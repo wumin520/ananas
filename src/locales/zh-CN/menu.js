@@ -1,7 +1,7 @@
 export default {
   'menu.fangdan': '放单中心',
   'menu.fangdan.index': '我要放单',
-  'menu.fangdan.stepform': '好评全返',
+  'menu.fangdan.stepform': '好评试用推广',
   'menu.fangdan.stepform.info': '第一步',
   'menu.fangdan.stepform.confirm': '编辑推广',
   'menu.fangdan.stepform.schedule': '推广排期',
@@ -45,6 +45,7 @@ export default {
   'menu.index': '流量矩阵',
   'menu.help': '帮助中心',
   'menu.aboutUs': '关于我们',
+  // 'menu.helpDetail': '帮助详情',
   'menu.list.searchtable': '查询表格',
   'menu.list.basiclist': '标准列表',
   'menu.list.cardlist': '卡片列表',

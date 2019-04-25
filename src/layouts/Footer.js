@@ -30,7 +30,7 @@ const FooterView = () => (
       }
       copyright={
         <Fragment>
-          Copyright <Icon type="copyright" /> 2019 有练网络科技产品超多客出品
+          Copyright <Icon type="copyright" /> 2019 超多客出品
         </Fragment>
       }
     />
