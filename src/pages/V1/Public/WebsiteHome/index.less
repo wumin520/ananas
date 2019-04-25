@@ -2,7 +2,7 @@
 @import '~@/utils/utils.less';
 
 .main {
-  min-width: 1440px;
+  min-width: 1128px;
 }
 
 p {
@@ -67,9 +67,21 @@ p {
   text-align: center;
 }
 
-.content1 {
-  padding: 80px 0 120px;
+.content_block {
+  width: 100%;
+}
+
+.bgf6f7f8 {
   background: #f6f7f8;
+}
+
+.content_center {
+  width: 1128px;
+  margin: 0 auto;
+}
+
+.content1 {
+  padding: 80px 0;
 
   .flex4 {
     display: flex;
@@ -79,9 +91,13 @@ p {
     .flexDiv {
       width: 258px;
       height: 300px;
-      margin: 0 16px 0;
+      margin-right: 32px;
       text-align: center;
       background: #fff;
+
+      &:last-child {
+        margin-right: 0;
+      }
 
       .above {
         padding: 64px 0;
@@ -163,6 +179,7 @@ p {
       }
 
       .p2 {
+        width: 480px;
         margin-top: 24px;
         color: rgba(0, 0, 0, 0.45);
         font-weight: 400;
@@ -231,7 +248,7 @@ p {
     .float3 {
       position: absolute;
       top: 180px;
-      left: 60%;
+      left: 58%;
     }
 
     .float4 {
@@ -249,7 +266,7 @@ p {
     .f1Text {
       position: absolute;
       top: 0;
-      right: -75%;
+      right: -56%;
     }
 
     .f2Text {

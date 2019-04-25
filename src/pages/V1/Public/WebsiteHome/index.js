@@ -112,124 +112,128 @@ class Index extends Component {
           <p className={styles.p2}>打造导购内容生态</p>
         </div>
         {/* {con1} */}
-        <div className={styles.content1}>
-          <p className={styles.titled}>多客推广、流量变现、一站式解决方案</p>
-          <p className={styles.subtitled}>142538041位流量主正在使用</p>
-          <div className={styles.flex4}>
-            <div className={styles.flexDiv}>
-              <div className={`${styles.above} ${styles.aboveBg1}`}>多多客</div>
-              <div>
-                <p className={styles.p1}>75%</p>
-                <p className={styles.p2}>拥有社群流量，稳定转化</p>
+        <div className={`${styles.content_block} ${styles.bgf6f7f8}`}>
+          <div className={`${styles.content1} ${styles.content_center}`}>
+            <p className={styles.titled}>多客推广、流量变现、一站式解决方案</p>
+            <p className={styles.subtitled}>142538041位流量主正在使用</p>
+            <div className={styles.flex4}>
+              <div className={styles.flexDiv}>
+                <div className={`${styles.above} ${styles.aboveBg1}`}>多多客</div>
+                <div>
+                  <p className={styles.p1}>75%</p>
+                  <p className={styles.p2}>拥有社群流量，稳定转化</p>
+                </div>
               </div>
-            </div>
 
-            <div className={styles.flexDiv}>
-              <div className={`${styles.above} ${styles.aboveBg2}`}>达人网红</div>
-              <div>
-                <p className={styles.p1}>14%</p>
-                <p className={styles.p2}>粉丝拥护，享受更多收益</p>
+              <div className={styles.flexDiv}>
+                <div className={`${styles.above} ${styles.aboveBg2}`}>达人网红</div>
+                <div>
+                  <p className={styles.p1}>14%</p>
+                  <p className={styles.p2}>粉丝拥护，享受更多收益</p>
+                </div>
               </div>
-            </div>
 
-            <div className={styles.flexDiv}>
-              <div className={`${styles.above} ${styles.aboveBg3}`}>自媒体流量站</div>
-              <div>
-                <p className={styles.p1}>9%</p>
-                <p className={styles.p2}>拥有社群流量，稳定转化</p>
+              <div className={styles.flexDiv}>
+                <div className={`${styles.above} ${styles.aboveBg3}`}>自媒体流量站</div>
+                <div>
+                  <p className={styles.p1}>9%</p>
+                  <p className={styles.p2}>拥有社群流量，稳定转化</p>
+                </div>
               </div>
-            </div>
 
-            <div className={styles.flexDiv}>
-              <div className={`${styles.above} ${styles.aboveBg4}`}>自媒体流量站</div>
-              <div>
-                <p className={styles.p1}>2%</p>
-                <p className={styles.p2}>用户群体庞大，坐享流量变现</p>
+              <div className={styles.flexDiv}>
+                <div className={`${styles.above} ${styles.aboveBg4}`}>自媒体流量站</div>
+                <div>
+                  <p className={styles.p1}>2%</p>
+                  <p className={styles.p2}>用户群体庞大，坐享流量变现</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* {con2} */}
-        <div className={styles.content2}>
-          <p className={styles.titled}>全域精准营销</p>
-          <p className={styles.subtitled}>全方位场景渗透、支持PC、小程序、APP、单页</p>
-          <div className={styles.vertical4}>
-            <div className={styles.verDiv}>
-              <div className={styles.flexVertical}>
-                <p className={styles.p1}>微信小程序</p>
-                <p className={styles.p2}>
-                  通过微信小程序进行导购，依托微信超级流量入口，快速的达成推广，更加的快捷、稳定。
-                </p>
-                <button className={styles.btn} type="button">
-                  了解更多
-                </button>
+        <div className={styles.content_block}>
+          <div className={`${styles.content2} ${styles.content_center}`}>
+            <p className={styles.titled}>全域精准营销</p>
+            <p className={styles.subtitled}>全方位场景渗透、支持PC、小程序、APP、单页</p>
+            <div className={styles.vertical4}>
+              <div className={styles.verDiv}>
+                <div className={styles.flexVertical}>
+                  <p className={styles.p1}>微信小程序</p>
+                  <p className={styles.p2}>
+                    通过微信小程序进行导购，依托微信超级流量入口，快速的达成推广，更加的快捷、稳定。
+                  </p>
+                  <button className={styles.btn} type="button">
+                    了解更多
+                  </button>
+                </div>
+                <div>
+                  <img
+                    alt="bg"
+                    className={styles.adBg}
+                    src="https://cdn.youlianyc.com/image/static/c6188dd271650402ef25562fcef3e7f9442f97af.jpg"
+                  />
+                </div>
               </div>
-              <div>
-                <img
-                  alt="bg"
-                  className={styles.adBg}
-                  src="https://cdn.youlianyc.com/image/static/c6188dd271650402ef25562fcef3e7f9442f97af.jpg"
-                />
-              </div>
-            </div>
 
-            <div className={styles.verDiv}>
-              <div className={styles.flexVertical}>
-                <img
-                  alt="bg"
-                  className={styles.adBg}
-                  src="https://cdn.youlianyc.com/image/static/df2a62e96fc20623970cd0a02bf1bcf442a7357a.jpg"
-                />
+              <div className={styles.verDiv}>
+                <div className={styles.flexVertical}>
+                  <img
+                    alt="bg"
+                    className={styles.adBg}
+                    src="https://cdn.youlianyc.com/image/static/df2a62e96fc20623970cd0a02bf1bcf442a7357a.jpg"
+                  />
+                </div>
+                <div>
+                  <p className={styles.p1}>CMS网站</p>
+                  <p className={styles.p2}>
+                    快速搭建专业导购网站，免费坐享100人专业团队，免费运营、维护、优化、迭代、运维...
+                    你要做的就是，专心去推广！
+                  </p>
+                  <button className={`${styles.btn} ${styles.btnDisable}`} type="button">
+                    敬请期待
+                  </button>
+                </div>
               </div>
-              <div>
-                <p className={styles.p1}>CMS网站</p>
-                <p className={styles.p2}>
-                  快速搭建专业导购网站，免费坐享100人专业团队，免费运营、维护、优化、迭代、运维...
-                  你要做的就是，专心去推广！
-                </p>
-                <button className={`${styles.btn} ${styles.btnDisable}`} type="button">
-                  敬请期待
-                </button>
-              </div>
-            </div>
 
-            <div className={styles.verDiv}>
-              <div className={styles.flexVertical}>
-                <p className={styles.p1}>精品单页</p>
-                <p className={styles.p2}>
-                  可以应用于任何有流量的网站、 APP、公众号等，如影视站、
-                  图片站、社区论坛等，帮助你将 流量变现，收益翻N倍！
-                </p>
-                <button className={`${styles.btn} ${styles.btnDisable}`} type="button">
-                  敬请期待
-                </button>
+              <div className={styles.verDiv}>
+                <div className={styles.flexVertical}>
+                  <p className={styles.p1}>精品单页</p>
+                  <p className={styles.p2}>
+                    可以应用于任何有流量的网站、 APP、公众号等，如影视站、
+                    图片站、社区论坛等，帮助你将 流量变现，收益翻N倍！
+                  </p>
+                  <button className={`${styles.btn} ${styles.btnDisable}`} type="button">
+                    敬请期待
+                  </button>
+                </div>
+                <div>
+                  <img
+                    alt="bg"
+                    className={styles.adBg}
+                    src="https://cdn.youlianyc.com/image/static/d061a9fbee5cb881caf04f1a8fa9b3996519a116.jpg"
+                  />
+                </div>
               </div>
-              <div>
-                <img
-                  alt="bg"
-                  className={styles.adBg}
-                  src="https://cdn.youlianyc.com/image/static/d061a9fbee5cb881caf04f1a8fa9b3996519a116.jpg"
-                />
-              </div>
-            </div>
 
-            <div className={styles.verDiv}>
-              <div>
-                <img
-                  alt="bg"
-                  className={styles.adBg}
-                  src="https://cdn.youlianyc.com/image/static/70889546d0c1fcadd35fcabb688673b38282b17e.jpg"
-                />
-              </div>
-              <div className={styles.flexVertical}>
-                <p className={styles.p1}>开放API</p>
-                <p className={styles.p2}>
-                  鼓励支持玩法创新，合作共赢！除了完善的导购解决方案，我们还有丰富的数据API接口可供调用，期待与懂技术有想法的你们开创更多导购新玩法。
-                </p>
-                <button className={`${styles.btn} ${styles.btnDisable}`} type="button">
-                  敬请期待
-                </button>
+              <div className={styles.verDiv}>
+                <div>
+                  <img
+                    alt="bg"
+                    className={styles.adBg}
+                    src="https://cdn.youlianyc.com/image/static/70889546d0c1fcadd35fcabb688673b38282b17e.jpg"
+                  />
+                </div>
+                <div className={styles.flexVertical}>
+                  <p className={styles.p1}>开放API</p>
+                  <p className={styles.p2}>
+                    鼓励支持玩法创新，合作共赢！除了完善的导购解决方案，我们还有丰富的数据API接口可供调用，期待与懂技术有想法的你们开创更多导购新玩法。
+                  </p>
+                  <button className={`${styles.btn} ${styles.btnDisable}`} type="button">
+                    敬请期待
+                  </button>
+                </div>
               </div>
             </div>
           </div>
