@@ -79,9 +79,9 @@ export default {
         },
       });
       if (res.code === 200) {
-        message.success(res.msg);
+        message.success(res.payload.msg);
       } else {
-        message.success(res.message);
+        message.success(res.payload.message);
       }
     },
     *planDownData({ payload }, { call, put }) {

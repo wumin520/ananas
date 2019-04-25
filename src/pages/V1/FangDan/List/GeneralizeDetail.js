@@ -140,7 +140,9 @@ class GeneralizeDetail extends Component {
             <Description term="商品主图">
               <img src={data.img} alt="img" style={{ width: 65, heigth: 65 }} />
             </Description>
-            <Description term="优惠券">￥{data.coupon_price}</Description>
+            <Description term="优惠券">
+              {data.coupon_price ? `￥ ${data.coupon_price}` : '无'}{' '}
+            </Description>
             <Description term="商品价格">￥{data.price}</Description>
           </DescriptionList>
           <Divider style={{ marginBottom: 32 }} />
@@ -154,7 +156,7 @@ class GeneralizeDetail extends Component {
             <Description term="返现金额">￥{data.rebate_price}</Description>
           </DescriptionList>
           <Divider style={{ marginBottom: 32, fontWeight: 600 }} />
-          <div className={styles.title}>推广排期进度</div>
+          <div className={styles.title}>推广排期</div>
           <Table
             style={{ marginBottom: 16 }}
             pagination={false}
