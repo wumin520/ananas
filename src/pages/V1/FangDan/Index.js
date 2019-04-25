@@ -38,7 +38,7 @@ class Index extends PureComponent {
         actions: ['列表', '+新增'],
         state: 1,
         avatar: 'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
-        title: '好评全返',
+        title: '好评试用推广',
         description: `适用于：
 基础销量偏低
 宝贝流量较少
@@ -50,7 +50,7 @@ DSR评分低
         actions: ['列表', '敬请期待...'],
         state: 0,
         avatar: 'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
-        title: '高佣高券',
+        title: '大额券推广',
         description: `适用于：
 宝贝月销量≥50，评价数≥50
 DSR评分≥4.8分
