@@ -1,0 +1,96 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/utils/utils.less';
+
+.au_banner {
+  position: relative;
+  padding: 176px 0 270px;
+  text-align: center;
+  background: url('https://cdn.youlianyc.com/image/static/a80c153c85340ef51d061a8ffe1583e4632e6b7e.jpg')
+    no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  .mask {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    filter: brightness(45%);
+  }
+
+  .au_title {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 40px;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 100;
+    font-size: 64px;
+    font-family: PingFangSC-Thin, sans-serif;
+    line-height: 90px;
+  }
+
+  .au_desc {
+    position: relative;
+    z-index: 2;
+    width: 1128px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+    font-size: 20px;
+    font-family: PingFang-SC-Regular, sans-serif;
+    line-height: 40px;
+    text-align: left;
+  }
+}
+
+.qq_block {
+  position: relative;
+  top: -100px;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 1128px;
+  margin: 0 auto;
+
+  .ml64 {
+    margin-left: 64px;
+  }
+
+  .qq_item {
+    flex: 1;
+    padding: 64px 0;
+    text-align: center;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 4px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+
+    .qq_img {
+      width: 120px;
+      height: 120px;
+      background: rgba(255, 255, 255, 1);
+      border-radius: 60px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.09);
+    }
+
+    .qq_title {
+      margin: 32px 0;
+      color: rgba(0, 0, 0, 0.65);
+      font-weight: 400;
+      font-size: 24px;
+      font-family: PingFang-SC-Regular, sans-serif;
+      line-height: 32px;
+    }
+
+    .btn_QQ {
+      width: 192px;
+      height: 40px;
+      color: #fff;
+      line-height: 40px;
+      background: rgba(47, 84, 235, 1);
+      border-radius: 4px;
+    }
+  }
+}

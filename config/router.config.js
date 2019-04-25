@@ -48,6 +48,11 @@ export default [
         name: 'help',
         component: './V1/Public/HelpCenter',
       },
+      {
+        path: '/public/aboutUs',
+        name: 'aboutUs',
+        component: './V1/Public/AboutUs',
+      },
     ],
   },
   {

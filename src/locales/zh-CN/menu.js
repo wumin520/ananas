@@ -44,6 +44,7 @@ export default {
   'menu.list': '我的订单',
   'menu.index': '流量矩阵',
   'menu.help': '帮助中心',
+  'menu.aboutUs': '关于我们',
   'menu.list.searchtable': '查询表格',
   'menu.list.basiclist': '标准列表',
   'menu.list.cardlist': '卡片列表',
