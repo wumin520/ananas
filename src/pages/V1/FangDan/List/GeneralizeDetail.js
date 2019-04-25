@@ -92,38 +92,39 @@ class GeneralizeDetail extends Component {
         },
       },
       {
-        title: '完成情况',
+        title: '投放份数',
         render: item => {
-          let operation;
-          if (item.state === 0) {
-            operation = <span>--</span>;
-          } else {
-            operation = (
-              <span>
-                <span>发放份数 {item.total_amount}</span>
-                <span>&nbsp;&nbsp;评价人数 {item.proof_num}</span>
-                <br />
-                <span>下单人数 {item.order_num}</span>
-                <span>&nbsp;&nbsp;售后人数 {item.sale_back_num}</span>
-              </span>
-            );
-          }
-          return <span>{operation}</span>;
+          return <span>{item.total_amount}</span>;
+          // let operation;
+          // if (item.state === 0) {
+          //   operation = <span>--</span>;
+          // } else {
+          //   operation = (
+          //     <span>
+          //       <span>{item.total_amount}</span>
+          //       <span>&nbsp;&nbsp;评价人数 {item.proof_num}</span>
+          //       <br />
+          //       <span>下单人数 {item.order_num}</span>
+          //       <span>&nbsp;&nbsp;售后人数 {item.sale_back_num}</span>
+          //     </span>
+          //   );
+          // }
+          // return <span>{operation}</span>;
         },
       },
-      {
-        title: '操作',
-        render: item => {
-          let operation;
-          if (item.state === 0) {
-            operation = <a onClick={this.planDown.bind(this, item)}>下架</a>;
-          }
-          if (item.state === 3) {
-            operation = <a onClick={this.planUp.bind(this, item)}>上架</a>;
-          }
-          return <span>{operation}</span>;
-        },
-      },
+      // {
+      //   title: '操作',
+      //   render: item => {
+      //     let operation;
+      //     if (item.state === 0) {
+      //       operation = <a onClick={this.planDown.bind(this, item)}>下架</a>;
+      //     }
+      //     if (item.state === 3) {
+      //       operation = <a onClick={this.planUp.bind(this, item)}>上架</a>;
+      //     }
+      //     return <span>{operation}</span>;
+      //   },
+      // },
     ];
     const planList = detailData.plan_list;
     const { data } = detailData;
