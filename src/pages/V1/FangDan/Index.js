@@ -41,11 +41,10 @@ class Index extends PureComponent {
           'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
         title: '好评试用推广',
         description: `适用于：
-基础销量偏低
-宝贝流量较少
-宝贝销评破零
-DSR评分低
-佣金比例≥20%`,
+          基础销量偏低
+          宝贝流量较少
+          宝贝销评破零
+          DSR评分低`,
       },
       {
         actions: ['列表', '敬请期待...'],
@@ -54,9 +53,10 @@ DSR评分低
           'https://cdn.youlianyc.com/image/static/526746a209d504d6d9c43270767ff76e928aedc2.jpg',
         title: '大额券推广',
         description: `适用于：
-宝贝月销量≥50，评价数≥50
-DSR评分≥4.8分
-佣金比例≥50%`,
+          宝贝月销量≥50
+          宝贝评价数≥50
+          DSR评分≥4.8分
+          佣金比例≥30%`,
       },
     ];
     const content = (

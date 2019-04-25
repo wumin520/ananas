@@ -158,8 +158,8 @@ class Withdraw extends PureComponent {
                 )}
               </Form.Item>
               <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit">
-                  申请提现
+                <Button type="primary" disabled htmlType="submit">
+                  暂未开放
                 </Button>
               </Form.Item>
             </Form>
