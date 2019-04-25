@@ -77,7 +77,7 @@ export default {
   },
   proxy: {
     '/v1/': {
-      target: 'http://test.chaoduoke.com/cdk',
+      target: 'https://chaoduoke.com/cdk',
       changeOrigin: true,
       // pathRewrite: { '^/server': '' },
     },
