@@ -9,7 +9,7 @@ const { Description } = DescriptionList;
 const statusMap = ['processing', 'success', 'default', 'error', 'processing'];
 const status = ['排期中', '进行中', '已结束', '已暂停', '审核中'];
 const statusMap1 = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
-const status1 = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已完成'];
+const status1 = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已结算'];
 const { confirm } = Modal;
 @connect(({ task, loading }) => ({
   detailData: task.detailData,

@@ -36,10 +36,7 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           }
           total={numeral(visitData.task_info.task_amount).format('0,0')}
           footer={
-            <Field
-              label={<span>总推广费用 ¥</span>}
-              value={numeral(visitData.task_info.total_money).format('0,0')}
-            />
+            <Field label={<span>总推广费用 ¥</span>} value={visitData.task_info.total_money} />
           }
           contentHeight={46}
         >
