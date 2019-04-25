@@ -9,7 +9,7 @@ import styles from './index.less';
 
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
 const OrderDetail = React.lazy(() => import('./OrderDetail'));
-const HotRankList = React.lazy(() => import('./HotRankList'));
+// const HotRankList = React.lazy(() => import('./HotRankList'));
 
 const { TabPane } = Tabs;
 
@@ -109,7 +109,7 @@ class Index extends Component {
 
     const headInfo = homedata.head_info;
     const taskList = homedata.task_plan_list;
-    const hotRank = homedata.hot_rank;
+    // const hotRank = homedata.hot_rank;
     const orderList = homedata.order_list;
     const noticeInfo = homedata.notice_info;
 
@@ -161,12 +161,14 @@ class Index extends Component {
         </Card>
         <div className={styles.twoColLayout}>
           <Row gutter={24}>
-            <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-              <Suspense fallback={null}>
-                <HotRankList loading={loading} data={hotRank} />
-              </Suspense>
-            </Col>
-            <Col xl={12} lg={24} md={24} sm={24} xs={24}>
+            {/*
+              <Col xl={12} lg={24} md={24} sm={24} xs={24}>
+                <Suspense fallback={null}>
+                  <HotRankList loading={loading} data={hotRank} />
+                </Suspense>
+              </Col>
+            */}
+            <Col xl={24} lg={24} md={24} sm={24} xs={24}>
               <Suspense fallback={null}>
                 <OrderDetail loading={loading} data={orderList} dropdownGroup={dropdownGroup} />
               </Suspense>

@@ -99,6 +99,10 @@ DSR评分≥4.8分
       if (!item.state) {
         return;
       }
+      if (index === 1) {
+        router.push('/fangdan/list');
+        return;
+      }
       const { dispatch } = this.props;
       dispatch({
         type: 'form/checkPrivige',
@@ -110,7 +114,7 @@ DSR评分≥4.8分
           router.push('/fangdan/step-form');
         }
       });
-      console.log('onTabChange', 1, index);
+      // console.log('onTabChange', 1, index);
     };
 
     return (
