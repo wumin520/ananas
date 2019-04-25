@@ -51,7 +51,7 @@ class MarketNav extends PureComponent {
     const menu = (
       <Menu>
         <Menu.Item>
-          <div onClick={this.logout}>退出</div>
+          <div onClick={this.logout}>退出登录</div>
         </Menu.Item>
       </Menu>
     );
@@ -71,7 +71,7 @@ class MarketNav extends PureComponent {
             </div>
           </div>
           <div className={styles.nav_center}>
-            <Link className={styles.nav_link} to="/web">
+            <Link className={styles.nav_link} to="/market">
               首页
             </Link>
             <Link className={styles.nav_link} to="/market/MerchantsSettled">

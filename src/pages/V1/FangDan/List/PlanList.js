@@ -44,12 +44,35 @@ class PlanList extends PureComponent {
     const { dispatch } = this.props;
     const thises = this;
     confirm({
-      title: '确定下架此商品？',
+      title: '确认要下架吗？',
+      content: '下架后排期将暂停，暂停当天商品不会展示，确认要下架吗？',
       okText: '确定',
       cancelText: '取消',
       onOk() {
         dispatch({
           type: 'task/planDownData',
+          payload: {
+            task_plan_id: item.task_plan_id,
+          },
+        }).then(() => {
+          thises.getListData(param);
+        });
+      },
+    });
+  };
+
+  // 上架
+  planUp = item => {
+    const { dispatch } = this.props;
+    const thises = this;
+    confirm({
+      title: '确认要上架吗？',
+      content: '请确保您的佣金/价格或商品状态符合《商品上架规则》',
+      okText: '确定',
+      cancelText: '取消',
+      onOk() {
+        dispatch({
+          type: 'task/planUpData',
           payload: {
             task_plan_id: item.task_plan_id,
           },
@@ -253,6 +276,14 @@ class PlanList extends PureComponent {
               </span>
             );
           }
+          if (item.state === 3) {
+            operation = (
+              <span>
+                <a onClick={this.planUp.bind(this, item)}>上架</a>
+              </span>
+            );
+          }
+
           return <span>{operation}</span>;
         },
       },

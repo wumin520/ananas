@@ -57,15 +57,15 @@ class MarketPromotion extends Component {
           <div className={styles.title}>平台优势</div>
           <div className={styles.advantages}>
             <div className={styles.advantage}>
-              <div className={styles.imgWord}>海量用户资源</div>
+              <div className={`${styles.imgWord} ${styles.imgWord_1}`}>海量用户资源</div>
               <div className={styles.desc}>覆盖千万级流量，大大提高曝光率</div>
             </div>
             <div className={styles.advantage}>
-              <div className={styles.imgWord}>极致的用户体验</div>
+              <div className={`${styles.imgWord} ${styles.imgWord_2}`}>极致的用户体验</div>
               <div className={styles.desc}>缩短推广周期，增强购物体验</div>
             </div>
             <div className={styles.advantage}>
-              <div className={styles.imgWord}>精准营销</div>
+              <div className={`${styles.imgWord} ${styles.imgWord_3}`}>精准营销</div>
               <div className={styles.desc}>建立信任，获得更多附加价值</div>
             </div>
           </div>

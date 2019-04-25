@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
 
 import styles from './AboutUs.less';
 import Footer from './components/Footer';
@@ -14,6 +14,17 @@ class AboutUs extends Component {
       opacity: 0.85,
     };
   }
+
+  info = () => {
+    Modal.info({
+      content: (
+        <div>
+          <p>咨询请加客服qq：1140453425</p>
+        </div>
+      ),
+      onOk() {},
+    });
+  };
 
   render() {
     const { bgColor, opacity } = this.state;
@@ -44,7 +55,9 @@ class AboutUs extends Component {
               alt=""
             />
             <p className={styles.qq_title}>商务合作</p>
-            <Button className={styles.btn_QQ}>QQ交谈</Button>
+            <Button className={styles.btn_QQ} onClick={this.info}>
+              QQ交谈
+            </Button>
           </div>
           <div className={`${styles.qq_item} ${styles.ml64}`}>
             <img
@@ -53,7 +66,9 @@ class AboutUs extends Component {
               alt=""
             />
             <p className={styles.qq_title}>商家咨询</p>
-            <Button className={styles.btn_QQ}>QQ交谈</Button>
+            <Button className={styles.btn_QQ} onClick={this.info}>
+              QQ交谈
+            </Button>
           </div>
         </div>
 

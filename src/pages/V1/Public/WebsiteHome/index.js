@@ -108,8 +108,8 @@ class Index extends Component {
         {/* {con0} */}
         <div className={styles.content0}>
           <div className={styles.mask} />
-          <p className={styles.p1}>一站式导购服务</p>
-          <p className={styles.p2}>打造导购内容生态</p>
+          <p className={styles.p1}>赋能百万推手 打造极致爆款</p>
+          <p className={styles.p2}>社群导购 + 内容服务 + 数字化营销 = 超多客</p>
         </div>
         {/* {con1} */}
         <div className={`${styles.content_block} ${styles.bgf6f7f8}`}>
@@ -142,7 +142,7 @@ class Index extends Component {
               </div>
 
               <div className={styles.flexDiv}>
-                <div className={`${styles.above} ${styles.aboveBg4}`}>自媒体流量站</div>
+                <div className={`${styles.above} ${styles.aboveBg4}`}>流量平台</div>
                 <div>
                   <p className={styles.p1}>2%</p>
                   <p className={styles.p2}>用户群体庞大，坐享流量变现</p>
