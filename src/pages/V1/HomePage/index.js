@@ -58,7 +58,7 @@ class Index extends Component {
     },
     {
       key: '6',
-      title: '推广份数',
+      title: '今日完成情况',
       dataIndex: 'task_info',
       render: val => (
         <div className={styles.taskInfo}>
