@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { formatMessage } from 'umi-plugin-react/locale';
+// import { formatMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
 import Link from 'umi/link';
 import { Icon, Row, Col, Button } from 'antd';
@@ -8,27 +8,27 @@ import DocumentTitle from 'react-document-title';
 import styles from './UserLayout.less';
 import getPageTitle from '@/utils/getPageTitle';
 
-const links = [
-  {
-    key: 'help',
-    title: formatMessage({ id: 'layout.user.link.help' }),
-    href: '',
-  },
-  {
-    key: 'privacy',
-    title: formatMessage({ id: 'layout.user.link.privacy' }),
-    href: '',
-  },
-  {
-    key: 'terms',
-    title: formatMessage({ id: 'layout.user.link.terms' }),
-    href: '',
-  },
-];
+// const links = [
+//   {
+//     key: 'help',
+//     title: formatMessage({ id: 'layout.user.link.help' }),
+//     href: '',
+//   },
+//   {
+//     key: 'privacy',
+//     title: formatMessage({ id: 'layout.user.link.privacy' }),
+//     href: '',
+//   },
+//   {
+//     key: 'terms',
+//     title: formatMessage({ id: 'layout.user.link.terms' }),
+//     href: '',
+//   },
+// ];
 
 const copyright = (
   <Fragment>
-    Copyright <Icon type="copyright" /> 2019 有练网络科技产品超多客出品
+    Copyright <Icon type="copyright" /> 2019 超多客出品
   </Fragment>
 );
 
@@ -94,7 +94,8 @@ class UserLayout extends Component {
             </div>
             {children}
           </div>
-          <GlobalFooter links={links} copyright={copyright} />
+          {/* <GlobalFooter links={links} copyright={copyright} /> */}
+          <GlobalFooter copyright={copyright} />
         </div>
       </DocumentTitle>
     );
