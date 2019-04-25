@@ -12,30 +12,24 @@ class Footer extends PureComponent {
           <div className={styles.list}>
             <div className={styles.item}>
               <div className={styles.title}>超多客</div>
-              <Link className={styles.ele} to="/">
+              <Link className={styles.ele} to="/public/aboutUs">
                 公司简介
               </Link>
-              <Link className={styles.ele} to="/">
+              <Link className={styles.ele} to="/public/aboutUs">
                 企业文化
               </Link>
-              <Link className={styles.ele} to="/">
+              <Link className={styles.ele} to="/public/aboutUs">
                 合作联系
               </Link>
             </div>
             <div className={styles.item}>
               <div className={styles.title}>产品服务</div>
-              <Link className={styles.ele} to="/">
-                CMS网站
-              </Link>
-              <Link className={styles.ele} to="/">
+              <Link className={styles.ele} to="/public/matrix">
                 微信小程序
               </Link>
-              <Link className={styles.ele} to="/">
-                精品单页
-              </Link>
-              <Link className={styles.ele} to="/">
-                开放API
-              </Link>
+              <div className={styles.ele}>CMS网站</div>
+              <div className={styles.ele}>精品单页</div>
+              <div className={styles.ele}>开放API</div>
             </div>
             {/*
               <div className={styles.item}>
