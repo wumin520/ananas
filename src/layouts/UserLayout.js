@@ -66,25 +66,32 @@ class UserLayout extends Component {
               </div>
               <div className={styles.desc}>超多客，卖你所买</div>
             </div> */}
-            <Row className={styles.topMenu}>
-              <Col push={2} span={12}>
-                <Link to="/web/index">
-                  <img
-                    className={styles.logo}
-                    alt="logo"
-                    src="https://cdn.youlianyc.com/image/static/80177b5561be4401729b60666c74a07e5e459d34.jpg"
-                  />
-                </Link>
-                <span className={styles.slogan}>一站式导购服务</span>
-              </Col>
-              <Col pull={2} span={12}>
-                <Link to="/web/index">
-                  <Button style={{ float: 'right' }} type="primary" ghost>
-                    返回首页
-                  </Button>
-                </Link>
-              </Col>
-            </Row>
+            <div className={styles.topMenu_bg}>
+              <Row className={styles.topMenu}>
+                <Col push={2} span={12}>
+                  <Link to="/web/index">
+                    <img
+                      className={styles.logo}
+                      alt="logo"
+                      src="https://cdn.youlianyc.com/image/static/80177b5561be4401729b60666c74a07e5e459d34.jpg"
+                    />
+                  </Link>
+                  <span className={styles.slogan}>一站式导购服务</span>
+                </Col>
+                <Col pull={2} span={12}>
+                  <Link to="/web/index">
+                    <Button
+                      style={{ float: 'right' }}
+                      type="primary"
+                      ghost
+                      className={styles.btnBackHome}
+                    >
+                      返回首页
+                    </Button>
+                  </Link>
+                </Col>
+              </Row>
+            </div>
             {children}
           </div>
           <GlobalFooter links={links} copyright={copyright} />

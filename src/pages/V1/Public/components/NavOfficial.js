@@ -122,12 +122,12 @@ class Header extends PureComponent {
       >
         <div className={styles.content}>
           <Row type="flex" justify="space-between">
-            <Col span={4}>
+            <Col span={5}>
               <div className={styles.nav_img} />
             </Col>
             <Col span={15}>
               <Row type="flex" justify="end">
-                <Col span={4} style={{ textAlign: 'right' }}>
+                <Col span={3} style={{ textAlign: 'right' }}>
                   <a className={`${styles.a_nav}`} href="/web/index">
                     首页
                   </a>
@@ -143,13 +143,13 @@ class Header extends PureComponent {
                     </div>
                   </Col>
                 </Dropdown>
-                <Col span={4} style={{ textAlign: 'right' }}>
+                <Col span={3} style={{ textAlign: 'right' }}>
                   <a className={`${styles.a_nav}`} href="/market">
                     营销推广
                   </a>
                 </Col>
                 <Col span={3} style={{ textAlign: 'right' }}>
-                  <a className={`${styles.a_nav}`} href="">
+                  <a className={`${styles.a_nav}`} href="/public/aboutUs">
                     关于我们
                   </a>
                 </Col>
