@@ -37,8 +37,9 @@ class Index extends PureComponent {
       {
         actions: ['列表', '+新增'],
         state: 1,
-        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
-        title: '好评全返',
+        avatar:
+          'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
+        title: '好评试用推广',
         description: `适用于：
 基础销量偏低
 宝贝流量较少
@@ -49,8 +50,9 @@ DSR评分低
       {
         actions: ['列表', '敬请期待...'],
         state: 0,
-        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
-        title: '高佣高券',
+        avatar:
+          'https://cdn.youlianyc.com/image/static/526746a209d504d6d9c43270767ff76e928aedc2.jpg',
+        title: '大额券推广',
         description: `适用于：
 宝贝月销量≥50，评价数≥50
 DSR评分≥4.8分
@@ -89,7 +91,7 @@ DSR评分≥4.8分
     );
     const titleContent = item => (
       <div>
-        <a>{item.title}</a>
+        <span style={{ fontSize: 16, fontWeight: 500 }}>{item.title}</span>
         {item.state ? '' : <div className={styles.upgradeTag}>升级中</div>}
       </div>
     );

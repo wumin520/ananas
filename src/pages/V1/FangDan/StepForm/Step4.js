@@ -145,9 +145,15 @@ class Step4 extends React.PureComponent {
         </Row>
         <Row>
           <Col offset={10}>
-            <Button onClick={this.toPay} disabled={false} size="default" type="primary">
-              确认支付
-            </Button>
+            {taskPayInfo.wait_pay > taskPayInfo.balance ? (
+              <Button disabled type="primary">
+                确认支付
+              </Button>
+            ) : (
+              <Button onClick={this.toPay} disabled={false} size="default" type="primary">
+                确认支付
+              </Button>
+            )}
             {this.actionType === 'pay' ? (
               ''
             ) : (
