@@ -79,70 +79,93 @@ class MarketPromotion extends Component {
             <Carousel>
               <div>
                 <div className={styles.business}>
-                  <img className={styles.logoImg} src="" alt="" />
-                  <div className={styles.businessName}>商家名称</div>
+                  <img
+                    className={styles.logoImg}
+                    src="https://cdn.youlianyc.com/image/static/efaf2d2ccf294c6e552daedc13eb2b84c1fa36c1.jpg"
+                    alt=""
+                  />
+                  <div className={styles.businessName}>丝飘旗舰店</div>
                   <div className={styles.businessDesc}>
-                    销量提升<span className={styles.num}>1234</span>单
+                    销量提升<span className={styles.num}>45613</span>单
                   </div>
                 </div>
                 <div className={styles.business}>
-                  <img className={styles.logoImg} src="" alt="" />
-                  <div className={styles.businessName}>商家名称</div>
+                  <img
+                    className={styles.logoImg}
+                    src="https://cdn.youlianyc.com/image/static/2c5b526d63d27279d0a5c24102df92db4ada78ac.jpg"
+                    alt=""
+                  />
+                  <div className={styles.businessName}>金冠家居专营店</div>
                   <div className={styles.businessDesc}>
-                    销量提升<span className={styles.num}>1234</span>单
+                    销量提升<span className={styles.num}>35215</span>单
                   </div>
                 </div>
                 <div className={styles.business}>
-                  <img className={styles.logoImg} src="" alt="" />
-                  <div className={styles.businessName}>商家名称</div>
+                  <img
+                    className={styles.logoImg}
+                    src="https://cdn.youlianyc.com/image/static/0c1609c3e1453f543a026925d12346d2e1bf033a.jpg"
+                    alt=""
+                  />
+                  <div className={styles.businessName}>顾大嫂旗舰店</div>
                   <div className={styles.businessDesc}>
-                    销量提升<span className={styles.num}>1234</span>单
+                    销量提升<span className={styles.num}>32563</span>单
                   </div>
                 </div>
                 <div className={styles.business}>
-                  <img className={styles.logoImg} src="" alt="" />
-                  <div className={styles.businessName}>商家名称</div>
+                  <img
+                    className={styles.logoImg}
+                    src="https://cdn.youlianyc.com/image/static/14255151aeebab639f0b8ee447a4f82c1961c02c.jpg"
+                    alt=""
+                  />
+                  <div className={styles.businessName}>幸福树旗舰店</div>
                   <div className={styles.businessDesc}>
-                    销量提升<span className={styles.num}>1234</span>单
+                    销量提升<span className={styles.num}>25637</span>单
                   </div>
                 </div>
                 <div className={styles.business}>
-                  <img className={styles.logoImg} src="" alt="" />
-                  <div className={styles.businessName}>商家名称</div>
+                  <img
+                    className={styles.logoImg}
+                    src="https://cdn.youlianyc.com/image/static/61d54fc88ad568fe6ae23c928ae3b4d9a66de3ea.jpg"
+                    alt=""
+                  />
+                  <div className={styles.businessName}>生活一站购</div>
                   <div className={styles.businessDesc}>
-                    销量提升<span className={styles.num}>1234</span>单
+                    销量提升<span className={styles.num}>24568</span>单
                   </div>
                 </div>
                 <div className={styles.business}>
-                  <img className={styles.logoImg} src="" alt="" />
-                  <div className={styles.businessName}>商家名称</div>
+                  <img
+                    className={styles.logoImg}
+                    src="https://cdn.youlianyc.com/image/static/7783d1f9c903519e2f45bce57b511e75749c19b6.jpg"
+                    alt=""
+                  />
+                  <div className={styles.businessName}>Mini饰品</div>
                   <div className={styles.businessDesc}>
-                    销量提升<span className={styles.num}>1234</span>单
+                    销量提升<span className={styles.num}>23541</span>单
                   </div>
                 </div>
                 <div className={styles.business}>
-                  <img className={styles.logoImg} src="" alt="" />
-                  <div className={styles.businessName}>商家名称</div>
+                  <img
+                    className={styles.logoImg}
+                    src="https://cdn.youlianyc.com/image/static/4b913a6c441ce566e8aac724c0b037d5008c8818.jpg"
+                    alt=""
+                  />
+                  <div className={styles.businessName}>时光闺蜜</div>
                   <div className={styles.businessDesc}>
-                    销量提升<span className={styles.num}>1234</span>单
+                    销量提升<span className={styles.num}>15613</span>单
                   </div>
                 </div>
                 <div className={styles.business}>
-                  <img className={styles.logoImg} src="" alt="" />
-                  <div className={styles.businessName}>商家名称</div>
+                  <img
+                    className={styles.logoImg}
+                    src="https://cdn.youlianyc.com/image/static/3e49c47873db9efcd36c7f7dfe83ab024f9f640c.jpg"
+                    alt=""
+                  />
+                  <div className={styles.businessName}>邻家家居</div>
                   <div className={styles.businessDesc}>
-                    销量提升<span className={styles.num}>1234</span>单
+                    销量提升<span className={styles.num}>12563</span>单
                   </div>
                 </div>
-              </div>
-              <div>
-                <h3>2</h3>
-              </div>
-              <div>
-                <h3>3</h3>
-              </div>
-              <div>
-                <h3>4</h3>
               </div>
             </Carousel>
           </div>
