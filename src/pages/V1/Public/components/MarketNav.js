@@ -20,7 +20,7 @@ class MarketNav extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     const token = getUserToken();
-    if (token !== '') {
+    if (token && token !== '') {
       dispatch({
         type: 'user/fetchCurrent',
       });

@@ -22,18 +22,11 @@ class Header extends PureComponent {
     if (scrollTop > 32) {
       this.setState({
         fixTop: true,
-      });
-    } else {
-      this.setState({
-        fixTop: false,
-      });
-    }
-    if (scrollTop > 600) {
-      this.setState({
         bgWhite: true,
       });
     } else {
       this.setState({
+        fixTop: false,
         bgWhite: false,
       });
     }
@@ -42,8 +35,8 @@ class Header extends PureComponent {
 
   handleVisibleChange = flag => {
     this.setState({ visible: flag });
-    const { visible } = this.state;
-    console.log(visible);
+    // const { visible } = this.state;
+    // console.log(visible);
   };
 
   forwardTo = url => {
