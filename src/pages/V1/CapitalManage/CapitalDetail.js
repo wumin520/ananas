@@ -224,7 +224,7 @@ class CapitalDetail extends PureComponent {
               <Col sm={8} xs={24}>
                 <Info
                   title="冻结金额"
-                  value={assetData.asset_info.frozen_balance}
+                  value={assetData.asset_info.balance}
                   linkName="冻结明细"
                   url="/CapitalManage/FreezeDetail"
                   bordered
