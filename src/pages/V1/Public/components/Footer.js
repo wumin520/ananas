@@ -37,15 +37,17 @@ class Footer extends PureComponent {
                 开放API
               </Link>
             </div>
-            <div className={styles.item}>
-              <div className={styles.title}>帮助支持</div>
-              <Link className={styles.ele} to="/">
-                新手入门
-              </Link>
-              <Link className={styles.ele} to="/">
-                常见问题
-              </Link>
-            </div>
+            {/*
+              <div className={styles.item}>
+                <div className={styles.title}>帮助支持</div>
+                <Link className={styles.ele} to="/">
+                  新手入门
+                </Link>
+                <Link className={styles.ele} to="/">
+                  常见问题
+                </Link>
+              </div>
+            */}
             <div className={styles.item}>
               <div className={styles.title}>微信服务号</div>
               <div className={styles.eleImg}>
