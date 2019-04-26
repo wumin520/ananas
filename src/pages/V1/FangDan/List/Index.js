@@ -222,9 +222,9 @@ class FdList extends PureComponent {
         width: 222,
       },
       {
-        title: '价格',
-        dataIndex: 'price',
-        key: 'price',
+        title: '券后价',
+        dataIndex: 'after_coupon_price',
+        key: 'after_coupon_price',
         render: item => {
           return <span>￥{item}</span>;
         },
@@ -239,17 +239,15 @@ class FdList extends PureComponent {
       },
       {
         title: '推广份数',
-        width: 220,
+        width: 170,
         render: item => {
           return (
             <p style={{ textAlign: 'left' }}>
               <span>发放份数 {item.total_amount}</span>
               <br />
-              <span>评价人数 {item.comment_num}</span>
-              <br />
               <span>下单人数 {item.order_num}</span>
               <br />
-              <span>售后人数 {item.sale_back_num}</span>
+              <span>评价人数 {item.comment_num}</span>
             </p>
           );
         },

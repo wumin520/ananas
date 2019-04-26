@@ -212,7 +212,7 @@ class CapitalDetail extends PureComponent {
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
-              <Col sm={8} xs={24}>
+              <Col sm={12} xs={24}>
                 <Info
                   title="可用余额"
                   value={assetData.asset_info.balance}
@@ -221,18 +221,17 @@ class CapitalDetail extends PureComponent {
                   bordered
                 />
               </Col>
-              <Col sm={8} xs={24}>
+              <Col sm={12} xs={24}>
                 <Info
                   title="冻结金额"
                   value={assetData.asset_info.frozen_balance}
                   linkName="冻结明细"
                   url="/CapitalManage/FreezeDetail"
-                  bordered
                 />
               </Col>
-              <Col sm={8} xs={24}>
+              {/* <Col sm={8} xs={24}>
                 <Info title="累计支出" value={assetData.asset_info.expend_balance} />
-              </Col>
+              </Col> */}
             </Row>
           </Card>
           <br />
