@@ -239,7 +239,7 @@ class FdList extends PureComponent {
       },
       {
         title: '推广份数',
-        width: 182,
+        width: 220,
         render: item => {
           return (
             <p style={{ textAlign: 'left' }}>
