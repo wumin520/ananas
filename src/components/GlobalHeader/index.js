@@ -23,7 +23,7 @@ export default class GlobalHeader extends PureComponent {
     this.triggerResizeEvent();
   };
   render() {
-    const { collapsed, isMobile, logo } = this.props;
+    const { collapsed, isMobile, logo, currentUser } = this.props;
     return (
       <div className={styles.header}>
         {isMobile && (
@@ -34,6 +34,7 @@ export default class GlobalHeader extends PureComponent {
         <span className={styles.trigger} onClick={this.toggle}>
           <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
         </span>
+        {currentUser.shop_name}，欢迎登录超多客放单系统
         <RightContent {...this.props} />
       </div>
     );

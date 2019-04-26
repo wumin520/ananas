@@ -184,7 +184,12 @@ class orderList extends PureComponent {
         title: '商品',
         render: val => {
           return (
-            <a className={styles.pro} rel="noopener noreferrer" target="_blank">
+            <a
+              className={styles.pro}
+              href={val.goods_url}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <img src={val.img} alt="a" style={{ width: 50, heigth: 50, marginRight: 5 }} />
               <span className={styles.goodsName}> {val.title}</span>
             </a>

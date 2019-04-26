@@ -241,6 +241,14 @@ class FdList extends PureComponent {
         },
       },
       {
+        key: 'coupon_price',
+        title: '优惠券',
+        dataIndex: 'coupon_price',
+        render: val => {
+          return <span>{val ? `￥ ${val}` : '无'}</span>;
+        },
+      },
+      {
         title: '状态',
         dataIndex: 'state',
         width: 110,

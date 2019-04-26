@@ -35,7 +35,7 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
             </Tooltip>
           }
           total={numeral(visitData.task_info.day_task_amount).format('0,0')}
-          footer={<Field label={<span>总放单量 ¥</span>} value={visitData.task_info.total_money} />}
+          footer={<Field label={<span>总放单量 </span>} value={visitData.task_info.total_amount} />}
           contentHeight={46}
         >
           <MiniArea
@@ -111,7 +111,7 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
               <Icon type="info-circle-o" />
             </Tooltip>
           }
-          total={numeral(visitData.comment_info.good_comment_rate).format('0,0')}
+          total={visitData.comment_info.good_comment_rate}
           footer={
             <Field label={<span>总好评数</span>} value={visitData.comment_info.good_comment_num} />
           }
