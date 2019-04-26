@@ -4,14 +4,12 @@ import { router } from 'umi';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import PageLoading from '@/components/PageLoading';
-import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Tabs, Alert } from 'antd';
+import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Alert } from 'antd';
 import styles from './index.less';
 
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
 const OrderDetail = React.lazy(() => import('./OrderDetail'));
 // const HotRankList = React.lazy(() => import('./HotRankList'));
-
-const { TabPane } = Tabs;
 
 const statusMap = ['default', 'success'];
 
@@ -134,30 +132,24 @@ class Index extends Component {
         <Suspense fallback={<PageLoading />}>
           <IntroduceRow loading={loading} visitData={headInfo} />
         </Suspense>
-        <Card fallback={null}>
-          <Tabs
-            tabBarExtraContent={
-              <div className={styles.salesExtraWrap}>
-                <div className={styles.salesExtra}>
-                  <a href="/fangdan/plan">{'排期列表>'}</a>
-                </div>
-              </div>
-            }
-            size="large"
-            defaultActiveKey="sales"
-          >
-            <TabPane
-              tab={<FormattedMessage id="app.homePage.todayPromotion" defaultMessage="Sales" />}
-              key="sales"
-            >
-              <Table
-                rowKey={record => record.id}
-                loading={loading}
-                dataSource={taskList}
-                columns={this.columns}
-              />
-            </TabPane>
-          </Tabs>
+        <Card
+          loading={loading}
+          bordered={false}
+          title={<FormattedMessage id="app.homePage.todayPromotion" defaultMessage="" />}
+          extra={<a href="/fangdan/plan">{'排期列表>'}</a>}
+          style={{ marginTop: 24 }}
+        >
+          <Table
+            rowKey={record => record.id}
+            size="small"
+            loading={loading}
+            dataSource={taskList}
+            columns={this.columns}
+            pagination={{
+              style: { marginBottom: 0 },
+              pageSize: 5,
+            }}
+          />
         </Card>
         <div className={styles.twoColLayout}>
           <Row gutter={24}>
