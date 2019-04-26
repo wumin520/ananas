@@ -22,29 +22,41 @@ class Index extends Component {
     {
       key: '1',
       title: '推广编号',
+      width: 100,
       dataIndex: 'task_plan_id',
+    },
+    {
+      key: 'goods_id',
+      title: '商品id',
+      width: 120,
+      dataIndex: 'goods_id',
     },
     {
       key: '2',
       title: '商品',
       className: styles.resultColumns,
       render: val => (
-        <p className={styles.resultColumnsDiv}>
+        <a
+          className={styles.resultColumnsDiv}
+          href={val.goods_url}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
           <img src={val.img} alt="a" style={{ width: 50, heigth: 50 }} />
           <span> {val.title}</span>
-        </p>
+        </a>
       ),
     },
     {
       key: '3',
-      title: '价格',
-      dataIndex: 'price',
+      title: '券后价',
+      dataIndex: 'after_coupon_price',
       render: val => `￥ ${val}`,
     },
     {
       key: '4',
       title: '优惠券',
-      dataIndex: 'coupon',
+      dataIndex: 'coupon_price',
       render: val => {
         return <span>{val ? `￥ ${val}` : '无'}</span>;
       },
@@ -61,9 +73,8 @@ class Index extends Component {
       render: val => (
         <div className={styles.taskInfo}>
           <p>发放份数 {val.task_amount}</p>
-          <p>评价人数 {val.comment_num}</p>
           <p>下单人数 {val.order_num}</p>
-          <p>售后人数 {val.sale_back_num}</p>
+          <p>评价人数 {val.comment_num}</p>
         </div>
       ),
     },

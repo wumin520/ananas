@@ -129,7 +129,7 @@ class FreezeDetail extends PureComponent {
         },
       },
       {
-        title: '放单类型',
+        title: '放单状态',
         dataIndex: 'state',
         key: 'state',
         width: 150,
