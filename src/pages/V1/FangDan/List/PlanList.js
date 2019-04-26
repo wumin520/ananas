@@ -211,27 +211,38 @@ class PlanList extends PureComponent {
     const headerInfo = planData.header_info;
     const columns = [
       {
-        title: '推广编号',
-        dataIndex: 'task_id',
-        key: 'task_id',
-        width: 91,
+        title: '排期时间',
+        dataIndex: 'plan_time',
+        key: 'plan_time',
+        width: 222,
+      },
+      {
+        key: 'goods_id',
+        title: '商品id',
+        width: 120,
+        dataIndex: 'goods_id',
       },
       {
         title: '商品',
         render: val => {
           return (
-            <span className={styles.pro}>
+            <a
+              className={styles.pro}
+              href={val.goods_url}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <img src={val.img} alt="a" style={{ width: 50, heigth: 50, marginRight: 5 }} />
               <span className={styles.goodsName}> {val.title}</span>
-            </span>
+            </a>
           );
         },
       },
       {
-        title: '提交时间',
-        dataIndex: 'plan_time',
-        key: 'plan_time',
-        width: 222,
+        title: '推广编号',
+        dataIndex: 'task_id',
+        key: 'task_id',
+        width: 91,
       },
       {
         title: '券后价',
@@ -240,6 +251,15 @@ class PlanList extends PureComponent {
         key: 'after_coupon_price',
         render: item => {
           return <span>￥{item}</span>;
+        },
+      },
+      {
+        key: 'coupon_price',
+        title: '优惠券',
+        width: 100,
+        dataIndex: 'coupon_price',
+        render: val => {
+          return <span>{val ? `￥ ${val}` : '无'}</span>;
         },
       },
       {

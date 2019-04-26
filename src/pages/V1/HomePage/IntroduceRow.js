@@ -26,18 +26,16 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
             <Tooltip
               title={
                 <div className={styles.toolP}>
-                  <p>1.总放单量：推广数量之和</p>
-                  <p>2.总推广费用：推广费用之和</p>
+                  <p>1.今日放单量：今日内所有推广的实时放单量</p>
+                  <p>2.总放单量：所有推广的累计放单量</p>
                 </div>
               }
             >
               <Icon type="info-circle-o" />
             </Tooltip>
           }
-          total={numeral(visitData.task_info.task_amount).format('0,0')}
-          footer={
-            <Field label={<span>总推广费用 ¥</span>} value={visitData.task_info.total_money} />
-          }
+          total={numeral(visitData.task_info.day_task_amount).format('0,0')}
+          footer={<Field label={<span>总放单量 ¥</span>} value={visitData.task_info.total_money} />}
           contentHeight={46}
         >
           <MiniArea
@@ -62,8 +60,8 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
             <Tooltip
               title={
                 <div className={styles.toolP}>
-                  <p>1.总订单数：推广订单之和</p>
-                  <p>2.日均订单数：总订单数/推广排期总天数</p>
+                  <p>1.今日订单数：今日内所有推广产生的实时订单数</p>
+                  <p>2.总订单数：所有推广产生的订单总和</p>
                 </div>
               }
             >
@@ -71,11 +69,11 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
             </Tooltip>
           }
           loading={loading}
-          total={() => <p>{visitData.order_info.total_order_num}</p>}
+          total={() => <p>{visitData.order_info.day_order_num}</p>}
           footer={
             <Field
-              label={<span>日均订单数</span>}
-              value={`${numeral(visitData.order_info.daily_order_num).format('0,0')}`}
+              label={<span>总订单数</span>}
+              value={`${numeral(visitData.order_info.total_order_num).format('0,0')}`}
             />
           }
           contentHeight={46}
@@ -105,17 +103,17 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
             <Tooltip
               title={
                 <div className={styles.toolP}>
-                  <p>1.总好评数：所有推广产生的好评数</p>
-                  <p>2.好评率总评价数/总订单数</p>
+                  <p>1.好评率：推广订单产生的好评率</p>
+                  <p>2.总好评数：所有订单产生的好评数总和</p>
                 </div>
               }
             >
               <Icon type="info-circle-o" />
             </Tooltip>
           }
-          total={numeral(visitData.comment_info.good_comment_num).format('0,0')}
+          total={numeral(visitData.comment_info.good_comment_rate).format('0,0')}
           footer={
-            <Field label={<span>好评率</span>} value={visitData.comment_info.good_comment_rate} />
+            <Field label={<span>总好评数</span>} value={visitData.comment_info.good_comment_num} />
           }
           contentHeight={46}
         >

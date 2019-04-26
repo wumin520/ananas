@@ -175,13 +175,19 @@ class orderList extends PureComponent {
         width: 91,
       },
       {
+        key: 'goods_id',
+        title: '商品id',
+        width: 120,
+        dataIndex: 'goods_id',
+      },
+      {
         title: '商品',
         render: val => {
           return (
-            <span className={styles.pro}>
+            <a className={styles.pro} rel="noopener noreferrer" target="_blank">
               <img src={val.img} alt="a" style={{ width: 50, heigth: 50, marginRight: 5 }} />
               <span className={styles.goodsName}> {val.title}</span>
-            </span>
+            </a>
           );
         },
       },

@@ -7,13 +7,13 @@ export default {
   state: {
     head_info: {
       task_info: {
-        task_amount: 0,
-        total_money: 0,
+        day_task_amount: 0, // 今日放单量
+        total_amount: 0, // 总放单量
         statistics_info: [],
       },
       order_info: {
-        total_order_num: 0,
-        daily_order_num: 0,
+        total_order_num: 0, // 总订单量
+        day_order_num: 0, // 今日订单量
         statistics_info: [],
       },
       comment_info: {
