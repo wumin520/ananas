@@ -440,11 +440,6 @@ class Step3 extends React.PureComponent {
             </Button>
           </Col> */}
         </Row>
-        <Row style={{ marginTop: 20 }}>
-          <Col span={6} style={{ marginBottom: 10 }}>
-            推广数量：{countPlanSum()}
-          </Col>
-        </Row>
 
         {startDate ? (
           // <Calendar
@@ -454,6 +449,7 @@ class Step3 extends React.PureComponent {
           //   dateFullCellRender={dateFullCellRender}
           // />
           <Table
+            style={{ width: '60%', marginTop: 20 }}
             components={components}
             bordered
             dataSource={schedules}
@@ -463,6 +459,14 @@ class Step3 extends React.PureComponent {
         ) : (
           <Empty style={{ margin: '20px auto 120px' }} description="请选择推广日期后进行一键排期" />
         )}
+        <Row style={{ marginTop: 20 }}>
+          <Col span={6} style={{ marginBottom: 10 }}>
+            总投放数量：
+            <span style={{ color: '#1890FF', fontWeight: 500, fontSize: 18 }}>
+              {countPlanSum()}
+            </span>
+          </Col>
+        </Row>
         <Row style={{ margin: '20px auto 50px' }}>
           <Col push={11}>
             <Button
