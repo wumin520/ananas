@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Card, Badge, Divider } from 'antd';
+import { Card, Badge, Divider, Modal, Carousel } from 'antd';
 import DescriptionList from '@/components/DescriptionList';
+// import ModelPop from './components/ModelPop';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './ProductDetail.less';
 
@@ -13,6 +14,11 @@ const status = ['无效', '已下单', '待评价', '已完成'];
   loading: loading.effects['order/orderDetail'],
 }))
 class ProductDetail extends Component {
+  state = {
+    modal1Visible: false,
+    // itemImg: {},
+  };
+
   componentDidMount() {
     this.getDetailData();
   }
@@ -28,8 +34,21 @@ class ProductDetail extends Component {
     });
   };
 
+  setModal1Visible = () => {
+    this.setState({
+      modal1Visible: true,
+    });
+  };
+
+  Closable = () => {
+    this.setState({
+      modal1Visible: false,
+    });
+  };
+
   render() {
     const { loading, orderDetail } = this.props;
+    const { modal1Visible } = this.state;
     console.log('orderDetail', orderDetail);
     const { data } = orderDetail;
     const content = <div />;
@@ -64,11 +83,31 @@ class ProductDetail extends Component {
               ? '未上传'
               : data.proof_images.length > 0 &&
                 data.proof_images.map(e => (
-                  <img
-                    src={e}
-                    style={{ width: 100, height: 100, marginLeft: 10, marginBottom: 20 }}
-                  />
+                  <a onClick={this.setModal1Visible.bind()}>
+                    <img
+                      src={e}
+                      style={{ width: 100, height: 100, marginLeft: 10, marginBottom: 20 }}
+                    />
+                  </a>
                 ))}
+            <Modal
+              style={{ top: 20 }}
+              footer={null}
+              visible={modal1Visible}
+              maskClosable={true}
+              onCancel={this.Closable.bind()}
+            >
+              <Carousel autoplay bodyStyle={{ backgroundColor: '#F6F7F8' }}>
+                {data.proof_images.length > 0 &&
+                  data.proof_images.map(e => (
+                    <div className={styles.models}>
+                      <a href={e} target="_Blank">
+                        <img src={e} alt="" className={styles.hp_img} />
+                      </a>
+                    </div>
+                  ))}
+              </Carousel>
+            </Modal>
           </p>
           <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="订单进度" style={{ marginBottom: 32 }}>
