@@ -202,7 +202,7 @@ class FdList extends PureComponent {
         title: '推广编号',
         dataIndex: 'task_id',
         key: 'task_id',
-        width: 91,
+        width: 90,
       },
       {
         key: 'goods_id',
@@ -230,18 +230,20 @@ class FdList extends PureComponent {
         title: '提交时间',
         dataIndex: 'created_at',
         key: 'created_at',
-        width: 222,
+        width: 185,
       },
       {
         title: '券后价',
         dataIndex: 'after_coupon_price',
         key: 'after_coupon_price',
+        width: 100,
         render: item => {
           return <span>￥{item}</span>;
         },
       },
       {
         key: 'coupon_price',
+        width: 100,
         title: '优惠券',
         dataIndex: 'coupon_price',
         render: val => {
@@ -251,14 +253,14 @@ class FdList extends PureComponent {
       {
         title: '状态',
         dataIndex: 'state',
-        width: 110,
+        width: 100,
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
       },
       {
         title: '推广份数',
-        width: 170,
+        width: 150,
         render: item => {
           return (
             <p style={{ textAlign: 'left' }}>

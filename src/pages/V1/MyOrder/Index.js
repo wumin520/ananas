@@ -169,10 +169,16 @@ class orderList extends PureComponent {
     const { list } = orderData;
     const columns = [
       {
+        title: '订单编号',
+        dataIndex: 'p_order_id',
+        key: 'p_order_id',
+        width: 200,
+      },
+      {
         title: '推广编号',
         dataIndex: 'task_id',
         key: 'task_id',
-        width: 91,
+        width: 90,
       },
       {
         key: 'goods_id',
@@ -197,14 +203,8 @@ class orderList extends PureComponent {
         },
       },
       {
-        title: '订单编号',
-        dataIndex: 'p_order_id',
-        key: 'p_order_id',
-        width: 198,
-      },
-      {
         title: '购买价格',
-        width: 88,
+        width: 100,
         render(item) {
           return <span>￥{item.order_price}</span>;
         },
@@ -212,14 +212,14 @@ class orderList extends PureComponent {
       {
         title: '状态',
         dataIndex: 'state',
-        width: 88,
+        width: 100,
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
       },
       {
         title: '时间',
-        width: 200,
+        width: 185,
         render(val) {
           /* eslint-disable */
           const time = (
@@ -242,7 +242,7 @@ class orderList extends PureComponent {
       },
       {
         title: '操作',
-        width: 130,
+        width: 120,
         render: item => {
           let option;
           if (item.proof_images.length > 0) {

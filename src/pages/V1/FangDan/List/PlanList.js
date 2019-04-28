@@ -214,7 +214,7 @@ class PlanList extends PureComponent {
         title: '排期时间',
         dataIndex: 'plan_time',
         key: 'plan_time',
-        width: 222,
+        width: 100,
       },
       {
         key: 'goods_id',
@@ -242,7 +242,7 @@ class PlanList extends PureComponent {
         title: '推广编号',
         dataIndex: 'task_id',
         key: 'task_id',
-        width: 91,
+        width: 90,
       },
       {
         title: '券后价',
@@ -265,14 +265,14 @@ class PlanList extends PureComponent {
       {
         title: '状态',
         dataIndex: 'state',
-        width: 110,
+        width: 100,
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
       },
       {
         title: '推广份数',
-        width: 200,
+        width: 150,
         render: item => {
           return (
             <p style={{ textAlign: 'left' }}>
