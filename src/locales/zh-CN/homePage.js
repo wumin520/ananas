@@ -13,7 +13,7 @@ export default {
   'app.homePage.hotRankList': '24小时热门榜',
   'app.homePage.table.orderNum': '订单数',
   'app.homePage.table.dayly-range': '日涨幅',
-  'app.homePage.orderDetail': '订单明细',
+  'app.homePage.todayOrder': '今日订单',
   'app.homePage.table.orderCode': '订单编号',
   'app.homePage.table.productName': '商品名',
   'app.homePage.table.shopName': '店铺名',

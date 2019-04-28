@@ -8,7 +8,7 @@ import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Alert } fr
 import styles from './index.less';
 
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
-const OrderDetail = React.lazy(() => import('./OrderDetail'));
+const TodayOrder = React.lazy(() => import('./todayOrder'));
 // const HotRankList = React.lazy(() => import('./HotRankList'));
 
 const statusMap = ['default', 'success'];
@@ -119,7 +119,7 @@ class Index extends Component {
     const headInfo = homedata.head_info;
     const taskList = homedata.task_plan_list;
     // const hotRank = homedata.hot_rank;
-    const orderList = homedata.order_list;
+    const dayOrderInfo = homedata.day_order_info;
     const noticeInfo = homedata.notice_info;
 
     const menu = (
@@ -173,7 +173,12 @@ class Index extends Component {
             */}
             <Col xl={24} lg={24} md={24} sm={24} xs={24}>
               <Suspense fallback={null}>
-                <OrderDetail loading={loading} data={orderList} dropdownGroup={dropdownGroup} />
+                <TodayOrder
+                  loading={loading}
+                  data={dayOrderInfo.list}
+                  pageInfo={dayOrderInfo.page_info}
+                  dropdownGroup={dropdownGroup}
+                />
               </Suspense>
             </Col>
           </Row>

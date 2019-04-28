@@ -31,6 +31,10 @@ export default {
     hot_rank: [],
     order_list: [],
     notice_info: '',
+    day_order_info: {
+      list: [],
+      page_info: {},
+    },
   },
 
   effects: {
@@ -44,6 +48,7 @@ export default {
           hot_rank: res.payload.hot_rank,
           order_list: res.payload.order_list,
           notice_info: res.payload.notice_info,
+          day_order_info: res.payload.day_order_info,
         },
       });
     },

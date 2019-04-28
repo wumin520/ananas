@@ -73,10 +73,10 @@ class ProductDetail extends Component {
           <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="订单进度" style={{ marginBottom: 32 }}>
             <div style={{ paddingLeft: 16 }}>
-              <p>{data.paid_datetime ? '下单时间: ' + data.paid_datetime : ''}</p>
-              <p>{data.ordered_datetime ? '支付时间: ' + data.ordered_datetime : ''}</p>
-              <p>{data.harvest_time ? '收货时间: ' + data.harvest_time : ''}</p>
-              <p>{data.harvest_time ? '好评时间: ' + data.harvest_time : ''}</p>
+              <p>{data.paid_datetime ? '下单: ' + data.paid_datetime : ''}</p>
+              <p>{data.ordered_datetime ? '付款: ' + data.ordered_datetime : ''}</p>
+              <p>{data.harvest_time ? '收货: ' + data.harvest_time : ''}</p>
+              <p>{data.harvest_time ? '好评: ' + data.harvest_time : ''}</p>
             </div>
           </DescriptionList>
         </Card>
