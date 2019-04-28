@@ -6,7 +6,7 @@ import { extend } from 'umi-request';
 import router from 'umi/router';
 import { notification, message } from 'antd';
 import { backend } from '@/defaultSettings';
-import { getStorage } from './authority';
+import { getStorage, setUserToken, setShState } from './authority';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -104,6 +104,8 @@ request.interceptors.response.use(async response => {
     const res = await response.clone().json();
     if (res.code === 40301) {
       message.error('请先登录');
+      setUserToken('');
+      setShState('');
       router.push('/user/login');
     } else if (res.code >= 40000) {
       message.error(res.message);
