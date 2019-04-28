@@ -172,7 +172,7 @@ class orderList extends PureComponent {
         title: '订单编号',
         dataIndex: 'p_order_id',
         key: 'p_order_id',
-        width: 200,
+        width: 230,
       },
       {
         title: '推广编号',
@@ -219,14 +219,14 @@ class orderList extends PureComponent {
       },
       {
         title: '时间',
-        width: 185,
+        width: 250,
         render(val) {
           /* eslint-disable */
           const time = (
             <span>
               <span>{val.paid_datetime ? '付款: ' + val.paid_datetime : ''}</span>
               <br />
-              <span> {val.harvest_time ? '确认收货: ' + val.harvest_time : ''}</span>
+              <span> {val.harvest_time ? '收货: ' + val.harvest_time : ''}</span>
               <br />
               <span>{val.proof_time ? '好评: ' + val.proof_time : ''}</span>
             </span>

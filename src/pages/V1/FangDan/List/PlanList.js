@@ -214,7 +214,7 @@ class PlanList extends PureComponent {
         title: '排期时间',
         dataIndex: 'plan_time',
         key: 'plan_time',
-        width: 100,
+        width: 120,
       },
       {
         key: 'goods_id',
