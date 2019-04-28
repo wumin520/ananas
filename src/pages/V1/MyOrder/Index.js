@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Table, Card, Row, Col, Modal, Input, Button, Form, Select, Badge } from 'antd';
+import { Table, Card, Row, Col, Modal, Input, Button, Form, Select, Badge, Carousel } from 'antd';
+// import ModelPop from './components/ModelPop';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { router } from 'umi';
 import styles from './Index.less';
@@ -18,6 +19,8 @@ const status = ['无效', '已下单', '待评价', '已完成'];
 class orderList extends PureComponent {
   state = {
     page: 1,
+    modal1Visible: false,
+    itemImg: {},
   };
 
   componentDidMount() {
@@ -28,7 +31,7 @@ class orderList extends PureComponent {
   getOrderData = p => {
     const { dispatch, location } = this.props;
     const { query } = location;
-    console.log('this.props:', query);
+    // console.log('this.props:', query);
     dispatch({
       type: 'order/orderData',
       payload: {
@@ -72,24 +75,17 @@ class orderList extends PureComponent {
     router.push(`/order/productDetail?order_id=${item.order_id}`);
   };
 
-  showModal = item => {
-    Modal.info({
-      title: '好评凭证',
-      width: 500,
-      okText: '关闭',
-      content: (
-        <div>
-          {item.proof_images.length > 0 &&
-            item.proof_images.map(e => (
-              <img
-                src={e}
-                alt=""
-                style={{ width: 100, height: 100, marginRight: 10, marginBottom: 20 }}
-              />
-            ))}
-        </div>
-      ),
-      onOk() {},
+  // model
+  setModal1Visible = item => {
+    this.setState({
+      modal1Visible: true,
+      itemImg: item.proof_images,
+    });
+  };
+
+  Closable = () => {
+    this.setState({
+      modal1Visible: false,
     });
   };
 
@@ -167,6 +163,7 @@ class orderList extends PureComponent {
     const orderNumInfo = orderData.order_num_info;
     const pageInfo = orderData.page_info;
     const { list } = orderData;
+    const { modal1Visible, itemImg } = this.state;
     const columns = [
       {
         title: '订单编号',
@@ -247,9 +244,30 @@ class orderList extends PureComponent {
           let option;
           if (item.proof_images.length > 0) {
             option = (
-              <a href={item.proof_images} target="_Blank">
-                好评凭证
-              </a>
+              <span>
+                <a onClick={this.setModal1Visible.bind(this, item)} target="_Blank">
+                  好评凭证
+                </a>
+                {/* <ModelPop itemImg={itemImg} modal1Visible={modal1Visible} ></ModelPop> */}
+                <Modal
+                  style={{ top: 20 }}
+                  footer={null}
+                  visible={modal1Visible}
+                  maskClosable={true}
+                  onCancel={this.Closable.bind()}
+                >
+                  <Carousel autoplay bodyStyle={{ backgroundColor: '#F6F7F8' }}>
+                    {item.proof_images.length > 0 &&
+                      item.proof_images.map(e => (
+                        <div className={styles.models}>
+                          <a href={e} target="_Blank">
+                            <img src={e} alt="" className={styles.hp_img} />
+                          </a>
+                        </div>
+                      ))}
+                  </Carousel>
+                </Modal>
+              </span>
             );
           }
           return (
