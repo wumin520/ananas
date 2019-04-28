@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Modal } from 'antd';
+import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Modal, DatePicker } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import moment from 'moment';
 import styles from './Index.less';
 
 const FormItem = Form.Item;
@@ -24,7 +25,10 @@ let param = {
 }))
 @Form.create()
 class PlanList extends PureComponent {
-  state = {};
+  state = {
+    startTime: '',
+    endTime: '',
+  };
 
   componentDidMount() {
     this.getListData(param);
@@ -87,6 +91,7 @@ class PlanList extends PureComponent {
   handleSearch = e => {
     e.preventDefault();
     const { dispatch, form } = this.props;
+    const { startTime, endTime } = this.state;
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       const values = {
@@ -99,6 +104,8 @@ class PlanList extends PureComponent {
         goods_id: values.goods_id || 0,
         state: values.state || -1,
         type: values.type || -1,
+        start_time: startTime || '',
+        end_time: endTime || '',
       };
       dispatch({
         type: 'task/planList',
@@ -123,6 +130,16 @@ class PlanList extends PureComponent {
     });
   };
 
+  // 保存筛选日期
+  selectPlanTime = date => {
+    const startTimeTemp = moment(date[0]).format('YYYY-MM-DD');
+    const endTimeTemp = moment(date[1]).format('YYYY-MM-DD');
+    this.setState({
+      startTime: startTimeTemp,
+      endTime: endTimeTemp,
+    });
+  };
+
   onChange = currPage => {
     param = {
       page: currPage,
@@ -137,6 +154,7 @@ class PlanList extends PureComponent {
     const { planData } = this.props;
     const stateSelect = planData.state_select;
     const typeSelect = planData.type_select;
+
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
@@ -196,6 +214,13 @@ class PlanList extends PureComponent {
               </Button>
             </span>
           </Col>
+        </Row>
+        <Row colSpan="5">
+          <FormItem label="推广日期">
+            {getFieldDecorator('endTime')(
+              <DatePicker.RangePicker format="YYYY-MM-DD" onChange={this.selectPlanTime} />
+            )}
+          </FormItem>
         </Row>
       </Form>
     );
