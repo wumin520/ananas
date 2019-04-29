@@ -11,7 +11,7 @@ export default [
       {
         path: '/user/selectSettleIn',
         name: 'selectSettleIn',
-        component: './V1/User/selectSettleIn',
+        component: './V1/User/SelectSettleIn',
       },
       {
         path: '/user/register-result',
