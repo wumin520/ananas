@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Card, Badge, Divider, Modal, Carousel } from 'antd';
+import { Card, Badge, Divider, Modal, Carousel, Icon } from 'antd';
 import DescriptionList from '@/components/DescriptionList';
 // import ModelPop from './components/ModelPop';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -14,10 +14,14 @@ const status = ['无效', '已下单', '待评价', '已完成'];
   loading: loading.effects['order/orderDetail'],
 }))
 class ProductDetail extends Component {
-  state = {
-    modal1Visible: false,
-    // itemImg: {},
-  };
+  constructor(props) {
+    super(props);
+    this.next = this.next.bind(this);
+    this.prev = this.prev.bind(this);
+    this.state = {
+      modal1Visible: false,
+    };
+  }
 
   componentDidMount() {
     this.getDetailData();
@@ -46,10 +50,18 @@ class ProductDetail extends Component {
     });
   };
 
+  // 轮播左右切换
+  next() {
+    this.slider.slick.slickNext();
+  }
+
+  prev() {
+    this.slider.slick.slickPrev();
+  }
+
   render() {
     const { loading, orderDetail } = this.props;
     const { modal1Visible } = this.state;
-    console.log('orderDetail', orderDetail);
     const { data } = orderDetail;
     const content = <div />;
     return (
@@ -97,7 +109,12 @@ class ProductDetail extends Component {
               maskClosable={true}
               onCancel={this.Closable.bind()}
             >
-              <Carousel autoplay bodyStyle={{ backgroundColor: '#F6F7F8' }}>
+              <Carousel
+                autoplay
+                dots={false}
+                ref={el => (this.slider = el)}
+                bodyStyle={{ backgroundColor: '#F6F7F8' }}
+              >
                 {data.proof_images.length > 0 &&
                   data.proof_images.map(e => (
                     <div className={styles.models}>
@@ -107,6 +124,10 @@ class ProductDetail extends Component {
                     </div>
                   ))}
               </Carousel>
+              <div className={styles.btn}>
+                <Icon type="left" onClick={this.prev} />
+                <Icon type="right" onClick={this.next} />
+              </div>
             </Modal>
           </p>
           <Divider style={{ marginBottom: 32 }} />
