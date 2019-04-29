@@ -32,7 +32,7 @@ export default {
           type: 'registerHandle',
           payload: response,
         });
-        yield put(routerRedux.push(homePath));
+        yield put(routerRedux.push('/user/SelectSettlein'));
       }
     },
   },

@@ -68,7 +68,7 @@ class UserLayout extends Component {
             </div> */}
             <div className={styles.topMenu_bg}>
               <Row className={styles.topMenu}>
-                <Col push={2} span={12}>
+                <Col span={12}>
                   <Link to="/web/index">
                     <img
                       className={styles.logo}
@@ -78,7 +78,7 @@ class UserLayout extends Component {
                   </Link>
                   <span className={styles.slogan}>一站式导购服务</span>
                 </Col>
-                <Col pull={2} span={12}>
+                <Col span={12}>
                   <Link to="/web/index">
                     <Button
                       style={{ float: 'right' }}

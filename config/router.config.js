@@ -9,6 +9,11 @@ export default [
       { path: '/user/register', name: 'register', component: './V1/User/Register' },
       { path: '/user/settlein', name: 'settlein', component: './V1/User/SettleIn' },
       {
+        path: '/user/selectSettlein',
+        name: 'selectSettlein',
+        component: './V1/User/selectSettlein',
+      },
+      {
         path: '/user/register-result',
         name: 'register.result',
         component: './V1/User/RegisterResult',
