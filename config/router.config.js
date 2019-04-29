@@ -7,11 +7,11 @@ export default [
       { path: '/user', redirect: '/user/login' },
       { path: '/user/login', name: 'login', component: './V1/User/Login' },
       { path: '/user/register', name: 'register', component: './V1/User/Register' },
-      { path: '/user/settlein', name: 'settlein', component: './V1/User/SettleIn' },
+      { path: '/user/settlein', name: 'settlein', component: './V1/User/Settlein' },
       {
-        path: '/user/selectSettlein',
-        name: 'selectSettlein',
-        component: './V1/User/selectSettlein',
+        path: '/user/selectSettleIn',
+        name: 'selectSettleIn',
+        component: './V1/User/selectSettleIn',
       },
       {
         path: '/user/register-result',
