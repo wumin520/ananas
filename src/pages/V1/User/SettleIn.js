@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Alert } from 'antd';
+import { Form, Input, Button, Alert, Icon, Tooltip } from 'antd';
 import { connect } from 'dva';
 import FormItem from 'antd/es/form/FormItem';
 import { FormattedMessage } from 'umi-plugin-react/locale';
@@ -76,7 +76,26 @@ class settleIn extends Component {
                   pattern: /^[0-9]*$/,
                 },
               ],
-            })(<Input size="large" placeholder="拼多多后台店铺编号" />)}
+            })(
+              <div style={{ position: 'relative' }}>
+                <Input size="large" placeholder="拼多多后台店铺编号" />
+                <Tooltip
+                  title={
+                    <div>
+                      <p>如何查看拼多多店铺编号：</p>
+                      <p>
+                        首先打开拼多多管理后台，在店铺管理下，点击商家/店铺信息，即可查看自己的店铺编号。
+                      </p>
+                    </div>
+                  }
+                >
+                  <Icon
+                    style={{ position: 'absolute', top: '12px', right: '10px' }}
+                    type="info-circle-o"
+                  />
+                </Tooltip>
+              </div>
+            )}
           </FormItem>
           <FormItem>
             {getFieldDecorator('qq', {
