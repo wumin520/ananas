@@ -1,6 +1,19 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Table, Card, Row, Col, Modal, Input, Button, Form, Select, Badge, Carousel } from 'antd';
+import {
+  Table,
+  Card,
+  Row,
+  Col,
+  Modal,
+  Input,
+  Button,
+  Form,
+  Select,
+  Badge,
+  Carousel,
+  Icon,
+} from 'antd';
 // import ModelPop from './components/ModelPop';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { router } from 'umi';
@@ -17,11 +30,16 @@ const status = ['无效', '已下单', '待评价', '已完成'];
 }))
 @Form.create()
 class orderList extends PureComponent {
-  state = {
-    page: 1,
-    modal1Visible: false,
-    itemImg: {},
-  };
+  constructor(props) {
+    super(props);
+    this.next = this.next.bind(this);
+    this.prev = this.prev.bind(this);
+    this.state = {
+      page: 1,
+      modal1Visible: false,
+      itemImg: {},
+    };
+  }
 
   componentDidMount() {
     const { page } = this.state;
@@ -95,6 +113,15 @@ class orderList extends PureComponent {
     };
     this.getOrderData(params.currentPage);
   };
+
+  // 轮播左右切换
+  next() {
+    this.slider.slick.slickNext();
+  }
+
+  prev() {
+    this.slider.slick.slickPrev();
+  }
 
   renderSimpleForm() {
     const {
@@ -245,9 +272,7 @@ class orderList extends PureComponent {
           if (item.proof_images.length > 0) {
             option = (
               <span>
-                <a onClick={this.setModal1Visible.bind(this, item)} target="_Blank">
-                  好评凭证
-                </a>
+                <a onClick={this.setModal1Visible.bind(this, item)}>好评凭证</a>
                 {/* <ModelPop itemImg={itemImg} modal1Visible={modal1Visible} ></ModelPop> */}
                 <Modal
                   style={{ top: 20 }}
@@ -256,7 +281,12 @@ class orderList extends PureComponent {
                   maskClosable={true}
                   onCancel={this.Closable.bind()}
                 >
-                  <Carousel autoplay bodyStyle={{ backgroundColor: '#F6F7F8' }}>
+                  <Carousel
+                    autoplay
+                    dots={false}
+                    ref={el => (this.slider = el)}
+                    bodyStyle={{ backgroundColor: '#F6F7F8' }}
+                  >
                     {item.proof_images.length > 0 &&
                       item.proof_images.map(e => (
                         <div className={styles.models}>
@@ -266,6 +296,10 @@ class orderList extends PureComponent {
                         </div>
                       ))}
                   </Carousel>
+                  <div className={styles.btn}>
+                    <Icon type="left" onClick={this.prev} />
+                    <Icon type="right" onClick={this.next} />
+                  </div>
                 </Modal>
               </span>
             );
