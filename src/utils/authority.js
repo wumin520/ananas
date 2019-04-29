@@ -40,3 +40,9 @@ export function setStorage(key, val) {
 export function getStorage(key) {
   return localStorage.getItem(key);
 }
+export function setInviteCode(inviteCode) {
+  return localStorage.setItem('inviteCode', inviteCode || '');
+}
+export function getInviteCode() {
+  return localStorage.getItem('inviteCode');
+}

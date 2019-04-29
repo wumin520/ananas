@@ -3,6 +3,7 @@ import { Form, Input, Button, Alert } from 'antd';
 import { connect } from 'dva';
 import FormItem from 'antd/es/form/FormItem';
 import { FormattedMessage } from 'umi-plugin-react/locale';
+import { getInviteCode } from '@/utils/authority';
 
 import styles from './Register.less';
 
@@ -12,6 +13,20 @@ import styles from './Register.less';
 }))
 @Form.create()
 class settleIn extends Component {
+  state = {
+    inviteCode: '',
+  };
+
+  componentWillMount() {
+    const inviteS = getInviteCode();
+    if (inviteS && inviteS !== '') {
+      console.log('settleln getInviteCode() --> inviteS', inviteS);
+      this.setState({
+        inviteCode: inviteS,
+      });
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     const { form, dispatch } = this.props;
@@ -29,6 +44,7 @@ class settleIn extends Component {
 
   render() {
     const { form, submitting } = this.props;
+    const { inviteCode } = this.state;
     const { getFieldDecorator } = form;
     return (
       <div className={styles.main}>
@@ -74,10 +90,15 @@ class settleIn extends Component {
           </FormItem>
           <FormItem>
             {getFieldDecorator('invitation_code', {
+              initialValue: inviteCode.trim(),
               rules: [
                 {
                   required: true,
+                  whitespace: true,
                   message: '请输入邀请码',
+                  transform: value => {
+                    return value.trim();
+                  },
                 },
               ],
             })(<Input size="large" placeholder="邀请码" />)}
