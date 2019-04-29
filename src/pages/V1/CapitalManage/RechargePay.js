@@ -91,7 +91,7 @@ class RechargePay extends PureComponent {
                 <li style={{ marginBottom: '12px' }}>说明</li>
                 <li>目前仅支持转账到微信账户</li>
                 <li>1.请勿在备注中填写任何关于刷单、刷销量、领商品之类的备注；</li>
-                <li>2.充值成功后不支持退款；放一些关于产品的常见问题说明。</li>
+                <li>2.充值成功后不支持退款；</li>
               </ul>
             </div>
           </div>
