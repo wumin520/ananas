@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { Button, Row, Col, Table, Alert } from 'antd';
+import { Button, Row, Col, Table, Alert, message } from 'antd';
 import router from 'umi/router';
 import { Link } from 'umi';
 // import styles from './style.less';
@@ -34,12 +34,17 @@ class Step4 extends React.PureComponent {
     this.taskId = taskId || task_id;
     let backTo = location.pathname + location.search;
     this.chargeUrl = `/CapitalManage/Recharge?backTo=${encodeURIComponent(backTo)}`;
-    console.log(this, '1');
     dispatch({
       type: 'form/queryPayInfoByTaskId',
       payload: {
         task_id: this.taskId,
       },
+    }).then(() => {
+      const { taskPayInfo } = this.props;
+      const { can_pay, pay_notice } = taskPayInfo;
+      if (can_pay === 0) {
+        message.error(pay_notice);
+      }
     });
 
     if (need_fetch) {
@@ -97,16 +102,20 @@ class Step4 extends React.PureComponent {
     const chargeUrl = this.chargeUrl || '';
     return (
       <Fragment>
-        <Row>
-          <Col push={6} span={12}>
-            <Alert
-              closable
-              showIcon
-              message="请先支付推广费用，推广费用将通过平台自动返款给用户。"
-              style={{ marginBottom: 24, marginTop: 20 }}
-            />
-          </Col>
-        </Row>
+        {taskPayInfo.can_pay == 1 ? (
+          <Row>
+            <Col push={6} span={12}>
+              <Alert
+                closable
+                showIcon
+                message="请先支付推广费用，推广费用将通过平台自动返款给用户。"
+                style={{ marginBottom: 24, marginTop: 20 }}
+              />
+            </Col>
+          </Row>
+        ) : (
+          ''
+        )}
         <Row>
           <Col style={{ textAlign: 'left', marginBottom: 10 }} push={6} span={12}>
             推广费用明细：

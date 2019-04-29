@@ -154,6 +154,11 @@ class GeneralizeDetail extends Component {
             <Description term="申请时间">{data.created_at}</Description>
             <Description term="推广份数">{data.total_amount}</Description>
             <Description term="返现金额">￥{data.rebate_price}</Description>
+            {data.reject_reason ? (
+              <Description term="驳回原因">{data.reject_reason}</Description>
+            ) : (
+              ''
+            )}
           </DescriptionList>
           <Divider style={{ marginBottom: 32, fontWeight: 600 }} />
           <div className={styles.title}>推广排期</div>

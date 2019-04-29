@@ -38,6 +38,7 @@ export default {
       wait_pay: '',
       balance: '',
       can_pay: '',
+      pay_notice: '',
     },
     schedules: [],
     startTime: '',
@@ -73,7 +74,6 @@ export default {
     },
     *publishTask({ payload }, { call, put }) {
       const res = yield call(publishTask, payload);
-      console.log('publishTask -> res -> ', res);
       if (res && res.status === 'ok') {
         const taskId = res.payload.task_id;
         yield put(
@@ -110,7 +110,7 @@ export default {
       const res = yield call(taskDetail, payload);
       if (res && res.status === 'ok') {
         /* eslint-disable */
-        console.log('queryTaskDetail -> res -> ', res);
+        // console.log('queryTaskDetail -> res -> ', res);
         const { plan_list, data } = res.payload;
         const arr = [];
         const len = plan_list.length;
@@ -174,7 +174,7 @@ export default {
 
   reducers: {
     saveState(state, { payload }) {
-      console.log('saveState -> payload -> ', payload);
+      // console.log('saveState -> payload -> ', payload);
       return {
         ...state,
         ...payload,
