@@ -77,7 +77,7 @@ class RechargePay extends PureComponent {
               <div className={styles.payInfo}>
                 <p>
                   请认准账户名称：
-                  <span style={{ color: '#fa8c16' }}>有练网络科技（宁波）有限公司</span>
+                  <span style={{ color: '#fa8c16' }}>极单信息科技（上海）有限公司</span>
                 </p>
                 <img src={qrcodeInfo.imgCode} alt="" />
                 <p className={styles.code_desc}>打开手机微信 扫一扫完成支付</p>
