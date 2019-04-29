@@ -4,7 +4,7 @@ import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import Link from 'umi/link';
 import router from 'umi/router';
 import { Form, Input, Button, Row, Col, Popover, Progress, Icon } from 'antd';
-import { getShState } from '@/utils/authority';
+import { getShState, setInviteCode } from '@/utils/authority';
 import styles from './Register.less';
 
 const FormItem = Form.Item;
@@ -55,6 +55,14 @@ class Register extends Component {
     // if (state === '0') {
     //   router.push('/user/settlein');
     // }
+
+    // 保存地址参数中的邀请码
+    const {
+      location: { query },
+    } = this.props;
+    if (query.s) {
+      setInviteCode(query.s);
+    }
   }
 
   componentDidMount() {

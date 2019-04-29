@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { setInviteCode } from '@/utils/authority';
 import styles from './index.less';
 
 import Footer from '../components/Footer';
@@ -12,6 +13,16 @@ class Index extends Component {
       bgColor: '#2F54EB',
       opacity: 0.85,
     };
+  }
+
+  componentWillMount() {
+    // 保存地址参数中的邀请码
+    const {
+      location: { query },
+    } = this.props;
+    if (query.s) {
+      setInviteCode(query.s);
+    }
   }
 
   componentDidMount() {
