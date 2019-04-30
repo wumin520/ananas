@@ -119,7 +119,9 @@ class Header extends PureComponent {
         <div className={styles.content}>
           <Row type="flex" justify="space-between">
             <Col span={5}>
-              <div className={styles.nav_img} />
+              <Link to="/web/index">
+                <div className={styles.nav_img} />
+              </Link>
             </Col>
             <Col span={15}>
               <Row type="flex" justify="end">
