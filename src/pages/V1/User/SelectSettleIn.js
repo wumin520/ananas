@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'antd';
-import { Link } from 'dva/router';
-
+import router from 'umi/router';
 import styles from './Register.less';
 
 @Form.create()
 class SelectSettleIn extends Component {
+  toGo = path => {
+    router.push(path);
+  };
+
   render() {
     return (
       <div className={styles.select_block}>
@@ -28,9 +31,14 @@ class SelectSettleIn extends Component {
             alt=""
           />
           <p className={styles.select_title}>我是商家</p>
-          <Link className={styles.btn_select} to="/user/settlein">
+          <Button
+            className={styles.btn_select}
+            type="primary"
+            // eslint-disable-next-line
+            onClick={this.toGo.bind(this, '/user/settlein')}
+          >
             立即入驻
-          </Link>
+          </Button>
         </div>
       </div>
     );

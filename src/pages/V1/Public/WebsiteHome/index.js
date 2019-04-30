@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { setInviteCode } from '@/utils/authority';
+import router from 'umi/router';
+import { Button } from 'antd';
 import styles from './index.less';
 
 import Footer from '../components/Footer';
@@ -107,6 +109,10 @@ class Index extends Component {
     return obj;
   };
 
+  toGo = path => {
+    router.push(path);
+  };
+
   render() {
     const { bgColor, opacity } = this.state;
 
@@ -176,9 +182,14 @@ class Index extends Component {
                 <p className={styles.p2}>
                   通过微信小程序进行导购，依托微信超级流量入口，快速的达成推广，更加的快捷、稳定。
                 </p>
-                <button className={styles.btn} type="button">
+                <Button
+                  className={styles.btn}
+                  type="primary"
+                  // eslint-disable-next-line
+                  onClick={this.toGo.bind(this, '/public/matrix')}
+                >
                   了解更多
-                </button>
+                </Button>
               </div>
               <div>
                 <img

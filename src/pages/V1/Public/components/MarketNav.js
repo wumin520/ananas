@@ -60,11 +60,13 @@ class MarketNav extends PureComponent {
       <div className={styles.marketNav}>
         <div className={styles.nav}>
           <div className={styles.nav_left}>
-            <img
-              className={styles.logoImg}
-              src="https://cdn.youlianyc.com/image/static/80177b5561be4401729b60666c74a07e5e459d34.jpg"
-              alt=""
-            />
+            <Link to="/web/index">
+              <img
+                className={styles.logoImg}
+                src="https://cdn.youlianyc.com/image/static/80177b5561be4401729b60666c74a07e5e459d34.jpg"
+                alt=""
+              />
+            </Link>
             <div className={styles.line}>line</div>
             <div className={styles.title}>
               营销推广<span className={styles.tit_label}>商家</span>

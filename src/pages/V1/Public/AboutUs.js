@@ -55,7 +55,7 @@ class AboutUs extends Component {
               alt=""
             />
             <p className={styles.qq_title}>商务合作</p>
-            <Button className={styles.btn_QQ} onClick={this.info}>
+            <Button className={styles.btn_QQ} type="primary" onClick={this.info}>
               QQ交谈
             </Button>
           </div>
@@ -66,7 +66,7 @@ class AboutUs extends Component {
               alt=""
             />
             <p className={styles.qq_title}>商家咨询</p>
-            <Button className={styles.btn_QQ} onClick={this.info}>
+            <Button className={styles.btn_QQ} type="primary" onClick={this.info}>
               QQ交谈
             </Button>
           </div>
