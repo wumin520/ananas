@@ -249,6 +249,7 @@ class PlanList extends PureComponent {
       },
       {
         title: '商品',
+        width: 143,
         render: val => {
           return (
             <a

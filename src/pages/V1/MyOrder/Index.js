@@ -196,7 +196,7 @@ class orderList extends PureComponent {
         title: '订单编号',
         dataIndex: 'p_order_id',
         key: 'p_order_id',
-        width: 230,
+        width: 150,
       },
       {
         title: '推广编号',
@@ -207,11 +207,12 @@ class orderList extends PureComponent {
       {
         key: 'goods_id',
         title: '商品id',
-        width: 120,
+        width: 110,
         dataIndex: 'goods_id',
       },
       {
         title: '商品',
+        width: 143,
         render: val => {
           return (
             <a
@@ -228,7 +229,7 @@ class orderList extends PureComponent {
       },
       {
         title: '购买价格',
-        width: 100,
+        width: 90,
         render(item) {
           return <span>￥{item.order_price}</span>;
         },
@@ -236,14 +237,14 @@ class orderList extends PureComponent {
       {
         title: '状态',
         dataIndex: 'state',
-        width: 100,
+        width: 90,
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
       },
       {
         title: '时间',
-        width: 250,
+        width: 200,
         render(val) {
           /* eslint-disable */
           const time = (
@@ -266,7 +267,7 @@ class orderList extends PureComponent {
       },
       {
         title: '操作',
-        width: 120,
+        width: 90,
         render: item => {
           let option;
           if (item.proof_images.length > 0) {
@@ -307,6 +308,7 @@ class orderList extends PureComponent {
           return (
             <span>
               <a onClick={this.goOrderDetail.bind(this, item)}>查看 </a>
+              <br />
               {option}
             </span>
           );
