@@ -212,6 +212,7 @@ class FdList extends PureComponent {
       },
       {
         title: '商品',
+        width: 143,
         render: val => {
           return (
             <a
@@ -230,7 +231,7 @@ class FdList extends PureComponent {
         title: '提交时间',
         dataIndex: 'created_at',
         key: 'created_at',
-        width: 185,
+        width: 160,
       },
       {
         title: '券后价',
@@ -243,7 +244,7 @@ class FdList extends PureComponent {
       },
       {
         key: 'coupon_price',
-        width: 100,
+        width: 80,
         title: '优惠券',
         dataIndex: 'coupon_price',
         render: val => {

@@ -73,8 +73,11 @@ class ProductDetail extends Component {
             <Description term="商品名称" className={styles.pro_name}>
               {data.title}
             </Description>
-            <Description term="商品主图">
-              <img src={data.img} alt="img" style={{ width: 65, heigth: 65 }} />
+            <Description>
+              <div className={styles.pro_img}>
+                <p>商品主图: </p>
+                <img src={data.img} alt="img" style={{ width: 65, heigth: 65, marginLeft: 10 }} />
+              </div>
             </Description>
             <Description term="优惠券">{data.coupon ? '￥' + data.coupon : '无'}</Description>
             <Description term="商品价格">￥{data.price}</Description>
@@ -92,7 +95,7 @@ class ProductDetail extends Component {
           <p>
             好评凭证:
             {data.proof_images.length === 0
-              ? '未上传'
+              ? ' 未上传'
               : data.proof_images.length > 0 &&
                 data.proof_images.map(e => (
                   <a onClick={this.setModal1Visible.bind()}>
