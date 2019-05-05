@@ -105,10 +105,10 @@ export default class GlobalHeaderRight extends PureComponent {
           </div>
         </div>
         <div className={styles.wx_info}>
-          <p className={styles.p_wx_name}>微信昵称：{currentUser.bd_info.nickname}</p>
+          <p className={styles.p_wx_name}>专属运营微信</p>
           <img className={styles.wx_img} src={currentUser.bd_info.qrcode} alt="" />
           <p className={styles.p_wx_name} style={{ color: 'rgba(0,0,0,0.45)' }}>
-            扫一扫添加专属运营微信
+            扫一扫添加运营企业微信
           </p>
         </div>
       </div>
