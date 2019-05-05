@@ -100,7 +100,7 @@ export default class GlobalHeaderRight extends PureComponent {
         <div className={styles.contact_top}>
           <img className={styles.bd_img} src={currentUser.bd_info.avatar} />
           <div className={styles.name_info}>
-            <div className={styles.name}>{currentUser.bd_info.name}</div>
+            <div className={styles.name}>{currentUser.bd_info.nickname}</div>
             <div className={styles.title}>{currentUser.bd_info.label}</div>
           </div>
         </div>
