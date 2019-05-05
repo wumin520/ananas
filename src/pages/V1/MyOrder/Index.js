@@ -16,7 +16,6 @@ import {
 } from 'antd';
 // import ModelPop from './components/ModelPop';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import { router } from 'umi';
 import styles from './Index.less';
 
 const { Option } = Select;
@@ -37,7 +36,7 @@ class orderList extends PureComponent {
     this.state = {
       page: 1,
       modal1Visible: false,
-      itemImg: {},
+      itemImg: [],
     };
   }
 
@@ -49,7 +48,6 @@ class orderList extends PureComponent {
   getOrderData = p => {
     const { dispatch, location } = this.props;
     const { query } = location;
-    // console.log('this.props:', query);
     dispatch({
       type: 'order/orderData',
       payload: {
@@ -89,9 +87,11 @@ class orderList extends PureComponent {
     });
   };
 
-  goOrderDetail = item => {
-    router.push(`/order/productDetail?order_id=${item.order_id}`);
-  };
+  // goOrderDetail = item => {
+  // const w = window.open('about:blank');
+  // w.location.href = `/order/productDetail?order_id=${item.order_id}`;
+  // router.push(`/order/productDetail?order_id=${item.order_id}`);
+  // };
 
   // model
   setModal1Visible = item => {
@@ -135,6 +135,11 @@ class orderList extends PureComponent {
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
+          <Col md={5} sm={24}>
+            <FormItem label="订单编号">
+              {getFieldDecorator('p_order_id')(<Input placeholder="请输入" />)}
+            </FormItem>
+          </Col>
           <Col md={5} sm={24}>
             <FormItem label="推广编号">
               {getFieldDecorator('task_id', { initialValue: defaultValue })(
@@ -191,6 +196,36 @@ class orderList extends PureComponent {
     const pageInfo = orderData.page_info;
     const { list } = orderData;
     const { modal1Visible, itemImg } = this.state;
+    const ModelPops = ({ itemImg }) => (
+      <Modal
+        style={{ top: 20 }}
+        footer={null}
+        visible={modal1Visible}
+        maskClosable={true}
+        onCancel={this.Closable.bind()}
+      >
+        <Carousel
+          autoplay
+          dots={false}
+          ref={el => (this.slider = el)}
+          bodyStyle={{ backgroundColor: '#F6F7F8' }}
+        >
+          {itemImg.length > 0 &&
+            itemImg.map(e => (
+              <div className={styles.models}>
+                <a href={e} target="_Blank">
+                  <img src={e} alt="" className={styles.hp_img} />
+                </a>
+              </div>
+            ))}
+        </Carousel>
+        <div className={styles.btn}>
+          <Icon type="left" onClick={this.prev} />
+          <Icon type="right" onClick={this.next} />
+        </div>
+      </Modal>
+    );
+
     const columns = [
       {
         title: '订单编号',
@@ -269,45 +304,23 @@ class orderList extends PureComponent {
         title: '操作',
         width: 90,
         render: item => {
+          const { itemImg } = this.state;
+          const url = `/order/productDetail?order_id=${item.order_id}`;
           let option;
           if (item.proof_images.length > 0) {
             option = (
               <span>
                 <a onClick={this.setModal1Visible.bind(this, item)}>好评凭证</a>
-                {/* <ModelPop itemImg={itemImg} modal1Visible={modal1Visible} ></ModelPop> */}
-                <Modal
-                  style={{ top: 20 }}
-                  footer={null}
-                  visible={modal1Visible}
-                  maskClosable={true}
-                  onCancel={this.Closable.bind()}
-                >
-                  <Carousel
-                    autoplay
-                    dots={false}
-                    ref={el => (this.slider = el)}
-                    bodyStyle={{ backgroundColor: '#F6F7F8' }}
-                  >
-                    {item.proof_images.length > 0 &&
-                      item.proof_images.map(e => (
-                        <div className={styles.models}>
-                          <a href={e} target="_Blank">
-                            <img src={e} alt="" className={styles.hp_img} />
-                          </a>
-                        </div>
-                      ))}
-                  </Carousel>
-                  <div className={styles.btn}>
-                    <Icon type="left" onClick={this.prev} />
-                    <Icon type="right" onClick={this.next} />
-                  </div>
-                </Modal>
+                <ModelPops itemImg={itemImg} />
               </span>
             );
           }
           return (
             <span>
-              <a onClick={this.goOrderDetail.bind(this, item)}>查看 </a>
+              {/* <a onClick={this.goOrderDetail.bind(this, item)} target='_blank'>查看 </a> */}
+              <a href={url} target="_blank">
+                查看{' '}
+              </a>
               <br />
               {option}
             </span>
