@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { PureComponent } from 'react';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
-import { Spin, Tag, Menu, Icon, Avatar, Tooltip, message } from 'antd';
+import { Spin, Tag, Menu, Icon, Avatar, Tooltip, message, Popover } from 'antd';
 import moment from 'moment';
 import groupBy from 'lodash/groupBy';
 import NoticeIcon from '../NoticeIcon';
@@ -95,6 +95,24 @@ export default class GlobalHeaderRight extends PureComponent {
         </Menu.Item>
       </Menu>
     );
+    const content = (
+      <div className={styles.bd_info_block}>
+        <div className={styles.contact_top}>
+          <img className={styles.bd_img} src={currentUser.bd_info.avatar} />
+          <div className={styles.name_info}>
+            <div className={styles.name}>{currentUser.bd_info.name}</div>
+            <div className={styles.title}>{currentUser.bd_info.label}</div>
+          </div>
+        </div>
+        <div className={styles.wx_info}>
+          <p className={styles.p_wx_name}>微信昵称：{currentUser.bd_info.nickname}</p>
+          <img className={styles.wx_img} src={currentUser.bd_info.qrcode} alt="" />
+          <p className={styles.p_wx_name} style={{ color: 'rgba(0,0,0,0.45)' }}>
+            扫一扫添加专属运营微信
+          </p>
+        </div>
+      </div>
+    );
     const noticeData = this.getNoticeData();
     const unreadMsg = this.getUnreadData(noticeData);
     let className = styles.right;
@@ -174,6 +192,9 @@ export default class GlobalHeaderRight extends PureComponent {
             showViewMore
           />
         </NoticeIcon> */}
+        <Popover content={content} trigger="hover">
+          <Icon type="message" /> 联系运营
+        </Popover>
         {currentUser.phone ? (
           <HeaderDropdown overlay={menu}>
             <span className={`${styles.action} ${styles.account}`}>

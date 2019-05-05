@@ -5,7 +5,17 @@ export default {
 
   state: {
     list: [],
-    currentUser: {},
+    currentUser: {
+      bd_info: {
+        name: '',
+        avatar: '',
+        nickname: '',
+        label: '',
+        qrcode: '',
+        qq: '',
+        qq_url: '',
+      },
+    },
   },
 
   effects: {

@@ -99,6 +99,60 @@
   }
 }
 
+.bd_info_block {
+  margin: 8px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, sans-serif;
+  line-height: 22px;
+
+  .contact_top {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .bd_img {
+      flex: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 24px;
+    }
+
+    .name_info {
+      margin-left: 8px;
+      & > .name {
+        margin-bottom: 4px;
+        font-family: PingFang-SC-Medium, sans-serif;
+      }
+
+      & > .title {
+        display: inline-block;
+        padding: 1px 8px;
+        color: #faad14;
+        font-size: 12px;
+        background: rgba(255, 251, 230, 1);
+        border: 1px solid rgba(255, 229, 143, 1);
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .wx_info {
+    margin-top: 24px;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+
+    .wx_img {
+      width: 192px;
+      height: 192px;
+      margin: 8px;
+    }
+  }
+}
+
 @media only screen and (max-width: @screen-md) {
   .header {
     :global(.ant-divider-vertical) {
