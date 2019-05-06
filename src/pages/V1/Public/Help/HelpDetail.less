@@ -1,0 +1,36 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/utils/utils.less';
+.ant-list-item-meta-title > a {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 16px;
+  transition: all 0.3s;
+}
+.help_page {
+  background: rgba(246, 247, 248, 1);
+
+  .help_detail {
+    display: flex;
+    justify-content: flex-start;
+    width: 1128px;
+    margin: 0 auto;
+    margin-bottom: 140px;
+    padding-top: 88px;
+  }
+
+  .ant-list-split {
+    :global {
+      .ant-list-item:last-child {
+        border-bottom: 1px solid #e8e8e8 !important;
+      }
+    }
+  }
+  .enterMessage {
+    width: 80%;
+    // height:1200px;
+    padding: 18px 24px;
+    background: rgba(255, 255, 255, 1);
+    .list {
+      font-size: 16px !important;
+    }
+  }
+}

@@ -1,14 +1,9 @@
 @import '~antd/lib/style/themes/default.less';
 @import '~@/utils/utils.less';
+
 p {
   margin: 0;
   padding: 0;
-}
-
-.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
-  position: absolute;
-  top: 50%;
-  right: 16px;
 }
 
 .pages {
@@ -79,13 +74,16 @@ p {
                 // font-family: PingFang-SC-Regular;
               }
             }
+            .listItem {
+              padding: 6px 0;
+            }
           }
         }
       }
     }
   }
   .help_problem {
-    padding-top: 208px;
+    padding: 208px 0 120px;
     .problem {
       width: 1128px;
       margin: 0 auto;
@@ -99,6 +97,17 @@ p {
       }
       .panel {
         margin-bottom: 24px;
+        .ant {
+          :global {
+            .ant-collapse-arrow {
+              right: 16px;
+              left: initial;
+            }
+            .ant-collapse-header {
+              font-size: 20px;
+            }
+          }
+        }
       }
     }
   }

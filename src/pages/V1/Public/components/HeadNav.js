@@ -97,16 +97,25 @@ class HeadNav extends PureComponent {
               )}
             </div>
           </div>
-          {/*
-            <div className={styles.navRight}>
+
+          <div className={styles.navRight}>
             <div>
-              <a className={styles.headNavWord} href="/public/helpCenter">
+              <a
+                className={styles.headNavWord}
+                href="/public/helpDetail?SelectedKeys=1&OpenKeys=sub1"
+              >
                 帮助中心
               </a>
             </div>
-            <div>联系我们</div>
+            <div>
+              <a
+                className={styles.headNavWord}
+                href="/public/helpDetail?SelectedKeys=5&OpenKeys=sub3"
+              >
+                联系我们
+              </a>
+            </div>
           </div>
-           */}
         </div>
       </div>
     );
