@@ -10,7 +10,7 @@ const { TabPane } = Tabs;
 const { Option } = Select;
 const FormItem = Form.Item;
 
-let param = {
+let params = {
   page: 1,
   type: -1,
 };
@@ -30,7 +30,7 @@ class CapitalDetail extends PureComponent {
   };
 
   componentDidMount() {
-    this.getAssetList(param);
+    this.getAssetList(params);
   }
 
   getAssetList = p => {
@@ -47,27 +47,26 @@ class CapitalDetail extends PureComponent {
   // 交易记录&提现记录切换
   tabsClick = value => {
     const { dispatch } = this.props;
-    param = {
+    params = {
       page: 1,
       tradeType: -1,
       page_no: 1,
     };
     if (value === 'withdraw') {
-      console.log(param.page_no);
       dispatch({
         type: 'capital/getExchangeList',
         payload: {
-          page: param.page_no,
+          page: params.page_no,
         },
       });
     } else if (value === 'trade') {
-      this.getAssetList(param);
+      this.getAssetList(params);
     }
   };
 
   // 交易类型切换
   selectTypeChange = value => {
-    param = {
+    params = {
       page: 1,
       type: value,
     };
@@ -75,13 +74,13 @@ class CapitalDetail extends PureComponent {
   };
 
   clearAll = () => {
-    param = {
+    params = {
       page: 1,
       type: -1,
     };
     const { form } = this.props;
     form.resetFields();
-    this.getAssetList(param);
+    this.getAssetList(params);
   };
 
   handleTableChange = (pagination, filters, sorter) => {
@@ -101,7 +100,7 @@ class CapitalDetail extends PureComponent {
   };
 
   setAgeSort = () => {
-    this.getAssetList(param);
+    this.getAssetList(params);
   };
 
   toGo = url => {
@@ -110,11 +109,11 @@ class CapitalDetail extends PureComponent {
 
   changePage = p => {
     const { changeType } = this.state;
-    param = {
+    params = {
       page: p,
       type: changeType,
     };
-    this.getAssetList(param);
+    this.getAssetList(params);
   };
 
   render() {

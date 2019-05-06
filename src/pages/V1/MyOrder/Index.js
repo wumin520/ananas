@@ -23,6 +23,14 @@ const FormItem = Form.Item;
 const statusMap = ['error', 'processing', 'warning', 'success'];
 const status = ['无效', '已下单', '待评价', '已完成'];
 
+let params = {
+  page: 1, // 翻页参数
+  task_id: 0, // 推广编号
+  goods_id: 0, // 商品id
+  state: -1, // 状态 -1全部 0失效1已下单2待评价3已完成
+  p_order_id: 0, // 订单编号
+};
+
 @connect(({ order, loading }) => ({
   orderData: order.orderData,
   loading: loading.models.order,
@@ -34,26 +42,23 @@ class orderList extends PureComponent {
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
     this.state = {
-      page: 1,
       modal1Visible: false,
       itemImg: [],
     };
   }
 
   componentDidMount() {
-    const { page } = this.state;
-    this.getOrderData(page);
+    const { location } = this.props;
+    const { query } = location;
+    params.task_id = query.task_id || 0;
+    this.getOrderData(params);
   }
 
   getOrderData = p => {
-    const { dispatch, location } = this.props;
-    const { query } = location;
+    const { dispatch } = this.props;
     dispatch({
       type: 'order/orderData',
-      payload: {
-        page: p,
-        task_id: query.task_id,
-      },
+      payload: p,
     });
   };
 
@@ -67,9 +72,16 @@ class orderList extends PureComponent {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
+      params = {
+        page: 1,
+        p_order_id: values.p_order_id,
+        task_id: values.task_id,
+        goods_id: values.goods_id,
+        state: values.state,
+      };
       dispatch({
         type: 'order/orderData',
-        payload: values,
+        payload: params,
       });
     });
   };
@@ -108,10 +120,8 @@ class orderList extends PureComponent {
   };
 
   onChange = page => {
-    const params = {
-      currentPage: page,
-    };
-    this.getOrderData(params.currentPage);
+    params.page = page;
+    this.getOrderData(params);
   };
 
   // 轮播左右切换

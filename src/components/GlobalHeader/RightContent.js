@@ -192,9 +192,13 @@ export default class GlobalHeaderRight extends PureComponent {
             showViewMore
           />
         </NoticeIcon> */}
-        <Popover content={content} trigger="hover">
-          <Icon type="message" /> 联系运营
-        </Popover>
+        {currentUser.bd_info.nickname ? (
+          <Popover content={content} trigger="hover">
+            <Icon type="message" /> 联系运营
+          </Popover>
+        ) : (
+          ''
+        )}
         {currentUser.phone ? (
           <HeaderDropdown overlay={menu}>
             <span className={`${styles.action} ${styles.account}`}>

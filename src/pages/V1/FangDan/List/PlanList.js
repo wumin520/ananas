@@ -11,7 +11,7 @@ const status = ['排期中', '进行中', '已结束', '已暂停'];
 const { Option } = Select;
 const { confirm } = Modal;
 
-let param = {
+let params = {
   page: 1,
   task_id: 0,
   goods_id: 0,
@@ -31,7 +31,7 @@ class PlanList extends PureComponent {
   };
 
   componentDidMount() {
-    this.getListData(param);
+    this.getListData(params);
   }
 
   // 接口
@@ -59,7 +59,7 @@ class PlanList extends PureComponent {
             task_plan_id: item.task_plan_id,
           },
         }).then(() => {
-          thises.getListData(param);
+          thises.getListData(params);
         });
       },
     });
@@ -81,7 +81,7 @@ class PlanList extends PureComponent {
             task_plan_id: item.task_plan_id,
           },
         }).then(() => {
-          thises.getListData(param);
+          thises.getListData(params);
         });
       },
     });
@@ -98,7 +98,7 @@ class PlanList extends PureComponent {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
-      param = {
+      params = {
         page: 1,
         task_id: values.task_id || 0,
         goods_id: values.goods_id || 0,
@@ -109,7 +109,7 @@ class PlanList extends PureComponent {
       };
       dispatch({
         type: 'task/planList',
-        payload: param,
+        payload: params,
       });
     });
   };
@@ -118,15 +118,16 @@ class PlanList extends PureComponent {
   handleFormReset = () => {
     const { form, dispatch } = this.props;
     form.resetFields();
+    params = {
+      page: 1,
+      task_id: 0,
+      goods_id: 0,
+      state: -1,
+      type: -1,
+    };
     dispatch({
       type: 'task/planList',
-      payload: {
-        page: 1,
-        task_id: 0,
-        goods_id: 0,
-        state: -1,
-        type: -1,
-      },
+      payload: params,
     });
   };
 
@@ -141,10 +142,8 @@ class PlanList extends PureComponent {
   };
 
   onChange = currPage => {
-    param = {
-      page: currPage,
-    };
-    this.getListData(param);
+    params.page = currPage;
+    this.getListData(params);
   };
 
   renderSimpleForm() {
