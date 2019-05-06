@@ -11,7 +11,7 @@ import styles from './CreditRecord.less';
 const FormItem = Form.Item;
 const { Option } = Select;
 
-const param = {
+let params = {
   page: 1,
   type: -1,
   task_id: 0,
@@ -237,7 +237,7 @@ class CreditRecord extends Component {
   ];
 
   componentDidMount() {
-    this.getFormData(param);
+    this.getFormData(params);
   }
 
   goRule = () => {
@@ -261,9 +261,10 @@ class CreditRecord extends Component {
     const { form } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        param.type = values.type;
-        param.task_id = values.task_id;
-        this.getFormData(param);
+        params.page = 1;
+        params.type = values.type;
+        params.task_id = values.task_id;
+        this.getFormData(params);
       }
     });
   };
@@ -271,12 +272,17 @@ class CreditRecord extends Component {
   handleFormReset = () => {
     const { form } = this.props;
     form.resetFields();
-    this.getFormData(param);
+    params = {
+      page: 1,
+      type: -1,
+      task_id: 0,
+    };
+    this.getFormData(params);
   };
 
   changePage = p => {
-    param.page = p;
-    this.getFormData(param);
+    params.page = p;
+    this.getFormData(params);
   };
 
   render() {

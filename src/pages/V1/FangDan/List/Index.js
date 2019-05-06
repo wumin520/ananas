@@ -12,29 +12,32 @@ const { Option } = Select;
 
 const { confirm } = Modal;
 
+let params = {
+  page: 1, // 翻页参数
+  task_id: 0, // 推广编号
+  goods_id: 0, // 商品id
+  state: -1, // 状态-1 全部 0待支付，1待审核，2进行中，3审核驳回 4 清算中 5 已结算
+  type: -1, // 推广类型 -1 全部 0好评全返
+};
+
 @connect(({ task, loading }) => ({
   listData: task.listData,
   loading: loading.effects['task/fetchBasic'],
 }))
 @Form.create()
 class FdList extends PureComponent {
-  state = {
-    page: 1,
-  };
+  state = {};
 
   componentDidMount() {
-    const { page } = this.state;
-    this.getListData(page);
+    this.getListData(params);
   }
 
   // 接口
-  getListData = p => {
+  getListData = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'task/fetchBasic',
-      payload: {
-        page: p,
-      },
+      payload: params,
     });
   };
 
@@ -48,9 +51,16 @@ class FdList extends PureComponent {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
+      params = {
+        page: 1,
+        task_id: values.task_id || 0,
+        goods_id: values.goods_id || 0,
+        state: values.state || -1,
+        type: values.type || -1,
+      };
       dispatch({
         type: 'task/fetchBasic',
-        payload: values,
+        payload: params,
       });
     });
   };
@@ -60,8 +70,14 @@ class FdList extends PureComponent {
     const { form, dispatch } = this.props;
     form.resetFields();
     dispatch({
-      type: 'task/fetch',
-      payload: {},
+      type: 'task/fetchBasic',
+      payload: {
+        page: 1,
+        task_id: 0,
+        goods_id: 0,
+        state: -1,
+        type: -1,
+      },
     });
   };
 
@@ -111,11 +127,8 @@ class FdList extends PureComponent {
   };
 
   onChange = page => {
-    const params = {
-      currentPage: page,
-      pageSize: 10,
-    };
-    this.getListData(params.currentPage);
+    params.page = page;
+    this.getListData(params);
   };
 
   renderSimpleForm() {

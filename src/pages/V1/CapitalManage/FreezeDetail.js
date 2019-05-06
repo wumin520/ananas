@@ -66,6 +66,7 @@ class FreezeDetail extends PureComponent {
       page: 1,
       type: -1,
     };
+    this.state.filteredInfo = null;
     const { form } = this.props;
     form.resetFields();
     this.getFreezeList(param);
