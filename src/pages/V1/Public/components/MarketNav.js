@@ -79,11 +79,9 @@ class MarketNav extends PureComponent {
             <Link className={styles.nav_link} to="/market/MerchantsSettled">
               商家入驻
             </Link>
-            {/**
-              <Link className={styles.nav_link} to="/public/helpCenter">
-                帮助中心
-              </Link>
-             */}
+            <Link className={styles.nav_link} to="/public/helpCenter">
+              帮助中心
+            </Link>
           </div>
           <div className={styles.nav_right}>
             {isLogin ? (
