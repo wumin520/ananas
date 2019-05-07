@@ -18,13 +18,14 @@ class settleIn extends Component {
   };
 
   componentWillMount() {
-    const inviteS = getInviteCode();
-    if (inviteS && inviteS !== '') {
-      console.log('settleln getInviteCode() --> inviteS', inviteS);
-      this.setState({
-        inviteCode: inviteS,
-      });
+    let inviteS = getInviteCode();
+    if (!inviteS || inviteS === '') {
+      // console.log('settleln getInviteCode() --> inviteS', inviteS);
+      inviteS = '91b9c8ddc0';
     }
+    this.setState({
+      inviteCode: inviteS,
+    });
   }
 
   handleSubmit = e => {
