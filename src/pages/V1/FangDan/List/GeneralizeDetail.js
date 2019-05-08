@@ -159,6 +159,9 @@ class GeneralizeDetail extends Component {
             ) : (
               ''
             )}
+            <Description term="投放方式">{data.type_name}</Description>
+            <Description term="评价限制">{data.comment_limit_info}</Description>
+            <Description term="评价关键词">{data.comment_keyword}</Description>
           </DescriptionList>
           <Divider style={{ marginBottom: 32, fontWeight: 600 }} />
           <div className={styles.title}>推广排期</div>

@@ -29,6 +29,8 @@ export default {
       commission: '',
       price: '',
       coupon_price: 0, // 券后价
+      comment_limit: 0,
+      comment_keyword: '',
     },
     category_list: [], // 商品分类
     category_id: '', // 分类id

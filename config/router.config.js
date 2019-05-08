@@ -63,37 +63,6 @@ export default [
         name: 'helpDetail',
         component: './V1/Public/Help/HelpDetail',
       },
-      // {
-      //   path: '/public/help',
-      //   name: 'helpDetail',
-      //   component: './V1/Public/Help/Info',
-      //   routes:[
-      //     {
-      //       path: '/public/help',
-      //       redirect: '/public/help/helpDetail'
-      //     },
-      //     // {
-      //     //   path: '/public/help/helpDetail',
-      //     //   component: './V1/Public/Help/HelpDetail',
-      //     // },
-      //     {
-      //       path: '/public/help/Base',
-      //       component: './V1/Public/Help/BaseView',
-      //     },
-      //     {
-      //       path: '/public/help/security',
-      //       component: './V1/Public/Help/SecurityView',
-      //     },
-      //     {
-      //       path: '/public/help/binding',
-      //       component: './V1/Public/Help/BindingView',
-      //     },
-      //     {
-      //       path: '/public/help/notification',
-      //       component: './V1/Public/Help/NotificationView',
-      //     },
-      //   ]
-      // },
     ],
   },
   {

@@ -281,6 +281,8 @@ class Step3 extends React.PureComponent {
         plan_info: schedules,
         task_id: taskId,
         zs_duo_id: pddZSId,
+        comment_limit: goodsDetail.comment_limit,
+        comment_keyword: goodsDetail.comment_keyword,
       },
     });
     // router.push('/fangdan/step-form/pay');
@@ -436,6 +438,7 @@ class Step3 extends React.PureComponent {
               onChange={this.rangePicker}
             />
           </Col>
+          {/* 日历 */}
           {/* <Col offset={8}>
             <Button onClick={this.toSchedule} type="primary">
               一键排期
