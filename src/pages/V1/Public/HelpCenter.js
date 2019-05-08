@@ -3,7 +3,6 @@ import { Collapse, Icon, List } from 'antd';
 import { router } from 'umi';
 import MarketNav from './components/MarketNav';
 import Footer from './components/Footer';
-import 'antd/dist/antd.css';
 import styles from './HelpCenter.less';
 
 class Header extends PureComponent {
