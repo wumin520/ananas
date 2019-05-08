@@ -4,6 +4,7 @@ import { router } from 'umi';
 import HeadNav from '../components/HeadNav';
 import DetailHeader from './components/DetailHeader';
 import Footer from '../components/Footer';
+import 'antd/dist/antd.css';
 import styles from './HelpDetail.less';
 
 const { SubMenu } = Menu;
