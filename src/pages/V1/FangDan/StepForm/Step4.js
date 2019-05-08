@@ -4,6 +4,7 @@ import { Button, Row, Col, Table, Alert, message } from 'antd';
 import router from 'umi/router';
 import { Link } from 'umi';
 // import styles from './style.less';
+let toPayIsClick = true;
 
 @connect(({ form }) => ({
   data: form.step,
@@ -12,6 +13,10 @@ import { Link } from 'umi';
 }))
 class Step4 extends React.PureComponent {
   toPay = () => {
+    if (!toPayIsClick) {
+      return;
+    }
+    toPayIsClick = false;
     const { dispatch } = this.props;
     dispatch({
       type: 'form/pay',
