@@ -99,6 +99,7 @@ class EditableCell extends React.Component {
   startTime: form.startTime,
   endTime: form.endTime,
   goodsDetail: form.goodsDetail,
+  pddZSId: form.pddZSId,
   submitting: loading.effects['form/publishTask'],
 }))
 class Step3 extends React.PureComponent {
@@ -267,7 +268,7 @@ class Step3 extends React.PureComponent {
       message.error('你还有投放数量没有填写完成哦～');
       return;
     }
-    const { dispatch, goodsDetail, startTime, endTime, schedules, taskId } = this.props;
+    const { dispatch, goodsDetail, startTime, endTime, schedules, taskId, pddZSId } = this.props;
     dispatch({
       type: 'form/publishTask',
       payload: {
@@ -279,6 +280,7 @@ class Step3 extends React.PureComponent {
         end_time: endTime,
         plan_info: schedules,
         task_id: taskId,
+        zs_duo_id: pddZSId,
       },
     });
     // router.push('/fangdan/step-form/pay');
