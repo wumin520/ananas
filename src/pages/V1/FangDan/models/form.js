@@ -16,6 +16,7 @@ export default {
 
   state: {
     pddGoodUrl: '',
+    pddZSId: '', // 招商团长ID
     goodsDetail: {
       goods_id: '',
       cate_name: '',
@@ -44,6 +45,7 @@ export default {
     startTime: '',
     endTime: '',
     taskId: '',
+    zs_duo_id: '',
   },
 
   effects: {
@@ -56,6 +58,7 @@ export default {
           payload: {
             goodsDetail: res.payload.goods_detail,
             pddGoodUrl: payload.goods_id,
+            pddZSId: payload.zs_duo_id,
           },
         });
         if (payload.auto_redirect !== 0) {

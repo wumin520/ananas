@@ -15,6 +15,7 @@ const formItemLayout = {
 @connect(({ form, loading }) => ({
   data: form.step,
   pddGoodUrl: form.pddGoodUrl,
+  pddZSId: form.pddZSId,
   submitting: loading.effects['form/queryGoodsDetail'],
 }))
 @Form.create()
@@ -30,7 +31,7 @@ class Step1 extends React.PureComponent {
   componentDidMount = () => {};
 
   render() {
-    const { form, pddGoodUrl, submitting, dispatch } = this.props;
+    const { form, pddGoodUrl, submitting, dispatch, pddZSId } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const onValidateForm = () => {
       validateFields((err, values) => {
@@ -63,6 +64,11 @@ class Step1 extends React.PureComponent {
               initialValue: pddGoodUrl,
               rules: [{ required: true, message: '请粘贴商品链接进行校验' }],
             })(<Input placeholder="请粘贴商品链接进行校验" />)}
+          </Form.Item>
+          <Form.Item {...formItemLayout} label="招商团长id">
+            {getFieldDecorator('zs_duo_id', {
+              initialValue: pddZSId,
+            })(<Input />)}
           </Form.Item>
           <Form.Item
             wrapperCol={{
