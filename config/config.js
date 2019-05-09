@@ -65,6 +65,7 @@ export default {
     APP_TYPE: APP_TYPE || '',
   },
   treeShaking: true,
+  hash: true,
   targets: {
     ie: 11,
   },
