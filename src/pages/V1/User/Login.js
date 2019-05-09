@@ -86,7 +86,7 @@ class LoginPage extends Component {
     const { login, submitting, setting } = this.props;
     const { type } = this.state;
 
-    const imgCaptchaUrl = `${setting.backend}/cdk/phrase?_version=`;
+    const imgCaptchaUrl = `${setting.configs[process.env.API_ENV].API_SERVER}/cdk/phrase?_version=`;
     return (
       <div className={styles.main}>
         <Login

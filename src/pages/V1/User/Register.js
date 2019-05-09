@@ -88,12 +88,11 @@ class Register extends Component {
 
   onGetCaptchaImg = () => {
     const {
-      setting: { backend },
+      setting: { configs },
     } = this.props;
-    console.log(backend, 'backend');
     const rand = (Math.random() * 10000).toString();
     this.captcha_rand = rand;
-    const url = `${backend}/cdk/phrase?_version=${rand}`;
+    const url = `${configs[process.env.API_ENV].API_SERVER}/cdk/phrase?_version=${rand}`;
     this.setState({
       captchaImg: url,
     });
