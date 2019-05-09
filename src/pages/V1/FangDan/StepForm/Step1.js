@@ -68,7 +68,7 @@ class Step1 extends React.PureComponent {
           <Form.Item {...formItemLayout} label="招商团长id">
             {getFieldDecorator('zs_duo_id', {
               initialValue: pddZSId,
-            })(<Input />)}
+            })(<Input placeholder="选填" />)}
           </Form.Item>
           <Form.Item
             wrapperCol={{
