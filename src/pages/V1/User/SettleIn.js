@@ -12,7 +12,7 @@ const options = [{ label: '我是商家', value: 0 }, { label: '我是招商', v
 
 const placeholderWord = [
   { shop: '请填写拼多多店铺名称', code: '请填写拼多多店铺编号' },
-  { shop: '请填写合作店铺的店铺名称', code: '请填写合作店铺的店铺编号' },
+  { shop: '请填写拼多多合作店铺的店铺名称', code: '请填写拼多多合作店铺的店铺编号' },
 ];
 
 @connect(({ register, loading }) => ({

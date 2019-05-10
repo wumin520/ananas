@@ -19,7 +19,7 @@ class SelectSettleIn extends Component {
             src="https://cdn.youlianyc.com/image/static/2399a4ab4b7d3343e2318e440a7afd3be2a127f3.jpg"
             alt=""
           />
-          <p className={styles.select_title}>我是推手</p>
+          <p className={styles.select_title}>推手入驻</p>
           <p className={styles.select_desc}>适合有流量的个人或团队推广，流量变现</p>
           <p className={`${styles.select_desc} ${styles.select_limit}`}>需实名认证</p>
           <Button disabled className={styles.btn_select}>
@@ -32,8 +32,10 @@ class SelectSettleIn extends Component {
             src="https://cdn.youlianyc.com/image/static/898c54bef29cf5a9127f71c0398f533b22f1cc3e.jpg"
             alt=""
           />
-          <p className={styles.select_title}>我是商家</p>
-          <p className={styles.select_desc}>适合有放单需求的招商/商家放单，目前仅支持拼多多</p>
+          <p className={styles.select_title}>招商/商家入驻</p>
+          <p className={styles.select_desc}>
+            适用于拥有商品资源和渠道的招商团长以及商家，目前仅支持拼多多放单
+          </p>
           <p className={`${styles.select_desc} ${styles.select_limit}`}>
             提供店铺/合作店铺相关资料
           </p>
