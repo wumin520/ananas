@@ -89,7 +89,7 @@ class settleIn extends Component {
               rules: [
                 {
                   required: true,
-                  message: '请输入您的拼多多店铺名称',
+                  message: '请输入拼多多店铺名称',
                 },
               ],
             })(
@@ -133,7 +133,8 @@ class settleIn extends Component {
               rules: [
                 {
                   required: true,
-                  message: '请输入您的QQ号码',
+                  pattern: /^[0-9]*$/,
+                  message: '请输入正确的QQ号码',
                 },
               ],
             })(<Input size="large" placeholder="您的QQ号码" />)}
