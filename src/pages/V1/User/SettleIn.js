@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Alert, Icon, Tooltip } from 'antd';
+import { Form, Input, Button, Alert, Icon, Tooltip, Radio } from 'antd';
 import { connect } from 'dva';
 import FormItem from 'antd/es/form/FormItem';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import { getInviteCode } from '@/utils/authority';
 
 import styles from './Register.less';
+
+const RadioGroup = Radio.Group;
+const options = [{ label: '我是商家', value: 0 }, { label: '我是招商', value: 1 }];
+
+const placeholderWord = [
+  { shop: '请填写拼多多店铺名称', code: '请填写拼多多店铺编号' },
+  { shop: '请填写拼多多合作店铺的店铺名称', code: '请填写拼多多合作店铺的店铺编号' },
+];
 
 @connect(({ register, loading }) => ({
   register,
@@ -15,6 +23,7 @@ import styles from './Register.less';
 class settleIn extends Component {
   state = {
     inviteCode: '',
+    selectShCode: 0,
   };
 
   componentWillMount() {
@@ -43,9 +52,15 @@ class settleIn extends Component {
     });
   };
 
+  changeShType = e => {
+    this.setState({
+      selectShCode: e.target.value,
+    });
+  };
+
   render() {
     const { form, submitting } = this.props;
-    const { inviteCode } = this.state;
+    const { inviteCode, selectShCode } = this.state;
     const { getFieldDecorator } = form;
     return (
       <div className={styles.main}>
@@ -59,14 +74,29 @@ class settleIn extends Component {
         </h3>
         <Form onSubmit={this.handleSubmit}>
           <FormItem>
+            {getFieldDecorator('sh_type', {
+              initialValue: 0,
+              rules: [
+                {
+                  required: true,
+                  message: '请选择商户类型',
+                },
+              ],
+            })(<RadioGroup options={options} onChange={this.changeShType} />)}
+          </FormItem>
+          <FormItem>
             {getFieldDecorator('shop_name', {
               rules: [
                 {
                   required: true,
-                  message: '请输入您的拼多多店铺名称',
+                  message: '请输入拼多多店铺名称',
                 },
               ],
-            })(<Input size="large" placeholder="您的拼多多店铺名称" />)}
+            })(
+              <div>
+                <Input size="large" placeholder={placeholderWord[selectShCode].shop} />
+              </div>
+            )}
           </FormItem>
           <FormItem>
             {getFieldDecorator('shop_code', {
@@ -79,7 +109,7 @@ class settleIn extends Component {
               ],
             })(
               <div style={{ position: 'relative' }}>
-                <Input size="large" placeholder="拼多多后台店铺编号" />
+                <Input size="large" placeholder={placeholderWord[selectShCode].code} />
                 <Tooltip
                   title={
                     <div>
@@ -103,7 +133,8 @@ class settleIn extends Component {
               rules: [
                 {
                   required: true,
-                  message: '请输入您的QQ号码',
+                  pattern: /^[0-9]*$/,
+                  message: '请输入正确的QQ号码',
                 },
               ],
             })(<Input size="large" placeholder="您的QQ号码" />)}

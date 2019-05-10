@@ -65,7 +65,7 @@
   justify-content: space-between;
   align-items: center;
   width: 1128px;
-  margin: 40px auto 0;
+  margin: 120px auto 0;
 
   .ml64 {
     margin-left: 64px;
@@ -73,13 +73,16 @@
 
   .select_item {
     flex: 1;
-    padding: 64px 0;
+    padding: 0 0 64px;
+    font-family: PingFang-SC-Regular, sans-serif;
     text-align: center;
     background: rgba(255, 255, 255, 1);
     border-radius: 4px;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
 
     .select_img {
+      position: relative;
+      top: -60px;
       width: 120px;
       height: 120px;
       background: rgba(255, 255, 255, 1);
@@ -88,12 +91,37 @@
     }
 
     .select_title {
-      margin: 32px 0;
+      margin: 0 0 32px;
       color: rgba(0, 0, 0, 0.65);
       font-weight: 400;
       font-size: 24px;
-      font-family: PingFang-SC-Regular, sans-serif;
       line-height: 32px;
+    }
+
+    .select_desc {
+      width: 292px;
+      height: 44px;
+      margin: 32px auto 16px;
+      color: rgba(0, 0, 0, 0.45);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 22px;
+      text-align: left;
+    }
+
+    .select_limit {
+      margin: 0 auto 16px;
+      color: #13c2c2;
+
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        margin-right: 8px;
+        background: rgba(19, 194, 194, 1);
+        border-radius: 3px;
+      }
     }
 
     .btn_select {
