@@ -19,4 +19,12 @@ module.exports = {
   backend: 'https://chaoduoke.com',
   // backend: 'http://test.chaoduoke.com',
   // backend: 'http://zs_good.test.chaoduoke.com',
+  configs: {
+    test: {
+      API_SERVER: 'http://test.chaoduoke.com', // 测试环境
+    },
+    production: {
+      API_SERVER: 'https://chaoduoke.com', // 线上环境
+    },
+  },
 };

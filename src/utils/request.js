@@ -5,7 +5,7 @@
 import { extend } from 'umi-request';
 import router from 'umi/router';
 import { notification, message } from 'antd';
-import { backend } from '@/defaultSettings';
+import { configs } from '@/defaultSettings';
 import { getStorage, setUserToken, setShState } from './authority';
 
 const codeMessage = {
@@ -80,7 +80,7 @@ const request = extend({
 // request interceptor, change url or options.
 request.interceptors.request.use((url, options) => {
   // const origin  = 'http://chaoduoke.com/cdk'
-  const origin = `${backend}/cdk`;
+  const origin = `${configs[process.env.API_ENV].API_SERVER}/cdk`;
   const token = window.cdk_token || getStorage('token');
   console.log('request -> url -> ', url, 'options -> ', options, token);
   return {

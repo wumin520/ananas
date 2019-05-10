@@ -63,6 +63,9 @@ export default {
   plugins,
   define: {
     APP_TYPE: APP_TYPE || '',
+    'process.env': {
+      API_ENV: process.env.API_ENV === 'production' ? 'production' : 'test',
+    },
   },
   treeShaking: true,
   hash: true,
