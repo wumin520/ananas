@@ -185,15 +185,22 @@ class Step2 extends React.PureComponent {
             initialValue: 0,
           })(
             <RadioGroup>
-              <Radio value={1}>无需晒图</Radio>
-              <Radio value={0}>无限制</Radio>
+              <Radio value={1}>纯文字好评</Radio>
+              <Radio value={0}>文字或图文好评</Radio>
             </RadioGroup>
           )}
         </Form.Item>
         <Form.Item {...formItemLayout} className={styles.stepFormText} label="评价关键字">
           {getFieldDecorator('comment_keyword', {
             rules: [{ required: true, message: '不得超过十五个字符！', max: 15 }],
-          })(<Input placeholder="请输入关键字，用逗号“,”隔开(必填)" style={{ width: '80%' }} />)}
+          })(
+            <div>
+              <Input placeholder="请输入关键字，用逗号“,”隔开(必填)" style={{ width: '80%' }} />{' '}
+              <div style={{ color: 'orange' }}>
+                不超过15个字，突出宝贝亮点，例如商品描述、物流、正品等
+              </div>
+            </div>
+          )}
         </Form.Item>
         <Divider style={{ margin: '24px 0' }} />
         {coupon_info.coupon_discount ? (
