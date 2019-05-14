@@ -191,9 +191,9 @@ class Step2 extends React.PureComponent {
           )}
         </Form.Item>
         <Form.Item {...formItemLayout} className={styles.stepFormText} label="评价关键字">
-          {getFieldDecorator('comment_keyword')(
-            <Input placeholder="请输入关键字，用逗号“,”隔开" style={{ width: '80%' }} />
-          )}
+          {getFieldDecorator('comment_keyword', {
+            rules: [{ required: true, message: '不得超过十五个字符！', max: 15 }],
+          })(<Input placeholder="请输入关键字，用逗号“,”隔开(必填)" style={{ width: '80%' }} />)}
         </Form.Item>
         <Divider style={{ margin: '24px 0' }} />
         {coupon_info.coupon_discount ? (

@@ -137,8 +137,11 @@ class GeneralizeDetail extends Component {
             <Description term="商品名称" className={styles.pro_name}>
               {data.title}
             </Description>
-            <Description term="商品主图">
-              <img src={data.img} alt="img" style={{ width: 65, heigth: 65 }} />
+            <Description term="">
+              <div className={styles.pro_img}>
+                <p>商品主图: </p>
+                <img src={data.img} alt="img" style={{ width: 65, heigth: 65, marginLeft: 10 }} />
+              </div>
             </Description>
             <Description term="优惠券">
               {data.coupon_price ? `￥ ${data.coupon_price}` : '无'}{' '}
