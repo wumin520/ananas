@@ -23,7 +23,7 @@ module.exports = {
     test: {
       // API_SERVER: 'http://test.chaoduoke.com', // 测试环境
       // API_SERVER: 'http://temp_fix.test.chaoduoke.com',
-      API_SERVER: 'http://fan.test.chaoduoke.com',
+      API_SERVER: 'http://fans.test.chaoduoke.com',
     },
     production: {
       API_SERVER: 'https://chaoduoke.com', // 线上环境
