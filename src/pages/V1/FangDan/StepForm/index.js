@@ -28,9 +28,14 @@ export default class StepForm extends PureComponent {
 
   render() {
     const { location, children } = this.props;
+    console.log(location, '1');
+    let title = '新增免单试用推广商品';
+    if (location.pathname.indexOf('/qf/') > -1) {
+      title = '商品圈粉';
+    }
     return (
       <PageHeaderWrapper
-        title="新增免单试用推广商品"
+        title={title}
         tabActiveKey={location.pathname}
         content="快速提升转化率/快速聚集人气/宝贝流量"
       >

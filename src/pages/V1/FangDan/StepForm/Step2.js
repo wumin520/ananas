@@ -69,7 +69,15 @@ class Step2 extends React.PureComponent {
 
   render() {
     /* eslint-disable */
-    const { form, dispatch, submitting, goodsDetail, category_list, category_id } = this.props;
+    const {
+      form,
+      dispatch,
+      submitting,
+      goodsDetail,
+      category_list,
+      category_id,
+      location,
+    } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const { Option } = Select;
 
@@ -90,7 +98,11 @@ class Step2 extends React.PureComponent {
               category_id: values.category_id,
             },
           });
-          router.push('/fangdan/step-form/schedule');
+          let path = `/fangdan/step-form/schedule`;
+          if (location.query.qf !== undefined) {
+            path = `/fangdan/qf/schedule?qf=${location.query.qf}`;
+          }
+          router.push(path);
         }
       });
     };
@@ -106,6 +118,8 @@ class Step2 extends React.PureComponent {
       comment_limit,
       comment_keyword,
     } = goodsDetail;
+
+    const qf = location.query.qf !== undefined;
 
     return (
       <Form layout="horizontal" className={styles.stepForm}>
@@ -202,32 +216,34 @@ class Step2 extends React.PureComponent {
               </div>
             </div>
           )}
-        </Form.Item>
-         *
-         */}
-        <Divider style={{ margin: '24px 0' }} />
-        {coupon_info.coupon_discount ? (
-          <Form.Item {...formItemLayout} className={styles.stepFormText} label="优惠券">
-            {coupon_info.coupon_discount}元
+          </Form.Item> **/}
+        {qf ?  '' : (
+        <React.Fragment>
+          <Divider style={{ margin: '24px 0' }} />
+          {coupon_info.coupon_discount ? (
+            <Form.Item {...formItemLayout} className={styles.stepFormText} label="优惠券">
+              {coupon_info.coupon_discount}元
+            </Form.Item>
+          ) : (
+            ''
+          )}
+          <Form.Item {...formItemLayout} className={styles.stepFormText} label="券后价">
+            <span className={styles.money}>{coupon_price}</span>
+            <span className={styles.uppercase}>（{digitUppercase(coupon_price)}）</span>
           </Form.Item>
-        ) : (
-          ''
+          <Form.Item {...formItemLayout} label="单笔返现金额" required={false}>
+            {getFieldDecorator('commission', {
+              initialValue: coupon_price,
+              rules: [
+                {
+                  required: false,
+                  message: '',
+                },
+              ],
+            })(<Input disabled type="number" autoComplete="off" style={{ width: '80%' }} />)}
+          </Form.Item>
+        </React.Fragment>
         )}
-        <Form.Item {...formItemLayout} className={styles.stepFormText} label="券后价">
-          <span className={styles.money}>{coupon_price}</span>
-          <span className={styles.uppercase}>（{digitUppercase(coupon_price)}）</span>
-        </Form.Item>
-        <Form.Item {...formItemLayout} label="单笔返现金额" required={false}>
-          {getFieldDecorator('commission', {
-            initialValue: coupon_price,
-            rules: [
-              {
-                required: false,
-                message: '',
-              },
-            ],
-          })(<Input disabled type="number" autoComplete="off" style={{ width: '80%' }} />)}
-        </Form.Item>
         <Form.Item
           style={{ marginBottom: 8 }}
           wrapperCol={{

@@ -22,10 +22,15 @@ const formItemLayout = {
 @Form.create()
 class Step1 extends React.PureComponent {
   fetchPddGoodsDetail = values => {
-    const { dispatch } = this.props;
+    const { dispatch, location } = this.props;
+    const params = values;
+    if (location.query.qf !== undefined) {
+      params.qf = location.query.qf;
+    }
+    console.log('values -> 1', params);
     dispatch({
       type: 'form/queryGoodsDetail',
-      payload: values,
+      payload: params,
     });
   };
 

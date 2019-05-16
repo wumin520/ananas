@@ -323,7 +323,21 @@ class Step3 extends React.PureComponent {
       message.error('你还有投放数量没有填写完成哦～');
       return;
     }
-    const { dispatch, goodsDetail, startTime, endTime, schedules, taskId, pddZSId } = this.props;
+    const {
+      dispatch,
+      goodsDetail,
+      startTime,
+      endTime,
+      schedules,
+      taskId,
+      pddZSId,
+      location,
+    } = this.props;
+    // type 推广类型 (10好评返利20大额券30圈粉-收藏商品31圈粉-收藏店铺)
+    let type = 10;
+    if (location.query.qf !== undefined) {
+      location.query.qf ? (type = 31) : (type = 30);
+    }
     dispatch({
       type: 'form/publishTask',
       payload: {
@@ -338,6 +352,7 @@ class Step3 extends React.PureComponent {
         zs_duo_id: pddZSId,
         comment_limit: goodsDetail.comment_limit,
         comment_keyword: goodsDetail.comment_keyword,
+        type,
       },
     });
     // router.push('/fangdan/step-form/pay');
@@ -450,21 +465,8 @@ class Step3 extends React.PureComponent {
               onChange={this.rangePicker}
             />
           </Col>
-          {/* 日历 */}
-          {/* <Col offset={8}>
-            <Button onClick={this.toSchedule} type="primary">
-              一键排期
-            </Button>
-          </Col> */}
         </Row>
-
         {startDate ? (
-          // <Calendar
-          //   className={styles.calendarCdk}
-          //   value={startDate}
-          //   validRange={validRange}
-          //   dateFullCellRender={dateFullCellRender}
-          // />
           <Table
             style={{ width: '60%', marginTop: 20 }}
             components={components}

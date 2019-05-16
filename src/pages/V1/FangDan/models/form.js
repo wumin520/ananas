@@ -64,7 +64,11 @@ export default {
           },
         });
         if (payload.auto_redirect !== 0) {
-          yield put(routerRedux.push('/fangdan/step-form/confirm'));
+          let path = `/fangdan/step-form/confirm`;
+          if (payload.qf !== undefined) {
+            path = `/fangdan/qf/confirm?qf=${payload.qf}`;
+          }
+          yield put(routerRedux.push(path));
         }
       }
     },
