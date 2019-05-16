@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Alert, Divider, List, Select } from 'antd';
+import { Form, Input, Button, Alert, Divider, List, Select, Radio } from 'antd';
 import router from 'umi/router';
 import { digitUppercase } from '@/utils/utils';
 import styles from './style.less';
 
+const RadioGroup = Radio.Group;
 const formItemLayout = {
   labelCol: {
     span: 5,
@@ -24,7 +25,7 @@ const formItemLayout = {
 @Form.create()
 class Step2 extends React.PureComponent {
   setMainImage = (item, index) => {
-    console.log(item, index, this.props);
+    // console.log(item, index, this.props);
     const { dispatch, goodsDetail } = this.props;
     const arr = goodsDetail.detailImgRecordUrl;
     const firstImage = arr[0];
@@ -79,7 +80,6 @@ class Step2 extends React.PureComponent {
       e.preventDefault();
       validateFields((err, values) => {
         if (!err) {
-          console.log('values -> ', values);
           dispatch({
             type: 'form/updateState',
             payload: {
@@ -103,6 +103,8 @@ class Step2 extends React.PureComponent {
       coupon_info,
       commission,
       coupon_price,
+      comment_limit,
+      comment_keyword,
     } = goodsDetail;
 
     return (
@@ -175,6 +177,30 @@ class Step2 extends React.PureComponent {
               );
             }}
           />
+        </Form.Item>
+        <Divider style={{ margin: '24px 0' }} />
+
+        <Form.Item {...formItemLayout} className={styles.stepFormText} label="评价限制">
+          {getFieldDecorator('comment_limit', {
+            initialValue: 0,
+          })(
+            <RadioGroup>
+              <Radio value={1}>纯文字好评</Radio>
+              <Radio value={0}>文字或图文好评</Radio>
+            </RadioGroup>
+          )}
+        </Form.Item>
+        <Form.Item {...formItemLayout} className={styles.stepFormText} label="评价关键字">
+          {getFieldDecorator('comment_keyword', {
+            rules: [{ required: true, message: '不得超过十五个字符！', max: 15 }],
+          })(
+            <div>
+              <Input placeholder="请输入关键字，用逗号“,”隔开(必填)" style={{ width: '80%' }} />{' '}
+              <div style={{ color: 'orange' }}>
+                不超过15个字，突出宝贝亮点，例如商品描述、物流、正品等
+              </div>
+            </div>
+          )}
         </Form.Item>
         <Divider style={{ margin: '24px 0' }} />
         {coupon_info.coupon_discount ? (

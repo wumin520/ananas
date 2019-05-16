@@ -81,6 +81,7 @@ class ProductDetail extends Component {
             </Description>
             <Description term="优惠券">{data.coupon ? '￥' + data.coupon : '无'}</Description>
             <Description term="商品价格">￥{data.price}</Description>
+            <Description term="招商ID">{data.zs_duo_id}</Description>
           </DescriptionList>
           <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="订单信息" style={{ marginBottom: 32 }}>
