@@ -1,8 +1,8 @@
 /* globals workbox */
 /* eslint-disable no-restricted-globals */
 workbox.core.setCacheNameDetails({
-  prefix: 'antd-pro',
-  suffix: 'v1',
+  prefix: 'ananas',
+  suffix: 'v2',
 });
 // Control all opened tabs ASAP
 workbox.clientsClaim();
@@ -28,6 +28,8 @@ workbox.routing.registerNavigationRoute('/index.html');
  * https://developers.google.com/web/tools/workbox/reference-docs/latest/workbox.strategies
  */
 
+// html的缓存策略
+workbox.routing.registerRoute(/.*\.html/, workbox.strategies.networkFirst());
 /**
  * Handle API requests
  */
