@@ -76,7 +76,7 @@ class UserLayout extends Component {
                       src="https://cdn.youlianyc.com/image/static/80177b5561be4401729b60666c74a07e5e459d34.jpg"
                     />
                   </Link>
-                  <span className={styles.slogan}>一站式导购服务</span>
+                  <span className={styles.slogan}>一站式导购服务 test</span>
                 </Col>
                 <Col span={12}>
                   <Link to="/web/index">

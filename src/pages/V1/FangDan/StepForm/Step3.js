@@ -335,8 +335,10 @@ class Step3 extends React.PureComponent {
     } = this.props;
     // type 推广类型 (10好评返利20大额券30圈粉-收藏商品31圈粉-收藏店铺)
     let type = 10;
+    let qf = ''; // 1为店铺圈粉，0为商品圈粉
     if (location.query.qf !== undefined) {
-      location.query.qf ? (type = 31) : (type = 30);
+      location.query.qf == '1' ? (type = 31) : (type = 30);
+      qf = location.query.qf;
     }
     dispatch({
       type: 'form/publishTask',
@@ -353,6 +355,7 @@ class Step3 extends React.PureComponent {
         comment_limit: goodsDetail.comment_limit,
         comment_keyword: goodsDetail.comment_keyword,
         type,
+        qf,
       },
     });
     // router.push('/fangdan/step-form/pay');

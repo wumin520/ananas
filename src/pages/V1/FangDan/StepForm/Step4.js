@@ -32,7 +32,12 @@ class Step4 extends React.PureComponent {
   };
 
   goBack = () => {
-    router.push('/fangdan/step-form/schedule');
+    const { location } = this.props;
+    let path = `/fangdan/step-form/schedule`;
+    if (location.query.qf !== undefined) {
+      path = `/fangdan/qf/schedule?qf=${location.query.qf}`;
+    }
+    router.push(path);
   };
 
   componentDidMount = () => {

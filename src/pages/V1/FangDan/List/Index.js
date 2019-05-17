@@ -131,6 +131,10 @@ class FdList extends PureComponent {
     this.getListData(params);
   };
 
+  handleTabChange = index => {
+    console.log('1', index);
+  };
+
   renderSimpleForm() {
     const {
       form: { getFieldDecorator },
@@ -208,7 +212,7 @@ class FdList extends PureComponent {
 
   render() {
     // 表格数据
-    const { listData } = this.props;
+    const { listData, match } = this.props;
     const taskInfo = listData.task_info;
     const columns = [
       {
@@ -342,8 +346,25 @@ class FdList extends PureComponent {
       </div>
     );
     const content = <div />;
+    const tabList = [
+      {
+        key: 'haoping',
+        tab: '好评试用',
+      },
+      {
+        key: 'quanfen',
+        tab: '圈粉收藏',
+      },
+    ];
+    console.log(match, '1');
     return (
-      <PageHeaderWrapper title="放单列表" content={content}>
+      <PageHeaderWrapper
+        title="放单列表"
+        content={content}
+        tabList={tabList}
+        tabActiveKey="haoping"
+        onTabChange={this.handleTabChange}
+      >
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
