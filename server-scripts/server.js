@@ -9,7 +9,7 @@ const app = express();
 app.use('/', express.static(path.join(__dirname, '..', 'dist/')));
 const indexPath = path.join(__dirname, '..', 'dist/index.html');
 
-app.get('/', function(req, res) {
+app.get('*', function(req, res) {
   res.sendFile(indexPath);
 });
 

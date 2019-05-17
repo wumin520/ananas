@@ -56,6 +56,13 @@ class Footer extends PureComponent {
         <div className={styles.footer_below}>
           Copyright © 2018<span className={styles.comp}> 极单信息科技有限公司 </span>
           沪ICP备17028167号-6 版权所有
+          <a
+            style={{ marginLeft: 10 }}
+            target="cyxyv"
+            href="https://v.yunaq.com/certificate?domain=www.chaoduoke.com&from=label&code=90020"
+          >
+            <img alt="" src="https://aqyzmedia.yunaq.com/labels/label_sm_90020.png" />
+          </a>
         </div>
       </div>
     );
