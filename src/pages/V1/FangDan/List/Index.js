@@ -275,6 +275,14 @@ class FdList extends PureComponent {
     this.setState({
       tabActiveKey: key,
     });
+    if (key === 'haoping') {
+      this.qf = undefined;
+      params.type = 10;
+    } else if (key === 'quanfen') {
+      this.qf = 1;
+      params.type = '30,31';
+    }
+    this.getListData(params);
   };
 
   radioGroupOnChange = e => {
