@@ -26,6 +26,11 @@ export default {
         limit_info: '',
         credit_level: 0,
       },
+      fans_info: {
+        day_order_num: 0,
+        total_order_num: 0,
+        statistics_info: [],
+      },
     },
     task_plan_list: [],
     hot_rank: [],
@@ -35,22 +40,24 @@ export default {
       list: [],
       page_info: {},
     },
+    task_report_info: {
+      great_review: [],
+      fans: [],
+    },
   },
 
   effects: {
     *fetch({ payload }, { call, put }) {
       const res = yield call(getHomeData, payload);
-      yield put({
-        type: 'save',
-        payload: {
-          head_info: res.payload.head_info,
-          task_plan_list: res.payload.task_plan_list,
-          hot_rank: res.payload.hot_rank,
-          order_list: res.payload.order_list,
-          notice_info: res.payload.notice_info,
-          day_order_info: res.payload.day_order_info,
-        },
-      });
+      console.log(res, 'res 1');
+      if (res.status === 'ok') {
+        yield put({
+          type: 'save',
+          payload: {
+            ...res.payload,
+          },
+        });
+      }
     },
     *toPlanUp({ payload }, { call }) {
       const res = yield call(taskPlanUp, payload);

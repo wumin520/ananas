@@ -130,7 +130,16 @@ class FreezeDetail extends PureComponent {
         },
       },
       {
-        title: '放单状态',
+        title: '推广类型',
+        key: 'type_desc',
+        dataIndex: 'type_desc',
+        width: 100,
+        render(val) {
+          return <span>{val}</span>;
+        },
+      },
+      {
+        title: '状态',
         dataIndex: 'state',
         key: 'state',
         width: 150,

@@ -35,7 +35,8 @@ class Index extends PureComponent {
   };
 
   forwardToQF = index => {
-    router.push(`/fangdan/qf/info?qf=${index}`);
+    const val = index === 0 ? 1 : 0;
+    router.push(`/fangdan/qf/info?qf=${val}`);
   };
 
   render() {

@@ -19,7 +19,14 @@ export async function taskDetail(params) {
 export async function orderList(params) {
   return request(`/v1/web/order/list?${stringify(params)}`);
 }
-
+// 关注列表
+export async function fansList(params) {
+  return request(`/v1/web/order/fans/list?${stringify(params)}`);
+}
+// 关注详情
+export async function fansDetail(params) {
+  return request(`/v1/web/order/fans/detail?${stringify(params)}`);
+}
 // 终止
 export async function taskFinish(params) {
   return request(`/v1/web/task/finish?${stringify(params)}`);

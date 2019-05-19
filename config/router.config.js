@@ -225,6 +225,12 @@ export default [
             component: './V1/FangDan/List/GeneralizeDetail',
             hideInMenu: true,
           },
+          {
+            path: '/fangdan/qfDetail',
+            name: 'qfDetail',
+            component: './V1/FangDan/List/qfDetail',
+            hideInMenu: true,
+          },
         ],
       },
       // myOrder
@@ -237,6 +243,17 @@ export default [
             path: '/order/Index',
             name: 'index',
             component: './V1/MyOrder/Index',
+          },
+          {
+            path: '/order/qf',
+            name: 'qf',
+            component: './V1/MyOrder/qfList',
+          },
+          {
+            path: '/order/qfDetail',
+            name: 'qfDetail',
+            hideInMenu: true,
+            component: './V1/MyOrder/qfDetail',
           },
           {
             path: '/order/productDetail',

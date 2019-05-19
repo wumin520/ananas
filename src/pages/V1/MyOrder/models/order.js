@@ -1,4 +1,4 @@
-import { orderList, orderDetail } from '@/services/api';
+import { orderList, orderDetail, fansList, fansDetail } from '@/services/api';
 
 export default {
   namespace: 'order',
@@ -19,11 +19,35 @@ export default {
           proof_images: [],
         },
       ],
-      order_num_info: {},
+      order_num_info: {
+        pay_num: 0,
+        wait_proof_num: 0,
+      },
       state_select: [],
       page_info: {},
     },
     orderDetail: {
+      data: {
+        proof_images: [],
+      },
+    },
+    fansData: {
+      list: [
+        {
+          ordered_datetime: '',
+          harvest_time: '',
+          proof_time: '',
+          paid_datetime: '',
+          proof_images: [],
+        },
+      ],
+      order_stat: {
+        daily_num: 0,
+        total_num: 0,
+      },
+      page_info: {},
+    },
+    fansDetail: {
       data: {
         proof_images: [],
       },
@@ -47,6 +71,26 @@ export default {
         type: 'saveState',
         payload: {
           orderDetail: res.payload,
+        },
+      });
+    },
+    *fansList({ payload }, { call, put }) {
+      const res = yield call(fansList, payload);
+      if (res.status === 'ok') {
+        yield put({
+          type: 'saveState',
+          payload: {
+            fansData: res.payload,
+          },
+        });
+      }
+    },
+    *fansDetail({ payload }, { call, put }) {
+      const res = yield call(fansDetail, payload);
+      yield put({
+        type: 'saveState',
+        payload: {
+          orderData: res.payload,
         },
       });
     },

@@ -243,7 +243,11 @@ class FdList extends PureComponent {
   };
 
   goDetail = item => {
-    router.push(`/fangdan/list/generalizeDetail?task_id=${item.task_id}`);
+    let path = `/fangdan/list/generalizeDetail`;
+    if (/^3[0|1]$/.test(item.type)) {
+      path = `/fangdan/qfDetail`;
+    }
+    router.push(`${path}?task_id=${item.task_id}`);
   };
 
   goPay = item => {
@@ -260,9 +264,15 @@ class FdList extends PureComponent {
 
   // 编辑
   goRedact = item => {
-    router.push(
-      `/fangdan/step-form/confirm?task_id=${item.task_id}&goods_id=${item.goods_id}&action=edit`
-    );
+    let path = `/fangdan/step-form/confirm?task_id=${item.task_id}&goods_id=${
+      item.goods_id
+    }&action=edit`;
+    console.log('item -> ', item);
+    if (/^3[0|1]$/.test(item.type)) {
+      const qf = item.type === 30 ? 0 : 1;
+      path += `&qf=${qf}`;
+    }
+    router.push(path);
   };
 
   onChange = page => {
@@ -368,7 +378,7 @@ class FdList extends PureComponent {
 
   render() {
     // 表格数据
-    const { listData, match, location } = this.props;
+    const { listData, match } = this.props;
     const { tabActiveKey } = this.state;
     const taskInfo = listData.task_info;
 
@@ -411,7 +421,6 @@ class FdList extends PureComponent {
       },
       {
         title: '圈粉类型',
-        dataIndex: 'type',
         key: 'type',
         width: 100,
         render: item => {
@@ -446,6 +455,7 @@ class FdList extends PureComponent {
         width: 120,
         render: item => {
           let operation;
+          // 0-待支付，1-待审核，2-进行中，3-审核驳回 4-清算中 5-已结算
           if (item.state === 0) {
             operation = (
               <span>
@@ -487,7 +497,7 @@ class FdList extends PureComponent {
         },
       },
     ];
-    if (location.query.qf !== undefined) {
+    if (this.qf) {
       columns = qFColumns;
     }
     const Info = ({ title, value, bordered }) => (

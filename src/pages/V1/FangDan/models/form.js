@@ -55,10 +55,19 @@ export default {
       const res = yield call(queryGoodsDetail, payload);
       console.log('queryGoodsDetail -> res ', res, payload);
       if (res && res.status === 'ok') {
+        /* eslint-disable */
+        let { mall_detail, goods_detail } = res.payload;
+        if (mall_detail.mall_id) {
+          goods_detail = {
+            goods_id: mall_detail.mall_id,
+            title: mall_detail.mall_name,
+            detailImgRecordUrl: [mall_detail.url],
+          };
+        }
         yield put({
           type: 'saveState',
           payload: {
-            goodsDetail: res.payload.goods_detail,
+            goodsDetail: goods_detail,
             pddGoodUrl: payload.goods_id,
             pddZSId: payload.zs_duo_id,
           },

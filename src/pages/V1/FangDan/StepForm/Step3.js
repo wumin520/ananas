@@ -437,7 +437,12 @@ class Step3 extends React.PureComponent {
     );
 
     const onPrev = () => {
-      router.push('/fangdan/step-form/confirm');
+      const { location } = this.props;
+      let path = `/fangdan/step-form/confirm`;
+      if (location.query.qf !== undefined) {
+        path = `/fangdan/qf/confirm?qf=${location.query.qf}`;
+      }
+      router.push(path);
     };
     this.planSum = 0;
     const countPlanSum = () => {

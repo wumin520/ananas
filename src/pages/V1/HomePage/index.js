@@ -4,11 +4,15 @@ import { router } from 'umi';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import PageLoading from '@/components/PageLoading';
-import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Alert } from 'antd';
+import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Alert, Radio } from 'antd';
 import styles from './index.less';
 
+const RadioGroup = Radio.Group;
+const RadioButton = Radio.Button;
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
 const TodayOrder = React.lazy(() => import('./todayOrder'));
+const SalesCard = React.lazy(() => import('./SalesCard'));
+
 // const HotRankList = React.lazy(() => import('./HotRankList'));
 
 const statusMap = ['default', 'success'];
@@ -97,6 +101,10 @@ class Index extends Component {
     },
   ];
 
+  state = {
+    dataType: 'great_review',
+  };
+
   componentDidMount() {
     const { dispatch } = this.props;
     this.reqRef = requestAnimationFrame(() => {
@@ -118,16 +126,28 @@ class Index extends Component {
     router.push(`/order/Index?task_id=${item.task_id}`);
   };
 
+  reportRadioOnChange = e => {
+    console.log('reportRadioOnChange -> ', e);
+    const val = e.target.value;
+    const dataType = val === '0' ? 'great_review' : 'fans';
+    this.setState({
+      dataType,
+    });
+  };
+
   render() {
     const { loading } = this.props;
     const { homedata } = this.props;
 
     const headInfo = homedata.head_info;
     const taskList = homedata.task_plan_list;
+    const taskReportInfo = homedata.task_report_info;
     // const hotRank = homedata.hot_rank;
     const dayOrderInfo = homedata.day_order_info;
     const noticeInfo = homedata.notice_info;
-
+    console.log('taskReportInfo -> ', taskReportInfo, homedata);
+    /* eslint-disable */
+    const salesData = taskReportInfo[this.state.dataType];
     const menu = (
       <Menu>
         <Menu.Item>操作一</Menu.Item>
@@ -142,12 +162,33 @@ class Index extends Component {
         </Dropdown>
       </span>
     );
-
+    const extraContent = this.show ? (
+      <div className={styles.extraContent}>
+        <RadioGroup onChange={this.radioGroupOnChange} defaultValue="30,31">
+          <RadioButton value="30,31">好评试用</RadioButton>
+          <RadioButton value="30">圈粉引流</RadioButton>
+        </RadioGroup>
+      </div>
+    ) : (
+      ''
+    );
     return (
       <GridContent>
         <Alert message={noticeInfo} type="info" showIcon style={{ marginBottom: 20 }} />
         <Suspense fallback={<PageLoading />}>
           <IntroduceRow loading={loading} visitData={headInfo} />
+        </Suspense>
+        <Suspense fallback={null}>
+          <SalesCard
+            radioGroupOnChange={this.reportRadioOnChange}
+            loading={loading}
+            salesData={salesData.map(item => {
+              return {
+                x: item.day,
+                y: item.amount,
+              };
+            })}
+          />
         </Suspense>
         <Card
           loading={loading}
@@ -156,6 +197,7 @@ class Index extends Component {
           extra={<a href="/fangdan/plan">{'排期列表>'}</a>}
           style={{ marginTop: 24 }}
         >
+          {extraContent}
           <Table
             rowKey={record => record.id}
             size="small"

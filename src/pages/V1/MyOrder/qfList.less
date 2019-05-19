@@ -71,7 +71,6 @@
     margin-left: 16px;
   }
 }
-
 .customStyleCard {
   :global {
     .ant-card-extra {
@@ -80,7 +79,6 @@
     }
   }
 }
-
 .tableList {
   .tableListOperator {
     margin-bottom: 16px;
@@ -88,10 +86,11 @@
       margin-right: 8px;
     }
   }
-
+  .tableMargin {
+    margin-bottom: 200px;
+  }
   .pageBottom {
     display: flex;
-    flex-wrap: nowrap;
     justify-content: flex-end;
   }
 }
@@ -257,6 +256,28 @@
   justify-content: flex-start;
   align-items: center;
   .goodsName {
-    display: block;
+    display: inline-block;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
+}
+
+.models {
+  width: 300px;
+  margin: 0 auto;
+  .hp_img {
+    width: auto;
+    height: 400px;
+    margin: 0 auto;
+  }
+}
+.btn {
+  width: 80px;
+  margin: 0 auto;
+  color: #fff;
+  text-align: center;
+  background: rgba(24, 144, 255, 1);
+  border-radius: 18px;
 }
