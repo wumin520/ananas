@@ -16,7 +16,7 @@ const SalesCard = memo(({ salesData, loading, radioGroupOnChange }) => {
     return '';
   }
   const rankingListData = [];
-  for (let i = len - 1; i > len - 8; i -= 1) {
+  for (let i = len - 1; i >= 0; i -= 1) {
     const item = salesData[i];
     let title = '';
     if (i === len - 1) {
@@ -24,10 +24,13 @@ const SalesCard = memo(({ salesData, loading, radioGroupOnChange }) => {
     } else {
       title = moment(item.x).format('M月DD日');
     }
-    rankingListData.push({
-      title,
-      total: item.y,
-    });
+    if (i > len - 8) {
+      rankingListData.push({
+        title,
+        total: item.y,
+      });
+    }
+    item.x = title;
   }
   const extraContent = (
     <div className={styles.extraContent}>

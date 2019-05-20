@@ -1,11 +1,21 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Alert, Divider, List, Select } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Alert,
+  Divider,
+  List,
+  Select,
+  Upload,
+  Icon,
+  message,
+} from 'antd';
 import router from 'umi/router';
 import { digitUppercase } from '@/utils/utils';
 import styles from './style.less';
 
-const RadioGroup = Radio.Group;
 const { Fragment } = React;
 const formItemLayout = {
   labelCol: {
@@ -78,12 +88,12 @@ class Step2 extends React.PureComponent {
     /* eslint-disable */
     const {
       form,
-      dispatch,
       submitting,
       goodsDetail,
       category_list,
       category_id,
       location,
+      dispatch,
     } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const { Option } = Select;
@@ -131,6 +141,39 @@ class Step2 extends React.PureComponent {
     } = goodsDetail;
 
     const qf = location.query.qf !== undefined;
+    const uploadProps = {
+      name: 'file',
+      action: 'http://fans.test.chaoduoke.com/cdk/v1/web/upload',
+      headers: {
+        authorization: 'authorization-text',
+      },
+      data: file => {
+        return {
+          image: file,
+          type: 'avatar',
+        };
+      },
+      onChange(info) {
+        if (info.file.status !== 'uploading') {
+          console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+          message.success(`${info.file.name} file uploaded successfully`);
+          const imageUrl = info.file.response.payload.url;
+          dispatch({
+            type: 'form/updateState',
+            payload: {
+              goodsDetail: {
+                ...goodsDetail,
+                detailImgRecordUrl: [imageUrl],
+              },
+            },
+          });
+        } else if (info.file.status === 'error') {
+          message.error(`${info.file.name} file upload failed.`);
+        }
+      },
+    };
 
     return (
       <Form layout="horizontal" className={styles.stepForm}>
@@ -164,15 +207,11 @@ class Step2 extends React.PureComponent {
                         alt=""
                         src={item}
                       />
-                      <Button
-                        onClick={() => {
-                          this.setMainImage(item, index);
-                        }}
-                        style={{ display: 'block', margin: '0 auto' }}
-                        size="small"
-                      >
-                        {index === 0 ? '当前主图' : '设为主图'}
-                      </Button>
+                      <Upload className={styles.uploadCustom} {...uploadProps}>
+                        <Button>
+                          <Icon type="upload" /> 更换logo
+                        </Button>
+                      </Upload>
                     </List.Item>
                   );
                 }}

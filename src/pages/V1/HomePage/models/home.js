@@ -1,4 +1,4 @@
-import { getHomeData, taskPlanUp, taskPlanDown } from '@/services/api';
+import { getHomeData, taskPlanUp, taskPlanDown, planList, orderList } from '@/services/api';
 import { message } from 'antd';
 
 export default {
@@ -44,6 +44,11 @@ export default {
       great_review: [],
       fans: [],
     },
+    planData: {},
+    orderData: {
+      list: [],
+      page_info: {},
+    },
   },
 
   effects: {
@@ -70,6 +75,24 @@ export default {
       if (res && res.status === 'ok') {
         message.success('操作成功');
       }
+    },
+    *planList({ payload }, { call, put }) {
+      const res = yield call(planList, payload);
+      yield put({
+        type: 'save',
+        payload: {
+          planData: res.payload,
+        },
+      });
+    },
+    *orderData({ payload }, { call, put }) {
+      const res = yield call(orderList, payload);
+      yield put({
+        type: 'save',
+        payload: {
+          orderData: res.payload,
+        },
+      });
     },
   },
 

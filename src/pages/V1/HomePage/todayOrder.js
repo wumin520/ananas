@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Table, Card, Badge } from 'antd';
 import { FormattedMessage } from 'umi-plugin-react/locale';
+import Link from 'umi/link';
 import styles from './index.less';
 
 const statusMap = ['error', 'processing', 'warning', 'success'];
@@ -79,7 +80,7 @@ const OrderDetail = memo(({ loading, data, pageInfo }) => (
     loading={loading}
     bordered={false}
     title={<FormattedMessage id="app.homePage.todayOrder" defaultMessage="" />}
-    extra={<a href="/order/Index">{'查看更多>'}</a>}
+    extra={<Link to="/order/Index">{'查看更多>'}</Link>}
     style={{ marginTop: 24 }}
   >
     <Table
