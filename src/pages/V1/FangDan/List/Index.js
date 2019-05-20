@@ -17,7 +17,7 @@ let params = {
   task_id: 0, // 推广编号
   goods_id: 0, // 商品id
   state: -1, // 状态-1 全部 0待支付，1待审核，2进行中，3审核驳回 4 清算中 5 已结算
-  type: -1, // 推广类型 -1 全部 0好评全返
+  type: -1, // 推广类型 -1 全部 0免单全返
 };
 
 @connect(({ task, loading }) => ({
@@ -282,7 +282,7 @@ class FdList extends PureComponent {
               <br />
               <span>下单人数 {item.order_num}</span>
               <br />
-              <span>评价人数 {item.comment_num}</span>
+              {/** <span>评价人数 {item.comment_num}</span> */}
             </p>
           );
         },

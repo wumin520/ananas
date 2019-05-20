@@ -7,9 +7,7 @@ import styles from './GeneralizeDetail.less';
 
 const { Description } = DescriptionList;
 const statusMap = ['processing', 'success', 'default', 'error', 'processing'];
-const status = ['排期中', '进行中', '已结束', '已暂停', '审核中'];
 const statusMap1 = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
-const status1 = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已结算'];
 const { confirm } = Modal;
 @connect(({ task, loading }) => ({
   detailData: task.detailData,
@@ -85,10 +83,9 @@ class GeneralizeDetail extends Component {
       },
       {
         title: '状态',
-        dataIndex: 'state',
         key: 'state',
-        render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+        render(item) {
+          return <Badge status={statusMap[item.state]} text={item.state_desc} />;
         },
       },
       {
@@ -153,7 +150,7 @@ class GeneralizeDetail extends Component {
           <DescriptionList size="large" title="推广信息" style={{ marginBottom: 32 }}>
             <Description term="推广编号">{data.task_id}</Description>
             <Description term="推广状态">
-              <Badge status={statusMap1[data.state]} text={status1[data.state]} />
+              <Badge status={statusMap1[data.state]} text={data.state_desc} />
             </Description>
             <Description term="申请时间">{data.created_at}</Description>
             <Description term="推广份数">{data.total_amount}</Description>
@@ -164,8 +161,8 @@ class GeneralizeDetail extends Component {
               ''
             )}
             <Description term="投放方式">{data.type_name}</Description>
-            <Description term="评价限制">{data.comment_limit_info}</Description>
-            <Description term="评价关键词">{data.comment_keyword}</Description>
+            {/** <Description term="评价限制">{data.comment_limit_info}</Description>
+                <Description term="评价关键词">{data.comment_keyword}</Description>  */}
           </DescriptionList>
           <Divider style={{ marginBottom: 32, fontWeight: 600 }} />
           <div className={styles.title}>推广排期</div>

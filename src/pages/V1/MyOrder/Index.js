@@ -21,13 +21,12 @@ import styles from './Index.less';
 const { Option } = Select;
 const FormItem = Form.Item;
 const statusMap = ['error', 'processing', 'warning', 'success'];
-const status = ['无效', '已下单', '待评价', '已完成'];
 
 let params = {
   page: 1, // 翻页参数
   task_id: 0, // 推广编号
   goods_id: 0, // 商品id
-  state: -1, // 状态 -1全部 0失效1已下单2待评价3已完成
+  state: -1, // 状态 -1全部 0失效1,2已下单3已完成
   p_order_id: 0, // 订单编号
 };
 
@@ -281,10 +280,9 @@ class orderList extends PureComponent {
       },
       {
         title: '状态',
-        dataIndex: 'state',
         width: 90,
-        render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+        render(item) {
+          return <Badge status={statusMap[item.state]} text={item.state_desc} />;
         },
       },
       {
@@ -298,7 +296,7 @@ class orderList extends PureComponent {
               <br />
               <span> {val.harvest_time ? '收货: ' + val.harvest_time : ''}</span>
               <br />
-              <span>{val.proof_time ? '好评: ' + val.proof_time : ''}</span>
+              {/** <span>{val.proof_time ? '免单: ' + val.proof_time : ''}</span>*/}
             </span>
           );
           return (
@@ -318,12 +316,14 @@ class orderList extends PureComponent {
           const url = `/order/productDetail?order_id=${item.order_id}`;
           let option;
           if (item.proof_images.length > 0) {
-            option = (
+            {
+              /** option = (
               <span>
-                <a onClick={this.setModal1Visible.bind(this, item)}>好评凭证</a>
+                <a onClick={this.setModal1Visible.bind(this, item)}>免单凭证</a>
                 <ModelPops itemImg={itemImg} />
               </span>
-            );
+            ); */
+            }
           }
           return (
             <span>
@@ -357,7 +357,7 @@ class orderList extends PureComponent {
                 <Info title="已下单" value={orderNumInfo.pay_num} bordered />
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="待评价" value={orderNumInfo.wait_proof_num} bordered />
+                <Info title="已收货" value={orderNumInfo.wait_proof_num} bordered />
               </Col>
 
               <Col sm={8} xs={24}>

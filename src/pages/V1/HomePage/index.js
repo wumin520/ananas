@@ -74,7 +74,7 @@ class Index extends Component {
         <div className={styles.taskInfo}>
           <p>发放份数 {val.task_amount}</p>
           <p>下单人数 {val.order_num}</p>
-          <p>评价人数 {val.comment_num}</p>
+          {/** <p>评价人数 {val.comment_num}</p> */}
         </div>
       ),
     },

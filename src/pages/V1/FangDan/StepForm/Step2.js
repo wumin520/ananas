@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Alert, Divider, List, Select, Radio } from 'antd';
+import { Form, Input, Button, Alert, Divider, List, Select } from 'antd';
 import router from 'umi/router';
 import { digitUppercase } from '@/utils/utils';
 import styles from './style.less';
 
-const RadioGroup = Radio.Group;
+// const RadioGroup = Radio.Group;
 const formItemLayout = {
   labelCol: {
     span: 5,
@@ -178,15 +178,16 @@ class Step2 extends React.PureComponent {
             }}
           />
         </Form.Item>
-        <Divider style={{ margin: '24px 0' }} />
 
-        <Form.Item {...formItemLayout} className={styles.stepFormText} label="评价限制">
+        {/**
+          <Divider style={{ margin: '24px 0' }} />
+          <Form.Item {...formItemLayout} className={styles.stepFormText} label="评价限制">
           {getFieldDecorator('comment_limit', {
             initialValue: 0,
           })(
             <RadioGroup>
-              <Radio value={1}>纯文字好评</Radio>
-              <Radio value={0}>文字或图文好评</Radio>
+              <Radio value={1}>纯文字免单</Radio>
+              <Radio value={0}>文字或图文免单</Radio>
             </RadioGroup>
           )}
         </Form.Item>
@@ -202,6 +203,8 @@ class Step2 extends React.PureComponent {
             </div>
           )}
         </Form.Item>
+         *
+         */}
         <Divider style={{ margin: '24px 0' }} />
         {coupon_info.coupon_discount ? (
           <Form.Item {...formItemLayout} className={styles.stepFormText} label="优惠券">

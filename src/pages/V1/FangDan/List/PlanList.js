@@ -305,7 +305,7 @@ class PlanList extends PureComponent {
               <br />
               <span>下单人数 {item.order_num}</span>
               <br />
-              <span>评价人数 {item.comment_num}</span>
+              {/** <span>评价人数 {item.comment_num}</span> */}
             </p>
           );
         },

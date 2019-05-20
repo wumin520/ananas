@@ -3,7 +3,7 @@ import { Row, Col, Icon, Tooltip } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import numeral from 'numeral';
 import styles from './index.less';
-import { ChartCard, MiniProgress, Field, MiniArea, MiniBar } from '@/components/Charts';
+import { ChartCard, MiniProgress, Field, MiniArea } from '@/components/Charts';
 
 const topColResponsiveProps = {
   xs: 24,
@@ -92,7 +92,7 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
         </ChartCard>
       </Col>
 
-      <Col {...topColResponsiveProps}>
+      {/** <Col {...topColResponsiveProps}>
         <ChartCard
           bordered={false}
           loading={loading}
@@ -103,8 +103,8 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
             <Tooltip
               title={
                 <div className={styles.toolP}>
-                  <p>1.好评率：推广订单产生的好评率</p>
-                  <p>2.总好评数：所有订单产生的好评数总和</p>
+                  <p>1.免单率：推广订单产生的免单率</p>
+                  <p>2.总免单数：所有订单产生的免单数总和</p>
                 </div>
               }
             >
@@ -113,7 +113,7 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           }
           total={visitData.comment_info.good_comment_rate}
           footer={
-            <Field label={<span>总好评数</span>} value={visitData.comment_info.good_comment_num} />
+            <Field label={<span>总免单数</span>} value={visitData.comment_info.good_comment_num} />
           }
           contentHeight={46}
         >
@@ -126,7 +126,8 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
             })}
           />
         </ChartCard>
-      </Col>
+      </Col> */}
+
       <Col {...topColResponsiveProps}>
         <ChartCard
           loading={loading}

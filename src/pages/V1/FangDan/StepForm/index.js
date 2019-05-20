@@ -30,7 +30,7 @@ export default class StepForm extends PureComponent {
     const { location, children } = this.props;
     return (
       <PageHeaderWrapper
-        title="新增好评试用推广商品"
+        title="新增免单试用推广商品"
         tabActiveKey={location.pathname}
         content="快速提升转化率/快速聚集人气/宝贝流量"
       >

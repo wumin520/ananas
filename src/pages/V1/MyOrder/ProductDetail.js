@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Card, Badge, Divider, Modal, Carousel, Icon } from 'antd';
+import { Card, Badge, Divider } from 'antd';
 import DescriptionList from '@/components/DescriptionList';
 // import ModelPop from './components/ModelPop';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -8,7 +8,6 @@ import styles from './ProductDetail.less';
 
 const { Description } = DescriptionList;
 const statusMap = ['error', 'processing', 'warning', 'success'];
-const status = ['无效', '已下单', '待评价', '已完成'];
 @connect(({ order, loading }) => ({
   orderDetail: order.orderDetail,
   loading: loading.effects['order/orderDetail'],
@@ -18,9 +17,6 @@ class ProductDetail extends Component {
     super(props);
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
-    this.state = {
-      modal1Visible: false,
-    };
   }
 
   componentDidMount() {
@@ -38,17 +34,9 @@ class ProductDetail extends Component {
     });
   };
 
-  setModal1Visible = () => {
-    this.setState({
-      modal1Visible: true,
-    });
-  };
+  setModal1Visible = () => {};
 
-  Closable = () => {
-    this.setState({
-      modal1Visible: false,
-    });
-  };
+  Closable = () => {};
 
   // 轮播左右切换
   next() {
@@ -61,7 +49,6 @@ class ProductDetail extends Component {
 
   render() {
     const { loading, orderDetail } = this.props;
-    const { modal1Visible } = this.state;
     const { data } = orderDetail;
     const content = <div />;
     return (
@@ -87,14 +74,15 @@ class ProductDetail extends Component {
           <DescriptionList size="large" title="订单信息" style={{ marginBottom: 32 }}>
             <Description term="订单编号">{data.p_order_id}</Description>
             <Description term="订单状态">
-              <Badge status={statusMap[data.state]} text={status[data.state]} />
+              <Badge status={statusMap[data.state]} text={data.state_desc} />
             </Description>
             <Description term="来源">推广编号{data.task_id}</Description>
             <Description term="订单价格">{data.order_price}</Description>
             <Description term="返现金额">￥{data.rebate_price}</Description>
           </DescriptionList>
-          <p>
-            好评凭证:
+
+          {/** <p>
+            免单凭证:
             {data.proof_images.length === 0
               ? ' 未上传'
               : data.proof_images.length > 0 &&
@@ -133,14 +121,15 @@ class ProductDetail extends Component {
                 <Icon type="right" onClick={this.next} />
               </div>
             </Modal>
-          </p>
+          </p> */}
+
           <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="订单进度" style={{ marginBottom: 32 }}>
             <div style={{ paddingLeft: 16 }}>
               <p>{data.paid_datetime ? '下单: ' + data.paid_datetime : ''}</p>
               <p>{data.ordered_datetime ? '付款: ' + data.ordered_datetime : ''}</p>
               <p>{data.harvest_time ? '收货: ' + data.harvest_time : ''}</p>
-              <p>{data.proof_time ? '好评: ' + data.proof_time : ''}</p>
+              // <p>{data.proof_time ? '免单: ' + data.proof_time : ''}</p>
             </div>
           </DescriptionList>
         </Card>
