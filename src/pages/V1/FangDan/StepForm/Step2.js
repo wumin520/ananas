@@ -192,10 +192,10 @@ class Step2 extends React.PureComponent {
         </Form.Item>
         <Form.Item {...formItemLayout} className={styles.stepFormText} label="评价关键字">
           {getFieldDecorator('comment_keyword', {
-            rules: [{ required: true, message: '不得超过十五个字符！', max: 15 }],
+            rules: [{ message: '不得超过15个字符！', max: 15 }],
           })(
-            <div>
-              <Input placeholder="请输入关键字，用逗号“,”隔开(必填)" style={{ width: '80%' }} />{' '}
+            <div style={{ position: 'relative', top: '-3px' }}>
+              <Input placeholder="请输入关键字，用逗号“，”隔开(选填)" style={{ width: '80%' }} />{' '}
               <div style={{ color: 'orange' }}>
                 不超过15个字，突出宝贝亮点，例如商品描述、物流、正品等
               </div>
