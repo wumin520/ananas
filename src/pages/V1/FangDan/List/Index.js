@@ -259,7 +259,11 @@ class FdList extends PureComponent {
   // 订单明细
   goOrder = item => {
     // console.log('this:', item.task_id);
-    router.push(`/order/Index?&task_id=${item.task_id}`);
+    let path = `/order/Index`;
+    if (/^3[0|1]$/.test(item.type)) {
+      path = `/order/qf`;
+    }
+    router.push(`${path}?task_id=${item.task_id}`);
   };
 
   // 编辑
@@ -471,7 +475,7 @@ class FdList extends PureComponent {
             operation = (
               <span>
                 <a onClick={this.goDetail.bind(this, item)}>查看 </a>
-                <a onClick={this.goOrder.bind(this, item)}>订单明细 </a>
+                <a onClick={this.goOrder.bind(this, item)}>推广效果</a>
                 <br />
                 <a onClick={this.taskFinish.bind(this, item)}>终止 </a>
               </span>
@@ -489,7 +493,7 @@ class FdList extends PureComponent {
             operation = (
               <span>
                 <a onClick={this.goDetail.bind(this, item)}>查看 </a>
-                <a onClick={this.goOrder.bind(this, item)}>订单明细 </a>
+                <a onClick={this.goOrder.bind(this, item)}>推广效果 </a>
               </span>
             );
           }

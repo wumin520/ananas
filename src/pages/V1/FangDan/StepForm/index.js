@@ -6,6 +6,17 @@ import styles from '../style.less';
 const { Step } = Steps;
 
 export default class StepForm extends PureComponent {
+  componentDidMount() {
+    /* eslint-disable */
+    window.onbeforeunload = function() {
+      return '确定离开吗？系统可能不会保存您所做的更改';
+    };
+  }
+
+  componentWillUnmount() {
+    window.onbeforeunload = null;
+  }
+
   getCurrentStep() {
     const { location } = this.props;
     const { pathname } = location;

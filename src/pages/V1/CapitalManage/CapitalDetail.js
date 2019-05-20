@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import Link from 'umi/link';
 import { Card, Row, Col, Button, Form, Select, Table, Tabs, Badge } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import router from 'umi/router';
@@ -138,7 +139,7 @@ class CapitalDetail extends PureComponent {
         <span>{title}</span>
         <p>￥{value}</p>
         {bordered && <em />}
-        <a href={url}>{linkName}</a>
+        <Link to={url}>{linkName}</Link>
       </div>
     );
 

@@ -157,7 +157,11 @@ class Index extends PureComponent {
         return;
       }
       if (index === 1) {
-        router.push('/fangdan/list');
+        let path = `/fangdan/list`;
+        if (item.type === 2) {
+          path += '?qf=1';
+        }
+        router.push(path);
         return;
       }
       const { dispatch } = this.props;

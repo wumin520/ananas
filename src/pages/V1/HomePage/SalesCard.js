@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { Row, Col, Card, Tabs, Radio } from 'antd';
+import Link from 'umi/link';
 import numeral from 'numeral';
 import moment from 'moment';
 import styles from './index.less';
@@ -42,7 +43,7 @@ const SalesCard = memo(({ salesData, loading, radioGroupOnChange }) => {
         <Tabs
           tabBarExtraContent={
             <div className={styles.salesExtraWrap}>
-              <a href="/fangdan/list">{'放单列表>'}</a>
+              <Link to="/fangdan/list">{'放单列表>'}</Link>
             </div>
           }
           size="large"
