@@ -7,10 +7,9 @@ import { ChartCard, MiniProgress, Field, MiniArea } from '@/components/Charts';
 
 const topColResponsiveProps = {
   xs: 24,
-  sm: 12,
-  md: 12,
-  lg: 12,
-  xl: 6,
+  sm: 8,
+  md: 8,
+  lg: 8,
   style: { marginBottom: 24 },
 };
 
