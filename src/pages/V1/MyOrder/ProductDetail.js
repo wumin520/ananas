@@ -129,7 +129,7 @@ class ProductDetail extends Component {
               <p>{data.paid_datetime ? '下单: ' + data.paid_datetime : ''}</p>
               <p>{data.ordered_datetime ? '付款: ' + data.ordered_datetime : ''}</p>
               <p>{data.harvest_time ? '收货: ' + data.harvest_time : ''}</p>
-              // <p>{data.proof_time ? '免单: ' + data.proof_time : ''}</p>
+              {/**<p>{data.proof_time ? '免单: ' + data.proof_time : ''}</p>*/}
             </div>
           </DescriptionList>
         </Card>
