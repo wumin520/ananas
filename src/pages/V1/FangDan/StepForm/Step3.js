@@ -85,7 +85,6 @@ class EditableCell extends React.Component {
       record,
       index,
       handleSave,
-      hour,
       editTime,
       ...restProps
     } = this.props;
@@ -117,7 +116,7 @@ class EditableCell extends React.Component {
                       >
                         {timeList.length &&
                           timeList.map((e, i) => (
-                            <Option value={i} title={e} key={i}>
+                            <Option value={i} key={i}>
                               {e}点
                             </Option>
                           ))}
@@ -133,6 +132,10 @@ class EditableCell extends React.Component {
                       {
                         required: true,
                         message: `请输入推广数量`,
+                      },
+                      {
+                        pattern: /^[0-9]*$/,
+                        message: `请输入数字`,
                       },
                     ],
                     //   const num = this.schedulesHash[key] || '';
