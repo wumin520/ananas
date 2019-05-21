@@ -1,11 +1,24 @@
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { Button, Row, Col, Input, DatePicker, message, Alert, Empty, Table, Form } from 'antd';
+import {
+  Button,
+  Row,
+  Col,
+  Input,
+  DatePicker,
+  message,
+  Alert,
+  Empty,
+  Table,
+  Form,
+  Select,
+} from 'antd';
 import router from 'umi/router';
 import moment from 'moment';
 // import styles from './style.less';
 
 const dateFormat = 'YYYY-MM-DD';
+const { Option } = Select;
 
 const FormItem = Form.Item;
 const EditableContext = React.createContext();
@@ -15,6 +28,15 @@ const EditableRow = ({ form, index, ...props }) => (
     <tr {...props} />
   </EditableContext.Provider>
 );
+
+const timeList = (() => {
+  const res = [];
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < 24; i++) {
+    res.push(i);
+  }
+  return res;
+})();
 
 const EditableFormRow = Form.create()(EditableRow);
 class EditableCell extends React.Component {
@@ -40,20 +62,69 @@ class EditableCell extends React.Component {
         return;
       }
       this.toggleEdit();
-      handleSave({ ...record, ...values, event });
+      handleSave({ ...record, ...values, amount: event.value });
+    });
+  };
+
+  saveTime = value => {
+    const { record, handleSave } = this.props;
+    this.form.validateFields((error, values) => {
+      if (error) {
+        return;
+      }
+      handleSave({ ...record, ...values, hour: value });
     });
   };
 
   render() {
     const { editing } = this.state;
-    const { editable, dataIndex, title, record, index, handleSave, ...restProps } = this.props;
+    const {
+      editable,
+      dataIndex,
+      title,
+      record,
+      index,
+      handleSave,
+      editTime,
+      ...restProps
+    } = this.props;
 
     return (
       <td {...restProps}>
-        {editable ? (
+        {editable || editTime ? (
           <EditableContext.Consumer>
             {form => {
               this.form = form;
+              if (editTime) {
+                return (
+                  <FormItem style={{ margin: 0 }}>
+                    {form.getFieldDecorator(dataIndex, {
+                      rules: [
+                        {
+                          required: true,
+                          message: `请选择`,
+                        },
+                      ],
+                      //   const num = this.schedulesHash[key] || '';
+                      initialValue: record[dataIndex] || timeList[0],
+                    })(
+                      <Select
+                        placeholder="请选择"
+                        style={{ width: 150 }}
+                        onChange={this.saveTime}
+                        ref={node => (this.select = node)}
+                      >
+                        {timeList.length &&
+                          timeList.map((e, i) => (
+                            <Option value={i} key={i}>
+                              {e}点
+                            </Option>
+                          ))}
+                      </Select>
+                    )}
+                  </FormItem>
+                );
+              }
               return editing ? (
                 <FormItem style={{ margin: 0 }}>
                   {form.getFieldDecorator(dataIndex, {
@@ -61,6 +132,10 @@ class EditableCell extends React.Component {
                       {
                         required: true,
                         message: `请输入推广数量`,
+                      },
+                      {
+                        pattern: /^[0-9]*$/,
+                        message: `请输入数字`,
                       },
                     ],
                     //   const num = this.schedulesHash[key] || '';
@@ -111,12 +186,19 @@ class Step3 extends React.PureComponent {
       {
         title: '推广排期',
         dataIndex: 'day',
+        width: '20%',
+      },
+      {
+        title: '投放开始时间（当日24点结束）',
+        dataIndex: 'hour',
         width: '40%',
+        editTime: true,
       },
       {
         title: '投放数量',
         dataIndex: 'amount',
         editable: true,
+        width: '40%',
       },
     ];
   }
@@ -145,6 +227,7 @@ class Step3 extends React.PureComponent {
         key: index,
         day: minDate.format(dateFormat),
         amount: '请输入数量',
+        hour: 0,
       });
       minDate.add(1, 'days');
       /* eslint-disable */
@@ -160,18 +243,10 @@ class Step3 extends React.PureComponent {
     this.makeScheduleData(this.startTimeTemp, this.endTimeTemp);
   };
 
-  // 一键排期
-  // toSchedule = () => {
-  //   if (!this.startTimeTemp) {
-  //     message.warning('请先选择合适的推广日期');
-  //     return;
-  //   }
-  //   this.makeScheduleData(this.startTimeTemp, this.endTimeTemp);
-  // };
-
   makeScheduleData = (startTime, endTime) => {
     const { dispatch, schedules } = this.props;
     this.schedulesHash = this.schedulesHash || {};
+    let hours = {};
 
     if (startTime) {
       this.startTimeTemp = startTime;
@@ -181,6 +256,7 @@ class Step3 extends React.PureComponent {
     for (let i = 0; i < schedules.length; i += 1) {
       const item = schedules[i];
       this.schedulesHash[item.day] = item.amount;
+      hours[item.day] = item.hour;
     }
     let index = 1;
     const arr = [];
@@ -194,11 +270,13 @@ class Step3 extends React.PureComponent {
         this.schedulesHash[key] = '';
       }
       const value = this.schedulesHash[key];
+      const hour = hours[key];
       obj[key] = value;
       arr.push({
         key: index,
         day: key,
         amount: value,
+        hour: hour,
       });
       a.add(1, 'days');
       /* eslint-disable */
@@ -217,29 +295,6 @@ class Step3 extends React.PureComponent {
       },
     });
   };
-
-  // planNumChange = (e, date) => {
-  //   const { schedules, dispatch, startTime, endTime } = this.props;
-  //   const { value } = e.target;
-  //   console.log('planNumChange==>value',value);
-  //   // 数据没改变
-  //   if (this.schedulesHash[date] === value || /[^\d]/gi.test(value)) {
-  //     return;
-  //   }
-  //   const schedule = schedules.find(item => {
-  //     return item.day === date;
-  //   });
-  //   schedule.amount = value;
-  //   this.schedulesHash[date] = value;
-  //   dispatch({
-  //     type: 'form/setScheduleTime',
-  //     payload: {
-  //       startTime,
-  //       endTime,
-  //       schedules,
-  //     },
-  //   });
-  // };
 
   onValidateForm = () => {
     let valid = true;
@@ -297,26 +352,18 @@ class Step3 extends React.PureComponent {
   /* eslint-desable */
   handleSave = row => {
     const { schedules, dispatch, startTime, endTime } = this.props;
-    const { event } = row;
-    const newData = [...schedules];
-    const index = newData.findIndex(item => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    this.setState({ schedules: newData });
-
-    const { value } = event;
-    const date = item.day;
-    // 数据没改变
-    if (this.schedulesHash[date] === value || /[^\d]/gi.test(value)) {
-      return;
-    }
+    const value = row.amount;
+    const hour = row.hour;
+    const date = row.day;
     const schedule = schedules.find(item => {
       return item.day === date;
     });
+    // 数据没改变
+    if (/[^\d]/gi.test(value)) {
+      return;
+    }
     schedule.amount = value;
+    schedule.hour = hour;
     this.schedulesHash[date] = value;
     dispatch({
       type: 'form/setScheduleTime',
@@ -339,7 +386,7 @@ class Step3 extends React.PureComponent {
       },
     };
     const columns = this.columns.map(col => {
-      if (!col.editable) {
+      if (!col.editable && !col.editTime) {
         return col;
       }
       return {
@@ -347,6 +394,7 @@ class Step3 extends React.PureComponent {
         onCell: record => ({
           record,
           editable: col.editable,
+          editTime: col.editTime,
           dataIndex: col.dataIndex,
           title: col.title,
           handleSave: this.handleSave,
@@ -354,42 +402,6 @@ class Step3 extends React.PureComponent {
       };
     });
 
-    // const validRange = [startDate, endDate];
-    // console.log('render', this.props);
-
-    // const dateFullCellRender = m => {
-    //   const date = m.date();
-    //   if (m > endDate || m < startDate) {
-    //     return '';
-    //   }
-    //   const key = m.format(dateFormat);
-    //   const num = this.schedulesHash[key] || '';
-
-    //   return (
-    //     <div style={{ padding: '10px' }}>
-    //       <div style={{ borderTop: '1px solid #e8e8e8', textAlign: 'right' }}>
-    //         <div>{date}</div>
-    //         <div style={{ textAlign: 'left', marginTop: '20px' }}>投放数量：</div>
-    //         <Row>
-    //           <Col span={24}>
-    //             <Input
-    //               type="number"
-    //               min={1}
-    //               value={num}
-    //               className="col-16"
-    //               placeholder="请输入"
-    //               size="small"
-    //               addonAfter="份"
-    //               onChange={e => {
-    //                 this.planNumChange(e, key);
-    //               }}
-    //             />
-    //           </Col>
-    //         </Row>
-    //       </div>
-    //     </div>
-    //   );
-    // };
     const disabledDate = date => {
       const now = moment().add(-1, 'days');
       if (date < now) {

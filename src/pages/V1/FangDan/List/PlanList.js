@@ -7,7 +7,6 @@ import styles from './Index.less';
 
 const FormItem = Form.Item;
 const statusMap = ['processing', 'success', 'default', 'error'];
-const status = ['排期中', '进行中', '已结束', '已暂停'];
 const { Option } = Select;
 const { confirm } = Modal;
 
@@ -289,10 +288,9 @@ class PlanList extends PureComponent {
       },
       {
         title: '状态',
-        dataIndex: 'state',
         width: 100,
         render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+          return <Badge status={statusMap[val.state]} text={val.state_desc} />;
         },
       },
       {
@@ -305,7 +303,7 @@ class PlanList extends PureComponent {
               <br />
               <span>下单人数 {item.order_num}</span>
               <br />
-              <span>评价人数 {item.comment_num}</span>
+              {/** <span>评价人数 {item.comment_num}</span> */}
             </p>
           );
         },

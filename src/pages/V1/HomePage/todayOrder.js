@@ -4,7 +4,6 @@ import { FormattedMessage } from 'umi-plugin-react/locale';
 import styles from './index.less';
 
 const statusMap = ['error', 'processing', 'warning', 'success'];
-const status = ['无效', '已下单', '待评价', '已完成'];
 
 const columns = [
   {
@@ -45,10 +44,9 @@ const columns = [
   },
   {
     title: '状态',
-    dataIndex: 'state',
     width: 100,
-    render(val) {
-      return <Badge status={statusMap[val]} text={status[val]} />;
+    render(item) {
+      return <Badge status={statusMap[item.state]} text={item.state_desc} />;
     },
   },
   {
@@ -62,7 +60,7 @@ const columns = [
           <br />
           <span> {val.harvest_time ? '收货: ' + val.harvest_time : ''}</span>
           <br />
-          <span>{val.proof_time ? '好评: ' + val.proof_time : ''}</span>
+          {/**<span>{val.proof_time ? '免单: ' + val.proof_time : ''}</span> */}
         </span>
       );
       return (

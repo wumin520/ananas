@@ -20,6 +20,12 @@ const statusMap = ['default', 'success'];
 class Index extends Component {
   columns = [
     {
+      key: 'plan_time',
+      title: '排期时间',
+      width: 100,
+      dataIndex: 'plan_time',
+    },
+    {
       key: '1',
       title: '推广编号',
       width: 100,
@@ -74,7 +80,7 @@ class Index extends Component {
         <div className={styles.taskInfo}>
           <p>发放份数 {val.task_amount}</p>
           <p>下单人数 {val.order_num}</p>
-          <p>评价人数 {val.comment_num}</p>
+          {/** <p>评价人数 {val.comment_num}</p> */}
         </div>
       ),
     },
