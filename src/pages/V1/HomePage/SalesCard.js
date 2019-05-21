@@ -35,7 +35,7 @@ const SalesCard = memo(({ salesData, loading, radioGroupOnChange }) => {
   const extraContent = (
     <div className={styles.extraContent}>
       <RadioGroup onChange={radioGroupOnChange} defaultValue="0">
-        <RadioButton value="0">好评试用</RadioButton>
+        <RadioButton value="0">免单试用</RadioButton>
         <RadioButton value="1">圈粉引流</RadioButton>
       </RadioGroup>
     </div>

@@ -119,10 +119,10 @@ class CapitalDetail extends PureComponent {
 
   render() {
     const stateMap = ['processing', 'success', 'error'];
-    const state = ['审核中', '提现成功', '提现失败'];
+    // const state = ['审核中', '提现成功', '提现失败'];
 
     const statusMap = ['error', 'success'];
-    const status = ['失败', '成功'];
+    // const status = ['失败', '成功'];
 
     const {
       assetData,
@@ -157,11 +157,10 @@ class CapitalDetail extends PureComponent {
       },
       {
         title: '状态',
-        dataIndex: 'state',
         key: 'state',
         width: 100,
-        render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+        render(item) {
+          return <Badge status={statusMap[item.state]} text={item.state_desc} />;
         },
       },
       {
@@ -194,10 +193,9 @@ class CapitalDetail extends PureComponent {
       },
       {
         title: '状态',
-        dataIndex: 'state',
         key: 'state',
-        render(val) {
-          return <Badge status={stateMap[val - 1]} text={state[val - 1]} />;
+        render(item) {
+          return <Badge status={stateMap[item.state - 1]} text={item.state_desc} />;
         },
       },
       {

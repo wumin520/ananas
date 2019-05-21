@@ -9,6 +9,15 @@ const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const defaultColumns = [
   {
+    key: 'plan_time',
+    title: '投放时间',
+    width: 100,
+    dataIndex: 'plan_time',
+    render(val) {
+      return val.split(' ')[1];
+    },
+  },
+  {
     key: '1',
     title: '推广编号',
     width: 100,
@@ -62,7 +71,7 @@ const defaultColumns = [
       <div className={styles.taskInfo}>
         <p>发放份数 {val.total_amount}</p>
         <p>下单人数 {val.order_num}</p>
-        <p>评价人数 {val.comment_num}</p>
+        {/** <p>评价人数 {val.comment_num}</p> */}
       </div>
     ),
   },
@@ -119,7 +128,7 @@ const qfColumns = [
     render: val => (
       <div className={styles.taskInfo}>
         <p>发放份数 {val.total_amount}</p>
-        <p>下单人数 {val.order_num}</p>
+        <p>收藏人数 {val.order_num}</p>
       </div>
     ),
   },
@@ -140,7 +149,7 @@ const todayPlan = memo(({ data, loading, radioOnChange, tableType }) => {
   const extraContent = (
     <div style={{ marginBottom: 20 }} className={styles.extraContent}>
       <RadioGroup onChange={radioOnChange} defaultValue="10">
-        <RadioButton value="10">好评试用</RadioButton>
+        <RadioButton value="10">免单试用</RadioButton>
         <RadioButton value="30,31">圈粉引流</RadioButton>
       </RadioGroup>
     </div>
