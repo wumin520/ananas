@@ -58,7 +58,6 @@ const defaultColumns = [
   {
     key: '6',
     title: '今日完成情况',
-    dataIndex: 'task_info',
     render: val => (
       <div className={styles.taskInfo}>
         <p>发放份数 {val.total_amount}</p>
