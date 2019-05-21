@@ -1,101 +1,31 @@
-import React, { Component, Suspense, Fragment } from 'react';
+import React, { Component, Suspense } from 'react';
 import { connect } from 'dva';
-import { router } from 'umi';
+import moment from 'moment';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
-import { FormattedMessage } from 'umi-plugin-react/locale';
 import PageLoading from '@/components/PageLoading';
-import { Row, Col, Card, Icon, Dropdown, Menu, Badge, Divider, Table, Alert } from 'antd';
+import { Row, Col, Icon, Dropdown, Menu, Alert } from 'antd';
 import styles from './index.less';
 
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
 const TodayOrder = React.lazy(() => import('./todayOrder'));
-// const HotRankList = React.lazy(() => import('./HotRankList'));
+const SalesCard = React.lazy(() => import('./SalesCard'));
+const TodayPlan = React.lazy(() => import('./todayPlan'));
 
-const statusMap = ['default', 'success'];
+const time = moment().format('YYYY-MM-DD');
+/* eslint-disable */
+const start_time = `${time} 00:00:00`;
+const end_time = `${time} 23:59:59`;
 
 @connect(({ loading, homedata }) => ({
   homedata,
-  loading: loading.models.homedata,
+  loading: loading.effects['homedata/fetch'],
 }))
 class Index extends Component {
-  columns = [
-    {
-      key: 'plan_time',
-      title: '排期时间',
-      width: 100,
-      dataIndex: 'plan_time',
-    },
-    {
-      key: '1',
-      title: '推广编号',
-      width: 100,
-      dataIndex: 'task_plan_id',
-    },
-    {
-      key: 'goods_id',
-      title: '商品id',
-      width: 120,
-      dataIndex: 'goods_id',
-    },
-    {
-      key: '2',
-      title: '商品',
-      className: styles.resultColumns,
-      render: val => (
-        <a
-          className={styles.resultColumnsDiv}
-          href={val.goods_url}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <img src={val.img} alt="a" style={{ width: 50, heigth: 50 }} />
-          <span> {val.title}</span>
-        </a>
-      ),
-    },
-    {
-      key: '3',
-      title: '券后价',
-      dataIndex: 'after_coupon_price',
-      render: val => `￥ ${val}`,
-    },
-    {
-      key: '4',
-      title: '优惠券',
-      dataIndex: 'coupon_price',
-      render: val => {
-        return <span>{val ? `￥ ${val}` : '无'}</span>;
-      },
-    },
-    {
-      key: '5',
-      title: '排期状态',
-      render: val => <Badge status={statusMap[val.state]} text={val.state_desc} />,
-    },
-    {
-      key: '6',
-      title: '今日完成情况',
-      dataIndex: 'task_info',
-      render: val => (
-        <div className={styles.taskInfo}>
-          <p>发放份数 {val.task_amount}</p>
-          <p>下单人数 {val.order_num}</p>
-          {/** <p>评价人数 {val.comment_num}</p> */}
-        </div>
-      ),
-    },
-    {
-      key: '7',
-      title: '操作',
-      render: record => (
-        <Fragment>
-          <a onClick={this.goFangdanDetail.bind(this, record)}>查看</a>
-          <Divider type="vertical" />
-          <a onClick={this.goOrderDetail.bind(this, record)}>订单明细</a>
-        </Fragment>
-      ),
-    },
-  ];
+  state = {
+    dataType: 'great_review',
+  };
+
+  tableType = 0;
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -104,18 +34,58 @@ class Index extends Component {
         type: 'homedata/fetch',
       });
     });
+    this.getListData();
+    this.getOrderData();
   }
 
   componentWillUnmount() {
     cancelAnimationFrame(this.reqRef);
   }
 
-  goFangdanDetail = item => {
-    router.push(`/fangdan/list/generalizeDetail?&task_id=${item.task_id}`);
+  reportRadioOnChange = e => {
+    console.log('reportRadioOnChange -> ', e);
+    const val = e.target.value;
+    const dataType = val === '0' ? 'great_review' : 'fans';
+    this.setState({
+      dataType,
+    });
   };
 
-  goOrderDetail = item => {
-    router.push(`/order/Index?task_id=${item.task_id}`);
+  // 接口
+  getListData = (type = 10) => {
+    const params = {
+      page: 1,
+      task_id: 0,
+      goods_id: 0,
+      state: -1,
+      type,
+      start_time,
+      end_time,
+    };
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'homedata/planList',
+      payload: params,
+    });
+  };
+
+  getOrderData = () => {
+    const params = {
+      page: 1,
+      state: -1,
+      ordered_time_for: start_time,
+      ordered_time_to: end_time,
+    };
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'homedata/orderData',
+      payload: params,
+    });
+  };
+
+  todayPlanRadioOnChange = e => {
+    this.getListData(e.target.value);
+    this.tableType = e.target.value === '10' ? 0 : 1;
   };
 
   render() {
@@ -123,11 +93,14 @@ class Index extends Component {
     const { homedata } = this.props;
 
     const headInfo = homedata.head_info;
-    const taskList = homedata.task_plan_list;
+    const taskList = homedata.planData.list;
+    const taskReportInfo = homedata.task_report_info;
     // const hotRank = homedata.hot_rank;
-    const dayOrderInfo = homedata.day_order_info;
+    const dayOrderInfo = homedata.orderData;
     const noticeInfo = homedata.notice_info;
-
+    console.log('taskReportInfo -> ', taskReportInfo, homedata);
+    /* eslint-disable */
+    const salesData = taskReportInfo[this.state.dataType];
     const menu = (
       <Menu>
         <Menu.Item>操作一</Menu.Item>
@@ -149,34 +122,28 @@ class Index extends Component {
         <Suspense fallback={<PageLoading />}>
           <IntroduceRow loading={loading} visitData={headInfo} />
         </Suspense>
-        <Card
-          loading={loading}
-          bordered={false}
-          title={<FormattedMessage id="app.homePage.todayPromotion" defaultMessage="" />}
-          extra={<a href="/fangdan/plan">{'排期列表>'}</a>}
-          style={{ marginTop: 24 }}
-        >
-          <Table
-            rowKey={record => record.id}
-            size="small"
+        <Suspense fallback={null}>
+          <SalesCard
+            radioGroupOnChange={this.reportRadioOnChange}
             loading={loading}
-            dataSource={taskList}
-            columns={this.columns}
-            pagination={{
-              style: { marginBottom: 0 },
-              pageSize: 5,
-            }}
+            salesData={salesData.map(item => {
+              return {
+                x: item.day,
+                y: item.amount,
+              };
+            })}
           />
-        </Card>
+        </Suspense>
+        <Suspense fallback={null}>
+          <TodayPlan
+            loading={loading}
+            data={taskList}
+            tableType={this.tableType}
+            radioOnChange={this.todayPlanRadioOnChange}
+          />
+        </Suspense>
         <div className={styles.twoColLayout}>
           <Row gutter={24}>
-            {/*
-              <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-                <Suspense fallback={null}>
-                  <HotRankList loading={loading} data={hotRank} />
-                </Suspense>
-              </Col>
-            */}
             <Col xl={24} lg={24} md={24} sm={24} xs={24}>
               <Suspense fallback={null}>
                 <TodayOrder

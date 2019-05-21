@@ -32,7 +32,12 @@ class Step4 extends React.PureComponent {
   };
 
   goBack = () => {
-    router.push('/fangdan/step-form/schedule');
+    const { location } = this.props;
+    let path = `/fangdan/step-form/schedule`;
+    if (location.query.qf !== undefined) {
+      path = `/fangdan/qf/schedule?qf=${location.query.qf}`;
+    }
+    router.push(path);
   };
 
   componentDidMount = () => {
@@ -74,7 +79,7 @@ class Step4 extends React.PureComponent {
   };
 
   render() {
-    const { taskPayInfo } = this.props;
+    const { taskPayInfo, location } = this.props;
     // const onFinish = () => {
     //   router.push('/form/step-form/info');
     // };
@@ -104,7 +109,7 @@ class Step4 extends React.PureComponent {
     const data = [
       {
         id: 1,
-        reward_type: '用户返款',
+        reward_type: location.query.qf === undefined ? '用户返款' : '平台服务费',
         ...taskPayInfo,
       },
     ];

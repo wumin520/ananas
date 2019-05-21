@@ -82,7 +82,7 @@ request.interceptors.request.use((url, options) => {
   // const origin  = 'http://chaoduoke.com/cdk'
   const origin = `${configs[process.env.API_ENV].API_SERVER}/cdk`;
   const token = window.cdk_token || getStorage('token');
-  console.log('request -> url -> ', url, 'options -> ', options, token);
+  console.log('request -> url -> ', url, 'options -> ', options, token, process.env);
   return {
     url: `${origin}${url}`,
     options: {

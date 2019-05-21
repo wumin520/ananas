@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import router from 'umi/router';
-import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Modal } from 'antd';
+import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Modal, Radio } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './Index.less';
 
 const FormItem = Form.Item;
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 const statusMap = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
 const status = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已结算'];
 const { Option } = Select;
@@ -17,7 +19,7 @@ let params = {
   task_id: 0, // 推广编号
   goods_id: 0, // 商品id
   state: -1, // 状态-1 全部 0待支付，1待审核，2进行中，3审核驳回 4 清算中 5 已结算
-  type: -1, // 推广类型 -1 全部 0免单全返
+  type: 10, // 推广类型  -1 全部 10-好评全返 20-大额券推广 30-圈粉-收藏商品 31-圈粉-收藏店铺 注意：多个“,”隔开，eg:圈粉全部：30,31 默认：10
 };
 
 @connect(({ task, loading }) => ({
@@ -26,9 +28,147 @@ let params = {
 }))
 @Form.create()
 class FdList extends PureComponent {
-  state = {};
+  state = {
+    tabActiveKey: 'haoping',
+  };
+
+  constructor(props) {
+    super(props);
+    this.columns = [
+      {
+        title: '推广编号',
+        dataIndex: 'task_id',
+        key: 'task_id',
+        width: 90,
+      },
+      {
+        key: 'goods_id',
+        title: '商品id',
+        width: 120,
+        dataIndex: 'goods_id',
+      },
+      {
+        title: '商品',
+        width: 143,
+        render: val => {
+          return (
+            <a
+              className={styles.pro}
+              href={val.goods_url}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img src={val.img} alt="a" style={{ width: 50, heigth: 50, marginRight: 5 }} />
+              <span className={styles.goodsName}> {val.title}</span>
+            </a>
+          );
+        },
+      },
+      {
+        title: '提交时间',
+        dataIndex: 'created_at',
+        key: 'created_at',
+        width: 160,
+      },
+      {
+        title: '券后价',
+        dataIndex: 'after_coupon_price',
+        key: 'after_coupon_price',
+        width: 100,
+        render: item => {
+          return <span>￥{item}</span>;
+        },
+      },
+      {
+        key: 'coupon_price',
+        width: 80,
+        title: '优惠券',
+        dataIndex: 'coupon_price',
+        render: val => {
+          return <span>{val ? `￥ ${val}` : '无'}</span>;
+        },
+      },
+      {
+        title: '状态',
+        dataIndex: 'state',
+        width: 100,
+        render(val) {
+          return <Badge status={statusMap[val]} text={status[val]} />;
+        },
+      },
+      {
+        title: '推广份数',
+        width: 150,
+        render: item => {
+          return (
+            <p style={{ textAlign: 'left' }}>
+              <span>发放份数 {item.total_amount}</span>
+              <br />
+              <span>下单人数 {item.order_num}</span>
+              <br />
+              <span>评价人数 {item.comment_num}</span>
+            </p>
+          );
+        },
+      },
+      {
+        title: '操作',
+        width: 120,
+        render: item => {
+          let operation;
+          if (item.state === 0) {
+            operation = (
+              <span>
+                <a onClick={this.goDetail.bind(this, item)}>查看 </a>
+                <a onClick={this.goPay.bind(this, item)}>支付 </a>
+              </span>
+            );
+          }
+          if (item.state === 1) {
+            operation = <a onClick={this.goDetail.bind(this, item)}>查看 </a>;
+          }
+          if (item.state === 2) {
+            operation = (
+              <span>
+                <a onClick={this.goDetail.bind(this, item)}>查看 </a>
+                <a onClick={this.goOrder.bind(this, item)}>订单明细 </a>
+                <br />
+                <a onClick={this.taskFinish.bind(this, item)}>终止 </a>
+              </span>
+            );
+          }
+          if (item.state === 3) {
+            operation = (
+              <span>
+                <a onClick={this.goDetail.bind(this, item)}>查看 </a>
+                <a onClick={this.goRedact.bind(this, item)}>编辑 </a>
+              </span>
+            );
+          }
+          if (item.state === 4 || item.state === 5) {
+            operation = (
+              <span>
+                <a onClick={this.goDetail.bind(this, item)}>查看 </a>
+                <a onClick={this.goOrder.bind(this, item)}>订单明细 </a>
+              </span>
+            );
+          }
+          return <span>{operation}</span>;
+        },
+      },
+    ];
+    this.qf = props.location.query.qf !== undefined;
+  }
 
   componentDidMount() {
+    const { location } = this.props;
+    params.type = 10;
+    if (location.query.qf !== undefined) {
+      params.type = '30,31';
+      this.setState({
+        tabActiveKey: 'quanfen',
+      });
+    }
     this.getListData(params);
   }
 
@@ -104,30 +244,73 @@ class FdList extends PureComponent {
   };
 
   goDetail = item => {
-    router.push(`/fangdan/list/generalizeDetail?task_id=${item.task_id}`);
+    let path = `/fangdan/list/generalizeDetail`;
+    if (/^3[0|1]$/.test(item.type)) {
+      path = `/fangdan/qfDetail`;
+    }
+    router.push(`${path}?task_id=${item.task_id}`);
   };
 
   goPay = item => {
-    router.push(
-      `/fangdan/step-form/pay?task_id=${item.task_id}&goods_id=${item.goods_id}&need_fetch=1`
-    );
+    let path = `/fangdan/step-form/pay?task_id=${item.task_id}&goods_id=${
+      item.goods_id
+    }&need_fetch=1`;
+    path = this.addQFQuery(item, path);
+    router.push(path);
   };
 
   // 订单明细
   goOrder = item => {
     // console.log('this:', item.task_id);
-    router.push(`/order/Index?&task_id=${item.task_id}`);
+    let path = `/order/Index`;
+    if (/^3[0|1]$/.test(item.type)) {
+      path = `/order/qf`;
+    }
+    router.push(`${path}?task_id=${item.task_id}`);
+  };
+
+  addQFQuery = (item, path) => {
+    console.log('item -> ', item);
+    let url = path;
+    if (/^3[0|1]$/.test(item.type)) {
+      const qf = item.type === 30 ? 0 : 1;
+      url += `&qf=${qf}`;
+    }
+    return url;
   };
 
   // 编辑
   goRedact = item => {
-    router.push(
-      `/fangdan/step-form/confirm?task_id=${item.task_id}&goods_id=${item.goods_id}&action=edit`
-    );
+    let path = `/fangdan/step-form/confirm?task_id=${item.task_id}&goods_id=${
+      item.goods_id
+    }&action=edit`;
+    path = this.addQFQuery(item, path);
+    router.push(path);
   };
 
   onChange = page => {
     params.page = page;
+    this.getListData(params);
+  };
+
+  handleTabChange = (key, val) => {
+    console.log('handleTabChange', key, val);
+    this.setState({
+      tabActiveKey: key,
+    });
+    if (key === 'haoping') {
+      this.qf = undefined;
+      params.type = 10;
+    } else if (key === 'quanfen') {
+      this.qf = 1;
+      params.type = '30,31';
+    }
+    this.getListData(params);
+  };
+
+  radioGroupOnChange = e => {
+    console.log('radioGroupOnChange -> ', e);
+    params.type = e.target.value;
     this.getListData(params);
   };
 
@@ -208,9 +391,12 @@ class FdList extends PureComponent {
 
   render() {
     // 表格数据
-    const { listData } = this.props;
+    const { listData, match } = this.props;
+    const { tabActiveKey } = this.state;
     const taskInfo = listData.task_info;
-    const columns = [
+
+    let { columns } = this;
+    const qFColumns = [
       {
         title: '推广编号',
         dataIndex: 'task_id',
@@ -219,12 +405,12 @@ class FdList extends PureComponent {
       },
       {
         key: 'goods_id',
-        title: '商品id',
+        title: '商品/店铺id',
         width: 120,
         dataIndex: 'goods_id',
       },
       {
-        title: '商品',
+        title: '商品/店铺名称',
         width: 143,
         render: val => {
           return (
@@ -247,21 +433,11 @@ class FdList extends PureComponent {
         width: 160,
       },
       {
-        title: '券后价',
-        dataIndex: 'after_coupon_price',
-        key: 'after_coupon_price',
+        title: '圈粉类型',
+        key: 'type',
         width: 100,
         render: item => {
-          return <span>￥{item}</span>;
-        },
-      },
-      {
-        key: 'coupon_price',
-        width: 80,
-        title: '优惠券',
-        dataIndex: 'coupon_price',
-        render: val => {
-          return <span>{val ? `￥ ${val}` : '无'}</span>;
+          return <span>{item.type === 30 ? '商品圈粉' : '店铺圈粉'}</span>;
         },
       },
       {
@@ -292,6 +468,7 @@ class FdList extends PureComponent {
         width: 120,
         render: item => {
           let operation;
+          // 0-待支付，1-待审核，2-进行中，3-审核驳回 4-清算中 5-已结算
           if (item.state === 0) {
             operation = (
               <span>
@@ -307,7 +484,7 @@ class FdList extends PureComponent {
             operation = (
               <span>
                 <a onClick={this.goDetail.bind(this, item)}>查看 </a>
-                <a onClick={this.goOrder.bind(this, item)}>订单明细 </a>
+                <a onClick={this.goOrder.bind(this, item)}>推广效果</a>
                 <br />
                 <a onClick={this.taskFinish.bind(this, item)}>终止 </a>
               </span>
@@ -325,7 +502,7 @@ class FdList extends PureComponent {
             operation = (
               <span>
                 <a onClick={this.goDetail.bind(this, item)}>查看 </a>
-                <a onClick={this.goOrder.bind(this, item)}>订单明细 </a>
+                <a onClick={this.goOrder.bind(this, item)}>推广效果 </a>
               </span>
             );
           }
@@ -333,7 +510,9 @@ class FdList extends PureComponent {
         },
       },
     ];
-
+    if (this.qf) {
+      columns = qFColumns;
+    }
     const Info = ({ title, value, bordered }) => (
       <div className={styles.headerInfo}>
         <span>{title}</span>
@@ -342,8 +521,36 @@ class FdList extends PureComponent {
       </div>
     );
     const content = <div />;
+    const tabList = [
+      {
+        key: 'haoping',
+        tab: '好评试用',
+      },
+      {
+        key: 'quanfen',
+        tab: '圈粉收藏',
+      },
+    ];
+    console.log(match, '1');
+    const extraContent = this.qf ? (
+      <div className={styles.extraContent}>
+        <RadioGroup onChange={this.radioGroupOnChange} defaultValue="30,31">
+          <RadioButton value="30,31">全部圈粉</RadioButton>
+          <RadioButton value="30">商品圈粉</RadioButton>
+          <RadioButton value="31">店铺圈粉</RadioButton>
+        </RadioGroup>
+      </div>
+    ) : (
+      ''
+    );
     return (
-      <PageHeaderWrapper title="放单列表" content={content}>
+      <PageHeaderWrapper
+        title="放单列表"
+        content={content}
+        tabList={tabList}
+        tabActiveKey={tabActiveKey}
+        onTabChange={this.handleTabChange}
+      >
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
@@ -359,7 +566,7 @@ class FdList extends PureComponent {
             </Row>
           </Card>
           <br />
-          <Card>
+          <Card className={styles.customStyleCard} extra={extraContent}>
             <div className={styles.tableList}>
               <div className={styles.tableListForm}>{this.renderForm()}</div>
               <Table

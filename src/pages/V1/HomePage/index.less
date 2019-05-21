@@ -5,6 +5,18 @@ table {
   table-layout: fixed;
 }
 
+.customStyleCard {
+  :global {
+    .ant-card-extra {
+      flex: 1;
+      float: left;
+    }
+    .ant-card-head {
+      border-bottom: none;
+    }
+  }
+}
+
 .resultColumns {
   overflow: hidden;
 }

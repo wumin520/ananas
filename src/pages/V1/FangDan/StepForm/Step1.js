@@ -22,17 +22,25 @@ const formItemLayout = {
 @Form.create()
 class Step1 extends React.PureComponent {
   fetchPddGoodsDetail = values => {
-    const { dispatch } = this.props;
+    const { dispatch, location } = this.props;
+    const params = values;
+    if (location.query.qf !== undefined) {
+      params.qf = location.query.qf;
+      if (location.query.qf === '1') {
+        params.type = 1;
+      }
+    }
+    console.log('values -> 1', params);
     dispatch({
       type: 'form/queryGoodsDetail',
-      payload: values,
+      payload: params,
     });
   };
 
   componentDidMount = () => {};
 
   render() {
-    const { form, pddGoodUrl, submitting, dispatch, pddZSId, currentUser } = this.props;
+    const { form, pddGoodUrl, submitting, dispatch, pddZSId, currentUser, location } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const onValidateForm = () => {
       validateFields((err, values) => {
@@ -60,12 +68,21 @@ class Step1 extends React.PureComponent {
           className={styles.stepForm}
           hideRequiredMark
         >
-          <Form.Item {...formItemLayout} label="拼多多商品链接">
-            {getFieldDecorator('goods_id', {
-              initialValue: pddGoodUrl,
-              rules: [{ required: true, message: '请粘贴商品链接进行校验' }],
-            })(<Input placeholder="请粘贴商品链接进行校验" />)}
-          </Form.Item>
+          {location.query.qf !== '1' ? (
+            <Form.Item {...formItemLayout} label="拼多多商品链接">
+              {getFieldDecorator('goods_id', {
+                initialValue: pddGoodUrl,
+                rules: [{ required: true, message: '请粘贴商品链接进行校验' }],
+              })(<Input placeholder="请粘贴商品链接进行校验" />)}
+            </Form.Item>
+          ) : (
+            <Form.Item {...formItemLayout} label="拼多多店铺编号：">
+              {getFieldDecorator('goods_id', {
+                initialValue: pddGoodUrl,
+                rules: [{ required: true, message: '请粘贴拼多多店铺编号' }],
+              })(<Input placeholder="请粘贴拼多多店铺编号" />)}
+            </Form.Item>
+          )}
           {/** sh_type=0商家1招商 */}
           {currentUser.sh_type === 1 ? (
             <Form.Item {...formItemLayout} label="招商团长id">

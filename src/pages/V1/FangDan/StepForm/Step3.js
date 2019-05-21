@@ -323,7 +323,23 @@ class Step3 extends React.PureComponent {
       message.error('你还有投放数量没有填写完成哦～');
       return;
     }
-    const { dispatch, goodsDetail, startTime, endTime, schedules, taskId, pddZSId } = this.props;
+    const {
+      dispatch,
+      goodsDetail,
+      startTime,
+      endTime,
+      schedules,
+      taskId,
+      pddZSId,
+      location,
+    } = this.props;
+    // type 推广类型 (10好评返利20大额券30圈粉-收藏商品31圈粉-收藏店铺)
+    let type = 10;
+    let qf = ''; // 1为店铺圈粉，0为商品圈粉
+    if (location.query.qf !== undefined) {
+      location.query.qf == '1' ? (type = 31) : (type = 30);
+      qf = location.query.qf;
+    }
     dispatch({
       type: 'form/publishTask',
       payload: {
@@ -338,6 +354,8 @@ class Step3 extends React.PureComponent {
         zs_duo_id: pddZSId,
         comment_limit: goodsDetail.comment_limit,
         comment_keyword: goodsDetail.comment_keyword,
+        type,
+        qf,
       },
     });
     // router.push('/fangdan/step-form/pay');
@@ -419,7 +437,12 @@ class Step3 extends React.PureComponent {
     );
 
     const onPrev = () => {
-      router.push('/fangdan/step-form/confirm');
+      const { location } = this.props;
+      let path = `/fangdan/step-form/confirm`;
+      if (location.query.qf !== undefined) {
+        path = `/fangdan/qf/confirm?qf=${location.query.qf}`;
+      }
+      router.push(path);
     };
     this.planSum = 0;
     const countPlanSum = () => {
@@ -450,21 +473,8 @@ class Step3 extends React.PureComponent {
               onChange={this.rangePicker}
             />
           </Col>
-          {/* 日历 */}
-          {/* <Col offset={8}>
-            <Button onClick={this.toSchedule} type="primary">
-              一键排期
-            </Button>
-          </Col> */}
         </Row>
-
         {startDate ? (
-          // <Calendar
-          //   className={styles.calendarCdk}
-          //   value={startDate}
-          //   validRange={validRange}
-          //   dateFullCellRender={dateFullCellRender}
-          // />
           <Table
             style={{ width: '60%', marginTop: 20 }}
             components={components}

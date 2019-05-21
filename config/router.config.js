@@ -173,6 +173,43 @@ export default [
             ],
           },
           {
+            path: '/fangdan/qf',
+            name: 'quanfen',
+            component: './V1/FangDan/StepForm',
+            hideInMenu: true,
+            routes: [
+              {
+                path: '/fangdan/qf',
+                redirect: '/fangdan/qf/info',
+              },
+              {
+                path: '/fangdan/qf/info',
+                name: 'info',
+                component: './V1/FangDan/StepForm/Step1',
+              },
+              {
+                path: '/fangdan/qf/confirm',
+                name: 'confirm',
+                component: './V1/FangDan/StepForm/Step2',
+              },
+              {
+                path: '/fangdan/qf/schedule',
+                name: 'schedule',
+                component: './V1/FangDan/StepForm/Step3',
+              },
+              {
+                path: '/fangdan/qf/pay',
+                name: 'pay',
+                component: './V1/FangDan/StepForm/Step4',
+              },
+              {
+                path: '/fangdan/qf/result',
+                name: 'result',
+                component: './V1/FangDan/StepForm/Step5',
+              },
+            ],
+          },
+          {
             path: '/fangdan/list',
             name: 'myList',
             component: './V1/FangDan/List/Index',
@@ -188,6 +225,12 @@ export default [
             component: './V1/FangDan/List/GeneralizeDetail',
             hideInMenu: true,
           },
+          {
+            path: '/fangdan/qfDetail',
+            name: 'qfDetail',
+            component: './V1/FangDan/List/qfDetail',
+            hideInMenu: true,
+          },
         ],
       },
       // myOrder
@@ -200,6 +243,17 @@ export default [
             path: '/order/Index',
             name: 'index',
             component: './V1/MyOrder/Index',
+          },
+          {
+            path: '/order/qf',
+            name: 'qf',
+            component: './V1/MyOrder/qfList',
+          },
+          {
+            path: '/order/qfDetail',
+            name: 'qfDetail',
+            hideInMenu: true,
+            component: './V1/MyOrder/qfDetail',
           },
           {
             path: '/order/productDetail',

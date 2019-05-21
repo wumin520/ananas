@@ -1,4 +1,4 @@
-import { getHomeData, taskPlanUp, taskPlanDown } from '@/services/api';
+import { getHomeData, taskPlanUp, taskPlanDown, planList, orderList } from '@/services/api';
 import { message } from 'antd';
 
 export default {
@@ -26,6 +26,11 @@ export default {
         limit_info: '',
         credit_level: 0,
       },
+      fans_info: {
+        day_order_num: 0,
+        total_order_num: 0,
+        statistics_info: [],
+      },
     },
     task_plan_list: [],
     hot_rank: [],
@@ -35,22 +40,29 @@ export default {
       list: [],
       page_info: {},
     },
+    task_report_info: {
+      great_review: [],
+      fans: [],
+    },
+    planData: {},
+    orderData: {
+      list: [],
+      page_info: {},
+    },
   },
 
   effects: {
     *fetch({ payload }, { call, put }) {
       const res = yield call(getHomeData, payload);
-      yield put({
-        type: 'save',
-        payload: {
-          head_info: res.payload.head_info,
-          task_plan_list: res.payload.task_plan_list,
-          hot_rank: res.payload.hot_rank,
-          order_list: res.payload.order_list,
-          notice_info: res.payload.notice_info,
-          day_order_info: res.payload.day_order_info,
-        },
-      });
+      console.log(res, 'res 1');
+      if (res.status === 'ok') {
+        yield put({
+          type: 'save',
+          payload: {
+            ...res.payload,
+          },
+        });
+      }
     },
     *toPlanUp({ payload }, { call }) {
       const res = yield call(taskPlanUp, payload);
@@ -63,6 +75,24 @@ export default {
       if (res && res.status === 'ok') {
         message.success('操作成功');
       }
+    },
+    *planList({ payload }, { call, put }) {
+      const res = yield call(planList, payload);
+      yield put({
+        type: 'save',
+        payload: {
+          planData: res.payload,
+        },
+      });
+    },
+    *orderData({ payload }, { call, put }) {
+      const res = yield call(orderList, payload);
+      yield put({
+        type: 'save',
+        payload: {
+          orderData: res.payload,
+        },
+      });
     },
   },
 

@@ -55,16 +55,29 @@ export default {
       const res = yield call(queryGoodsDetail, payload);
       console.log('queryGoodsDetail -> res ', res, payload);
       if (res && res.status === 'ok') {
+        /* eslint-disable */
+        let { mall_detail, goods_detail } = res.payload;
+        if (mall_detail.mall_id) {
+          goods_detail = {
+            goods_id: mall_detail.mall_id,
+            title: mall_detail.mall_name,
+            detailImgRecordUrl: [mall_detail.url],
+          };
+        }
         yield put({
           type: 'saveState',
           payload: {
-            goodsDetail: res.payload.goods_detail,
+            goodsDetail: goods_detail,
             pddGoodUrl: payload.goods_id,
             pddZSId: payload.zs_duo_id,
           },
         });
         if (payload.auto_redirect !== 0) {
-          yield put(routerRedux.push('/fangdan/step-form/confirm'));
+          let path = `/fangdan/step-form/confirm`;
+          if (payload.qf !== undefined) {
+            path = `/fangdan/qf/confirm?qf=${payload.qf}`;
+          }
+          yield put(routerRedux.push(path));
         }
       }
     },
@@ -81,9 +94,12 @@ export default {
       const res = yield call(publishTask, payload);
       if (res && res.status === 'ok') {
         const taskId = res.payload.task_id;
-        yield put(
-          routerRedux.push(`/fangdan/step-form/pay?task_id=${taskId}&goods_id=${payload.goods_id}`)
-        );
+        let path = `/fangdan/step-form/pay?task_id=${taskId}&goods_id=${payload.goods_id}`;
+        if (payload.qf !== '') {
+          path += `&qf=${payload.qf}`;
+        }
+        console.log(path, 'publishTask 1');
+        yield put(routerRedux.push(path));
         yield put({
           type: 'saveState',
           payload: {

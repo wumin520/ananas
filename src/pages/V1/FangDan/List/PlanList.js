@@ -1,10 +1,25 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Modal, DatePicker } from 'antd';
+import {
+  Table,
+  Card,
+  Row,
+  Col,
+  Input,
+  Button,
+  Form,
+  Select,
+  Badge,
+  Modal,
+  DatePicker,
+  Radio,
+} from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import moment from 'moment';
 import styles from './Index.less';
 
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const statusMap = ['processing', 'success', 'default', 'error'];
 const { Option } = Select;
@@ -24,14 +39,43 @@ let params = {
 }))
 @Form.create()
 class PlanList extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.qf = props.location.query.qf !== undefined;
+  }
+
   state = {
     startTime: '',
     endTime: '',
+    tabActiveKey: 'haoping',
   };
 
   componentDidMount() {
+    const { location } = this.props;
+    params.type = 10;
+    if (location.query.qf !== undefined) {
+      params.type = '30,31';
+      this.setState({
+        tabActiveKey: 'quanfen',
+      });
+    }
     this.getListData(params);
   }
+
+  handleTabChange = (key, val) => {
+    console.log('handleTabChange', key, val);
+    this.setState({
+      tabActiveKey: key,
+    });
+    if (key === 'haoping') {
+      this.qf = undefined;
+      params.type = 10;
+    } else if (key === 'quanfen') {
+      this.qf = 1;
+      params.type = '30,31';
+    }
+    this.getListData(params);
+  };
 
   // 接口
   getListData = p => {
@@ -142,6 +186,12 @@ class PlanList extends PureComponent {
 
   onChange = currPage => {
     params.page = currPage;
+    this.getListData(params);
+  };
+
+  radioGroupOnChange = e => {
+    console.log('radioGroupOnChange -> ', e);
+    params.type = e.target.value;
     this.getListData(params);
   };
 
@@ -341,8 +391,36 @@ class PlanList extends PureComponent {
       </div>
     );
     const content = <div />;
+    const tabList = [
+      {
+        key: 'haoping',
+        tab: '好评试用',
+      },
+      {
+        key: 'quanfen',
+        tab: '圈粉收藏',
+      },
+    ];
+    const extraContent = this.qf ? (
+      <div className={styles.extraContent}>
+        <RadioGroup onChange={this.radioGroupOnChange} defaultValue="30,31">
+          <RadioButton value="30,31">全部圈粉</RadioButton>
+          <RadioButton value="30">商品圈粉</RadioButton>
+          <RadioButton value="31">店铺圈粉</RadioButton>
+        </RadioGroup>
+      </div>
+    ) : (
+      ''
+    );
+    /* eslint-disable */
     return (
-      <PageHeaderWrapper title="排期列表" content={content}>
+      <PageHeaderWrapper
+        title="排期列表"
+        content={content}
+        tabList={tabList}
+        tabActiveKey={this.state.tabActiveKey}
+        onTabChange={this.handleTabChange}
+      >
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
@@ -358,7 +436,7 @@ class PlanList extends PureComponent {
             </Row>
           </Card>
           <br />
-          <Card>
+          <Card className={styles.customStyleCard} extra={extraContent}>
             <div className={styles.tableList}>
               <div className={styles.tableListForm}>{this.renderForm()}</div>
               <Table

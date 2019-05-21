@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Card, Button, Icon, List } from 'antd';
+import { Card, Button, Icon, List, Modal } from 'antd';
 import { router } from 'umi';
 
 import Ellipsis from '@/components/Ellipsis';
@@ -14,6 +14,10 @@ import styles from './Index.less';
   setting,
 }))
 class Index extends PureComponent {
+  state = {
+    visible: false,
+  };
+
   componentDidMount() {
     // const { dispatch } = this.props;
     // dispatch({
@@ -23,6 +27,17 @@ class Index extends PureComponent {
     //   },
     // });
   }
+
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  forwardToQF = index => {
+    const val = index === 0 ? 1 : 0;
+    router.push(`/fangdan/qf/info?qf=${val}`);
+  };
 
   render() {
     const {
@@ -47,6 +62,19 @@ class Index extends PureComponent {
           DSR评分低`,
       },
       {
+        actions: ['列表', '+新增'],
+        state: 1,
+        type: 2,
+        avatar:
+          'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
+        title: '圈粉推广',
+        description: `适用于：
+          无基础销量
+          宝贝流量较少
+          需要提高转化率
+          DSR评分低`,
+      },
+      {
         actions: ['列表', '敬请期待...'],
         state: 0,
         avatar:
@@ -59,6 +87,28 @@ class Index extends PureComponent {
           佣金比例≥30%`,
       },
     ];
+
+    const qfList = [
+      {
+        actions: ['+新增'],
+        state: 1,
+        type: 2,
+        avatar:
+          'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
+        title: '店铺圈粉',
+        description: `提高店铺收藏数`,
+      },
+      {
+        actions: ['+新增'],
+        state: 1,
+        type: 2,
+        avatar:
+          'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
+        title: '商品圈粉',
+        description: `提高单个商品收藏数`,
+      },
+    ];
+
     const content = (
       <div className={styles.pageHeaderContent}>
         <p>
@@ -99,8 +149,19 @@ class Index extends PureComponent {
       if (!item.state) {
         return;
       }
+      console.log('onTabChange -> ', index, item);
+      if (item.type === 2 && index === 2) {
+        this.setState({
+          visible: true,
+        });
+        return;
+      }
       if (index === 1) {
-        router.push('/fangdan/list');
+        let path = `/fangdan/list`;
+        if (item.type === 2) {
+          path += '?qf=1';
+        }
+        router.push(path);
         return;
       }
       const { dispatch } = this.props;
@@ -117,60 +178,96 @@ class Index extends PureComponent {
       // console.log('onTabChange', 1, index);
     };
 
+    const { visible } = this.state;
+    const { Meta } = Card;
     return (
-      <PageHeaderWrapper title="我要放单" content={content} extraContent={extraContent}>
-        <div className={styles.cardList}>
+      <div>
+        <Modal
+          title="请选择圈粉推广的类型"
+          footer={null}
+          visible={visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
           <List
-            rowKey="id"
-            loading={loading}
-            grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
-            dataSource={[...listTemp]}
-            renderItem={item =>
-              item ? (
-                <List.Item key={item.id}>
-                  <Card
-                    hoverable
-                    className={styles.card}
-                    actions={[
-                      <a
-                        onClick={() => {
-                          onTabChange(1, item);
-                        }}
-                      >
-                        {item.actions && item.actions[0]}
-                      </a>,
-                      <a
-                        style={item.state ? { color: primaryColor } : {}}
-                        onClick={() => {
-                          onTabChange('2', item);
-                        }}
-                      >
-                        {item.actions && item.actions[1]}
-                      </a>,
-                    ]}
+            dataSource={[...qfList]}
+            grid={{ gutter: 24, lg: 2, md: 2, sm: 2, xs: 2 }}
+            renderItem={(item, index) => (
+              <List.Item>
+                <Card
+                  hoverable
+                  style={{ width: 240 }}
+                  cover={<img alt="example" src={item.avatar} />}
+                >
+                  <Meta title={item.title} description={item.description} />
+                  <Button
+                    onClick={() => {
+                      this.forwardToQF(index);
+                    }}
+                    style={{ display: 'block', margin: '20px auto 0' }}
+                    type="primary"
                   >
-                    <Card.Meta
-                      avatar={<img alt="" className={styles.cardAvatar} src={item.avatar} />}
-                      title={titleContent(item)}
-                      description={
-                        <Ellipsis className={styles.item} lines={3}>
-                          {item.description}
-                        </Ellipsis>
-                      }
-                    />
-                  </Card>
-                </List.Item>
-              ) : (
-                <List.Item>
-                  <Button type="dashed" className={styles.newButton}>
-                    <Icon type="plus" /> 新建产品
+                    {item.actions[0]}
                   </Button>
-                </List.Item>
-              )
-            }
+                </Card>
+              </List.Item>
+            )}
           />
-        </div>
-      </PageHeaderWrapper>
+        </Modal>
+        <PageHeaderWrapper title="我要放单" content={content} extraContent={extraContent}>
+          <div className={styles.cardList}>
+            <List
+              rowKey="id"
+              loading={loading}
+              grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
+              dataSource={[...listTemp]}
+              renderItem={item =>
+                item ? (
+                  <List.Item key={item.id}>
+                    <Card
+                      hoverable
+                      className={styles.card}
+                      actions={[
+                        <a
+                          onClick={() => {
+                            onTabChange(1, item);
+                          }}
+                        >
+                          {item.actions && item.actions[0]}
+                        </a>,
+                        <a
+                          style={item.state ? { color: primaryColor } : {}}
+                          onClick={() => {
+                            onTabChange(2, item);
+                          }}
+                        >
+                          {item.actions && item.actions[1]}
+                        </a>,
+                      ]}
+                    >
+                      <Card.Meta
+                        avatar={<img alt="" className={styles.cardAvatar} src={item.avatar} />}
+                        title={titleContent(item)}
+                        description={
+                          <Ellipsis className={styles.item} lines={3}>
+                            {item.description}
+                          </Ellipsis>
+                        }
+                      />
+                    </Card>
+                  </List.Item>
+                ) : (
+                  <List.Item>
+                    <Button type="dashed" className={styles.newButton}>
+                      <Icon type="plus" /> 新建产品
+                    </Button>
+                  </List.Item>
+                )
+              }
+            />
+          </div>
+        </PageHeaderWrapper>
+      </div>
     );
   }
 }

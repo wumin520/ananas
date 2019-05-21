@@ -20,29 +20,31 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
         <ChartCard
           bordered={false}
           loading={loading}
-          title={<FormattedMessage id="app.homePage.chart.fangdanAmount" defaultMessage="Visits" />}
+          title="今日圈粉数"
           action={
             <Tooltip
               title={
                 <div className={styles.toolP}>
-                  <p>1.今日放单量：今日内所有推广的实时放单量</p>
-                  <p>2.总放单量：所有推广的累计放单量</p>
+                  <p>1.今日圈粉数：今日上传收藏凭证数</p>
+                  <p>2.总圈粉数：总上传收藏凭证数</p>
                 </div>
               }
             >
               <Icon type="info-circle-o" />
             </Tooltip>
           }
-          total={numeral(visitData.task_info.day_task_amount).format('0,0')}
-          footer={<Field label={<span>总放单量 </span>} value={visitData.task_info.total_amount} />}
+          total={numeral(visitData.fans_info.day_order_num).format('0,0')}
+          footer={
+            <Field label={<span>总圈粉数 </span>} value={visitData.fans_info.total_order_num} />
+          }
           contentHeight={46}
         >
           <MiniArea
             color="#975FE4"
-            data={visitData.task_info.statistics_info.map(k => {
+            data={visitData.fans_info.statistics_info.map(k => {
               return {
                 x: k.day,
-                y: k.amount,
+                y: k.number,
               };
             })}
           />

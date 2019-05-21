@@ -6,6 +6,17 @@ import styles from '../style.less';
 const { Step } = Steps;
 
 export default class StepForm extends PureComponent {
+  componentDidMount() {
+    /* eslint-disable */
+    window.onbeforeunload = function() {
+      return '确定离开吗？系统可能不会保存您所做的更改';
+    };
+  }
+
+  componentWillUnmount() {
+    window.onbeforeunload = null;
+  }
+
   getCurrentStep() {
     const { location } = this.props;
     const { pathname } = location;
@@ -28,9 +39,15 @@ export default class StepForm extends PureComponent {
 
   render() {
     const { location, children } = this.props;
+    console.log(location, '1');
+    let title = '新增免单试用推广商品';
+    if (location.pathname.indexOf('/qf/') > -1 || location.query.qf !== undefined) {
+      title = '商品圈粉';
+      location.query.qf === '1' ? (title = '店铺圈粉') : '';
+    }
     return (
       <PageHeaderWrapper
-        title="新增免单试用推广商品"
+        title={title}
         tabActiveKey={location.pathname}
         content="快速提升转化率/快速聚集人气/宝贝流量"
       >
