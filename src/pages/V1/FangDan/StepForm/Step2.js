@@ -14,6 +14,7 @@ import {
 } from 'antd';
 import router from 'umi/router';
 import { digitUppercase } from '@/utils/utils';
+import { configs } from '@/defaultSettings';
 import styles from './style.less';
 
 const { Fragment } = React;
@@ -143,7 +144,7 @@ class Step2 extends React.PureComponent {
     const qf = location.query.qf !== undefined;
     const uploadProps = {
       name: 'file',
-      action: 'http://fans.test.chaoduoke.com/cdk/v1/web/upload',
+      action: `${configs[process.env.API_ENV].API_SERVER}/cdk/v1/web/upload`,
       headers: {
         authorization: 'authorization-text',
       },
