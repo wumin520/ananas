@@ -162,6 +162,7 @@ class FdList extends PureComponent {
 
   componentDidMount() {
     const { location } = this.props;
+    params.type = 10;
     if (location.query.qf !== undefined) {
       params.type = '30,31';
       this.setState({
@@ -251,9 +252,11 @@ class FdList extends PureComponent {
   };
 
   goPay = item => {
-    router.push(
-      `/fangdan/step-form/pay?task_id=${item.task_id}&goods_id=${item.goods_id}&need_fetch=1`
-    );
+    let path = `/fangdan/step-form/pay?task_id=${item.task_id}&goods_id=${
+      item.goods_id
+    }&need_fetch=1`;
+    path = this.addQFQuery(item, path);
+    router.push(path);
   };
 
   // 订单明细
@@ -266,16 +269,22 @@ class FdList extends PureComponent {
     router.push(`${path}?task_id=${item.task_id}`);
   };
 
+  addQFQuery = (item, path) => {
+    console.log('item -> ', item);
+    let url = path;
+    if (/^3[0|1]$/.test(item.type)) {
+      const qf = item.type === 30 ? 0 : 1;
+      url += `&qf=${qf}`;
+    }
+    return url;
+  };
+
   // 编辑
   goRedact = item => {
     let path = `/fangdan/step-form/confirm?task_id=${item.task_id}&goods_id=${
       item.goods_id
     }&action=edit`;
-    console.log('item -> ', item);
-    if (/^3[0|1]$/.test(item.type)) {
-      const qf = item.type === 30 ? 0 : 1;
-      path += `&qf=${qf}`;
-    }
+    path = this.addQFQuery(item, path);
     router.push(path);
   };
 

@@ -41,8 +41,9 @@ export default class StepForm extends PureComponent {
     const { location, children } = this.props;
     console.log(location, '1');
     let title = '新增免单试用推广商品';
-    if (location.pathname.indexOf('/qf/') > -1) {
+    if (location.pathname.indexOf('/qf/') > -1 || location.query.qf !== undefined) {
       title = '商品圈粉';
+      location.query.qf === '1' ? (title = '店铺圈粉') : '';
     }
     return (
       <PageHeaderWrapper

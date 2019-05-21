@@ -52,6 +52,7 @@ class PlanList extends PureComponent {
 
   componentDidMount() {
     const { location } = this.props;
+    params.type = 10;
     if (location.query.qf !== undefined) {
       params.type = '30,31';
       this.setState({
