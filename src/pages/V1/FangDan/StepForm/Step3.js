@@ -106,7 +106,7 @@ class EditableCell extends React.Component {
                         },
                       ],
                       //   const num = this.schedulesHash[key] || '';
-                      initialValue: timeList[0],
+                      initialValue: record[dataIndex] || timeList[0],
                     })(
                       <Select
                         placeholder="请选择"
@@ -189,7 +189,7 @@ class Step3 extends React.PureComponent {
         width: '20%',
       },
       {
-        title: '投放时间',
+        title: '投放开始时间（当日24点结束）',
         dataIndex: 'hour',
         width: '40%',
         editTime: true,
@@ -246,6 +246,7 @@ class Step3 extends React.PureComponent {
   makeScheduleData = (startTime, endTime) => {
     const { dispatch, schedules } = this.props;
     this.schedulesHash = this.schedulesHash || {};
+    let hours = {};
 
     if (startTime) {
       this.startTimeTemp = startTime;
@@ -255,6 +256,7 @@ class Step3 extends React.PureComponent {
     for (let i = 0; i < schedules.length; i += 1) {
       const item = schedules[i];
       this.schedulesHash[item.day] = item.amount;
+      hours[item.day] = item.hour;
     }
     let index = 1;
     const arr = [];
@@ -268,12 +270,13 @@ class Step3 extends React.PureComponent {
         this.schedulesHash[key] = '';
       }
       const value = this.schedulesHash[key];
+      const hour = hours[key];
       obj[key] = value;
       arr.push({
         key: index,
         day: key,
         amount: value,
-        hour: 0,
+        hour: hour,
       });
       a.add(1, 'days');
       /* eslint-disable */

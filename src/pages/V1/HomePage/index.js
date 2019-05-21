@@ -20,6 +20,12 @@ const statusMap = ['default', 'success'];
 class Index extends Component {
   columns = [
     {
+      key: 'plan_time',
+      title: '排期时间',
+      width: 100,
+      dataIndex: 'plan_time',
+    },
+    {
       key: '1',
       title: '推广编号',
       width: 100,
