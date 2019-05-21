@@ -38,6 +38,7 @@ if (pwa) {
       window.location.reload(true);
       return true;
     };
+    reloadSW();
     const key = `open${Date.now()}`;
     const btn = (
       <Button

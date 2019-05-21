@@ -62,18 +62,18 @@ class Step4 extends React.PureComponent {
     });
 
     if (need_fetch) {
-      task_id &&
-        dispatch({
-          type: 'form/queryTaskDetail',
-          payload: {
-            task_id,
-          },
-        });
-      goods_id &&
-        dispatch({
-          type: 'form/queryGoodsDetail',
-          payload: { goods_id, auto_redirect: 0 },
-        });
+      // task_id &&
+      //   dispatch({
+      //     type: 'form/queryTaskDetail',
+      //     payload: {
+      //       task_id,
+      //     },
+      //   });
+      // goods_id &&
+      //   dispatch({
+      //     type: 'form/queryGoodsDetail',
+      //     payload: { goods_id, auto_redirect: 0 },
+      //   });
       this.actionType = 'pay';
     }
   };
