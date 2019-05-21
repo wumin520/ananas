@@ -333,7 +333,7 @@ class Step3 extends React.PureComponent {
       pddZSId,
       location,
     } = this.props;
-    // type 推广类型 (10好评返利20大额券30圈粉-收藏商品31圈粉-收藏店铺)
+    // type 推广类型 (10免单返利20大额券30圈粉-收藏商品31圈粉-收藏店铺)
     let type = 10;
     let qf = ''; // 1为店铺圈粉，0为商品圈粉
     if (location.query.qf !== undefined) {

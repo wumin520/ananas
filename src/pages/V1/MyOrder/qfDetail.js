@@ -8,7 +8,6 @@ import styles from './ProductDetail.less';
 
 const { Description } = DescriptionList;
 const statusMap = ['error', 'processing', 'warning', 'success'];
-const status = ['无效', '已下单', '待评价', '已完成'];
 @connect(({ order, loading }) => ({
   fansDetail: order.fansDetail,
   loading: loading.effects['order/fansDetail'],
@@ -84,7 +83,7 @@ class ProductDetail extends Component {
           <DescriptionList size="large" title="关注信息" style={{ marginBottom: 32 }}>
             <Description term="用户昵称">{data.p_order_id}</Description>
             <Description term="凭证状态">
-              <Badge status={statusMap[data.state]} text={status[data.state]} />
+              <Badge status={statusMap[data.state]} text={data.state_desc} />
             </Description>
             <Description term="来源">推广编号{data.task_id}</Description>
             <Description term="上传时间">{data.order_price}</Description>

@@ -9,7 +9,6 @@ const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const statusMap = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
-const status = ['待支付', '审核中', '进行中', '审核驳回', '清算中', '已结算'];
 const { Option } = Select;
 
 const { confirm } = Modal;
@@ -19,7 +18,7 @@ let params = {
   task_id: 0, // 推广编号
   goods_id: 0, // 商品id
   state: -1, // 状态-1 全部 0待支付，1待审核，2进行中，3审核驳回 4 清算中 5 已结算
-  type: 10, // 推广类型  -1 全部 10-好评全返 20-大额券推广 30-圈粉-收藏商品 31-圈粉-收藏店铺 注意：多个“,”隔开，eg:圈粉全部：30,31 默认：10
+  type: 10, // 推广类型  -1 全部 10-免单全返 20-大额券推广 30-圈粉-收藏商品 31-圈粉-收藏店铺 注意：多个“,”隔开，eg:圈粉全部：30,31 默认：10
 };
 
 @connect(({ task, loading }) => ({
@@ -90,10 +89,9 @@ class FdList extends PureComponent {
       },
       {
         title: '状态',
-        dataIndex: 'state',
         width: 100,
-        render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+        render(item) {
+          return <Badge status={statusMap[item.state]} text={item.state_desc} />;
         },
       },
       {
@@ -106,7 +104,7 @@ class FdList extends PureComponent {
               <br />
               <span>下单人数 {item.order_num}</span>
               <br />
-              <span>评价人数 {item.comment_num}</span>
+              {/** <span>评价人数 {item.comment_num}</span> */}
             </p>
           );
         },
@@ -442,10 +440,9 @@ class FdList extends PureComponent {
       },
       {
         title: '状态',
-        dataIndex: 'state',
         width: 100,
-        render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+        render(item) {
+          return <Badge status={statusMap[item.state]} text={item.state_desc} />;
         },
       },
       {
@@ -456,7 +453,7 @@ class FdList extends PureComponent {
             <p style={{ textAlign: 'left' }}>
               <span>发放份数 {item.total_amount}</span>
               <br />
-              <span>下单人数 {item.order_num}</span>
+              <span>收藏人数 {item.order_num}</span>
               <br />
               {/** <span>评价人数 {item.comment_num}</span> */}
             </p>
@@ -524,7 +521,7 @@ class FdList extends PureComponent {
     const tabList = [
       {
         key: 'haoping',
-        tab: '好评试用',
+        tab: '免单试用',
       },
       {
         key: 'quanfen',

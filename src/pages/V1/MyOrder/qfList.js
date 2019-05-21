@@ -22,13 +22,12 @@ const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const FormItem = Form.Item;
 const statusMap = ['error', 'processing', 'warning', 'success'];
-const status = ['无效', '待结算', '已结算', '结算退回'];
 
 let params = {
   page: 1, // 翻页参数
   task_id: 0, // 推广编号
   goods_id: 0, // 商品id
-  state: -1, // 状态 -1全部 0失效1已下单2待评价3已完成
+  state: -1, // 状态 -1全部 0失效1已下单2已收货3已完成
   p_order_id: 0, // 订单编号
 };
 
@@ -256,10 +255,9 @@ class orderList extends PureComponent {
       },
       {
         title: '状态',
-        dataIndex: 'state',
         width: 90,
-        render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+        render(item) {
+          return <Badge status={statusMap[item.state]} text={item.state_desc} />;
         },
       },
       {

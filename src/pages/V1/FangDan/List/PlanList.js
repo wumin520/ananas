@@ -394,7 +394,7 @@ class PlanList extends PureComponent {
     const tabList = [
       {
         key: 'haoping',
-        tab: '好评试用',
+        tab: '免单试用',
       },
       {
         key: 'quanfen',
