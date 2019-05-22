@@ -18,7 +18,7 @@ let params = {
   task_id: 0, // 推广编号
   goods_id: 0, // 商品id
   state: -1, // 状态-1 全部 0待支付，1待审核，2进行中，3审核驳回 4 清算中 5 已结算
-  type: 10, // 推广类型  -1 全部 10-免单全返 20-大额券推广 30-圈粉-收藏商品 31-圈粉-收藏店铺 注意：多个“,”隔开，eg:圈粉全部：30,31 默认：10
+  type: 10, // 推广类型 全部 10-免单全返 20-大额券推广 30-圈粉-收藏商品 31-圈粉-收藏店铺 注意：多个“,”隔开，eg:圈粉全部：30,31 默认：10
 };
 
 @connect(({ task, loading }) => ({
@@ -189,13 +189,12 @@ class FdList extends PureComponent {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
-      params = {
-        page: 1,
-        task_id: values.task_id || 0,
-        goods_id: values.goods_id || 0,
-        state: values.state || -1,
-        type: params.type || -1,
-      };
+
+      params.page = 1;
+      params.task_id = values.task_id || 0;
+      params.goods_id = values.goods_id || 0;
+      params.state = values.state || -1;
+
       dispatch({
         type: 'task/fetchBasic',
         payload: params,
@@ -207,15 +206,13 @@ class FdList extends PureComponent {
   handleFormReset = () => {
     const { form, dispatch } = this.props;
     form.resetFields();
+    params.page = 1;
+    params.task_id = 0;
+    params.goods_id = 0;
+    params.state = -1;
     dispatch({
       type: 'task/fetchBasic',
-      payload: {
-        page: 1,
-        task_id: 0,
-        goods_id: 0,
-        state: -1,
-        type: -1,
-      },
+      payload: params,
     });
   };
 
@@ -303,6 +300,10 @@ class FdList extends PureComponent {
       this.qf = 1;
       params.type = '30,31';
     }
+    params.page = 1;
+    params.task_id = 0;
+    params.goods_id = 0;
+    params.state = -1;
     this.getListData(params);
     // 清空input框中上次输入的值
     const { form } = this.props;
@@ -312,6 +313,13 @@ class FdList extends PureComponent {
   radioGroupOnChange = e => {
     // console.log('radioGroupOnChange -> ', e);
     params.type = e.target.value;
+    params = {
+      page: 1,
+      task_id: 0,
+      goods_id: 0,
+      state: -1,
+      type: e.target.value,
+    };
     this.getListData(params);
   };
 
