@@ -194,7 +194,7 @@ class FdList extends PureComponent {
         task_id: values.task_id || 0,
         goods_id: values.goods_id || 0,
         state: values.state || -1,
-        type: values.type || -1,
+        type: params.type || -1,
       };
       dispatch({
         type: 'task/fetchBasic',

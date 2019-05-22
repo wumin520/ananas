@@ -130,7 +130,7 @@ class GeneralizeDetail extends Component {
       <PageHeaderWrapper title="推广详情" loading={loading} content={content}>
         <Card bordered={false}>
           <DescriptionList size="large" title="商品/店铺信息" style={{ marginBottom: 32 }}>
-            <Description term="商品/店铺id">{data.goods_id}</Description>
+            <Description term="商品/店铺id">{data.mall_id}</Description>
             <Description term="商品/店铺名称" className={styles.pro_name}>
               {data.title}
             </Description>
