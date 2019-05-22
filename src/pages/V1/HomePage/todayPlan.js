@@ -90,6 +90,15 @@ const defaultColumns = [
 
 const qfColumns = [
   {
+    key: 'plan_time',
+    title: '投放时间',
+    width: 100,
+    dataIndex: 'plan_time',
+    render(val) {
+      return val.split(' ')[1];
+    },
+  },
+  {
     key: '1',
     title: '推广编号',
     width: 100,

@@ -20,7 +20,7 @@ export default {
   'menu.order': '效果分析',
   'menu.order.detail': '订单详情',
   'menu.order.index': '订单列表',
-  'menu.order.qf': '圈粉收藏',
+  'menu.order.qf': '圈粉列表',
   'menu.order.qfDetail': '收藏详情',
   'menu.capital': '资金管理',
   'menu.capital.detail': '资金明细',
