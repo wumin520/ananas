@@ -213,9 +213,15 @@ class PlanList extends PureComponent {
           </Col>
           <Col md={5} sm={24}>
             {/** 筛选店铺/商品 字段都为 goods_id, 后端查询两者已兼容 */}
-            <FormItem label="商品/店铺id ">
-              {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
-            </FormItem>
+            {params.type === 10 ? (
+              <FormItem label="商品id ">
+                {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
+              </FormItem>
+            ) : (
+              <FormItem label="商品/店铺id ">
+                {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
+              </FormItem>
+            )}
           </Col>
           {/** <Col md={5} sm={24}>
             <FormItem label="推广类型">
