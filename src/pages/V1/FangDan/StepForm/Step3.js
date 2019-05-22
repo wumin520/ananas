@@ -393,7 +393,7 @@ class Step3 extends React.PureComponent {
     });
   };
   render() {
-    const { schedules } = this.props;
+    const { schedules, location } = this.props;
     const { submitting, startTime, endTime } = this.props;
     const startDate = startTime && moment(startTime);
     const endDate = endTime && moment(endTime);
@@ -427,17 +427,21 @@ class Step3 extends React.PureComponent {
       }
       return false;
     };
-    const description = (
-      <div style={{ whiteSpace: 'pre-wrap' }}>
-        1、想权重大，单量一定要设计为稳定增长趋势（递增）。
-        <br />
-        2、建议投放周期为3~7天 <br />
-        注意：请记住上面的两个重点，让自己的店铺快速提升转化率和人气销量。
-      </div>
-    );
+    const description =
+      location.query.qf !== undefined ? (
+        <div style={{ whiteSpace: 'pre-wrap' }}>
+          建议投放不低于3-7天，根据统计98%成功案例连续投放3-10天可提升转化率
+        </div>
+      ) : (
+        <div style={{ whiteSpace: 'pre-wrap' }}>
+          1、想权重大，单量一定要设计为稳定增长趋势（递增）。
+          <br />
+          2、建议投放周期为3~7天 <br />
+          注意：请记住上面的两个重点，让自己的店铺快速提升转化率和人气销量。
+        </div>
+      );
 
     const onPrev = () => {
-      const { location } = this.props;
       let path = `/fangdan/step-form/confirm`;
       if (location.query.qf !== undefined) {
         path = `/fangdan/qf/confirm?qf=${location.query.qf}`;

@@ -14,11 +14,18 @@ class Step5 extends React.PureComponent {
   render() {
     /* eslint-disable */
     const { taskId, currentUser, location } = this.props;
+
+    let path = `/fangdan/list/GeneralizeDetail?task_id=${location.query.task_id}`;
+    let detailPath = '/fangdan/list';
+    if (/^3[0|1]$/.test(location.query.type)) {
+      path = `/fangdan/qfDetail?task_id=${location.query.task_id}`;
+      detailPath += `?qf=${location.query.type}`;
+    }
     const goDetail = () => {
-      router.push(`/fangdan/list/GeneralizeDetail?task_id=${location.query.task_id}`);
+      router.push(path);
     };
     const goBackList = () => {
-      router.push('/fangdan/list');
+      router.push(detailPath);
     };
 
     const actions = (
