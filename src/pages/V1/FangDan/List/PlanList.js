@@ -63,6 +63,9 @@ class PlanList extends PureComponent {
   }
 
   handleTabChange = (key, val) => {
+    // 清空input框中上次输入的值
+    const { form } = this.props;
+    form.resetFields();
     console.log('handleTabChange', key, val);
     this.setState({
       tabActiveKey: key,

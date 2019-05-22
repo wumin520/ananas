@@ -126,6 +126,7 @@ class Index extends Component {
           <SalesCard
             radioGroupOnChange={this.reportRadioOnChange}
             loading={loading}
+            dataType={this.state.dataType}
             salesData={salesData.map(item => {
               return {
                 x: item.day,

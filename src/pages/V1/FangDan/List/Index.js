@@ -268,7 +268,7 @@ class FdList extends PureComponent {
   };
 
   addQFQuery = (item, path) => {
-    console.log('item -> ', item);
+    // console.log('item -> ', item);
     let url = path;
     if (/^3[0|1]$/.test(item.type)) {
       const qf = item.type === 30 ? 0 : 1;
@@ -304,10 +304,13 @@ class FdList extends PureComponent {
       params.type = '30,31';
     }
     this.getListData(params);
+    // 清空input框中上次输入的值
+    const { form } = this.props;
+    form.resetFields();
   };
 
   radioGroupOnChange = e => {
-    console.log('radioGroupOnChange -> ', e);
+    // console.log('radioGroupOnChange -> ', e);
     params.type = e.target.value;
     this.getListData(params);
   };

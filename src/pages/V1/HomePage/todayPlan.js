@@ -172,7 +172,13 @@ const todayPlan = memo(({ data, loading, radioOnChange, tableType }) => {
       loading={loading}
       bordered={false}
       title="今日推广中"
-      extra={<Link to="/fangdan/plan">{'排期列表>'}</Link>}
+      extra={
+        tableType === 1 ? (
+          <Link to={`/fangdan/plan?qf=${tableType}`}>{'排期列表>'}</Link>
+        ) : (
+          <Link to="/fangdan/plan">{'排期列表>'}</Link>
+        )
+      }
       style={{ marginTop: 24 }}
     >
       {extraContent}
