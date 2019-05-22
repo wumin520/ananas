@@ -10,7 +10,7 @@ const { TabPane } = Tabs;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 
-const SalesCard = memo(({ salesData, loading, radioGroupOnChange }) => {
+const SalesCard = memo(({ salesData, loading, radioGroupOnChange, dataType }) => {
   const len = salesData.length;
   if (len < 7) {
     return '';
@@ -46,7 +46,11 @@ const SalesCard = memo(({ salesData, loading, radioGroupOnChange }) => {
         <Tabs
           tabBarExtraContent={
             <div className={styles.salesExtraWrap}>
-              <Link to="/fangdan/list">{'放单列表>'}</Link>
+              {dataType === 'fans' ? (
+                <Link to="/fangdan/list?qf=fans">{'放单列表>'}</Link>
+              ) : (
+                <Link to="/fangdan/list">{'放单列表>'}</Link>
+              )}
             </div>
           }
           size="large"
