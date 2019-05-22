@@ -378,7 +378,7 @@ class PlanList extends PureComponent {
               <span>发放份数 {item.total_amount}</span>
               <br />
               <span>
-                {item.type === '30' || item.type === '31' ? '收藏' : '下单'}人数 {item.order_num}
+                {/^3[0|1]$/.test(item.type) ? '收藏' : '下单'}人数 {item.order_num}
               </span>
               <br />
               {/** <span>评价人数 {item.comment_num}</span> */}
