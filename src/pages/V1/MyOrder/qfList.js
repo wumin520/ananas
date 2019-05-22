@@ -277,7 +277,7 @@ class orderList extends PureComponent {
         width: 90,
         render: item => {
           const { itemImg } = this.state;
-          const url = `/order/productDetail?order_id=${item.order_id}`;
+          const url = `/order/qfDetail?order_id=${item.order_id}`;
           let option;
           if (item.proof_images.length > 0) {
             option = (

@@ -38,7 +38,6 @@ if (pwa) {
       window.location.reload(true);
       return true;
     };
-    reloadSW();
     const key = `open${Date.now()}`;
     const btn = (
       <Button
@@ -48,12 +47,12 @@ if (pwa) {
           reloadSW();
         }}
       >
-        {formatMessage({ id: 'app.pwa.serviceworker.updated.ok' })}
+        点击更新
       </Button>
     );
     notification.open({
-      message: formatMessage({ id: 'app.pwa.serviceworker.updated' }),
-      description: formatMessage({ id: 'app.pwa.serviceworker.updated.hint' }),
+      message: '有新内容更新',
+      description: '为了更好的服务，请点击更新',
       btn,
       key,
       onClose: async () => {},
