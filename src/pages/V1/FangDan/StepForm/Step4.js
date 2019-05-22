@@ -21,11 +21,12 @@ class Step4 extends React.PureComponent {
       return;
     }
     toPayIsClick = false;
-    const { dispatch } = this.props;
+    const { dispatch, taskPayInfo } = this.props;
     dispatch({
       type: 'form/pay',
       payload: {
         task_id: this.taskId,
+        type: taskPayInfo.type,
       },
     });
     // router.push('/fangdan/step-form/result');

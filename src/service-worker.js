@@ -48,6 +48,8 @@ workbox.routing.registerRoute(
 );
 workbox.routing.registerRoute(/\/color.less/, workbox.strategies.networkFirst());
 
+/* eslint-disable */
+
 /**
  * Response to client after skipping waiting with MessageChannel
  */
