@@ -27,8 +27,8 @@ let params = {
   page: 1, // 翻页参数
   task_id: 0, // 推广编号
   goods_id: 0, // 商品id
-  state: -1, // 状态 -1全部 0失效1已下单2已收货3已完成
-  p_order_id: 0, // 订单编号
+  type: '30,31',
+  // state: -1, // 状态 已完成&无效
 };
 
 @connect(({ order, loading }) => ({
@@ -72,15 +72,13 @@ class orderList extends PureComponent {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
-      params = {
-        page: 1,
-        p_order_id: values.p_order_id,
-        task_id: values.task_id,
-        goods_id: values.goods_id,
-        state: values.state,
-      };
+
+      params.page = 1;
+      params.task_id = values.task_id || 0;
+      params.goods_id = values.goods_id || 0;
+
       dispatch({
-        type: 'order/fansData',
+        type: 'order/fansList',
         payload: params,
       });
     });
@@ -88,14 +86,16 @@ class orderList extends PureComponent {
 
   // 重置
   handleFormReset = () => {
-    const { form, dispatch, location } = this.props;
-    const { query } = location;
+    const { form, dispatch } = this.props;
     form.resetFields();
+
+    params.page = 1;
+    params.task_id = 0;
+    params.goods_id = 0;
+
     dispatch({
       type: 'order/fansData',
-      payload: {
-        task_id: query.task_id,
-      },
+      payload: params,
     });
   };
 
@@ -127,6 +127,12 @@ class orderList extends PureComponent {
   radioGroupOnChange = e => {
     console.log('radioGroupOnChange -> ', e);
     params.type = e.target.value;
+    params = {
+      page: 1, // 翻页参数
+      task_id: 0, // 推广编号
+      goods_id: 0, // 商品id
+      type: e.target.value,
+    };
     this.getfansData(params);
   };
 

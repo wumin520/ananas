@@ -30,7 +30,9 @@ let params = {
   task_id: 0,
   goods_id: 0,
   state: -1,
-  type: -1,
+  type: 10,
+  start_time: '',
+  end_time: '',
 };
 
 @connect(({ task, loading }) => ({
@@ -77,6 +79,12 @@ class PlanList extends PureComponent {
       this.qf = 1;
       params.type = '30,31';
     }
+    params.page = 1;
+    params.task_id = 0;
+    params.goods_id = 0;
+    params.state = -1;
+    params.start_time = '';
+    params.end_time = '';
     this.getListData(params);
   };
 
@@ -144,15 +152,14 @@ class PlanList extends PureComponent {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
-      params = {
-        page: 1,
-        task_id: values.task_id || 0,
-        goods_id: values.goods_id || 0,
-        state: values.state || -1,
-        type: params.type || -1,
-        start_time: startTime || '',
-        end_time: endTime || '',
-      };
+
+      params.page = 1;
+      params.task_id = values.task_id || 0;
+      params.goods_id = values.goods_id || 0;
+      params.state = values.state || -1;
+      params.start_time = startTime || '';
+      params.end_time = endTime || '';
+
       dispatch({
         type: 'task/planList',
         payload: params,
@@ -164,13 +171,14 @@ class PlanList extends PureComponent {
   handleFormReset = () => {
     const { form, dispatch } = this.props;
     form.resetFields();
-    params = {
-      page: 1,
-      task_id: 0,
-      goods_id: 0,
-      state: -1,
-      type: -1,
-    };
+
+    params.page = 1;
+    params.task_id = 0;
+    params.goods_id = 0;
+    params.state = -1;
+    params.start_time = '';
+    params.end_time = '';
+
     dispatch({
       type: 'task/planList',
       payload: params,
@@ -194,7 +202,15 @@ class PlanList extends PureComponent {
 
   radioGroupOnChange = e => {
     console.log('radioGroupOnChange -> ', e);
-    params.type = e.target.value;
+    params = {
+      page: 1,
+      task_id: 0,
+      goods_id: 0,
+      state: -1,
+      start_time: '',
+      end_time: '',
+      type: e.target.value,
+    };
     this.getListData(params);
   };
 
@@ -362,7 +378,7 @@ class PlanList extends PureComponent {
               <span>发放份数 {item.total_amount}</span>
               <br />
               <span>
-                {item.type === '30' || item.type === '31' ? '收藏' : '下单'}人数 {item.order_num}
+                {/^3[0|1]$/.test(item.type) ? '收藏' : '下单'}人数 {item.order_num}
               </span>
               <br />
               {/** <span>评价人数 {item.comment_num}</span> */}
