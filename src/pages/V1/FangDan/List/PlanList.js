@@ -201,7 +201,7 @@ class PlanList extends PureComponent {
     } = this.props;
     const { planData } = this.props;
     const stateSelect = planData.state_select;
-    const typeSelect = planData.type_select;
+    // const typeSelect = planData.type_select;
 
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
@@ -212,11 +212,12 @@ class PlanList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
-            <FormItem label="商品id">
+            {/** 筛选店铺/商品 字段都为 goods_id, 后端查询两者已兼容 */}
+            <FormItem label="商品/店铺id ">
               {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
-          <Col md={5} sm={24}>
+          {/** <Col md={5} sm={24}>
             <FormItem label="推广类型">
               {getFieldDecorator('type')(
                 <Select
@@ -233,7 +234,7 @@ class PlanList extends PureComponent {
                 </Select>
               )}
             </FormItem>
-          </Col>
+          </Col> */}
           <Col md={5} sm={24}>
             <FormItem label="状态">
               {getFieldDecorator('state')(
