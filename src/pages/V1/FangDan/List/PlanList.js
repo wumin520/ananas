@@ -292,12 +292,12 @@ class PlanList extends PureComponent {
       },
       {
         key: 'goods_id',
-        title: '商品id',
+        title: '商品/店铺id',
         width: 120,
         dataIndex: 'goods_id',
       },
       {
-        title: '商品',
+        title: '商品/店铺名称',
         width: 143,
         render: val => {
           return (
@@ -352,7 +352,9 @@ class PlanList extends PureComponent {
             <p style={{ textAlign: 'left' }}>
               <span>发放份数 {item.total_amount}</span>
               <br />
-              <span>下单人数 {item.order_num}</span>
+              <span>
+                {item.type === '30' || item.type === '31' ? '收藏' : '下单'}人数 {item.order_num}
+              </span>
               <br />
               {/** <span>评价人数 {item.comment_num}</span> */}
             </p>

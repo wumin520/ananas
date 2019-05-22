@@ -318,7 +318,7 @@ class FdList extends PureComponent {
     } = this.props;
     const { listData } = this.props;
     const stateSelect = listData.state_select;
-    const typeSelect = listData.type_select;
+    // const typeSelect = listData.type_select;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
@@ -327,12 +327,13 @@ class FdList extends PureComponent {
               {getFieldDecorator('task_id')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
+          {/** 筛选店铺/商品 字段都为 goods_id, 后端查询两者已兼容 */}
           <Col md={5} sm={24}>
-            <FormItem label="商品id">
+            <FormItem label="商品/店铺id">
               {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
-          <Col md={5} sm={24}>
+          {/** <Col md={5} sm={24}>
             <FormItem label="推广类型">
               {getFieldDecorator('type')(
                 <Select
@@ -349,7 +350,8 @@ class FdList extends PureComponent {
                 </Select>
               )}
             </FormItem>
-          </Col>
+          </Col> */}
+
           <Col md={5} sm={24}>
             <FormItem label="状态">
               {getFieldDecorator('state')(
