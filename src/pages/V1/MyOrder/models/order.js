@@ -90,7 +90,7 @@ export default {
       yield put({
         type: 'saveState',
         payload: {
-          orderData: res.payload,
+          orderDetail: res.payload,
         },
       });
     },

@@ -9,7 +9,7 @@ import styles from './ProductDetail.less';
 const { Description } = DescriptionList;
 const statusMap = ['error', 'processing', 'warning', 'success'];
 @connect(({ order, loading }) => ({
-  fansDetail: order.fansDetail,
+  orderDetail: order.orderDetail,
   loading: loading.effects['order/fansDetail'],
 }))
 class ProductDetail extends Component {
@@ -59,16 +59,16 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { loading, fansDetail } = this.props;
+    const { loading, orderDetail } = this.props;
     const { modal1Visible } = this.state;
-    const { data } = fansDetail;
+    const { data } = orderDetail;
     const content = <div />;
     return (
       /* eslint-disable */
       <PageHeaderWrapper title="收藏详情" loading={loading} content={content}>
         <Card bordered={false}>
           <DescriptionList size="large" title="商品/店铺信息" style={{ marginBottom: 32 }}>
-            <Description term="商品/店铺id">{data.mall_id}</Description>
+            <Description term="商品/店铺id">{data.goods_id}</Description>
             <Description term="商品/店铺名称" className={styles.pro_name}>
               {data.title}
             </Description>
@@ -81,15 +81,15 @@ class ProductDetail extends Component {
           </DescriptionList>
           <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="关注信息" style={{ marginBottom: 32 }}>
-            <Description term="用户昵称">{data.p_order_id}</Description>
+            <Description term="用户昵称">{data.nick_name}</Description>
             <Description term="凭证状态">
               <Badge status={statusMap[data.state]} text={data.state_desc} />
             </Description>
             <Description term="来源">推广编号{data.task_id}</Description>
-            <Description term="上传时间">{data.order_price}</Description>
+            <Description term="上传时间">{data.proof_time}</Description>
           </DescriptionList>
-          <p>
-            关注凭证:
+          <p className={styles.proofImgBlock}>
+            <span>关注凭证:</span>
             {data.proof_images.length === 0
               ? ' 未上传'
               : data.proof_images.length > 0 &&
