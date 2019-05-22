@@ -9,7 +9,7 @@ import styles from './ProductDetail.less';
 const { Description } = DescriptionList;
 const statusMap = ['error', 'processing', 'warning', 'success'];
 @connect(({ order, loading }) => ({
-  orderDetail: order.orderDetail,
+  fansDetail: order.fansDetail,
   loading: loading.effects['order/fansDetail'],
 }))
 class ProductDetail extends Component {
@@ -59,9 +59,9 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { loading, orderDetail } = this.props;
+    const { loading, fansDetail } = this.props;
     const { modal1Visible } = this.state;
-    const { data } = orderDetail;
+    const { data } = fansDetail;
     const content = <div />;
     return (
       /* eslint-disable */
