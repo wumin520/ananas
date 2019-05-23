@@ -21,6 +21,10 @@ const formItemLayout = {
 }))
 @Form.create()
 class Step1 extends React.PureComponent {
+  state = {
+    isQf: false,
+  };
+
   fetchPddGoodsDetail = values => {
     const { dispatch, location } = this.props;
     const params = values;
@@ -37,10 +41,19 @@ class Step1 extends React.PureComponent {
     });
   };
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    const { location } = this.props;
+    // 身份为招商--->圈粉推广不显示招商团长id input框
+    if (location.query.qf !== undefined) {
+      this.setState({
+        isQf: true,
+      });
+    }
+  };
 
   render() {
     const { form, pddGoodUrl, submitting, dispatch, pddZSId, currentUser, location } = this.props;
+    const { isQf } = this.state;
     const { getFieldDecorator, validateFields } = form;
     const onValidateForm = () => {
       validateFields((err, values) => {
@@ -78,13 +91,13 @@ class Step1 extends React.PureComponent {
           ) : (
             <Form.Item {...formItemLayout} label="拼多多店铺编号：">
               {getFieldDecorator('goods_id', {
-                initialValue: pddGoodUrl,
+                initialValue: currentUser.shop_code,
                 rules: [{ required: true, message: '请粘贴拼多多店铺编号' }],
               })(<Input placeholder="请粘贴拼多多店铺编号" />)}
             </Form.Item>
           )}
           {/** sh_type=0商家1招商 */}
-          {currentUser.sh_type === 1 ? (
+          {currentUser.sh_type === 1 && !isQf ? (
             <Form.Item {...formItemLayout} label="招商团长id">
               {getFieldDecorator('zs_duo_id', {
                 initialValue: pddZSId,
