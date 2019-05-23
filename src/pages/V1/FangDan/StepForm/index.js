@@ -45,6 +45,11 @@ export default class StepForm extends PureComponent {
       title = '商品圈粉';
       location.query.qf === '1' ? (title = '店铺圈粉') : '';
     }
+    // step 5
+    if (location.query.type) {
+      title = '商品圈粉';
+      location.query.type === '31' ? (title = '店铺圈粉') : '';
+    }
     return (
       <PageHeaderWrapper
         title={title}
