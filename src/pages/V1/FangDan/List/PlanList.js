@@ -42,6 +42,108 @@ let params = {
 class PlanList extends PureComponent {
   constructor(props) {
     super(props);
+    this.columns = [
+      {
+        title: '排期时间',
+        dataIndex: 'plan_time',
+        key: 'plan_time',
+        width: 120,
+      },
+      {
+        key: 'goods_id',
+        title: '商品/店铺id',
+        width: 120,
+        dataIndex: 'goods_id',
+      },
+      {
+        title: '商品/店铺名称',
+        width: 143,
+        render: val => {
+          return (
+            <a
+              className={styles.pro}
+              href={val.goods_url}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img src={val.img} alt="a" style={{ width: 50, heigth: 50, marginRight: 5 }} />
+              <span className={styles.goodsName}> {val.title}</span>
+            </a>
+          );
+        },
+      },
+      {
+        title: '推广编号',
+        dataIndex: 'task_id',
+        key: 'task_id',
+        width: 90,
+      },
+      {
+        title: '券后价',
+        width: 100,
+        dataIndex: 'after_coupon_price',
+        key: 'after_coupon_price',
+        render: item => {
+          return <span>￥{item}</span>;
+        },
+      },
+      {
+        key: 'coupon_price',
+        title: '优惠券',
+        width: 100,
+        dataIndex: 'coupon_price',
+        render: val => {
+          return <span>{val ? `￥ ${val}` : '无'}</span>;
+        },
+      },
+      {
+        title: '状态',
+        width: 100,
+        render(item) {
+          return <Badge status={item.state_color} text={item.state_desc} />;
+        },
+      },
+      {
+        title: '推广份数',
+        width: 150,
+        render: item => {
+          return (
+            <p style={{ textAlign: 'left' }}>
+              <span>发放份数 {item.total_amount}</span>
+              <br />
+              <span>
+                {/^3[0|1]$/.test(item.type) ? '收藏' : '下单'}人数 {item.order_num}
+              </span>
+              <br />
+              {/** <span>评价人数 {item.comment_num}</span> */}
+            </p>
+          );
+        },
+      },
+      {
+        title: '操作',
+        width: 120,
+        render: item => {
+          let operation;
+          if (item.state === 0) {
+            operation = (
+              <span>
+                <a onClick={this.planDown.bind(this, item)}>下架</a>
+              </span>
+            );
+          }
+          if (item.state === 3) {
+            operation = (
+              <span>
+                <a onClick={this.planUp.bind(this, item)}>上架</a>
+              </span>
+            );
+          }
+
+          return <span>{operation}</span>;
+        },
+      },
+    ];
     this.qf = props.location.query.qf !== undefined;
   }
 
@@ -307,7 +409,8 @@ class PlanList extends PureComponent {
     // 表格数据
     const { planData } = this.props;
     const headerInfo = planData.header_info;
-    const columns = [
+    let { columns } = this;
+    const qFColumns = [
       {
         title: '排期时间',
         dataIndex: 'plan_time',
@@ -362,6 +465,14 @@ class PlanList extends PureComponent {
         },
       },
       {
+        title: '圈粉类型',
+        key: 'type',
+        width: 100,
+        render: item => {
+          return <span>{item.type === 30 ? '商品圈粉' : '店铺圈粉'}</span>;
+        },
+      },
+      {
         title: '状态',
         width: 100,
         render(item) {
@@ -409,7 +520,9 @@ class PlanList extends PureComponent {
         },
       },
     ];
-
+    if (this.qf) {
+      columns = qFColumns;
+    }
     const Info = ({ title, value, bordered }) => (
       <div className={styles.headerInfo}>
         <span>{title}</span>
@@ -466,6 +579,7 @@ class PlanList extends PureComponent {
           <Card className={styles.customStyleCard} extra={extraContent}>
             <div className={styles.tableList}>
               <div className={styles.tableListForm}>{this.renderForm()}</div>
+
               <Table
                 rowKey={item => item.id}
                 columns={columns}
