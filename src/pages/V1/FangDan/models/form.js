@@ -139,13 +139,19 @@ export default {
         const { plan_list, data } = res.payload;
         const arr = [];
         const len = plan_list.length;
-        const start_time = len > 0 && plan_list[0].plan_time;
-        const end_time = len > 0 && plan_list[len - 1].plan_time;
+        const start_time = len > 0 && plan_list[0].plan_time.split(' ')[0];
+        const end_time = len > 0 && plan_list[len - 1].plan_time.split(' ')[0];
         for (let i = 0; i < len; i += 1) {
           const item = plan_list[i];
+          const times = item.plan_time.split(' ');
+          let hour = 0;
+          if (item.hour.substr(0, 1) === '0') {
+            hour = item.hour.substr(1);
+          }
           arr.push({
-            day: item.plan_time,
+            day: times[0],
             amount: item.total_amount,
+            hour: parseInt(hour),
           });
         }
 
