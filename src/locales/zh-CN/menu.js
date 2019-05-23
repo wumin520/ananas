@@ -1,7 +1,7 @@
 export default {
   'menu.fangdan': '放单中心',
   'menu.fangdan.index': '我要放单',
-  'menu.fangdan.stepform': '好评试用推广',
+  'menu.fangdan.stepform': '免单试用推广',
   'menu.fangdan.stepform.info': '第一步',
   'menu.fangdan.stepform.confirm': '编辑推广',
   'menu.fangdan.stepform.schedule': '推广排期',
