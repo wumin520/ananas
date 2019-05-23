@@ -66,18 +66,33 @@ class ProductDetail extends Component {
       /* eslint-disable */
       <PageHeaderWrapper title="收藏详情" loading={loading} content={content}>
         <Card bordered={false}>
-          <DescriptionList size="large" title="商品/店铺信息" style={{ marginBottom: 32 }}>
-            <Description term="商品/店铺id">{data.goods_id}</Description>
-            <Description term="商品/店铺名称" className={styles.pro_name}>
-              {data.title}
-            </Description>
-            <Description>
-              <div className={styles.pro_img}>
-                <p>商品/店铺主图: </p>
-                <img src={data.img} alt="img" style={{ width: 65, heigth: 65, marginLeft: 10 }} />
-              </div>
-            </Description>
-          </DescriptionList>
+          {data.type === 30 ? (
+            <DescriptionList size="large" title="商品信息" style={{ marginBottom: 32 }}>
+              <Description term="商品id">{data.goods_id}</Description>
+              <Description term="商品名称" className={styles.pro_name}>
+                {data.title}
+              </Description>
+              <Description term="">
+                <div className={styles.pro_img}>
+                  <p>商品主图: </p>
+                  <img src={data.img} alt="img" style={{ width: 65, height: 65, marginLeft: 10 }} />
+                </div>
+              </Description>
+            </DescriptionList>
+          ) : (
+            <DescriptionList size="large" title="店铺信息" style={{ marginBottom: 32 }}>
+              <Description term="店铺id">{data.goods_id}</Description>
+              <Description term="店铺名称" className={styles.pro_name}>
+                {data.title}
+              </Description>
+              <Description term="">
+                <div className={styles.pro_img}>
+                  <p>店铺主图: </p>
+                  <img src={data.img} alt="img" style={{ width: 65, height: 65, marginLeft: 10 }} />
+                </div>
+              </Description>
+            </DescriptionList>
+          )}
           <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="关注信息" style={{ marginBottom: 32 }}>
             <Description term="用户昵称">{data.nick_name}</Description>
