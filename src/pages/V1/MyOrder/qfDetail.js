@@ -94,7 +94,7 @@ class ProductDetail extends Component {
             </DescriptionList>
           )}
           <Divider style={{ marginBottom: 32 }} />
-          <DescriptionList size="large" title="关注信息" style={{ marginBottom: 32 }}>
+          <DescriptionList size="large" title="收藏信息" style={{ marginBottom: 32 }}>
             <Description term="用户昵称">{data.nick_name}</Description>
             <Description term="凭证状态">
               <Badge status={data.state_color} text={data.state_desc} />
@@ -103,7 +103,7 @@ class ProductDetail extends Component {
             <Description term="上传时间">{data.proof_time}</Description>
           </DescriptionList>
           <p className={styles.proofImgBlock}>
-            <span>关注凭证:</span>
+            <span>收藏凭证:</span>
             {data.proof_images.length === 0
               ? ' 未上传'
               : data.proof_images.length > 0 &&
