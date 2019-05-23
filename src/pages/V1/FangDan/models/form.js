@@ -111,11 +111,12 @@ export default {
     *pay({ payload }, { call, put }) {
       const res = yield call(pay, payload);
       if (res && res.status === 'ok') {
-        yield put(
-          routerRedux.push(
-            `/fangdan/step-form/result?task_id=${payload.task_id}&type=${payload.type}`
-          )
-        );
+        let path = `/fangdan/step-form/result`;
+        if (/^3[0|1]/.test(payload.type)) {
+          path = `/fangdan/qf/result`;
+        }
+        path += `?task_id=${payload.task_id}&type=${payload.type}`;
+        yield put(routerRedux.push(path));
       }
     },
     *checkPrivige({ payload }, { call }) {
