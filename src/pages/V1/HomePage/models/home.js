@@ -78,21 +78,25 @@ export default {
     },
     *planList({ payload }, { call, put }) {
       const res = yield call(planList, payload);
-      yield put({
-        type: 'save',
-        payload: {
-          planData: res.payload,
-        },
-      });
+      if (res.status === 'ok') {
+        yield put({
+          type: 'save',
+          payload: {
+            planData: res.payload,
+          },
+        });
+      }
     },
     *orderData({ payload }, { call, put }) {
       const res = yield call(orderList, payload);
-      yield put({
-        type: 'save',
-        payload: {
-          orderData: res.payload,
-        },
-      });
+      if (res.status === 'ok') {
+        yield put({
+          type: 'save',
+          payload: {
+            orderData: res.payload,
+          },
+        });
+      }
     },
   },
 

@@ -28,11 +28,12 @@ export default {
     },
     *fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
-
-      yield put({
-        type: 'saveCurrentUser',
-        payload: response && response.payload,
-      });
+      if (response.status === 'ok') {
+        yield put({
+          type: 'saveCurrentUser',
+          payload: response && response.payload,
+        });
+      }
     },
   },
 
