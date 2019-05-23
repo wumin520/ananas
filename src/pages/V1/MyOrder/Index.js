@@ -20,7 +20,6 @@ import styles from './Index.less';
 
 const { Option } = Select;
 const FormItem = Form.Item;
-const statusMap = ['error', 'processing', 'warning', 'success'];
 
 let params = {
   page: 1, // 翻页参数
@@ -282,7 +281,7 @@ class orderList extends PureComponent {
         title: '状态',
         width: 90,
         render(item) {
-          return <Badge status={statusMap[item.state]} text={item.state_desc} />;
+          return <Badge status={item.state_color} text={item.state_desc} />;
         },
       },
       {

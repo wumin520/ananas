@@ -8,7 +8,6 @@ import styles from './Index.less';
 const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-const statusMap = ['warning', 'processing', 'success', 'error', 'warning', 'default'];
 const { Option } = Select;
 
 const { confirm } = Modal;
@@ -91,7 +90,7 @@ class FdList extends PureComponent {
         title: '状态',
         width: 100,
         render(item) {
-          return <Badge status={statusMap[item.state]} text={item.state_desc} />;
+          return <Badge status={item.state_color} text={item.state_desc} />;
         },
       },
       {
@@ -460,7 +459,7 @@ class FdList extends PureComponent {
         title: '状态',
         width: 100,
         render(item) {
-          return <Badge status={statusMap[item.state]} text={item.state_desc} />;
+          return <Badge status={item.state_color} text={item.state_desc} />;
         },
       },
       {

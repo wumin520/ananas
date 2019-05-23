@@ -118,12 +118,6 @@ class CapitalDetail extends PureComponent {
   };
 
   render() {
-    const stateMap = ['processing', 'success', 'error'];
-    // const state = ['审核中', '提现成功', '提现失败'];
-
-    const statusMap = ['error', 'success'];
-    // const status = ['失败', '成功'];
-
     const {
       assetData,
       exchangeData,
@@ -160,7 +154,7 @@ class CapitalDetail extends PureComponent {
         key: 'state',
         width: 100,
         render(item) {
-          return <Badge status={statusMap[item.state]} text={item.state_desc} />;
+          return <Badge status={item.state_color} text={item.state_desc} />;
         },
       },
       {
@@ -195,7 +189,7 @@ class CapitalDetail extends PureComponent {
         title: '状态',
         key: 'state',
         render(item) {
-          return <Badge status={stateMap[item.state - 1]} text={item.state_desc} />;
+          return <Badge status={item.state_color} text={item.state_desc} />;
         },
       },
       {

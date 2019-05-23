@@ -7,7 +7,6 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './ProductDetail.less';
 
 const { Description } = DescriptionList;
-const statusMap = ['error', 'processing', 'warning', 'success'];
 @connect(({ order, loading }) => ({
   orderDetail: order.orderDetail,
   loading: loading.effects['order/orderDetail'],
@@ -74,7 +73,7 @@ class ProductDetail extends Component {
           <DescriptionList size="large" title="订单信息" style={{ marginBottom: 32 }}>
             <Description term="订单编号">{data.p_order_id}</Description>
             <Description term="订单状态">
-              <Badge status={statusMap[data.state]} text={data.state_desc} />
+              <Badge status={data.state_color} text={data.state_desc} />
             </Description>
             <Description term="来源">推广编号{data.task_id}</Description>
             <Description term="订单价格">{data.order_price}</Description>
