@@ -95,15 +95,12 @@ class FreezeDetail extends PureComponent {
   };
 
   render() {
-    let { filteredInfo } = this.state;
-    filteredInfo = filteredInfo || {};
+    // let { filteredInfo } = this.state;
+    // filteredInfo = filteredInfo || {};
     const {
       freezeData,
       form: { getFieldDecorator },
     } = this.props;
-
-    const statusMap = ['', 'processing', 'success', 'default'];
-    const status = ['', '审核中', '进行中', '清算中'];
 
     const columns = [
       {
@@ -143,25 +140,25 @@ class FreezeDetail extends PureComponent {
         dataIndex: 'state',
         key: 'state',
         width: 150,
-        filters: [
-          {
-            text: status[1],
-            value: 1,
-          },
-          {
-            text: status[2],
-            value: 2,
-          },
-          {
-            text: status[3],
-            value: 3,
-          },
-        ],
-        render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+        // filters: [
+        //   {
+        //     text: status[1],
+        //     value: 1,
+        //   },
+        //   {
+        //     text: status[2],
+        //     value: 2,
+        //   },
+        //   {
+        //     text: status[3],
+        //     value: 3,
+        //   },
+        // ],
+        render(item) {
+          return <Badge status={item.state_color} text={item.state_desc} />;
         },
-        filteredValue: filteredInfo.state || null,
-        onFilter: (value, record) => record.state === value,
+        // filteredValue: filteredInfo.state || null,
+        // onFilter: (value, record) => record.state === value,
       },
       {
         title: '冻结金额',

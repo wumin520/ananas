@@ -4,8 +4,6 @@ import { FormattedMessage } from 'umi-plugin-react/locale';
 import Link from 'umi/link';
 import styles from './index.less';
 
-const statusMap = ['error', 'processing', 'warning', 'success'];
-
 const columns = [
   {
     title: <FormattedMessage id="app.homePage.table.orderCode" defaultMessage="Rank" />,
@@ -47,7 +45,7 @@ const columns = [
     title: '状态',
     width: 100,
     render(item) {
-      return <Badge status={statusMap[item.state]} text={item.state_desc} />;
+      return <Badge status={item.state_color} text={item.state_desc} />;
     },
   },
   {

@@ -1,10 +1,8 @@
 import React, { memo, Fragment } from 'react';
 import { Card, Table, Badge, Divider, Radio } from 'antd';
 import Link from 'umi/link';
-
 import styles from './index.less';
 
-const statusMap = ['default', 'success'];
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const defaultColumns = [
@@ -62,7 +60,7 @@ const defaultColumns = [
   {
     key: '5',
     title: '排期状态',
-    render: val => <Badge status={statusMap[val.state]} text={val.state_desc} />,
+    render: item => <Badge status={item.state_color} text={item.state_desc} />,
   },
   {
     key: '6',
@@ -129,7 +127,7 @@ const qfColumns = [
   {
     key: '5',
     title: '状态',
-    render: val => <Badge status={statusMap[val.state]} text={val.state_desc} />,
+    render: item => <Badge status={item.state_color} text={item.state_desc} />,
   },
   {
     key: '6',

@@ -21,7 +21,6 @@ import styles from './Index.less';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
-const statusMap = ['processing', 'success', 'default', 'error'];
 const { Option } = Select;
 const { confirm } = Modal;
 
@@ -365,8 +364,8 @@ class PlanList extends PureComponent {
       {
         title: '状态',
         width: 100,
-        render(val) {
-          return <Badge status={statusMap[val.state]} text={val.state_desc} />;
+        render(item) {
+          return <Badge status={item.state_color} text={item.state_desc} />;
         },
       },
       {
