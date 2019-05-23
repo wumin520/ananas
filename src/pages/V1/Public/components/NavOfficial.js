@@ -13,13 +13,13 @@ class Header extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
   }
 
   handleScroll = () => {
-    const { scrollTop } = document.documentElement;
-    if (scrollTop > 32) {
+    const { scrollY } = window;
+    if (scrollY > 32) {
       this.setState({
         fixTop: true,
         bgWhite: true,
