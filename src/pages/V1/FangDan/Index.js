@@ -66,7 +66,7 @@ class Index extends PureComponent {
         state: 1,
         type: 2,
         avatar:
-          'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
+          'https://cdn.youlianyc.com/image/static/5c75983b5efea8cef21ec34f25972cb946983272.jpg',
         title: '圈粉推广',
         description: `适用于：
           无基础销量
@@ -94,7 +94,7 @@ class Index extends PureComponent {
         state: 1,
         type: 2,
         avatar:
-          'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
+          'https://cdn.youlianyc.com/image/static/b506a5e8c8c2c467d9bf26b695746268187db04b.jpg',
         title: '店铺圈粉',
         description: `提高店铺收藏数`,
       },
@@ -103,7 +103,7 @@ class Index extends PureComponent {
         state: 1,
         type: 2,
         avatar:
-          'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
+          'https://cdn.youlianyc.com/image/static/f90b52f7970908277319d34c556fbaf656323549.jpg',
         title: '商品圈粉',
         description: `提高单个商品收藏数`,
       },
@@ -188,6 +188,7 @@ class Index extends PureComponent {
           visible={visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
+          width={483}
         >
           <List
             dataSource={[...qfList]}
@@ -196,8 +197,10 @@ class Index extends PureComponent {
               <List.Item>
                 <Card
                   hoverable
-                  style={{ width: 240 }}
-                  cover={<img alt="example" src={item.avatar} />}
+                  style={{ width: 206, textAlign: 'center', border: 'none' }}
+                  cover={
+                    <img alt="example" src={item.avatar} style={{ width: 80, margin: '0 auto' }} />
+                  }
                 >
                   <Meta title={item.title} description={item.description} />
                   <Button
