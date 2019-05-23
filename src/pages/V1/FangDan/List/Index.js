@@ -276,9 +276,8 @@ class FdList extends PureComponent {
 
   // 编辑
   goRedact = item => {
-    let path = `/fangdan/step-form/confirm?task_id=${item.task_id}&goods_id=${
-      item.goods_id
-    }&action=edit`;
+    let path = item.type === 10 ? `/fangdan/step-form/confirm` : `/fangdan/qf/confirm`;
+    path += `?task_id=${item.task_id}&goods_id=${item.goods_id}&action=edit`;
     path = this.addQFQuery(item, path);
     router.push(path);
   };
