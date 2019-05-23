@@ -163,6 +163,7 @@ class GeneralizeDetail extends Component {
             <Description term="申请时间">{data.created_at}</Description>
             <Description term="推广份数">{data.total_amount}</Description>
             <Description term="平台服务费">{data.rebate_price}</Description>
+            <Description term="投放方式">{data.type_name}</Description>
             {data.reject_reason ? (
               <Description term="驳回原因">{data.reject_reason}</Description>
             ) : (
