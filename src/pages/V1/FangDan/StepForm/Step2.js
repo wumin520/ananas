@@ -1,17 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import {
-  Form,
-  Input,
-  Button,
-  Alert,
-  Divider,
-  List,
-  Select,
-  Upload,
-  Icon,
-  message,
-} from 'antd';
+import { Form, Input, Button, Alert, Divider, List, Select, Upload, Icon, message } from 'antd';
 import router from 'umi/router';
 import { digitUppercase } from '@/utils/utils';
 import { configs } from '@/defaultSettings';
@@ -65,7 +54,7 @@ class Step2 extends React.PureComponent {
     const { goods_id, task_id, action, qf } = location.query;
     this.actionType = action;
     if (action === 'edit') {
-      const type = qf !== undefined ? 1 : 0;
+      const type = qf === '1' ? 1 : 0;
       task_id &&
         dispatch({
           type: 'form/queryTaskDetail',
