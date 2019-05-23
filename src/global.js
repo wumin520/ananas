@@ -51,6 +51,7 @@ if (pwa) {
       </Button>
     );
     notification.open({
+      duration: null,
       message: '有新内容更新',
       description: '为了更好的服务，请点击更新',
       btn,
