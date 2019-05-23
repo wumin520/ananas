@@ -316,11 +316,11 @@ class Step3 extends React.PureComponent {
       return;
     }
     if (isLtZero) {
-      message.error('你填写的投放数量必须 > 0');
+      message.error('您填写的投放数量必须 > 0');
       return;
     }
     if (!valid) {
-      message.error('你还有投放数量没有填写完成哦～');
+      message.error('您还有投放数量没有填写完成哦～');
       return;
     }
     const {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Alert, Divider, List, Select, Upload, Icon, message } from 'antd';
+import { Form, Input, Button, Divider, List, Select, Upload, Icon, message } from 'antd';
 import router from 'umi/router';
 import { digitUppercase } from '@/utils/utils';
 import { configs } from '@/defaultSettings';
@@ -210,12 +210,13 @@ class Step2 extends React.PureComponent {
           </Fragment>
         ) : (
           <Fragment>
-            <Alert
+            {/**
+              <Alert
               closable
               showIcon
               message="注意：活动期间请勿随意修改佣金比例和购买价格，否则任务会立即终止，并影响您的信用分"
               style={{ marginBottom: 24 }}
-            />
+            /> */}
             <Form.Item {...formItemLayout} className={styles.stepFormText} label="商品id">
               {goods_id}
             </Form.Item>
