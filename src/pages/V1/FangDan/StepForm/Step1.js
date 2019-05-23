@@ -91,7 +91,7 @@ class Step1 extends React.PureComponent {
           ) : (
             <Form.Item {...formItemLayout} label="拼多多店铺编号：">
               {getFieldDecorator('goods_id', {
-                initialValue: pddGoodUrl,
+                initialValue: currentUser.shop_code,
                 rules: [{ required: true, message: '请粘贴拼多多店铺编号' }],
               })(<Input placeholder="请粘贴拼多多店铺编号" />)}
             </Form.Item>
