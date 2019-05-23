@@ -10,7 +10,7 @@ function AuthComponent({ children, location, routerData }) {
   const auth = getAuthority();
   const isLogin = auth && auth[0] !== 'guest';
   const isValid = getShState();
-  let redirectTo = '/user/login';
+  let redirectTo = '/web/index';
   // 信息没有完善
   if (isValid === 0) {
     redirectTo = '/user/settlein';

@@ -3,7 +3,7 @@
  * 更详细的api文档: https://bigfish.alipay.com/doc/api#request
  */
 import { extend } from 'umi-request';
-import router from 'umi/router';
+// import router from 'umi/router';
 import { notification, message } from 'antd';
 import { configs } from '@/defaultSettings';
 import { getStorage, setUserToken, setShState } from './authority';
@@ -103,10 +103,10 @@ request.interceptors.response.use(async response => {
   if (status === 200) {
     const res = await response.clone().json();
     if (res.code === 40301) {
-      message.error('请先登录');
+      // message.error('请先登录');
       setUserToken('');
       setShState('');
-      router.push('/user/login');
+      // router.push('/web/index');
     } else if (res.code >= 40000) {
       message.error(res.message);
     }
