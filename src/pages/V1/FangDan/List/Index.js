@@ -242,7 +242,8 @@ class FdList extends PureComponent {
     if (/^3[0|1]$/.test(item.type)) {
       path = `/fangdan/qfDetail`;
     }
-    router.push(`${path}?task_id=${item.task_id}`);
+    // router.push(`${path}?task_id=${item.task_id}`);
+    window.open(`${path}?task_id=${item.task_id}`); // 0523 新窗口打开
   };
 
   goPay = item => {

@@ -67,12 +67,12 @@ class Index extends PureComponent {
         type: 2,
         avatar:
           'https://cdn.youlianyc.com/image/static/5c75983b5efea8cef21ec34f25972cb946983272.jpg',
-        title: '圈粉推广',
+        title: '圈粉收藏推广',
         description: `适用于：
-          无基础销量
-          宝贝流量较少
-          需要提高转化率
-          DSR评分低`,
+          宝贝收藏数低
+          店铺收藏数低
+          宝贝权重不高
+          店铺权重不高`,
       },
       {
         actions: ['列表', '敬请期待...'],
@@ -183,7 +183,7 @@ class Index extends PureComponent {
     return (
       <div>
         <Modal
-          title="请选择圈粉推广的类型"
+          title="请选择圈粉收藏推广的类型"
           footer={null}
           visible={visible}
           onOk={this.handleOk}
