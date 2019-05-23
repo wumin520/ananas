@@ -328,10 +328,10 @@ class orderList extends PureComponent {
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
-              <Col sm={8} xs={24}>
+              <Col sm={12} xs={24}>
                 <Info title="今日圈粉" value={orderNumInfo.daily_num} bordered />
               </Col>
-              <Col sm={8} xs={24}>
+              <Col sm={12} xs={24}>
                 <Info title="累计圈粉" value={orderNumInfo.total_num} />
               </Col>
             </Row>

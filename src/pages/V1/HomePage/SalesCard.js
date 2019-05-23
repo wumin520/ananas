@@ -22,7 +22,7 @@ const SalesCard = memo(({ salesData, loading, radioGroupOnChange, dataType }) =>
     if (i === len - 1) {
       title = '今天';
     } else {
-      title = moment(item.x).format('M月DD日');
+      title = moment(item.x).format('MM.DD');
     }
     if (i > len - 8) {
       rankingListData.push({
