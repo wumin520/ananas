@@ -18,6 +18,12 @@ export default [
         name: 'register.result',
         component: './V1/User/RegisterResult',
       },
+      // 推手注册相关路由
+      {
+        path: '/user/tuishou-signin',
+        name: 'index',
+        component: './V1/User/TuishouSignin',
+      },
       {
         component: '404',
       },
@@ -233,6 +239,12 @@ export default [
             component: './V1/FangDan/List/qfDetail',
             hideInMenu: true,
           },
+          {
+            path: '/fangdan/deqDetail',
+            name: 'generalizeDetail',
+            component: './V1/FangDan/List/deqDetail',
+            hideInMenu: true,
+          },
         ],
       },
       // myOrder
@@ -337,18 +349,36 @@ export default [
         name: 'dashboard',
         icon: 'dashboard',
         component: './V1/HomePage/index',
-        hideChildrenInMenu: true,
+        authority: ['tuishou'],
+      },
+      {
+        path: '/tuishou-account',
+        name: 'tygj',
+        icon: 'profile',
         authority: ['tuishou'],
         routes: [
-          // 推手中心子路由
           {
-            path: '/tuishou',
-            redirect: '/tuishou/home',
+            name: 'pid',
+            path: '/tuishou-account/pid',
+            component: './V1_Tuishou/Account/Pid',
           },
           {
-            path: '/tuishou/home',
-            name: 'index',
-            component: './V1/HomePage/index',
+            name: 'favorite',
+            path: '/tuishou-account/favorite',
+            component: './V1_Tuishou/Account/Favorite',
+          },
+        ],
+      },
+      {
+        path: '/tuishou-order',
+        name: 'tgxg',
+        icon: 'profile',
+        authority: ['tuishou'],
+        routes: [
+          {
+            name: 'order',
+            path: '/tuishou-order/index',
+            component: './V1_Tuishou/Order/List',
           },
         ],
       },

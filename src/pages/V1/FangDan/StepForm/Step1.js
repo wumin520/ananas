@@ -34,6 +34,9 @@ class Step1 extends React.PureComponent {
         params.type = 1;
       }
     }
+    if (location.query.deq !== undefined) {
+      params.deq = 1;
+    }
     console.log('values -> 1', params);
     dispatch({
       type: 'form/queryGoodsDetail',

@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import moment from 'moment';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import PageLoading from '@/components/PageLoading';
-import { Row, Col, Icon, Dropdown, Menu, Alert } from 'antd';
+import { Row, Col, Alert } from 'antd';
 import styles from './index.less';
 
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
@@ -45,7 +45,7 @@ class Index extends Component {
   reportRadioOnChange = e => {
     console.log('reportRadioOnChange -> ', e);
     const val = e.target.value;
-    const dataType = val === '0' ? 'great_review' : 'fans';
+    const dataType = val === '0' ? 'great_review' : val === '2' ? 'large_coupon' : 'fans';
     this.setState({
       dataType,
     });
@@ -69,12 +69,13 @@ class Index extends Component {
     });
   };
 
-  getOrderData = () => {
+  getOrderData = (type = 10) => {
     const params = {
       page: 1,
       state: -1,
       ordered_time_for: start_time,
       ordered_time_to: end_time,
+      type,
     };
     const { dispatch } = this.props;
     dispatch({
@@ -86,6 +87,10 @@ class Index extends Component {
   todayPlanRadioOnChange = e => {
     this.getListData(e.target.value);
     this.tableType = e.target.value === '10' ? 0 : 1;
+  };
+
+  todayOrderRadioOnChange = e => {
+    this.getOrderData(e.target.value);
   };
 
   render() {
@@ -101,20 +106,6 @@ class Index extends Component {
     console.log('taskReportInfo -> ', taskReportInfo, homedata);
     /* eslint-disable */
     const salesData = taskReportInfo[this.state.dataType];
-    const menu = (
-      <Menu>
-        <Menu.Item>操作一</Menu.Item>
-        <Menu.Item>操作二</Menu.Item>
-      </Menu>
-    );
-
-    const dropdownGroup = (
-      <span className={styles.iconGroup}>
-        <Dropdown overlay={menu} placement="bottomRight">
-          <Icon type="ellipsis" />
-        </Dropdown>
-      </span>
-    );
 
     return (
       <GridContent>
@@ -151,7 +142,7 @@ class Index extends Component {
                   loading={loading}
                   data={dayOrderInfo.list}
                   pageInfo={dayOrderInfo.page_info}
-                  dropdownGroup={dropdownGroup}
+                  radioOnChange={this.todayOrderRadioOnChange}
                 />
               </Suspense>
             </Col>

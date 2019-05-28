@@ -21,8 +21,7 @@ module.exports = {
   // backend: 'http://zs_good.test.chaoduoke.com',
   configs: {
     test: {
-      // API_SERVER: 'http://fans.test.chaoduoke.com', // 测试环境
-      API_SERVER: 'http://reward.test.chaoduoke.com',
+      API_SERVER: 'http://large_coupon.test.chaoduoke.com', // 测试环境
     },
     production: {
       API_SERVER: 'https://chaoduoke.com', // 线上环境

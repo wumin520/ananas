@@ -47,9 +47,11 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { loading, orderDetail } = this.props;
+    const { loading, orderDetail, location } = this.props;
     const { data } = orderDetail;
     const content = <div />;
+    const { deq } = location.query;
+
     return (
       /* eslint-disable */
       <PageHeaderWrapper title="订单详情" loading={loading} content={content}>
@@ -66,8 +68,21 @@ class ProductDetail extends Component {
               </div>
             </Description>
             <Description term="优惠券">{data.coupon ? '￥' + data.coupon : '无'}</Description>
-            <Description term="商品价格">￥{data.price}</Description>
-            <Description term="招商ID">{data.zs_duo_id}</Description>
+            {deq ? (
+              <React.Fragment>
+                <Description term="优惠券数量">
+                  ￥{data.coupon_info.coupon_total_quantity}
+                </Description>
+                <Description term="招商ID">{data.zs_duo_id}</Description>
+                <Description term="商品价格">￥{data.price}</Description>
+                <Description term="佣金">{data.commission_rate}</Description>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <Description term="商品价格">￥{data.price}</Description>
+                <Description term="招商ID">{data.zs_duo_id}</Description>
+              </React.Fragment>
+            )}
           </DescriptionList>
           <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="订单信息" style={{ marginBottom: 32 }}>
@@ -77,7 +92,7 @@ class ProductDetail extends Component {
             </Description>
             <Description term="来源">推广编号{data.task_id}</Description>
             <Description term="订单价格">{data.order_price}</Description>
-            <Description term="返现金额">￥{data.rebate_price}</Description>
+            {deq ? '' : <Description term="返现金额">￥{data.rebate_price}</Description>}
           </DescriptionList>
           <div className={styles.evaluate}>
             <Description style={{ width: '34.3%' }}>

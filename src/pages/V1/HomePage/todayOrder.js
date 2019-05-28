@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Table, Card, Badge } from 'antd';
+import { Table, Card, Badge, Radio } from 'antd';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import Link from 'umi/link';
 import styles from './index.less';
@@ -73,22 +73,37 @@ const columns = [
   },
 ];
 
-const OrderDetail = memo(({ loading, data, pageInfo }) => (
-  <Card
-    loading={loading}
-    bordered={false}
-    title={<FormattedMessage id="app.homePage.todayOrder" defaultMessage="" />}
-    extra={<Link to="/order/Index">{'订单列表>'}</Link>}
-    style={{ marginTop: 24 }}
-  >
-    <Table
-      rowKey={record => record.index}
-      size="small"
-      columns={columns}
-      dataSource={data}
-      pagination={pageInfo}
-    />
-  </Card>
-));
+const RadioGroup = Radio.Group;
+const RadioButton = Radio.Button;
+
+const OrderDetail = memo(({ loading, data, pageInfo, radioOnChange }) => {
+  const extraContent = (
+    <div style={{ marginBottom: 20 }} className={styles.extraContent}>
+      <RadioGroup onChange={radioOnChange} defaultValue="10">
+        <RadioButton value="10">免单试用</RadioButton>
+        <RadioButton value="20">大额券</RadioButton>
+      </RadioGroup>
+    </div>
+  );
+
+  return (
+    <Card
+      loading={loading}
+      bordered={false}
+      title={<FormattedMessage id="app.homePage.todayOrder" defaultMessage="" />}
+      extra={<Link to="/order/Index">{'订单列表>'}</Link>}
+      style={{ marginTop: 24 }}
+    >
+      {extraContent}
+      <Table
+        rowKey={record => record.index}
+        size="small"
+        columns={columns}
+        dataSource={data}
+        pagination={pageInfo}
+      />
+    </Card>
+  );
+});
 
 export default OrderDetail;

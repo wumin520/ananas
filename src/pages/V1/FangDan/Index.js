@@ -75,8 +75,9 @@ class Index extends PureComponent {
           店铺权重不高`,
       },
       {
-        actions: ['列表', '敬请期待...'],
-        state: 0,
+        actions: ['列表', '+新增'],
+        state: 1,
+        type: 3,
         avatar:
           'https://cdn.youlianyc.com/image/static/526746a209d504d6d9c43270767ff76e928aedc2.jpg',
         title: '优惠券推广',
@@ -160,8 +161,14 @@ class Index extends PureComponent {
         let path = `/fangdan/list`;
         if (item.type === 2) {
           path += '?qf=1';
+        } else if (item.type === 3) {
+          path += '?deq=1';
         }
         router.push(path);
+        return;
+      }
+      if (item.type === 3) {
+        router.push('/fangdan/step-form/info?deq=1');
         return;
       }
       const { dispatch } = this.props;

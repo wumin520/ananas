@@ -61,8 +61,8 @@ export default class StepForm extends PureComponent {
             <Steps current={this.getCurrentStep()} className={styles.steps}>
               <Step title="校验商品" />
               <Step title="编辑推广" />
-              <Step title="推广排期" />
-              <Step title="支付" />
+              <Step style={{ display: 'none' }} title="推广排期" />
+              <Step style={{ display: 'none' }} title="支付" />
               <Step title="完成" />
             </Steps>
             {children}

@@ -42,6 +42,7 @@ class orderList extends PureComponent {
     this.state = {
       modal1Visible: false,
       itemImg: [],
+      tabActiveKey: 'haoping',
     };
   }
 
@@ -120,6 +121,30 @@ class orderList extends PureComponent {
   onChange = page => {
     params.page = page;
     this.getOrderData(params);
+  };
+
+  handleTabChange = (key, val) => {
+    console.log('handleTabChange', key, val);
+    this.setState({
+      tabActiveKey: key,
+    });
+    if (key === 'haoping') {
+      this.qf = undefined;
+      params.type = 10;
+    } else if (key === 'quanfen') {
+      this.qf = 1;
+      params.type = '30,31';
+    } else if (key === 'deq') {
+      params.type = 20;
+    }
+    params.page = 1;
+    params.task_id = 0;
+    params.goods_id = 0;
+    params.state = -1;
+    this.getOrderData(params);
+    // 清空input框中上次输入的值
+    const { form } = this.props;
+    form.resetFields();
   };
 
   // 轮播左右切换
@@ -203,7 +228,7 @@ class orderList extends PureComponent {
     const orderNumInfo = orderData.order_num_info;
     const pageInfo = orderData.page_info;
     const { list } = orderData;
-    const { modal1Visible, itemImg } = this.state;
+    const { modal1Visible, itemImg, tabActiveKey } = this.state;
     const ModelPops = ({ itemImg }) => (
       <Modal
         style={{ top: 20 }}
@@ -347,8 +372,25 @@ class orderList extends PureComponent {
     );
     const content = <div />;
 
+    const tabList = [
+      {
+        key: 'haoping',
+        tab: '免单试用',
+      },
+      {
+        key: 'deq',
+        tab: '大额券',
+      },
+    ];
+
     return (
-      <PageHeaderWrapper title="订单列表" content={content}>
+      <PageHeaderWrapper
+        title="订单列表"
+        content={content}
+        tabList={tabList}
+        tabActiveKey={tabActiveKey}
+        onTabChange={this.handleTabChange}
+      >
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>

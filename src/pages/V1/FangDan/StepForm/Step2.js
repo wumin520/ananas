@@ -1,7 +1,19 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Divider, List, Select, Upload, Icon, message } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Divider,
+  List,
+  Select,
+  Upload,
+  Icon,
+  message,
+  DatePicker,
+} from 'antd';
 import router from 'umi/router';
+import moment from 'moment';
 import { digitUppercase } from '@/utils/utils';
 import { configs } from '@/defaultSettings';
 import styles from './style.less';
@@ -15,6 +27,25 @@ const formItemLayout = {
     span: 19,
   },
 };
+function range(start, end) {
+  const result = [];
+  for (let i = start; i < end; i += 1) {
+    result.push(i);
+  }
+  return result;
+}
+function disabledDate(current) {
+  // Can not select days before today and today
+  return current && current < moment().endOf('day');
+}
+
+function disabledDateTime() {
+  return {
+    disabledHours: () => range(0, 24).splice(4, 20),
+    disabledMinutes: () => range(30, 60),
+    disabledSeconds: () => [55, 56],
+  };
+}
 
 @connect(({ form, loading }) => ({
   submitting: loading.effects['form/submitStepForm'],
@@ -109,6 +140,24 @@ class Step2 extends React.PureComponent {
               category_id: values.category_id,
             },
           });
+          if (location.query.deq !== undefined) {
+            dispatch({
+              type: 'form/publishTask',
+              payload: {
+                ...goodsDetail,
+                type: 20,
+                ...values,
+                no_redirect: 1,
+                images: goodsDetail.detailImgRecordUrl,
+                plan_info: [],
+              },
+            }).then(res => {
+              if (res.status === 'ok') {
+                router.push(`/fangdan/step-form/result?deq=1`);
+              }
+            });
+            return;
+          }
           let path = `/fangdan/step-form/schedule`;
           if (location.query.qf !== undefined) {
             path = `/fangdan/qf/schedule?qf=${location.query.qf}`;
@@ -128,9 +177,11 @@ class Step2 extends React.PureComponent {
       coupon_price,
       comment_limit,
       comment_keyword,
+      commission_rate,
     } = goodsDetail;
 
     const qf = location.query.qf !== undefined;
+    const deq = location.query.deq !== undefined;
     const uploadProps = {
       name: 'file',
       action: `${configs[process.env.API_ENV].API_SERVER}/cdk/v1/web/upload`,
@@ -282,7 +333,62 @@ class Step2 extends React.PureComponent {
             </Form.Item>
           </Fragment>
         )}
-        {qf ? (
+        {deq ? (
+          <React.Fragment>
+            <Form.Item {...formItemLayout} className={styles.stepFormText} label="推荐理由">
+              {getFieldDecorator('comment_keyword', {
+                rules: [{ required: true, message: '请输入推荐理由', max: 36 }],
+              })(
+                <div>
+                  <Input placeholder="请输入推荐理由" style={{ width: '80%' }} />{' '}
+                  <div style={{ color: 'orange' }}>
+                    不超过36个字的精简文案，突出产品亮点、需求痛点、为什么值得购买！
+                  </div>
+                </div>
+              )}
+            </Form.Item>
+            <Form.Item {...formItemLayout} className={styles.stepFormText} label="推广时间">
+              {getFieldDecorator('start_time', {
+                rules: [
+                  {
+                    required: true,
+                    message: `请选择推广开始时间`,
+                  },
+                ],
+                initialValue: '',
+              })(
+                <DatePicker
+                  format="YYYY-MM-DD HH:mm:ss"
+                  disabledDate={disabledDate}
+                  disabledTime={disabledDateTime}
+                  showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
+                />
+              )}
+            </Form.Item>
+            {coupon_info ? (
+              <React.Fragment>
+                <Form.Item {...formItemLayout} className={styles.stepFormText} label="优惠券">
+                  <span className={styles.money}>{coupon_info.coupon_discount}</span>
+                  <span className={styles.uppercase}>
+                    （{digitUppercase(coupon_info.coupon_discount)}）
+                  </span>
+                </Form.Item>
+                <Form.Item {...formItemLayout} className={styles.stepFormText} label="优惠券数量">
+                  <span className={styles.money}>{coupon_info.coupon_total_quantity}</span>
+                </Form.Item>
+              </React.Fragment>
+            ) : (
+              ''
+            )}
+            <Form.Item {...formItemLayout} className={styles.stepFormText} label="券后价">
+              <span className={styles.money}>{coupon_price}</span>
+              <span className={styles.uppercase}>（{digitUppercase(coupon_price)}）</span>
+            </Form.Item>
+            <Form.Item {...formItemLayout} className={styles.stepFormText} label="佣金比例">
+              <span className={styles.money}>{commission_rate}%</span>
+            </Form.Item>
+          </React.Fragment>
+        ) : qf ? (
           ''
         ) : (
           <React.Fragment>

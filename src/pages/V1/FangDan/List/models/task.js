@@ -23,7 +23,9 @@ export default {
       page_info: {},
     },
     detailData: {
-      data: {},
+      data: {
+        coupon_info: {},
+      },
       plan_list: [],
     },
     orderData: {

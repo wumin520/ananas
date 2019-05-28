@@ -242,6 +242,9 @@ class FdList extends PureComponent {
     if (/^3[0|1]$/.test(item.type)) {
       path = `/fangdan/qfDetail`;
     }
+    if (item.type === 20) {
+      path = `/fangdan/deqDetail`;
+    }
     // router.push(`${path}?task_id=${item.task_id}`);
     window.open(`${path}?task_id=${item.task_id}`); // 0523 新窗口打开
   };
@@ -260,6 +263,9 @@ class FdList extends PureComponent {
     let path = `/order/Index`;
     if (/^3[0|1]$/.test(item.type)) {
       path = `/order/qf`;
+    }
+    if (item.type === 20) {
+      path += '?deq=1';
     }
     router.push(`${path}?task_id=${item.task_id}`);
   };
@@ -298,6 +304,8 @@ class FdList extends PureComponent {
     } else if (key === 'quanfen') {
       this.qf = 1;
       params.type = '30,31';
+    } else if (key === 'deq') {
+      params.type = 20;
     }
     params.page = 1;
     params.task_id = 0;
@@ -540,6 +548,10 @@ class FdList extends PureComponent {
       {
         key: 'haoping',
         tab: '免单试用',
+      },
+      {
+        key: 'deq',
+        tab: '大额券',
       },
       {
         key: 'quanfen',
