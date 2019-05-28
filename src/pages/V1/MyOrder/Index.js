@@ -356,9 +356,8 @@ class orderList extends PureComponent {
                 <Info title="已下单" value={orderNumInfo.pay_num} bordered />
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="已收货" value={orderNumInfo.wait_proof_num} bordered />
+                <Info title="试用报告" value={orderNumInfo.trial_report_num} bordered />
               </Col>
-
               <Col sm={8} xs={24}>
                 <Info title="已完成" value={orderNumInfo.finish_num} />
               </Col>

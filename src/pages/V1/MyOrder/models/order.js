@@ -29,6 +29,7 @@ export default {
     orderDetail: {
       data: {
         proof_images: [],
+        real_images: [],
       },
     },
     fansData: {

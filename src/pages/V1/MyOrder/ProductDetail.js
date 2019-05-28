@@ -79,21 +79,37 @@ class ProductDetail extends Component {
             <Description term="订单价格">{data.order_price}</Description>
             <Description term="返现金额">￥{data.rebate_price}</Description>
           </DescriptionList>
-
-          {/** <p>
-            免单凭证:
-            {data.proof_images.length === 0
-              ? ' 未上传'
-              : data.proof_images.length > 0 &&
-                data.proof_images.map(e => (
-                  <a onClick={this.setModal1Visible.bind()}>
-                    <img
-                      src={e}
-                      style={{ width: 100, height: 100, marginLeft: 10, marginBottom: 20 }}
-                    />
-                  </a>
-                ))}
-            <Modal
+          <div className={styles.evaluate}>
+            <Description style={{ width: '34.3%' }}>
+              <div className={styles.pro_img}>
+                <p style={{ marginRight: 6, color: '#000' }}>用户评价: </p>
+                {data.proof_images.length === 0
+                  ? '未上传'
+                  : data.proof_images.length > 0 &&
+                    data.proof_images.map(e => (
+                      <img src={e} style={{ width: 100, height: 100, margin: '0 0px 20px 10px' }} />
+                    ))}
+              </div>
+            </Description>
+            <Description style={{ width: '30%' }}>
+              <div className={styles.pro_img}>
+                <p style={{ marginRight: 6, color: '#000' }}>试用报告: </p>
+                {data.real_images.length === 0 ? (
+                  '未上传'
+                ) : (
+                  <span>
+                    {data.trial_experience}
+                    <br />
+                    {data.real_images.length > 0 &&
+                      data.real_images.map(e => (
+                        <img src={e} style={{ width: 100, height: 100, margin: '10px 0 20px' }} />
+                      ))}
+                  </span>
+                )}
+              </div>
+            </Description>
+          </div>
+          {/* <Modal
               style={{ top: 20 }}
               footer={null}
               visible={modal1Visible}
@@ -119,8 +135,7 @@ class ProductDetail extends Component {
                 <Icon type="left" onClick={this.prev} />
                 <Icon type="right" onClick={this.next} />
               </div>
-            </Modal>
-          </p> */}
+              </Modal> */}
 
           <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="订单进度" style={{ marginBottom: 32 }}>
