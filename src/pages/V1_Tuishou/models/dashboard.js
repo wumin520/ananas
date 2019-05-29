@@ -1,21 +1,34 @@
-import { queryHomeData } from '@/services/api';
+import { queryHomeData } from '@/services/tuishou_api';
 
 export default {
   namespace: 'dashboard',
 
   state: {
-    homeData: [],
+    head_info: {
+      visitor_info: {
+        aver_visitor_amount: 0,
+        day_visitor_amount: 0,
+        statistics_info: [],
+      },
+      order_info: {
+        aver_order_num: 0,
+        day_order_num: 0,
+        statistics_info: [],
+      },
+    },
+    today_rebate: 0,
+    month_rebate: 0,
+    last_month_rebate: 0,
+    total_rebate: 0,
   },
 
   effects: {
-    *queryList({ payload }, { put, call }) {
+    *queryHomeData({ payload }, { put, call }) {
       const res = yield call(queryHomeData, payload);
       if (res.status === 'ok') {
         yield put({
           type: 'saveState',
-          payload: {
-            homeData: res.payload,
-          },
+          payload: res.payload,
         });
       }
     },

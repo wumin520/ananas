@@ -348,7 +348,7 @@ export default [
         path: '/tuishou',
         name: 'dashboard',
         icon: 'dashboard',
-        component: './V1/HomePage/index',
+        component: './V1_Tuishou/Dashboard',
         authority: ['tuishou'],
       },
       {

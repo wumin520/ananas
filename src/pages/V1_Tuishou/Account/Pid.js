@@ -26,11 +26,6 @@ class Pid extends Component {
       });
     }
     this.queryPidTaskList();
-    this.openNotification({
-      status: 'fail',
-      state: 0,
-      message: '您绑定的授权帐号 15185768791 有效期预计2019-06-20 10:34:08',
-    });
   }
 
   queryPidTaskList = () => {
