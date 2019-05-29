@@ -73,7 +73,7 @@ class ProductDetail extends Component {
                 {data.title}
               </Description>
               <Description term="">
-                <div className={styles.pro_img}>
+                <div className={styles.pro_image}>
                   <p>商品主图: </p>
                   <img src={data.img} alt="img" style={{ width: 65, height: 65, marginLeft: 10 }} />
                 </div>
@@ -86,7 +86,7 @@ class ProductDetail extends Component {
                 {data.title}
               </Description>
               <Description term="">
-                <div className={styles.pro_img}>
+                <div className={styles.pro_image}>
                   <p>店铺主图: </p>
                   <img src={data.img} alt="img" style={{ width: 65, height: 65, marginLeft: 10 }} />
                 </div>

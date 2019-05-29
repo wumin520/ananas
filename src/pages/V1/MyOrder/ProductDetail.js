@@ -60,7 +60,7 @@ class ProductDetail extends Component {
               {data.title}
             </Description>
             <Description>
-              <div className={styles.pro_img}>
+              <div className={styles.pro_image}>
                 <p>商品主图: </p>
                 <img src={data.img} alt="img" style={{ width: 65, heigth: 65, marginLeft: 10 }} />
               </div>
@@ -82,7 +82,7 @@ class ProductDetail extends Component {
           <div className={styles.evaluate}>
             <Description style={{ width: '34.3%' }}>
               <div className={styles.pro_img}>
-                <p style={{ marginRight: 6, color: '#000' }}>用户评价: </p>
+                <p className={styles.S_title}>用户评价: </p>
                 {data.proof_images.length === 0
                   ? '未上传'
                   : data.proof_images.length > 0 &&
@@ -91,9 +91,9 @@ class ProductDetail extends Component {
                     ))}
               </div>
             </Description>
-            <Description style={{ width: '30%' }}>
+            <Description style={{ width: '50%' }}>
               <div className={styles.pro_img}>
-                <p style={{ marginRight: 6, color: '#000' }}>试用报告: </p>
+                <p className={styles.S_title}>试用报告: </p>
                 {data.real_images.length === 0 ? (
                   '未上传'
                 ) : (
