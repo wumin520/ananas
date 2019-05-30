@@ -56,7 +56,6 @@ class Favorites extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      popVisible: false,
       sortTitle: '最新上架',
     };
   }
@@ -68,8 +67,6 @@ class Favorites extends Component {
 
   // 获取商品列表
   getProList = () => {
-    // let sale = this.sortSale === 2 ? 1 : 0
-    // sortCondition.sort = sort || 1
     const { dispatch } = this.props;
     dispatch({
       type: 'favorites/tsTaskList',
@@ -127,6 +124,10 @@ class Favorites extends Component {
     );
   };
 
+  copyCont = () => {
+    console.log('复制');
+  };
+
   // 超多客六大优势
   showAdvantages = () => {
     return advantage.map(item => {
@@ -143,8 +144,9 @@ class Favorites extends Component {
 
   // 选品库商品展示
   showFavItem = list => {
-    const { popVisible } = this.state;
-    return list.map(item => {
+    // const { popVisible } = this.state;
+    console.log('showFavItem -> list ', list);
+    return list.map((item, index) => {
       return (
         <div className={styles.fav_item} key={item.task_id}>
           <img className={styles.fav_item_img} src={item.img} alt="" />
@@ -174,11 +176,15 @@ class Favorites extends Component {
               <Popover
                 content={this.promoteInfo(item)}
                 className={styles.fav}
-                visible={popVisible}
+                visible={item.popVisible}
                 trigger="click"
                 placement="right"
               >
-                <div onClick={this.getShortUrl.bind(this, item)}>推广链接</div>
+                {item.popVisible ? (
+                  <div onClick={this.copyCont.bind(this, item)}>点击复制</div>
+                ) : (
+                  <div onClick={this.getShortUrl.bind(this, item, index)}>推广链接</div>
+                )}
               </Popover>
             </div>
           </div>
@@ -227,7 +233,7 @@ class Favorites extends Component {
   promoteInfo = item => {
     const { shortUrl } = this.props;
     return (
-      <div className={styles.flow_bg}>
+      <div className={styles.flow_bg} onMouseLeave={this.handleMouseLeave.bind(this, item)}>
         <p className={styles.mb12}>{item.title}</p>
         <p className={styles.mb12}>
           券后价【{item.after_coupon_price}元】 原价【{item.price}元】
@@ -238,10 +244,17 @@ class Favorites extends Component {
     );
   };
 
+  handleMouseLeave = item => {
+    const obj = item;
+    obj.popVisible = false;
+    this.setStoreData();
+  };
+
   // 获取推广商品分享链接
-  getShortUrl = (item, e) => {
+  getShortUrl = (item, index, e) => {
+    const obj = item;
     e.preventDefault();
-    const { dispatch } = this.props;
+    const { dispatch, tsTaskData } = this.props;
     const taskPlanId = item.task_plan_id;
     dispatch({
       type: 'favorites/tsTaskGoodsUrl',
@@ -250,9 +263,26 @@ class Favorites extends Component {
         task_plan_id: taskPlanId,
       },
     }).then(() => {
-      this.setState({
-        popVisible: true,
-      });
+      obj.popVisible = true;
+      if (this.prev_index !== undefined) {
+        tsTaskData.list[this.prev_index] = false;
+      }
+      this.prev_index = index;
+      // console.log(tsTaskData, '1')
+      this.setStoreData();
+    });
+  };
+
+  setStoreData = () => {
+    const { dispatch, tsTaskData } = this.props;
+    dispatch({
+      type: 'favorites/setState',
+      payload: {
+        tsTaskData: {
+          ...tsTaskData,
+          list: tsTaskData.list,
+        },
+      },
     });
   };
 
@@ -271,15 +301,6 @@ class Favorites extends Component {
     });
   };
 
-  // handleVisibleChange = visible => {
-  //   this.setState({
-  //     popVisible: visible,
-  //   },
-  //   () => {
-  //     console.log('popVisible: ', visible);
-  //   });
-  // };
-
   // 翻页
   onChange = pageNumber => {
     sortCondition.page = pageNumber;
@@ -290,6 +311,7 @@ class Favorites extends Component {
     const { tsTaskData } = this.props;
     const { sortTitle } = this.state;
     const pageInfo = tsTaskData.page_info;
+    // console.log(tsTaskData, '2');
 
     return (
       <div>

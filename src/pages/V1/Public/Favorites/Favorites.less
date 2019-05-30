@@ -12,7 +12,7 @@
 }
 
 .fav_main {
-  padding-top: 88px;
+  padding-top: 66px;
   padding-bottom: 40px;
   font-weight: 400;
   font-family: PingFang-SC-Regular, sans-serif;
@@ -110,9 +110,15 @@
         background-size: 12px 12px;
       }
       &:hover {
+        position: relative;
         color: #fa541c;
         &::after {
           content: '';
+          position: absolute;
+          top: 6px;
+          display: inline-block;
+          width: 12px;
+          height: 12px;
           background: url(https://cdn.youlianyc.com/image/static/63f2f244b43cc9acbca0466debdeb3f1cf8eeaea.jpg);
           background-size: 12px 12px;
         }

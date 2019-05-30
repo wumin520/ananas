@@ -35,6 +35,12 @@ export default {
         },
       });
     },
+    *setState({ payload }, { put }) {
+      yield put({
+        type: 'saveState',
+        payload,
+      });
+    },
   },
 
   reducers: {

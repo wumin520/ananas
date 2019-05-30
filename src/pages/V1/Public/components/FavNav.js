@@ -14,7 +14,7 @@ class FavNav extends PureComponent {
     super();
     this.state = {
       isLogin: false,
-      // fixTop: false,
+      top: '32px',
     };
   }
 
@@ -34,16 +34,16 @@ class FavNav extends PureComponent {
   }
 
   handleScroll = () => {
-    // const { scrollY } = window;
-    // if (scrollY > 32) {
-    //   this.setState({
-    //     fixTop: true,
-    //   });
-    // } else {
-    //   this.setState({
-    //     fixTop: false,
-    //   });
-    // }
+    const { scrollY } = window;
+    if (scrollY > 32) {
+      this.setState({
+        top: '0',
+      });
+    } else {
+      this.setState({
+        top: '32px',
+      });
+    }
   };
 
   logout = () => {
@@ -54,7 +54,7 @@ class FavNav extends PureComponent {
   };
 
   render() {
-    const { isLogin } = this.state;
+    const { isLogin, top } = this.state;
     const {
       currentUser: { state },
       currentUser,
@@ -73,7 +73,7 @@ class FavNav extends PureComponent {
     );
 
     return (
-      <div style={{ top: '0' }} className={styles.marketNav}>
+      <div style={{ top }} className={styles.marketNav}>
         <div className={styles.nav}>
           <div className={styles.nav_left}>
             <Link to="/web/index">
