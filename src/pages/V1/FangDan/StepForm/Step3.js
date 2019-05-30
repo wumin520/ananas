@@ -211,8 +211,8 @@ class Step3 extends React.PureComponent {
     const endTime = dateString[1];
     const sdate = moment(startTime);
     const { schedules } = this.props;
-    if (endDate > sdate.add(7, 'days')) {
-      message.warning('最多选择7天进行排期');
+    if (endDate > sdate.add(14, 'days')) {
+      message.warning('最多选择14天进行排期');
       return;
     }
     // 将日期数据放进表格
@@ -436,7 +436,7 @@ class Step3 extends React.PureComponent {
         <div style={{ whiteSpace: 'pre-wrap' }}>
           1、想权重大，单量一定要设计为稳定增长趋势（递增）。
           <br />
-          2、建议投放周期为3~7天 <br />
+          2、建议投放周期为7~14天 <br />
           注意：请记住上面的两个重点，让自己的店铺快速提升转化率和人气销量。
         </div>
       );
