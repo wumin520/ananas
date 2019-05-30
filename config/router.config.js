@@ -352,6 +352,19 @@ export default [
         authority: ['tuishou'],
       },
       {
+        path: '/tuishou-platform',
+        name: 'platform',
+        icon: 'profile',
+        authority: ['tuishou'],
+        routes: [
+          {
+            name: 'h5',
+            path: '/tuishou-platform/h5',
+            component: './V1_Tuishou/Platform/H5',
+          },
+        ],
+      },
+      {
         path: '/tuishou-account',
         name: 'tygj',
         icon: 'profile',

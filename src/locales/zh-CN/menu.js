@@ -18,6 +18,8 @@ export default {
   'menu.fangdan.generalizeDetail': '推广详情',
   'menu.fangdan.qfDetail': '圈粉列表 / 推广详情',
   'menu.tygj': '通用工具',
+  'menu.platform': '推广工具',
+  'menu.platform.h5': '移动端网页',
   'menu.tygj.pid': 'pid管理',
   'menu.tygj.favorite': '收藏管理',
   'menu.tgxg': '推广效果',

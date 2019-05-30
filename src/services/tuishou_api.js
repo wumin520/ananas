@@ -30,6 +30,14 @@ export async function queryOrder(params) {
 export async function queryCollectList(params) {
   return request(`${api_pre}/ts/task/collection/list?${stringify(params)}`);
 }
+// 商品专属链接
+export async function queryGoodsUrl(params) {
+  return request(`${api_pre}/ts/task/goods/uri?${stringify(params)}`);
+}
+// 商品专属链接
+export async function queryH5OpenState(params) {
+  return request(`${api_pre}/ts/mobile/state?${stringify(params)}`);
+}
 const postData = function(url, params) {
   return request(`${api_pre}${url}`, {
     method: 'POST',
@@ -39,6 +47,10 @@ const postData = function(url, params) {
     },
   });
 };
+// 添加收藏
+export async function settleIn(params) {
+  return postData(`/ts/settle_in`, params);
+}
 // 添加收藏
 export async function addFavorite(params) {
   return postData(`/ts/task/collection/add`, params);

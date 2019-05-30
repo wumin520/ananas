@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Card, Button, Icon, List, Modal, message } from 'antd';
+import { Card, Button, Icon, List, message } from 'antd';
 import { router } from 'umi';
 
 import * as clipboard from 'clipboard-polyfill';
@@ -14,9 +14,7 @@ import styles from './Favorite.less';
   setting,
 }))
 class Favorite extends PureComponent {
-  state = {
-    visible: false,
-  };
+  state = {};
 
   componentDidMount() {
     this.fetchList();
@@ -26,12 +24,6 @@ class Favorite extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'favorite/queryFavoriteList',
-    });
-  };
-
-  handleCancel = () => {
-    this.setState({
-      visible: false,
     });
   };
 
@@ -48,66 +40,6 @@ class Favorite extends PureComponent {
     } = this.props;
 
     const { primaryColor } = setting;
-    const listTemp = [
-      {
-        actions: ['列表', '+新增'],
-        state: 1,
-        avatar:
-          'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
-        title: '免单试用推广',
-        description: `适用于：
-          基础销量偏低
-          宝贝流量较少
-          宝贝销评破零
-          DSR评分低`,
-      },
-      {
-        actions: ['列表', '+新增'],
-        state: 1,
-        type: 2,
-        avatar:
-          'https://cdn.youlianyc.com/image/static/5c75983b5efea8cef21ec34f25972cb946983272.jpg',
-        title: '圈粉收藏推广',
-        description: `适用于：
-          宝贝收藏数低
-          店铺收藏数低
-          宝贝权重不高
-          店铺权重不高`,
-      },
-      {
-        actions: ['列表', '+新增'],
-        state: 1,
-        type: 3,
-        avatar:
-          'https://cdn.youlianyc.com/image/static/526746a209d504d6d9c43270767ff76e928aedc2.jpg',
-        title: '大额券推广',
-        description: `适用于：
-          宝贝月销量≥50
-          宝贝评价数≥50
-          DSR评分≥4.8分
-          佣金比例≥30%`,
-      },
-    ];
-    const qfList = [
-      {
-        actions: ['+新增'],
-        state: 1,
-        type: 2,
-        avatar:
-          'https://cdn.youlianyc.com/image/static/b506a5e8c8c2c467d9bf26b695746268187db04b.jpg',
-        title: '店铺圈粉',
-        description: `提高店铺收藏数`,
-      },
-      {
-        actions: ['+新增'],
-        state: 1,
-        type: 2,
-        avatar:
-          'https://cdn.youlianyc.com/image/static/f90b52f7970908277319d34c556fbaf656323549.jpg',
-        title: '商品圈粉',
-        description: `提高单个商品收藏数`,
-      },
-    ];
     const titleContent = item => (
       <div>
         <span style={{ fontSize: 16, fontWeight: 500 }}>{item.title}</span>
@@ -116,10 +48,21 @@ class Favorite extends PureComponent {
     );
     const onTabChange = (index, item) => {
       const { dispatch } = this.props;
-      console.log(index, item);
+      console.log(index, item, this.nodeRef);
       if (index === 1) {
-        clipboard.writeText('hello world').then(() => {
-          message.success('复制成功');
+        dispatch({
+          type: 'favorite/queryGoodsUrl',
+        }).then(res => {
+          if (res.status === 'ok') {
+            const url = res.payload.short_url;
+            const text = this[`nodeRef_${item.task_id}`].titleContent.replace(
+              '[点击复制文案获取]',
+              url
+            );
+            clipboard.writeText(text).then(() => {
+              message.success('复制成功');
+            });
+          }
         });
       } else {
         dispatch({
@@ -134,53 +77,16 @@ class Favorite extends PureComponent {
         });
       }
     };
-    const { visible } = this.state;
-    const { Meta } = Card;
     console.log(list, 'list -> ');
     return (
       <div className={styles.noTitle}>
-        <Modal
-          title="请选择圈粉收藏推广的类型"
-          footer={null}
-          visible={visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          width={483}
-        >
-          <List
-            dataSource={[...qfList]}
-            grid={{ gutter: 24, lg: 2, md: 2, sm: 2, xs: 2 }}
-            renderItem={(item, index) => (
-              <List.Item>
-                <Card
-                  hoverable
-                  style={{ width: 206, textAlign: 'center', border: 'none' }}
-                  cover={
-                    <img alt="example" src={item.avatar} style={{ width: 80, margin: '0 auto' }} />
-                  }
-                >
-                  <Meta title={item.title} description={item.description} />
-                  <Button
-                    onClick={() => {
-                      this.forwardToQF(index);
-                    }}
-                    style={{ display: 'block', margin: '20px auto 0' }}
-                    type="primary"
-                  >
-                    {item.actions[0]}
-                  </Button>
-                </Card>
-              </List.Item>
-            )}
-          />
-        </Modal>
         <PageHeaderWrapper title=" " content=" " extraContent="">
           <div className={styles.cardList}>
             <List
               rowKey="id"
               loading={loading}
               grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
-              dataSource={[...listTemp]}
+              dataSource={[...list]}
               renderItem={item =>
                 item ? (
                   <List.Item key={item.id}>
@@ -215,12 +121,17 @@ class Favorite extends PureComponent {
                         title={titleContent(item)}
                         description={
                           <React.Fragment>
-                            <div>价格:15.80元</div>
-                            <div>券后价:5.80元</div>
-                            <div>
-                              【推荐理由】限制36个字限制36个字限制36个字限制36个字限制36个字限制36个字限制36个字限
+                            <div
+                              style={{ whiteSpace: 'pre-wrap' }}
+                              ref={node => {
+                                this[`nodeRef_${item.task_id}`] = node;
+                              }}
+                            >
+                              {`价格:${item.price}元
+券后价:${item.after_coupon_price}元
+【推荐理由】${item.recommend_reason}
+商品链接:[点击复制文案获取]`}
                             </div>
-                            <div>商品链接:[点击复制文案获取]</div>
                           </React.Fragment>
                         }
                       />

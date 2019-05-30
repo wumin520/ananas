@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { Card, Alert, Form, Input, Button, Upload, Icon, Row, Col, message, Modal } from 'antd';
+import { connect } from 'dva';
 import constants from '@/utils/apiConstants';
 
 import styles from './TuishouSignin.less';
 
+@connect(({ login, loading }) => ({
+  login,
+  loading: loading.effects['login/tuishouSettleIn'],
+}))
 @Form.create()
 class TuishouSignin extends Component {
   state = {
@@ -14,7 +19,7 @@ class TuishouSignin extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { form } = this.props;
+    const { form, dispatch } = this.props;
     form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
@@ -23,9 +28,18 @@ class TuishouSignin extends Component {
           return item === '';
         });
         console.log(arr, '');
-        if (arr.length > 0) {
+        if (arr && arr.length > 0) {
           message.error('请先上传身份证正反面');
+          return;
         }
+        dispatch({
+          type: 'login/tuishouSettleIn',
+          payload: {
+            ...values,
+            front: imageUrlArr[0],
+            back: imageUrlArr[1],
+          },
+        });
       }
     });
   };
@@ -114,13 +128,19 @@ class TuishouSignin extends Component {
         >
           <Form onSubmit={this.handleSubmit}>
             <Form.Item>
-              {getFieldDecorator('username', {
+              {getFieldDecorator('real_name', {
                 rules: [{ required: true, message: '请输入你的真实姓名' }],
               })(<Input placeholder="请输入你的真实姓名" />)}
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('idcard', {
-                rules: [{ required: true, message: '请填写姓名所对应的身份证号' }],
+              {getFieldDecorator('id_card', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请填写姓名所对应的身份证号',
+                    pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+                  },
+                ],
               })(<Input placeholder="请填写姓名所对应的身份证号" />)}
             </Form.Item>
             <Form.Item>

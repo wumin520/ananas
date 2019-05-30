@@ -1,4 +1,9 @@
-import { queryCollectList, removeFavorite, addFavorite } from '@/services/tuishou_api';
+import {
+  queryCollectList,
+  removeFavorite,
+  addFavorite,
+  queryGoodsUrl,
+} from '@/services/tuishou_api';
 
 export default {
   namespace: 'favorite',
@@ -25,6 +30,10 @@ export default {
     },
     *addFavorite({ payload }, { call }) {
       const res = yield call(addFavorite, payload);
+      return res;
+    },
+    *queryGoodsUrl({ payload }, { call }) {
+      const res = yield call(queryGoodsUrl, payload);
       return res;
     },
   },
