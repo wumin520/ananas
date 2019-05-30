@@ -43,9 +43,10 @@ class HeadNav extends PureComponent {
   };
 
   render() {
+    /* eslint-disable */
     const { isLogin } = this.state;
     const { currentUser } = this.props;
-    const { state, phone } = currentUser;
+    const { state, phone, ts_state } = currentUser;
     const phoneStr = phone
       ? `${currentUser.phone.substr(0, 3)}****${currentUser.phone.substr(7)}`
       : '';
@@ -89,7 +90,7 @@ class HeadNav extends PureComponent {
                       放单中心
                     </a>
                   )}
-                  {state === 0 ? (
+                  {ts_state === 0 ? (
                     <a
                       style={{ marginLeft: 20 }}
                       className={styles.headNavWord}

@@ -143,14 +143,11 @@ class Dashboard extends Component {
     return (
       <div>
         <Row gutter={20}>
-          {colsData.map(item => {
+          {colsData.map((item, index) => {
             return (
-              <Col xs={24} sm={12} xl={6} style={{ marginTop: 24 }}>
+              <Col key={`key${index}`} xs={24} sm={12} xl={6} style={{ marginTop: 24 }}>
                 <ChartCard
                   title={item.title}
-                  avatar={
-                    <img alt="indicator" style={{ width: 56, height: 56 }} src={item.avatar} />
-                  }
                   action={
                     <Tooltip title={item.tooltip}>
                       <Icon type="info-circle-o" />

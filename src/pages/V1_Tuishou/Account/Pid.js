@@ -59,6 +59,7 @@ class Pid extends Component {
       title: '请先绑定多多进宝',
       content: '',
       okText: '前往授权',
+      maskClosable: true,
       onOk: () => {
         this.jumpToAuthorize();
       },
