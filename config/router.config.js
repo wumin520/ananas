@@ -69,6 +69,11 @@ export default [
         name: 'helpDetail',
         component: './V1/Public/Help/HelpDetail',
       },
+      {
+        path: '/public/favorites',
+        name: 'favorites',
+        component: './V1/Public/Favorites/Favorites',
+      },
     ],
   },
   {
