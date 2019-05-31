@@ -103,7 +103,8 @@ class GeneralizeDetail extends Component {
             <Description term="推广状态">
               <Badge status={data.state_color} text={data.state_desc} />
             </Description>
-            <Description term="推广开始时间">{data.created_at}</Description>
+            <Description term="申请时间">{data.created_at}</Description>
+            <Description term="推广开始时间">{data.start_time}</Description>
             <Description term="推荐理由">{data.comment_keyword}</Description>
           </DescriptionList>
         </Card>

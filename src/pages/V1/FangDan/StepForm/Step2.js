@@ -27,25 +27,25 @@ const formItemLayout = {
     span: 19,
   },
 };
-function range(start, end) {
-  const result = [];
-  for (let i = start; i < end; i += 1) {
-    result.push(i);
-  }
-  return result;
-}
+// function range(start, end) {
+//   const result = [];
+//   for (let i = start; i < end; i += 1) {
+//     result.push(i);
+//   }
+//   return result;
+// }
 function disabledDate(current) {
   // Can not select days before today and today
-  return current && current < moment().endOf('day');
+  return current && current < moment().startOf('day');
 }
 
-function disabledDateTime() {
-  return {
-    disabledHours: () => range(0, 24).splice(4, 20),
-    disabledMinutes: () => range(30, 60),
-    disabledSeconds: () => [55, 56],
-  };
-}
+// function disabledDateTime() {
+//   return {
+//     disabledHours: () => range(0, 24).splice(4, 20),
+//     disabledMinutes: () => range(30, 60),
+//     disabledSeconds: () => [55, 56],
+//   };
+// }
 
 @connect(({ form, loading }) => ({
   submitting: loading.effects['form/submitStepForm'],
@@ -358,10 +358,11 @@ class Step2 extends React.PureComponent {
                 initialValue: '',
               })(
                 <DatePicker
-                  format="YYYY-MM-DD HH:mm:ss"
+                  format="YYYY-MM-DD 00:00:00"
                   disabledDate={disabledDate}
-                  disabledTime={disabledDateTime}
-                  showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
+                  // disabledTime={disabledDateTime}
+                  // showToday={false}
+                  // defaultValue={moment('00:00:00')}
                 />
               )}
             </Form.Item>

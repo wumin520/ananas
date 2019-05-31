@@ -129,8 +129,8 @@ class TuishouSignin extends Component {
           <Form onSubmit={this.handleSubmit}>
             <Form.Item>
               {getFieldDecorator('real_name', {
-                rules: [{ required: true, message: '请输入你的真实姓名' }],
-              })(<Input placeholder="请输入你的真实姓名" />)}
+                rules: [{ required: true, message: '请输入正确的姓名', min: 2, max: 7 }],
+              })(<Input placeholder="请输入您的真实姓名" />)}
             </Form.Item>
             <Form.Item>
               {getFieldDecorator('id_card', {

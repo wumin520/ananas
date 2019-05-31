@@ -262,8 +262,8 @@ class OrderList extends PureComponent {
     const columns = [
       {
         title: '订单编号',
-        dataIndex: 'p_order_id',
-        key: 'p_order_id',
+        dataIndex: 'order_id',
+        key: 'order_id',
         width: 150,
       },
       {
@@ -311,38 +311,38 @@ class OrderList extends PureComponent {
         title: '状态',
         width: 90,
         render(item) {
-          return <Badge status={item.state_color} text={item.state_desc} />;
+          return <Badge status={item.state_color} text={item.state} />;
         },
       },
-      {
-        title: '操作',
-        width: 90,
-        render: item => {
-          const { itemImg } = this.state;
-          const url = `/order/productDetail?order_id=${item.order_id}`;
-          let option;
-          if (item.proof_images.length > 0) {
-            {
-              /** option = (
-              <span>
-                <a onClick={this.setModal1Visible.bind(this, item)}>免单凭证</a>
-                <ModelPops itemImg={itemImg} />
-              </span>
-            ); */
-            }
-          }
-          return (
-            <span>
-              {/* <a onClick={this.goOrderDetail.bind(this, item)} target='_blank'>查看 </a> */}
-              <a href={url} target="_blank">
-                查看{' '}
-              </a>
-              <br />
-              {option}
-            </span>
-          );
-        },
-      },
+      // {
+      //   title: '操作',
+      //   width: 90,
+      //   render: item => {
+      //     const { itemImg } = this.state;
+      //     const url = `/order/productDetail?order_id=${item.order_id}`;
+      //     let option;
+      //     // if (item.proof_images.length > 0) {
+      //     //   {
+      //     //     /** option = (
+      //     //     <span>
+      //     //       <a onClick={this.setModal1Visible.bind(this, item)}>免单凭证</a>
+      //     //       <ModelPops itemImg={itemImg} />
+      //     //     </span>
+      //     //   ); */
+      //     //   }
+      //     // }
+      //     return (
+      //       <span>
+      //         {/* <a onClick={this.goOrderDetail.bind(this, item)} target='_blank'>查看 </a> */}
+      //         <a href={url} target="_blank">
+      //           查看{' '}
+      //         </a>
+      //         <br />
+      //         {option}
+      //       </span>
+      //     );
+      //   },
+      // },
     ];
 
     const Info = ({ title, value, bordered }) => (

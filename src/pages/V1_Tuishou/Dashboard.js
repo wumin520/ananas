@@ -12,7 +12,7 @@ import styles from './Dashboard.less';
 @connect(({ loading, dashboard, order }) => ({
   loading: loading.models.dashboard,
   dashboard,
-  order,
+  orderData: order.orderData,
 }))
 class Dashboard extends Component {
   state = {};
@@ -29,11 +29,9 @@ class Dashboard extends Component {
 
   render() {
     /* eslint-disable */
-    const {
-      loading,
-      dashboard,
-      order: { list },
-    } = this.props;
+    const { loading, dashboard, orderData } = this.props;
+    const { list } = orderData;
+    console.log('list==>', list);
     const {
       head_info: { visitor_info, order_info },
       today_rebate,
@@ -44,8 +42,8 @@ class Dashboard extends Component {
     const columns = [
       {
         title: '订单编号',
-        dataIndex: 'p_order_id',
-        key: 'p_order_id',
+        dataIndex: 'order_id',
+        key: 'order_id',
         width: 150,
       },
       {
@@ -94,14 +92,6 @@ class Dashboard extends Component {
         width: 90,
         render(item) {
           return <Badge status={item.state_color} text={item.state_desc} />;
-        },
-      },
-      {
-        title: '操作',
-        width: 90,
-        render: item => {
-          const url = `/tuishou-order?order_id=${item.order_id}`;
-          return <Link to={url}>查看</Link>;
         },
       },
     ];
