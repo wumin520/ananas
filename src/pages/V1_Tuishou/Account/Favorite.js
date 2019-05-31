@@ -58,10 +58,8 @@ class Favorite extends PureComponent {
         }).then(res => {
           if (res.status === 'ok') {
             const url = res.payload.short_url;
-            const text = this[`nodeRef_${item.task_id}`].innerText.replace(
-              '[点击复制文案获取]',
-              url
-            );
+            let text = this[`nodeRef_${item.task_id}`].innerText.replace('[点击复制文案获取]', url);
+            text = `${item.title}\n${text}`;
             clipboard.writeText(text).then(() => {
               message.success('复制成功');
             });

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Modal, notification } from 'antd';
 import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { router } from 'umi';
 
 @connect(({ pid, loading }) => ({
   pid,
@@ -21,8 +22,9 @@ class Pid extends Component {
         payload: {
           code: query.code,
         },
-      }).then(res => {
-        this.openNotification(res);
+      }).then(() => {
+        // this.openNotification(res.payload);
+        router.push('/tuishou-account/pid');
       });
     }
     this.queryPidTaskList();

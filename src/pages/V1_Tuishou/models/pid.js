@@ -38,6 +38,7 @@ export default {
           payload: res.payload,
         });
       }
+      return res;
     },
     *queryAuthorizeState({ payload }, { call }) {
       const res = yield call(queryAuthorizeState, payload);
