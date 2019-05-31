@@ -1,4 +1,4 @@
-import { getAssetList, getExchangeList, frozenTaskList } from '@/services/api';
+import { getAssetList, getExchangeList, getRewardList, frozenTaskList } from '@/services/api';
 
 export default {
   namespace: 'capital',
@@ -15,6 +15,16 @@ export default {
       page_info: {},
     },
     exchangeData: {
+      asset_info: {
+        balance: 0,
+        forzen_balance: 0,
+        expend_balance: 0,
+      },
+      list: [],
+      type_select: [],
+      page_info: {},
+    },
+    rewardData: {
       asset_info: {
         balance: 0,
         forzen_balance: 0,
@@ -54,6 +64,17 @@ export default {
           type: 'saveData',
           payload: {
             exchangeData: res.payload,
+          },
+        });
+      }
+    },
+    *getRewardDataList({ payload }, { call, put }) {
+      const res = yield call(getRewardList, payload);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'saveData',
+          payload: {
+            rewardData: res.payload,
           },
         });
       }

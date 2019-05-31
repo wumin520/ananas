@@ -61,6 +61,10 @@ export async function getAssetList(params) {
 export async function getExchangeList(params) {
   return request(`/v1/web/account/exchange_list?${stringify(params)}`);
 }
+// 提现明细
+export async function getRewardList(params) {
+  return request(`/v1/web/account/asset_reward_list?${stringify(params)}`);
+}
 
 // 冻结明细
 export async function frozenTaskList(params) {
