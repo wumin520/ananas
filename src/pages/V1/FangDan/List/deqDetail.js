@@ -104,7 +104,7 @@ class GeneralizeDetail extends Component {
               <Badge status={data.state_color} text={data.state_desc} />
             </Description>
             <Description term="推广开始时间">{data.created_at}</Description>
-            <Description term="推荐理由">{data.recommend_reason}</Description>
+            <Description term="推荐理由">{data.comment_keyword}</Description>
           </DescriptionList>
         </Card>
       </PageHeaderWrapper>

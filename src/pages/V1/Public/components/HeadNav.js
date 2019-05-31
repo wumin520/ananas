@@ -94,7 +94,7 @@ class HeadNav extends PureComponent {
                     <a
                       style={{ marginLeft: 20 }}
                       className={styles.headNavWord}
-                      href="/user/settlein"
+                      href="/user/tuishou-signin"
                     >
                       推手入驻
                     </a>
