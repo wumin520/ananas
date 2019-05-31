@@ -60,6 +60,20 @@ export default {
     },
     *tsTaskGoodsUrl({ payload }, { call, put }) {
       const res = yield call(tsTaskGoodsUrl, payload);
+      if (res.code === 40302) {
+        message.destroy();
+        const modal = Modal.confirm();
+        modal.update({
+          title: '提示',
+          content: res.message,
+          cancelText: '放弃',
+          okText: '去认证',
+          onOk: () => {
+            router.push('/tuishou-account/pid');
+          },
+        });
+        return;
+      }
       if (res.code === 40303) {
         message.destroy();
         const modal = Modal.confirm();

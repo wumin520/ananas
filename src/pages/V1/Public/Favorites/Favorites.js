@@ -307,19 +307,21 @@ class Favorites extends Component {
         task_plan_id: taskPlanId,
       },
     }).then(() => {
+      const { shortUrl } = this.props;
+      if (shortUrl === '') {
+        return;
+      }
       obj.popVisible = true;
       if (this.prev_index !== undefined) {
-        tsTaskData.list[this.prev_index] = false;
+        tsTaskData.list[this.prev_index].popVisible = false;
       }
       this.prev_index = index;
-      // console.log(tsTaskData, '1')
       this.setStoreData();
     });
   };
 
   setStoreData = () => {
     const { dispatch, tsTaskData } = this.props;
-    console.log('setStoreData tsTaskData: ', tsTaskData.list, tsTaskData.list.length);
 
     dispatch({
       type: 'favorites/setState',
@@ -370,8 +372,6 @@ class Favorites extends Component {
     const { tsTaskData } = this.props;
     const { sortTitle, isShowBottomFlow } = this.state;
     const pageInfo = tsTaskData.page_info;
-    // console.log(tsTaskData, '2');
-    console.log('render tsTaskData: ', tsTaskData.list, tsTaskData.list.length);
 
     return (
       <div>
