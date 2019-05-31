@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { Pagination, Popover } from 'antd';
+import * as clipboard from 'clipboard-polyfill';
+import { Pagination, Popover, message } from 'antd';
 import { connect } from 'dva';
 import Footer from '../components/Footer';
 import HeadNav from '../components/HeadNav';
@@ -124,8 +125,12 @@ class Favorites extends Component {
     );
   };
 
-  copyCont = () => {
-    console.log('复制');
+  // 复制推广链接文案
+  copyCont = (item, index) => {
+    const text = this[`nodeRef_${index}`].innerText;
+    clipboard.writeText(text).then(() => {
+      message.success('复制成功');
+    });
   };
 
   // 超多客六大优势
@@ -144,8 +149,6 @@ class Favorites extends Component {
 
   // 选品库商品展示
   showFavItem = list => {
-    // const { popVisible } = this.state;
-    console.log('showFavItem -> list ', list);
     return list.map((item, index) => {
       return (
         <div className={styles.fav_item} key={item.task_id}>
@@ -174,14 +177,14 @@ class Favorites extends Component {
                 {item.is_collected ? '取消收藏' : '加入收藏'}
               </div>
               <Popover
-                content={this.promoteInfo(item)}
+                content={this.promoteInfo(item, index)}
                 className={styles.fav}
                 visible={item.popVisible}
                 trigger="click"
                 placement="right"
               >
                 {item.popVisible ? (
-                  <div onClick={this.copyCont.bind(this, item)}>点击复制</div>
+                  <div onClick={this.copyCont.bind(this, item, index)}>点击复制</div>
                 ) : (
                   <div onClick={this.getShortUrl.bind(this, item, index)}>推广链接</div>
                 )}
@@ -230,10 +233,16 @@ class Favorites extends Component {
   };
 
   // 推广链接悬浮层
-  promoteInfo = item => {
+  promoteInfo = (item, index) => {
     const { shortUrl } = this.props;
     return (
-      <div className={styles.flow_bg} onMouseLeave={this.handleMouseLeave.bind(this, item)}>
+      <div
+        className={styles.flow_bg}
+        onMouseLeave={this.handleMouseLeave.bind(this, item)}
+        ref={node => {
+          this[`nodeRef_${index}`] = node;
+        }}
+      >
         <p className={styles.mb12}>{item.title}</p>
         <p className={styles.mb12}>
           券后价【{item.after_coupon_price}元】 原价【{item.price}元】

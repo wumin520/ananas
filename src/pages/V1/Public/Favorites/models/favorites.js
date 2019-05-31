@@ -5,7 +5,11 @@ export default {
   state: {
     tsTaskData: {
       list: [],
-      page_info: {},
+      page_info: {
+        total_num: 0,
+        current_page: 0,
+        per_page: 0,
+      },
     },
     shortUrl: '',
   },
