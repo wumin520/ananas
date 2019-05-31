@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import * as clipboard from 'clipboard-polyfill';
 import { Pagination, Popover, message } from 'antd';
 import { connect } from 'dva';
+import router from 'umi/router';
 import Footer from '../components/Footer';
 import HeadNav from '../components/HeadNav';
 import FavNav from '../components/FavNav';
@@ -58,13 +59,28 @@ class Favorites extends Component {
     super(props);
     this.state = {
       sortTitle: '最新上架',
+      isShowBottomFlow: false,
     };
   }
 
   // 页面初始化
   componentDidMount() {
     this.getProList();
+    window.addEventListener('scroll', this.handleScroll);
   }
+
+  handleScroll = () => {
+    const { scrollY } = window;
+    if (scrollY > 400) {
+      this.setState({
+        isShowBottomFlow: true,
+      });
+    } else {
+      this.setState({
+        isShowBottomFlow: false,
+      });
+    }
+  };
 
   // 获取商品列表
   getProList = () => {
@@ -238,7 +254,7 @@ class Favorites extends Component {
     return (
       <div
         className={styles.flow_bg}
-        onMouseLeave={this.handleMouseLeave.bind(this, item)}
+        onMouseLeave={this.handleMouseLeave.bind(this, index)}
         ref={node => {
           this[`nodeRef_${index}`] = node;
         }}
@@ -253,9 +269,9 @@ class Favorites extends Component {
     );
   };
 
-  handleMouseLeave = item => {
-    const obj = item;
-    obj.popVisible = false;
+  handleMouseLeave = index => {
+    const { tsTaskData } = this.props;
+    tsTaskData.list[index] = false;
     this.setStoreData();
   };
 
@@ -310,6 +326,14 @@ class Favorites extends Component {
     });
   };
 
+  scrollToTop = () => {
+    document.documentElement.scrollTop = 0;
+  };
+
+  jumpToFav = () => {
+    router.push(`/tuishou-account/favorite`);
+  };
+
   // 翻页
   onChange = pageNumber => {
     sortCondition.page = pageNumber;
@@ -318,7 +342,7 @@ class Favorites extends Component {
 
   render() {
     const { tsTaskData } = this.props;
-    const { sortTitle } = this.state;
+    const { sortTitle, isShowBottomFlow } = this.state;
     const pageInfo = tsTaskData.page_info;
     // console.log(tsTaskData, '2');
 
@@ -380,6 +404,22 @@ class Favorites extends Component {
               onChange={this.onChange}
             />
           </div>
+        </div>
+
+        <div className={styles.g_flow}>
+          <img
+            className={styles.g_flow_img}
+            style={{ display: isShowBottomFlow ? 'block' : 'none' }}
+            onClick={this.scrollToTop.bind(this)}
+            src="https://cdn.youlianyc.com/image/static/6ab6eb39bfeb90284639ca913ca3bb560cadde1c.jpg"
+            alt=""
+          />
+          <img
+            className={styles.g_flow_img}
+            onClick={this.jumpToFav.bind(this)}
+            src="https://cdn.youlianyc.com/image/static/3fe383e2ce3febc8ab634b643db391240863c4e8.jpg"
+            alt=""
+          />
         </div>
 
         {/* foot */}

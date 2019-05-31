@@ -18,7 +18,7 @@ class FavNav extends PureComponent {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     window.addEventListener('scroll', this.handleScroll);
 
     const { dispatch } = this.props;
@@ -98,12 +98,12 @@ class FavNav extends PureComponent {
                 </Dropdown>
 
                 {state === 0 ? (
-                  <Link to="/user/settlein" className={styles.btn_apply}>
+                  <Link to="/user/tuishou-signin" className={styles.btn_apply}>
                     申请入驻
                   </Link>
                 ) : (
-                  <Link to="/homePage" className={styles.btn_apply}>
-                    放单中心
+                  <Link to="/tuishou" className={styles.btn_apply}>
+                    推手中心
                   </Link>
                 )}
               </div>
