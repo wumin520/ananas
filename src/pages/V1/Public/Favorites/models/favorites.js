@@ -1,4 +1,6 @@
 import { tsTaskList, tsRemoveCollect, tsAddCollect, tsTaskGoodsUrl } from '@/services/api';
+import { Modal, message } from 'antd';
+import router from 'umi/router';
 
 export default {
   namespace: 'favorites',
@@ -25,13 +27,53 @@ export default {
       });
     },
     *tsAddCollect({ payload }, { call }) {
-      yield call(tsAddCollect, payload);
+      const res = yield call(tsAddCollect, payload);
+      if (res.code === 40302) {
+        message.destroy();
+        const modal = Modal.confirm();
+        modal.update({
+          title: '提示',
+          content: res.message,
+          cancelText: '放弃',
+          okText: '去认证',
+          onOk: () => {
+            router.push('/user/tuishou-signin');
+          },
+        });
+      }
     },
     *tsRemoveCollect({ payload }, { call }) {
-      yield call(tsRemoveCollect, payload);
+      const res = yield call(tsRemoveCollect, payload);
+      if (res.code === 40302) {
+        message.destroy();
+        const modal = Modal.confirm();
+        modal.update({
+          title: '提示',
+          content: res.message,
+          cancelText: '放弃',
+          okText: '去认证',
+          onOk: () => {
+            router.push('/user/tuishou-signin');
+          },
+        });
+      }
     },
     *tsTaskGoodsUrl({ payload }, { call, put }) {
       const res = yield call(tsTaskGoodsUrl, payload);
+      if (res.code === 40303) {
+        message.destroy();
+        const modal = Modal.confirm();
+        modal.update({
+          title: '提示',
+          content: res.message,
+          cancelText: '放弃',
+          okText: '去设置',
+          onOk: () => {
+            router.push('/tuishou-account/pid');
+          },
+        });
+        return;
+      }
       yield put({
         type: 'saveState',
         payload: {

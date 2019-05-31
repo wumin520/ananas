@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import * as clipboard from 'clipboard-polyfill';
-import { Pagination, Popover, message } from 'antd';
+import { Pagination, Popover, message, Modal } from 'antd';
 import { connect } from 'dva';
+import { getUserToken } from '@/utils/authority';
 import router from 'umi/router';
 import Footer from '../components/Footer';
 import HeadNav from '../components/HeadNav';
@@ -64,7 +65,7 @@ class Favorites extends Component {
   }
 
   // 页面初始化
-  componentDidMount() {
+  componentWillMount() {
     this.getProList();
     window.addEventListener('scroll', this.handleScroll);
   }
@@ -80,6 +81,19 @@ class Favorites extends Component {
         isShowBottomFlow: false,
       });
     }
+  };
+
+  confirmLogin = () => {
+    const modal = Modal.confirm();
+    modal.update({
+      title: '提示',
+      content: '请先登录再进行操作',
+      cancelText: '放弃',
+      okText: '去登陆',
+      onOk: () => {
+        router.push('/user/login');
+      },
+    });
   };
 
   // 获取商品列表
@@ -167,7 +181,7 @@ class Favorites extends Component {
   showFavItem = list => {
     return list.map((item, index) => {
       return (
-        <div className={styles.fav_item} key={item.task_id}>
+        <div className={styles.fav_item} key={item.task_plan_id}>
           <img className={styles.fav_item_img} src={item.img} alt="" />
           {item.is_new && item.is_collected === 0 ? (
             <img
@@ -271,12 +285,17 @@ class Favorites extends Component {
 
   handleMouseLeave = index => {
     const { tsTaskData } = this.props;
-    tsTaskData.list[index] = false;
+    tsTaskData.list[index].popVisible = false;
     this.setStoreData();
   };
 
   // 获取推广商品分享链接
   getShortUrl = (item, index, e) => {
+    const token = getUserToken();
+    if (!token || token === '') {
+      this.confirmLogin();
+      return;
+    }
     const obj = item;
     e.preventDefault();
     const { dispatch, tsTaskData } = this.props;
@@ -300,6 +319,8 @@ class Favorites extends Component {
 
   setStoreData = () => {
     const { dispatch, tsTaskData } = this.props;
+    console.log('setStoreData tsTaskData: ', tsTaskData.list, tsTaskData.list.length);
+
     dispatch({
       type: 'favorites/setState',
       payload: {
@@ -313,6 +334,11 @@ class Favorites extends Component {
 
   // 加入&取消收藏
   fav = item => {
+    const token = getUserToken();
+    if (!token || token === '') {
+      this.confirmLogin();
+      return;
+    }
     const { dispatch } = this.props;
     const taskId = item.task_id;
     const type = item.is_collected === 0 ? 'favorites/tsAddCollect' : 'favorites/tsRemoveCollect';
@@ -345,6 +371,7 @@ class Favorites extends Component {
     const { sortTitle, isShowBottomFlow } = this.state;
     const pageInfo = tsTaskData.page_info;
     // console.log(tsTaskData, '2');
+    console.log('render tsTaskData: ', tsTaskData.list, tsTaskData.list.length);
 
     return (
       <div>

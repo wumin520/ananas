@@ -55,10 +55,8 @@ class FavNav extends PureComponent {
 
   render() {
     const { isLogin, top } = this.state;
-    const {
-      currentUser: { state },
-      currentUser,
-    } = this.props;
+    const { currentUser } = this.props;
+    const tsState = currentUser.ts_state;
 
     const phoneStr = currentUser.phone
       ? `${currentUser.phone.substr(0, 3)}****${currentUser.phone.substr(7)}`
@@ -97,7 +95,7 @@ class FavNav extends PureComponent {
                   </div>
                 </Dropdown>
 
-                {state === 0 ? (
+                {tsState === 0 ? (
                   <Link to="/user/tuishou-signin" className={styles.btn_apply}>
                     申请入驻
                   </Link>

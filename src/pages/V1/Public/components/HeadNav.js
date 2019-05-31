@@ -17,7 +17,7 @@ class HeadNav extends PureComponent {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { dispatch } = this.props;
     const token = getUserToken();
 
