@@ -20,6 +20,7 @@ const content = <div />;
 
 @connect(({ capital, loading }) => ({
   assetData: capital.assetData,
+  rewardData: capital.rewardData,
   exchangeData: capital.exchangeData,
   loading: loading.models.capital,
 }))
@@ -45,6 +46,17 @@ class CapitalDetail extends PureComponent {
     });
   };
 
+  getRewardList = p => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'capital/getRewardDataList',
+      payload: {
+        page: p.page,
+        type: p.type,
+      },
+    });
+  };
+
   // 交易记录&提现记录切换
   tabsClick = value => {
     const { dispatch } = this.props;
@@ -62,6 +74,10 @@ class CapitalDetail extends PureComponent {
       });
     } else if (value === 'trade') {
       this.getAssetList(params);
+      this.tabType = 0;
+    } else if (value === 'reward') {
+      this.tabType = 1;
+      this.getRewardList(params);
     }
   };
 
@@ -81,7 +97,11 @@ class CapitalDetail extends PureComponent {
     };
     const { form } = this.props;
     form.resetFields();
-    this.getAssetList(params);
+    if (this.tabType === 1) {
+      this.getRewardList(params);
+    } else {
+      this.getAssetList(params);
+    }
   };
 
   handleTableChange = (pagination, filters, sorter) => {
@@ -101,7 +121,11 @@ class CapitalDetail extends PureComponent {
   };
 
   setAgeSort = () => {
-    this.getAssetList(params);
+    if (this.tabType === 1) {
+      this.getRewardList(params);
+    } else {
+      this.getAssetList(params);
+    }
   };
 
   toGo = url => {
@@ -114,13 +138,18 @@ class CapitalDetail extends PureComponent {
       page: p,
       type: changeType,
     };
-    this.getAssetList(params);
+    if (this.tabType === 1) {
+      this.getRewardList(params);
+    } else {
+      this.getAssetList(params);
+    }
   };
 
   render() {
     const {
       assetData,
       exchangeData,
+      rewardData,
       form: { getFieldDecorator },
     } = this.props;
 
@@ -204,7 +233,7 @@ class CapitalDetail extends PureComponent {
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
-              <Col sm={12} xs={24}>
+              <Col sm={8} xs={24}>
                 <Info
                   title="可用余额"
                   value={assetData.asset_info.balance}
@@ -213,7 +242,16 @@ class CapitalDetail extends PureComponent {
                   bordered
                 />
               </Col>
-              <Col sm={12} xs={24}>
+              <Col sm={8} xs={24}>
+                <Info
+                  title="奖励余额"
+                  value={assetData.asset_info.reward_balance || 0}
+                  linkName=""
+                  url=""
+                  bordered
+                />
+              </Col>
+              <Col sm={8} xs={24}>
                 <Info
                   title="冻结金额"
                   value={assetData.asset_info.frozen_balance}
@@ -267,6 +305,48 @@ class CapitalDetail extends PureComponent {
                     current: assetData.page_info.current_page,
                     pageSize: assetData.page_info.per_page,
                     total: assetData.page_info.total_num,
+                    onChange: this.changePage,
+                  }}
+                />
+              </TabPane>
+              <TabPane tab="奖励记录" key="reward">
+                <Form layout="inline">
+                  <FormItem label="交易类型">
+                    {getFieldDecorator('type', {})(
+                      <Select
+                        placeholder="全部"
+                        style={{ width: 120 }}
+                        onChange={this.selectTypeChange}
+                      >
+                        {rewardData.type_select.length &&
+                          rewardData.type_select.map(e => (
+                            <Option key={e.value} value={e.value}>
+                              {e.name}
+                            </Option>
+                          ))}
+                      </Select>
+                    )}
+                  </FormItem>
+                  <Button
+                    style={{ marginLeft: 8, marginTop: 4 }}
+                    type="primary"
+                    onClick={this.setAgeSort}
+                  >
+                    查询
+                  </Button>
+                  <Button style={{ marginLeft: 8, marginTop: 4 }} onClick={this.clearAll}>
+                    重置
+                  </Button>
+                </Form>
+                <br />
+                <Table
+                  columns={columns}
+                  dataSource={rewardData.list}
+                  pagination={{
+                    defaultCurrent: 1,
+                    current: rewardData.page_info.current_page,
+                    pageSize: rewardData.page_info.per_page,
+                    total: rewardData.page_info.total_num,
                     onChange: this.changePage,
                   }}
                 />
