@@ -12,10 +12,12 @@ import {
   Select,
   Badge,
   Carousel,
+  DatePicker,
   Icon,
 } from 'antd';
 // import ModelPop from './components/ModelPop';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import moment from 'moment';
 import styles from './List.less';
 
 const { Option } = Select;
@@ -43,6 +45,8 @@ class OrderList extends PureComponent {
       modal1Visible: false,
       itemImg: [],
       tabActiveKey: 'haoping',
+      startTime: '',
+      endTime: '',
     };
   }
 
@@ -61,10 +65,21 @@ class OrderList extends PureComponent {
     });
   };
 
+  // 保存筛选日期
+  selectPlanTime = date => {
+    const startTimeTemp = moment(date[0]).format('YYYY-MM-DD');
+    const endTimeTemp = moment(date[1]).format('YYYY-MM-DD');
+    this.setState({
+      startTime: startTimeTemp,
+      endTime: endTimeTemp,
+    });
+  };
+
   // 查询
   handleSearch = e => {
     e.preventDefault();
     const { dispatch, form } = this.props;
+    const { startTime, endTime } = this.state;
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       const values = {
@@ -73,13 +88,15 @@ class OrderList extends PureComponent {
       };
       params = {
         page: 1,
-        p_order_id: values.p_order_id,
-        task_id: values.task_id,
-        goods_id: values.goods_id,
-        state: values.state,
+        order_id: values.order_id || 0,
+        title: values.title || '',
+        terminal_type: values.terminal || 0,
+        state: values.state || 0,
+        ordered_time_for: startTime || '',
+        ordered_time_to: endTime || '',
       };
       dispatch({
-        type: 'order/orderData',
+        type: 'order/queryOrder',
         payload: params,
       });
     });
@@ -162,27 +179,39 @@ class OrderList extends PureComponent {
     } = this.props;
     const { orderData } = this.props;
     const stateSelect = orderData.state;
-    const { location } = this.props;
-    const { query } = location;
-    const defaultValue = query.task_id;
+    const { terminal } = orderData;
+    // const { location } = this.props;
+    // const { query } = location;
+    // const defaultValue = query.task_id;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
           <Col md={5} sm={24}>
             <FormItem label="订单编号">
-              {getFieldDecorator('p_order_id')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('order_id')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
-            <FormItem label="推广编号">
-              {getFieldDecorator('task_id', { initialValue: defaultValue })(
-                <Input placeholder="请输入" />
+            <FormItem label="商品名称">
+              {getFieldDecorator('title')(<Input placeholder="请输入" />)}
+            </FormItem>
+          </Col>
+          <Col md={5} sm={24}>
+            <FormItem label="来源">
+              {getFieldDecorator('terminal')(
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="全部"
+                  onChange={this.selectTypeChange}
+                >
+                  {terminal.length &&
+                    terminal.map(e => (
+                      <Option key={e.value} value={e.value}>
+                        {e.name}
+                      </Option>
+                    ))}
+                </Select>
               )}
-            </FormItem>
-          </Col>
-          <Col md={5} sm={24}>
-            <FormItem label="商品id">
-              {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
@@ -213,6 +242,13 @@ class OrderList extends PureComponent {
               </Button>
             </span>
           </Col>
+        </Row>
+        <Row colSpan="5">
+          <FormItem label="下单时间">
+            {getFieldDecorator('ordered_time_to')(
+              <DatePicker.RangePicker format="YYYY-MM-DD" onChange={this.selectPlanTime} />
+            )}
+          </FormItem>
         </Row>
       </Form>
     );
@@ -311,7 +347,7 @@ class OrderList extends PureComponent {
         title: '状态',
         width: 90,
         render(item) {
-          return <Badge status={item.state_color} text={item.state} />;
+          return <Badge status={item.state_color} text={item.state_desc} />;
         },
       },
       // {
