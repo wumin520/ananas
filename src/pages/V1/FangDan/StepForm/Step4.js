@@ -10,6 +10,7 @@ let toPayIsClick = true;
   data: form.step,
   taskPayInfo: form.taskPayInfo,
   taskId: form.taskId,
+  goodsDetail: form.goodsDetail,
 }))
 class Step4 extends React.PureComponent {
   state = {
@@ -29,15 +30,15 @@ class Step4 extends React.PureComponent {
     });
     /* eslint-disable */
     let can_pay = 0;
-    if (
-      (val === 1 && taskPayInfo.wait_pay > (taskPayInfo.reward_balance || 0)) ||
-      (val === 0 && taskPayInfo.wait_pay > taskPayInfo.balance)
-    ) {
+    const wait_pay = parseFloat(taskPayInfo.wait_pay);
+    const reward_balance = parseFloat(taskPayInfo.reward_balance || 0);
+    const balance = parseFloat(taskPayInfo.balance);
+    if ((val === 1 && wait_pay > reward_balance) || (val === 0 && wait_pay > balance)) {
       can_pay = 0;
     } else {
       can_pay = 1;
     }
-    console.log(can_pay, 'can_pay -> ', taskPayInfo);
+    console.log(can_pay, 'can_pay -> ', taskPayInfo, wait_pay, reward_balance, balance);
     if (taskPayInfo.can_pay !== can_pay) {
       dispatch({
         type: 'form/updateState',
@@ -119,7 +120,7 @@ class Step4 extends React.PureComponent {
   };
 
   render() {
-    const { taskPayInfo, location } = this.props;
+    const { taskPayInfo, location, goodsDetail } = this.props;
     // const onFinish = () => {
     //   router.push('/form/step-form/info');
     // };
@@ -233,7 +234,7 @@ class Step4 extends React.PureComponent {
                 确认支付
               </Button>
             )}
-            {this.actionType === 'pay' ? (
+            {this.actionType === 'pay' || !goodsDetail.goods_id ? (
               ''
             ) : (
               <Button onClick={this.goBack} style={{ marginLeft: 20 }} size="default">
