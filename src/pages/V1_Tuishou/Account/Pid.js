@@ -32,19 +32,26 @@ class Pid extends Component {
     const { dispatch } = this.props;
     dispatch({
       type: 'pid/queryPidTaskList',
+    }).then(res => {
+      if (res.status === 'ok') {
+        this.openNotification(res.payload.state);
+      }
     });
   };
 
   openNotification = result => {
     /* eslint-disable */
-    const message = result.state === 1 ? '已成功！' : result.state === 0 ? '请注意！' : '出错了！';
+    let message = result.state === 1 ? '已成功！' : result.state === 0 ? '请注意！' : '出错了！';
     const type = result.state === 1 ? 'success' : result.state === 0 ? 'warn' : 'error';
+    if (result.title) {
+      message = result.title;
+    }
     notification[type]({
-      duration: null,
+      duration: 10,
       message,
       description: (
         <React.Fragment>
-          <div>{result.message}</div>
+          <div>{result.message || result.desc}</div>
           <a onClick={this.jumpToAuthorize} href="javascript:;">
             {result.state === 1 ? '更换授权' : '绑定授权'}
           </a>
@@ -71,7 +78,7 @@ class Pid extends Component {
     dispatch({
       type: 'pid/jumpToAuthorize',
       payload: {
-        redirect_uri: encodeURIComponent(window.location.href),
+        redirect_uri: window.location.href,
       },
     }).then(res => {
       if (res.status === 'ok') {
