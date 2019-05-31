@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { Button, Row, Col, Table, Alert, message } from 'antd';
+import { Button, Row, Col, Table, Alert, message, Radio } from 'antd';
 import router from 'umi/router';
-import { Link } from 'umi';
+
 // import styles from './style.less';
 let toPayIsClick = true;
 
@@ -10,11 +10,48 @@ let toPayIsClick = true;
   data: form.step,
   taskPayInfo: form.taskPayInfo,
   taskId: form.taskId,
+  goodsDetail: form.goodsDetail,
 }))
 class Step4 extends React.PureComponent {
+  state = {
+    payType: 0,
+  };
+
   componentWillUnmount() {
     toPayIsClick = true;
   }
+
+  onChange = e => {
+    const { taskPayInfo, dispatch } = this.props;
+    const val = e.target.value;
+    console.log('radio checked', e.target.value);
+    this.setState({
+      payType: val,
+    });
+    /* eslint-disable */
+    let can_pay = 0;
+    const wait_pay = parseFloat(taskPayInfo.wait_pay);
+    const reward_balance = parseFloat(taskPayInfo.reward_balance || 0);
+    const balance = parseFloat(taskPayInfo.balance);
+    if ((val === 1 && wait_pay > reward_balance) || (val === 0 && wait_pay > balance)) {
+      can_pay = 0;
+    } else {
+      can_pay = 1;
+    }
+    console.log(can_pay, 'can_pay -> ', taskPayInfo, wait_pay, reward_balance, balance);
+    if (taskPayInfo.can_pay !== can_pay) {
+      dispatch({
+        type: 'form/updateState',
+        payload: {
+          taskPayInfo: {
+            ...taskPayInfo,
+            can_pay,
+            reward_balance: 0,
+          },
+        },
+      });
+    }
+  };
 
   toPay = () => {
     if (!toPayIsClick) {
@@ -22,11 +59,14 @@ class Step4 extends React.PureComponent {
     }
     toPayIsClick = false;
     const { dispatch, taskPayInfo } = this.props;
+    const { payType } = this.state;
+
     dispatch({
       type: 'form/pay',
       payload: {
         task_id: this.taskId,
         type: taskPayInfo.type,
+        pay_type: payType,
       },
     });
     // router.push('/fangdan/step-form/result');
@@ -80,7 +120,7 @@ class Step4 extends React.PureComponent {
   };
 
   render() {
-    const { taskPayInfo, location } = this.props;
+    const { taskPayInfo, location, goodsDetail } = this.props;
     // const onFinish = () => {
     //   router.push('/form/step-form/info');
     // };
@@ -115,6 +155,11 @@ class Step4 extends React.PureComponent {
       },
     ];
     const chargeUrl = this.chargeUrl || '';
+    const radioStyle = {
+      display: 'block',
+      height: '30px',
+      lineHeight: '30px',
+    };
     return (
       <Fragment>
         {taskPayInfo.can_pay == 1 ? (
@@ -156,14 +201,25 @@ class Step4 extends React.PureComponent {
           <Col offset={6} span={3}>
             需支付：￥{taskPayInfo.wait_pay}
           </Col>
-          <Col push={4} span={6}>
-            余额：￥{taskPayInfo.balance}{' '}
+          <Col push={5} span={9}>
+            {location.query.qf !== undefined ? (
+              <Radio.Group onChange={this.onChange} value={this.state.payType}>
+                <Radio style={radioStyle} value={0}>
+                  余额：￥{taskPayInfo.balance}{' '}
+                </Radio>
+                <Radio style={radioStyle} value={1}>
+                  奖励余额：￥{taskPayInfo.reward_balance || 0}{' '}
+                </Radio>
+              </Radio.Group>
+            ) : (
+              `余额：￥${taskPayInfo.balance} `
+            )}
             {taskPayInfo.can_pay ? (
               ''
             ) : (
-              <Link to={chargeUrl} style={{ marginLeft: 10 }}>
+              <a href={chargeUrl} target="_blank" style={{ marginLeft: 10 }}>
                 {'余额不足,去充值>'}
-              </Link>
+              </a>
             )}
           </Col>
         </Row>
@@ -178,7 +234,7 @@ class Step4 extends React.PureComponent {
                 确认支付
               </Button>
             )}
-            {this.actionType === 'pay' ? (
+            {this.actionType === 'pay' || !goodsDetail.goods_id ? (
               ''
             ) : (
               <Button onClick={this.goBack} style={{ marginLeft: 20 }} size="default">

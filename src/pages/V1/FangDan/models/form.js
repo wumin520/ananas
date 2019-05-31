@@ -42,6 +42,7 @@ export default {
       balance: '',
       can_pay: '',
       pay_notice: '',
+      reward_balance: 0,
     },
     schedules: [],
     startTime: '',
