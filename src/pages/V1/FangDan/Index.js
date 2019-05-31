@@ -79,7 +79,7 @@ class Index extends PureComponent {
         state: 0,
         avatar:
           'https://cdn.youlianyc.com/image/static/526746a209d504d6d9c43270767ff76e928aedc2.jpg',
-        title: '大额券推广',
+        title: '优惠券推广',
         description: `适用于：
           宝贝月销量≥50
           宝贝评价数≥50
