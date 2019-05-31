@@ -46,7 +46,6 @@ class Step4 extends React.PureComponent {
           taskPayInfo: {
             ...taskPayInfo,
             can_pay,
-            reward_balance: 0,
           },
         },
       });
