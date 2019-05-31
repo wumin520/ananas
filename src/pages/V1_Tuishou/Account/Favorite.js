@@ -52,10 +52,13 @@ class Favorite extends PureComponent {
       if (index === 1) {
         dispatch({
           type: 'favorite/queryGoodsUrl',
+          payload: {
+            task_plan_id: item.task_plan_id,
+          },
         }).then(res => {
           if (res.status === 'ok') {
             const url = res.payload.short_url;
-            const text = this[`nodeRef_${item.task_id}`].titleContent.replace(
+            const text = this[`nodeRef_${item.task_id}`].innerText.replace(
               '[点击复制文案获取]',
               url
             );
@@ -93,12 +96,7 @@ class Favorite extends PureComponent {
                     <Card
                       hoverable
                       className={styles.card}
-                      cover={
-                        <img
-                          alt="example"
-                          src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                        />
-                      }
+                      cover={<img alt="example" src={item.img} />}
                       actions={[
                         <a
                           style={{ color: primaryColor }}

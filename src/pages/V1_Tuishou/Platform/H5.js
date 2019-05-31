@@ -63,11 +63,11 @@ class Index extends PureComponent {
 
   render() {
     /* eslint-disable */
-    // const {
-    //   platform: { qr_code },
-    // } = this.props;
-    const qr_code = `https://cdn.youlianyc.com/image/static/b7e6993c2c60b18b2e0150914b9b45b458a05987.jpg`;
-    const url = `http://www.test.chaoduoke.com?sh_id=1393&type=20`;
+    const {
+      platform: { qr_code, url },
+    } = this.props;
+    // const qr_code = `https://cdn.youlianyc.com/image/static/b7e6993c2c60b18b2e0150914b9b45b458a05987.jpg`;
+    // const url = `http://www.test.chaoduoke.com?sh_id=1393&type=20`;
     console.log(qr_code);
 
     const content = (
