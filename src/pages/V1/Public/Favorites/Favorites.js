@@ -181,7 +181,11 @@ class Favorites extends Component {
   showFavItem = list => {
     return list.map((item, index) => {
       return (
-        <div className={styles.fav_item} key={item.task_plan_id}>
+        <div
+          className={styles.fav_item}
+          key={item.task_plan_id}
+          onMouseLeave={this.handleMouseLeave.bind(this, index)}
+        >
           <img className={styles.fav_item_img} src={item.img} alt="" />
           {item.is_new && item.is_collected === 0 ? (
             <img
@@ -311,10 +315,10 @@ class Favorites extends Component {
       if (shortUrl === '') {
         return;
       }
-      obj.popVisible = true;
       if (this.prev_index !== undefined) {
         tsTaskData.list[this.prev_index].popVisible = false;
       }
+      obj.popVisible = true;
       this.prev_index = index;
       this.setStoreData();
     });
