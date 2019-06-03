@@ -153,7 +153,7 @@ class Step2 extends React.PureComponent {
               },
             }).then(res => {
               if (res.status === 'ok') {
-                router.push(`/fangdan/step-form/result?deq=1`);
+                router.push(`/fangdan/step-form/result?deq=1&task_id=${res.payload.task_id}`);
               }
             });
             return;
