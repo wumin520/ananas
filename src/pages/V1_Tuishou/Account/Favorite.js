@@ -53,6 +53,7 @@ class Favorite extends PureComponent {
       console.log(index, item, this.nodeRef, this.copyTextHash);
       if (index === 1) {
         if (this.copyFailed && this.copyTextHash && this.copyTextHash[item.task_plan_id]) {
+          const text = this.copyTextHash[item.task_plan_id];
           clipboard.writeText(text).then(() => {
             message.success('复制成功');
           });
