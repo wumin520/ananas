@@ -25,9 +25,11 @@ class Pid extends Component {
       }).then(() => {
         // this.openNotification(res.payload);
         router.push('/tuishou-account/pid');
+        this.queryPidTaskList();
       });
+    } else {
+      this.queryPidTaskList();
     }
-    this.queryPidTaskList();
   }
 
   queryPidTaskList = () => {
