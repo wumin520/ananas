@@ -80,6 +80,7 @@ class OrderList extends PureComponent {
     e.preventDefault();
     const { dispatch, form } = this.props;
     const { startTime, endTime } = this.state;
+    console.log('startTime, endTime====>', startTime, endTime);
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       const values = {
@@ -92,8 +93,8 @@ class OrderList extends PureComponent {
         title: values.title || '',
         terminal_type: values.terminal || 0,
         state: values.state || 0,
-        ordered_time_for: startTime || '',
-        ordered_time_to: endTime || '',
+        ordered_time_for: `${startTime} 00:00:00` || '',
+        ordered_time_to: `${endTime} 23:59:59` || '',
       };
       dispatch({
         type: 'order/queryOrder',
@@ -104,14 +105,15 @@ class OrderList extends PureComponent {
 
   // 重置
   handleFormReset = () => {
-    const { form, dispatch, location } = this.props;
-    const { query } = location;
+    const { form, dispatch } = this.props;
+    // const { query } = location;
     form.resetFields();
+    params = {
+      page: 1,
+    };
     dispatch({
-      type: 'order/orderData',
-      payload: {
-        task_id: query.task_id,
-      },
+      type: 'order/queryOrder',
+      payload: params,
     });
   };
 
