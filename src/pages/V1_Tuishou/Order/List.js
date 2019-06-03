@@ -24,11 +24,13 @@ const { Option } = Select;
 const FormItem = Form.Item;
 
 let params = {
-  page: 1, // 翻页参数
-  task_id: 0, // 推广编号
-  goods_id: 0, // 商品id
-  state: -1, // 状态 -1全部 0失效1,2已下单3已完成
-  p_order_id: 0, // 订单编号
+  page: 1,
+  order_id: 0,
+  title: '',
+  terminal_type: 0,
+  state: 0,
+  ordered_time_for: '',
+  ordered_time_to: '',
 };
 
 @connect(({ order, loading }) => ({
@@ -51,10 +53,8 @@ class OrderList extends PureComponent {
   }
 
   componentDidMount() {
-    const { location } = this.props;
-    const { query } = location;
-    params.task_id = query.task_id || 0;
-    this.getOrderData(params);
+    // this.getOrderData(params);
+    this.handleFormReset();
   }
 
   getOrderData = p => {
@@ -106,10 +106,15 @@ class OrderList extends PureComponent {
   // 重置
   handleFormReset = () => {
     const { form, dispatch } = this.props;
-    // const { query } = location;
     form.resetFields();
     params = {
       page: 1,
+      order_id: 0,
+      title: '',
+      terminal_type: 0,
+      state: 0,
+      ordered_time_for: '',
+      ordered_time_to: '',
     };
     dispatch({
       type: 'order/queryOrder',
