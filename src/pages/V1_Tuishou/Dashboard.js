@@ -133,7 +133,6 @@ class Dashboard extends Component {
       <div>
         <Row gutter={20}>
           {colsData.map((item, index) => {
-            item.number = 0.01;
             return (
               <Col key={`key${index}`} xs={24} sm={12} xl={6} style={{ marginTop: 24 }}>
                 <ChartCard

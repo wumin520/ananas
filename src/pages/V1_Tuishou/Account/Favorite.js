@@ -92,7 +92,7 @@ class Favorite extends PureComponent {
           },
         }).then(res => {
           if (res.status === 'ok') {
-            message.success('删除成功');
+            message.success('取消收藏成功');
             this.fetchList();
           }
         });
