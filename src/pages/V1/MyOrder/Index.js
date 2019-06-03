@@ -53,6 +53,16 @@ class orderList extends PureComponent {
     this.getOrderData(params);
   }
 
+  componentWillUnmount() {
+    params = {
+      page: 1, // 翻页参数
+      task_id: 0, // 推广编号
+      goods_id: 0, // 商品id
+      state: -1, // 状态 -1全部 0失效1,2已下单3已完成
+      p_order_id: 0, // 订单编号
+    };
+  }
+
   getOrderData = p => {
     const { dispatch } = this.props;
     dispatch({
@@ -65,6 +75,7 @@ class orderList extends PureComponent {
   handleSearch = e => {
     e.preventDefault();
     const { dispatch, form } = this.props;
+    const currType = params.type;
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       const values = {
@@ -77,6 +88,7 @@ class orderList extends PureComponent {
         task_id: values.task_id,
         goods_id: values.goods_id,
         state: values.state,
+        type: currType || 10,
       };
       dispatch({
         type: 'order/orderData',
@@ -89,12 +101,19 @@ class orderList extends PureComponent {
   handleFormReset = () => {
     const { form, dispatch, location } = this.props;
     const { query } = location;
+    const currType = params.type;
     form.resetFields();
+    params = {
+      page: 1, // 翻页参数
+      task_id: query.task_id, // 推广编号
+      goods_id: 0, // 商品id
+      state: -1, // 状态 -1全部 0失效1,2已下单3已完成
+      p_order_id: 0, // 订单编号
+      type: currType || 10,
+    };
     dispatch({
       type: 'order/orderData',
-      payload: {
-        task_id: query.task_id,
-      },
+      payload: params,
     });
   };
 
@@ -141,6 +160,7 @@ class orderList extends PureComponent {
     params.task_id = 0;
     params.goods_id = 0;
     params.state = -1;
+    params.p_order_id = 0;
     this.getOrderData(params);
     // 清空input框中上次输入的值
     const { form } = this.props;
@@ -366,6 +386,113 @@ class orderList extends PureComponent {
       },
     ];
 
+    const columns2 = [
+      {
+        title: '订单编号',
+        dataIndex: 'p_order_id',
+        key: 'p_order_id',
+        width: 150,
+      },
+      {
+        title: '推广编号',
+        dataIndex: 'task_id',
+        key: 'task_id',
+        width: 90,
+      },
+      {
+        key: 'goods_id',
+        title: '商品id',
+        width: 110,
+        dataIndex: 'goods_id',
+      },
+      {
+        title: '商品',
+        width: 143,
+        render: val => {
+          return (
+            <a
+              className={styles.pro}
+              href={val.goods_url}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img src={val.img} alt="a" style={{ width: 50, heigth: 50, marginRight: 5 }} />
+              <span className={styles.goodsName}> {val.title}</span>
+            </a>
+          );
+        },
+      },
+      {
+        title: '券后价',
+        width: 90,
+        render(item) {
+          return <span>￥{item.after_coupon_price}</span>;
+        },
+      },
+      {
+        title: '优惠券',
+        width: 90,
+        render(item) {
+          return <span>￥{item.coupon_price}</span>;
+        },
+      },
+      {
+        title: '状态',
+        width: 90,
+        render(item) {
+          return <Badge status={item.state_color} text={item.state_desc} />;
+        },
+      },
+      {
+        title: '时间',
+        width: 200,
+        render(val) {
+          /* eslint-disable */
+          const time = (
+            <span>
+              <span> {val.harvest_time ? '收货: ' + val.harvest_time : ''}</span>
+            </span>
+          );
+          return (
+            <span>
+              <span>下单:{val.ordered_datetime}</span>
+              <br />
+              {time}
+            </span>
+          );
+        },
+      },
+      {
+        title: '操作',
+        width: 90,
+        render: item => {
+          const { itemImg } = this.state;
+          const url = `/order/productDetail?order_id=${item.order_id}`;
+          let option;
+          if (item.proof_images.length > 0) {
+            {
+              /** option = (
+              <span>
+                <a onClick={this.setModal1Visible.bind(this, item)}>免单凭证</a>
+                <ModelPops itemImg={itemImg} />
+              </span>
+            ); */
+            }
+          }
+          return (
+            <span>
+              {/* <a onClick={this.goOrderDetail.bind(this, item)} target='_blank'>查看 </a> */}
+              <a href={url} target="_blank">
+                查看{' '}
+              </a>
+              <br />
+              {option}
+            </span>
+          );
+        },
+      },
+    ];
+
     const Info = ({ title, value, bordered }) => (
       <div className={styles.headerInfo}>
         <span>{title}</span>
@@ -425,18 +552,33 @@ class orderList extends PureComponent {
           <Card>
             <div className={styles.tableList}>
               <div className={styles.tableListForm}>{this.renderForm()}</div>
-              <Table
-                rowKey={item => item.id}
-                columns={columns}
-                dataSource={list}
-                pagination={{
-                  defaultCurrent: 1,
-                  current: orderData.page_info.current_page,
-                  pageSize: orderData.page_info.per_page,
-                  total: orderData.page_info.total_num,
-                  onChange: this.onChange,
-                }}
-              />
+              {params.type && params.type === 20 ? (
+                <Table
+                  rowKey={item => item.id}
+                  columns={columns2}
+                  dataSource={list}
+                  pagination={{
+                    defaultCurrent: 1,
+                    current: orderData.page_info.current_page,
+                    pageSize: orderData.page_info.per_page,
+                    total: orderData.page_info.total_num,
+                    onChange: this.onChange,
+                  }}
+                />
+              ) : (
+                <Table
+                  rowKey={item => item.id}
+                  columns={columns}
+                  dataSource={list}
+                  pagination={{
+                    defaultCurrent: 1,
+                    current: orderData.page_info.current_page,
+                    pageSize: orderData.page_info.per_page,
+                    total: orderData.page_info.total_num,
+                    onChange: this.onChange,
+                  }}
+                />
+              )}
             </div>
           </Card>
         </div>
