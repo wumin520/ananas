@@ -85,8 +85,9 @@ class Index extends Component {
   };
 
   todayPlanRadioOnChange = e => {
-    this.getListData(e.target.value);
-    this.tableType = e.target.value === '10' ? 0 : 1;
+    const { value } = e.target;
+    this.getListData(value);
+    this.tableType = value === '10' ? 0 : value === '20' ? 2 : 1;
   };
 
   todayOrderRadioOnChange = e => {

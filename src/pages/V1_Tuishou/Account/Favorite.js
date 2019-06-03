@@ -47,9 +47,17 @@ class Favorite extends PureComponent {
       </div>
     );
     const onTabChange = (index, item) => {
+      /* eslint-disable */
       const { dispatch } = this.props;
-      console.log(index, item, this.nodeRef);
+      let short_url = '';
+      console.log(index, item, this.nodeRef, this.copyTextHash);
       if (index === 1) {
+        if (this.copyFailed && this.copyTextHash && this.copyTextHash[item.task_plan_id]) {
+          clipboard.writeText(text).then(() => {
+            message.success('复制成功');
+          });
+          return;
+        }
         dispatch({
           type: 'favorite/queryGoodsUrl',
           payload: {
@@ -57,12 +65,22 @@ class Favorite extends PureComponent {
           },
         }).then(res => {
           if (res.status === 'ok') {
-            const url = res.payload.short_url;
+            short_url = res.payload.short_url;
+            const url = short_url;
             let text = this[`nodeRef_${item.task_id}`].innerText.replace('[点击复制文案获取]', url);
             text = `${item.title}\n${text}`;
-            clipboard.writeText(text).then(() => {
-              message.success('复制成功');
-            });
+            this.copyTextHash = this.copyTextHash || {};
+            this.copyTextHash[item.task_plan_id] = text;
+            clipboard
+              .writeText(text)
+              .then(() => {
+                message.success('复制成功');
+              })
+              .catch(e => {
+                console.log(e, 'e -> 复制 ');
+                message.error('复制失败！请重新点击复制～');
+                this.copyFailed = 1;
+              });
           }
         });
       } else {
@@ -73,6 +91,7 @@ class Favorite extends PureComponent {
           },
         }).then(res => {
           if (res.status === 'ok') {
+            message.success('删除成功');
             this.fetchList();
           }
         });

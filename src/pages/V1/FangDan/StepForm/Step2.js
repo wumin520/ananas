@@ -59,6 +59,7 @@ class Step2 extends React.PureComponent {
   constructor(props) {
     super(props);
     this.qf = props.location.query.qf;
+    this.deq = props.location.query.deq;
   }
 
   setMainImage = (item, index) => {
@@ -123,6 +124,9 @@ class Step2 extends React.PureComponent {
       let path = `/fangdan/step-form/info`;
       if (this.qf !== undefined) {
         path = `/fangdan/qf/info?qf=${this.qf}`;
+      }
+      if (this.deq !== undefined) {
+        path += `?deq=${this.deq}`;
       }
       router.push(path);
     };

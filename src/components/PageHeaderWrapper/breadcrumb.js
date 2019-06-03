@@ -8,6 +8,7 @@ import { urlToList } from '../_utils/pathTools';
 // Render the Breadcrumb child node
 const itemRender = (route, params, routes, paths) => {
   const last = routes.indexOf(route) === routes.length - 1;
+  console.log(params, '1', route);
   return last || !route.component ? (
     <span>{route.breadcrumbName}</span>
   ) : (
@@ -92,6 +93,8 @@ const conversionFromLocation = (routerLocation, breadcrumbNameMap, props) => {
 export const conversionBreadcrumbList = props => {
   const { breadcrumbList } = props;
   const { routes, params, routerLocation, breadcrumbNameMap } = getBreadcrumbProps(props);
+  console.log('breadcrumbList -> ', breadcrumbList);
+
   if (breadcrumbList && breadcrumbList.length) {
     return {
       routes: conversionFromProps(props),

@@ -151,6 +151,72 @@ const qfColumns = [
     ),
   },
 ];
+const deqColumns = [
+  {
+    key: '1',
+    title: '推广编号',
+    width: 100,
+    dataIndex: 'task_plan_id',
+  },
+  {
+    key: 'goods_id',
+    title: '商品/店铺id',
+    width: 120,
+    dataIndex: 'goods_id',
+  },
+  {
+    key: '2',
+    title: '商品/店铺名称',
+    className: styles.resultColumns,
+    render: val => (
+      <a
+        className={styles.resultColumnsDiv}
+        href={val.goods_url}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <img src={val.img} alt="a" style={{ width: 50, heigth: 50 }} />
+        <span> {val.title}</span>
+      </a>
+    ),
+  },
+  {
+    key: '8',
+    title: '券后价',
+    dataIndex: 'after_coupon_price',
+  },
+  {
+    key: '9',
+    title: '优惠券',
+    dataIndex: 'coupon_price',
+  },
+  {
+    key: '5',
+    title: '状态',
+    render: item => <Badge status={item.state_color} text={item.state_desc} />,
+  },
+  {
+    key: '6',
+    title: '推广份数',
+    render: val => (
+      <div className={styles.taskInfo}>
+        <p>发放份数 {val.total_amount}</p>
+        <p>下单人数 {val.order_num}</p>
+      </div>
+    ),
+  },
+  {
+    key: '7',
+    title: '操作',
+    render: record => (
+      <Fragment>
+        <Link to={`/fangdan/deqDetail?&task_id=${record.task_id}`}>查看</Link>
+        <Divider type="vertical" />
+        <Link to={`/order/Index?task_id=${record.task_id}&deq=1`}>推广效果</Link>
+      </Fragment>
+    ),
+  },
+];
 
 const todayPlan = memo(({ data, loading, radioOnChange, tableType }) => {
   const extraContent = (
@@ -165,6 +231,8 @@ const todayPlan = memo(({ data, loading, radioOnChange, tableType }) => {
   let columns = defaultColumns;
   if (tableType === 1) {
     columns = qfColumns;
+  } else if (tableType === 2) {
+    columns = deqColumns;
   }
   return (
     <Card

@@ -39,10 +39,12 @@ class orderList extends PureComponent {
     super(props);
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
+    /* eslint-disable */
+    const tabActiveKey = this.props.location.query.deq !== undefined ? 'deq' : 'haoping';
     this.state = {
       modal1Visible: false,
       itemImg: [],
-      tabActiveKey: 'haoping',
+      tabActiveKey,
     };
   }
 
