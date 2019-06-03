@@ -270,7 +270,8 @@ class FdList extends PureComponent {
       path = `/order/qf`;
     }
     if (item.type === 20) {
-      path += '?deq=1';
+      router.push(`${path}?deq=1&task_id=${item.task_id}`);
+      return;
     }
     router.push(`${path}?task_id=${item.task_id}`);
   };
