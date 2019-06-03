@@ -165,6 +165,11 @@ class FdList extends PureComponent {
       this.setState({
         tabActiveKey: 'quanfen',
       });
+    } else if (location.query.deq) {
+      params.type = 20;
+      this.setState({
+        tabActiveKey: 'deq',
+      });
     }
     this.getListData(params);
   }
@@ -305,6 +310,7 @@ class FdList extends PureComponent {
       this.qf = 1;
       params.type = '30,31';
     } else if (key === 'deq') {
+      this.qf = undefined;
       params.type = 20;
     }
     params.page = 1;
