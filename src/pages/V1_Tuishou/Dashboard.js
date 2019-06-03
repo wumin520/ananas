@@ -5,7 +5,6 @@ import { Row, Col, Tooltip, Icon, Card, Table, Badge } from 'antd';
 import numeral from 'numeral';
 import moment from 'moment';
 import { connect } from 'dva';
-import Link from 'umi/link';
 
 import styles from './Dashboard.less';
 
@@ -213,7 +212,11 @@ class Dashboard extends Component {
           loading={loading}
           bordered={false}
           title="今日订单"
-          extra={<Link to="/tuishou-order">{'订单列表>'}</Link>}
+          extra={
+            <a href="/tuishou-order/index" target="_blank">
+              {'查看更多>'}
+            </a>
+          }
           style={{ marginTop: 24 }}
         >
           <Table

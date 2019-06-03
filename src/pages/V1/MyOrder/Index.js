@@ -337,18 +337,21 @@ class orderList extends PureComponent {
         width: 90,
         render: item => {
           const { itemImg } = this.state;
-          const url = `/order/productDetail?order_id=${item.order_id}`;
-          let option;
-          if (item.proof_images.length > 0) {
-            {
-              /** option = (
-              <span>
-                <a onClick={this.setModal1Visible.bind(this, item)}>免单凭证</a>
-                <ModelPops itemImg={itemImg} />
-              </span>
-            ); */
-            }
+          let url = `/order/productDetail?order_id=${item.order_id}`;
+          if (tabActiveKey == 'deq') {
+            url = `/order/productDetail?order_id=${item.order_id}&deq=deq`;
           }
+          let option;
+          // if (item.proof_images.length > 0) {
+          //   {
+          //     /** option = (
+          //     <span>
+          //       <a onClick={this.setModal1Visible.bind(this, item)}>免单凭证</a>
+          //       <ModelPops itemImg={itemImg} />
+          //     </span>
+          //   ); */
+          //   }
+          // }
           return (
             <span>
               {/* <a onClick={this.goOrderDetail.bind(this, item)} target='_blank'>查看 </a> */}
@@ -394,15 +397,28 @@ class orderList extends PureComponent {
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
-              <Col sm={8} xs={24}>
-                <Info title="已下单" value={orderNumInfo.pay_num} bordered />
-              </Col>
-              <Col sm={8} xs={24}>
-                <Info title="试用报告" value={orderNumInfo.trial_report_num} bordered />
-              </Col>
-              <Col sm={8} xs={24}>
-                <Info title="已完成" value={orderNumInfo.finish_num} />
-              </Col>
+              {tabActiveKey == 'deq' ? (
+                <span>
+                  <Col sm={12} xs={24}>
+                    <Info title="已下单" value={orderNumInfo.pay_num} bordered />
+                  </Col>
+                  <Col sm={12} xs={24}>
+                    <Info title="已完成" value={orderNumInfo.finish_num} />
+                  </Col>
+                </span>
+              ) : (
+                <span>
+                  <Col sm={8} xs={24}>
+                    <Info title="已下单" value={orderNumInfo.pay_num} bordered />
+                  </Col>
+                  <Col sm={8} xs={24}>
+                    <Info title="试用报告" value={orderNumInfo.trial_report_num} bordered />
+                  </Col>
+                  <Col sm={8} xs={24}>
+                    <Info title="已完成" value={orderNumInfo.finish_num} />
+                  </Col>
+                </span>
+              )}
             </Row>
           </Card>
           <br />
