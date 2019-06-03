@@ -282,6 +282,8 @@ class FdList extends PureComponent {
     if (/^3[0|1]$/.test(item.type)) {
       const qf = item.type === 30 ? 0 : 1;
       url += `&qf=${qf}`;
+    } else if (item.type === 20) {
+      url += `&deq=1`;
     }
     return url;
   };
