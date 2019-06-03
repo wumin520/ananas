@@ -53,6 +53,7 @@ function disabledDate(current) {
   goodsDetail: form.goodsDetail,
   category_list: form.category_list,
   category_id: form.category_id,
+  editTaskInfo: form.editTaskInfo,
 }))
 @Form.create()
 class Step2 extends React.PureComponent {
@@ -110,6 +111,7 @@ class Step2 extends React.PureComponent {
     /* eslint-disable */
     const {
       form,
+      editTaskInfo,
       submitting,
       goodsDetail,
       category_list,
@@ -119,6 +121,8 @@ class Step2 extends React.PureComponent {
     } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const { Option } = Select;
+
+    console.log('recommend_reason -> ', editTaskInfo);
 
     const onPrev = () => {
       let path = `/fangdan/step-form/info`;
@@ -340,7 +344,8 @@ class Step2 extends React.PureComponent {
         {deq ? (
           <React.Fragment>
             <Form.Item {...formItemLayout} className={styles.stepFormText} label="推荐理由">
-              {getFieldDecorator('comment_keyword', {
+              {getFieldDecorator('recommend_reason', {
+                initialValue: editTaskInfo.recommend_reason,
                 rules: [{ required: true, message: '请输入推荐理由', max: 36 }],
               })(
                 <div>
@@ -353,13 +358,13 @@ class Step2 extends React.PureComponent {
             </Form.Item>
             <Form.Item {...formItemLayout} className={styles.stepFormText} label="推广时间">
               {getFieldDecorator('start_time', {
+                initialValue: (editTaskInfo.start_time && moment(editTaskInfo.start_time)) || null,
                 rules: [
                   {
                     required: true,
                     message: `请选择推广开始时间`,
                   },
                 ],
-                initialValue: '',
               })(
                 <DatePicker
                   format="YYYY-MM-DD 00:00:00"

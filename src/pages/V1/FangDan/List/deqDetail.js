@@ -105,7 +105,7 @@ class GeneralizeDetail extends Component {
             </Description>
             <Description term="申请时间">{data.created_at}</Description>
             <Description term="推广开始时间">{data.start_time}</Description>
-            <Description term="推荐理由">{data.comment_keyword}</Description>
+            <Description term="推荐理由">{data.recommend_reason}</Description>
           </DescriptionList>
         </Card>
       </PageHeaderWrapper>

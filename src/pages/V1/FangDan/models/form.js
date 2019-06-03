@@ -53,6 +53,10 @@ export default {
     endTime: '',
     taskId: '',
     zs_duo_id: '',
+    editTaskInfo: {
+      recommend_reason: '',
+      start_time: '',
+    },
   },
 
   effects: {
@@ -175,6 +179,10 @@ export default {
             endTime: end_time,
             category_id: data.category_id,
             schedules: arr,
+            editTaskInfo: {
+              recommend_reason: data.recommend_reason,
+              start_time: data.start_time,
+            },
           },
         });
       }
