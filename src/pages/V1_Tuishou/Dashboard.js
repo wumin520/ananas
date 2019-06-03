@@ -8,6 +8,9 @@ import { connect } from 'dva';
 
 import styles from './Dashboard.less';
 
+const time = moment().format('YYYY-MM-DD');
+const endTime = `${time} 00:00:00`;
+
 @connect(({ loading, dashboard, order }) => ({
   loading: loading.models.dashboard,
   dashboard,
@@ -23,6 +26,9 @@ class Dashboard extends Component {
     });
     dispatch({
       type: 'order/queryOrder',
+      payload: {
+        ordered_time_for: endTime,
+      },
     });
   }
 
