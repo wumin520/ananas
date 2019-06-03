@@ -149,16 +149,20 @@ class Step2 extends React.PureComponent {
             },
           });
           if (location.query.deq !== undefined) {
+            let params = {
+              ...goodsDetail,
+              type: 20,
+              ...values,
+              no_redirect: 1,
+              images: goodsDetail.detailImgRecordUrl,
+              plan_info: [],
+            };
+            if (location.query.task_id !== undefined) {
+              params.task_id = location.query.task_id;
+            }
             dispatch({
               type: 'form/publishTask',
-              payload: {
-                ...goodsDetail,
-                type: 20,
-                ...values,
-                no_redirect: 1,
-                images: goodsDetail.detailImgRecordUrl,
-                plan_info: [],
-              },
+              payload: params,
             }).then(res => {
               if (res.status === 'ok') {
                 router.push(`/fangdan/step-form/result?deq=1&task_id=${res.payload.task_id}`);
@@ -347,14 +351,10 @@ class Step2 extends React.PureComponent {
               {getFieldDecorator('recommend_reason', {
                 initialValue: editTaskInfo.recommend_reason,
                 rules: [{ required: true, message: '请输入推荐理由', max: 36 }],
-              })(
-                <div>
-                  <Input placeholder="请输入推荐理由" style={{ width: '80%' }} />{' '}
-                  <div style={{ color: 'orange' }}>
-                    不超过36个字的精简文案，突出产品亮点、需求痛点、为什么值得购买！
-                  </div>
-                </div>
-              )}
+              })(<Input placeholder="请输入推荐理由" style={{ width: '80%' }} />)}
+              <div style={{ color: 'orange' }}>
+                不超过36个字的精简文案，突出产品亮点、需求痛点、为什么值得购买！
+              </div>
             </Form.Item>
             <Form.Item {...formItemLayout} className={styles.stepFormText} label="推广时间">
               {getFieldDecorator('start_time', {
