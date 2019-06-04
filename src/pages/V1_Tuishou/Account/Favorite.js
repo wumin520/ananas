@@ -9,7 +9,7 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './Favorite.less';
 
 const params = {
-  per_page: 10,
+  per_page: 12,
   page: 1,
 };
 
@@ -119,7 +119,7 @@ class Favorite extends PureComponent {
             <List
               rowKey="id"
               loading={loading}
-              grid={{ gutter: 24, lg: 5, md: 2, sm: 1, xs: 1 }}
+              grid={{ gutter: 10, lg: 4, md: 2, sm: 1, xs: 1 }}
               dataSource={[...list]}
               renderItem={item =>
                 item ? (
