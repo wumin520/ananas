@@ -360,9 +360,6 @@ class orderList extends PureComponent {
         render: item => {
           const { itemImg } = this.state;
           let url = `/order/productDetail?order_id=${item.order_id}`;
-          if (tabActiveKey == 'deq') {
-            url = `/order/productDetail?order_id=${item.order_id}&deq=deq`;
-          }
           let option;
           // if (item.proof_images.length > 0) {
           //   {
@@ -469,7 +466,7 @@ class orderList extends PureComponent {
         width: 90,
         render: item => {
           const { itemImg } = this.state;
-          const url = `/order/productDetail?order_id=${item.order_id}`;
+          const url = `/order/productDetail?order_id=${item.order_id}&deq=1`;
           let option;
           if (item.proof_images.length > 0) {
             {
