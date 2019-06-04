@@ -26,6 +26,7 @@ class Index extends Component {
   };
 
   tableType = 0;
+  orderType = 0;
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -94,7 +95,9 @@ class Index extends Component {
   };
 
   todayOrderRadioOnChange = e => {
-    this.getOrderData(e.target.value);
+    const { value } = e.target;
+    this.getOrderData(value);
+    this.orderType = value === '10' ? 0 : 1;
   };
 
   render() {
@@ -145,6 +148,7 @@ class Index extends Component {
                 <TodayOrder
                   loading={loading}
                   data={dayOrderInfo.list}
+                  orderType={this.orderType}
                   pageInfo={dayOrderInfo.page_info}
                   radioOnChange={this.todayOrderRadioOnChange}
                 />

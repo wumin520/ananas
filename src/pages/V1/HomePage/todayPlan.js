@@ -160,13 +160,13 @@ const deqColumns = [
   },
   {
     key: 'goods_id',
-    title: '商品/店铺id',
+    title: '商品id',
     width: 120,
     dataIndex: 'goods_id',
   },
   {
     key: '2',
-    title: '商品/店铺名称',
+    title: '商品名称',
     className: styles.resultColumns,
     render: val => (
       <a
