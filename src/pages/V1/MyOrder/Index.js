@@ -508,7 +508,7 @@ class orderList extends PureComponent {
       },
       {
         key: 'deq',
-        tab: '大额券',
+        tab: '优惠券',
       },
     ];
 

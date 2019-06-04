@@ -81,7 +81,7 @@ const OrderDetail = memo(({ loading, data, pageInfo, radioOnChange }) => {
     <div style={{ marginBottom: 20 }} className={styles.extraContent}>
       <RadioGroup onChange={radioOnChange} defaultValue="10">
         <RadioButton value="10">免单试用</RadioButton>
-        <RadioButton value="20">大额券</RadioButton>
+        <RadioButton value="20">优惠券</RadioButton>
       </RadioGroup>
     </div>
   );
