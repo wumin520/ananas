@@ -51,15 +51,14 @@ class TuishouSignin extends Component {
       console.log(info.file, info.fileList);
     }
     if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
+      message.success(`上传成功！`);
       const imageUrl = info.file.response.payload.url;
       imageUrlArr[index] = imageUrl;
-      console.log('imageUrlArr -> ', imageUrlArr);
       this.setState({
         imageUrlArr,
       });
     } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
+      message.error(`上传失败！`);
     }
   };
 
@@ -111,6 +110,13 @@ class TuishouSignin extends Component {
           image: file,
           type: 'avatar',
         };
+      },
+      beforeUpload: file => {
+        const isLt5M = file.size / 1024 / 1024 < 5;
+        if (!isLt5M) {
+          message.error('照片不能超过5MB');
+        }
+        return isLt5M;
       },
     };
     return (
