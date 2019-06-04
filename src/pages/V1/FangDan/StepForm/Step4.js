@@ -67,6 +67,8 @@ class Step4 extends React.PureComponent {
         type: taskPayInfo.type,
         pay_type: payType,
       },
+    }).then(() => {
+      toPayIsClick = true;
     });
     // router.push('/fangdan/step-form/result');
   };
