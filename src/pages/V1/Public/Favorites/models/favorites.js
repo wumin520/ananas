@@ -30,7 +30,7 @@ export default {
       const res = yield call(tsAddCollect, payload);
       if (res.code === 200) {
         message.destroy();
-        message.info('已收藏');
+        message.success('已收藏');
         return;
       }
       if (res.code === 40302) {
@@ -51,7 +51,7 @@ export default {
       const res = yield call(tsRemoveCollect, payload);
       if (res.code === 200) {
         message.destroy();
-        message.info('已取消');
+        message.success('已取消');
         return;
       }
       if (res.code === 40302) {
