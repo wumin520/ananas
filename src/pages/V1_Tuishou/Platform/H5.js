@@ -122,7 +122,7 @@ class Index extends PureComponent {
 【界面预览】`}
               </div>
               <div style={{ marginTop: 20 }}>
-                <img src="https://cdn.youlianyc.com/image/static/b82761ba5231af27f1ffb79cb393ce8cc7bcf70a.jpg" />
+                <img src="https://cdn.youlianyc.com/image/static/04597c93d5938738c6514f737f7f4209bde98106.jpg" />
               </div>
             </Card>
           </div>
