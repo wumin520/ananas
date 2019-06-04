@@ -62,6 +62,9 @@ class Index extends Component {
       start_time,
       end_time,
     };
+    if (type === '20') {
+      params.state = 4;
+    }
     const { dispatch } = this.props;
     dispatch({
       type: 'homedata/planList',

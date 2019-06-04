@@ -560,7 +560,7 @@ class FdList extends PureComponent {
       },
       {
         key: 'deq',
-        tab: '优惠券',
+        tab: '优惠券推广',
       },
       {
         key: 'quanfen',
