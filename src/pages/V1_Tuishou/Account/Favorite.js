@@ -151,7 +151,7 @@ class Favorite extends PureComponent {
                         description={
                           <React.Fragment>
                             <div
-                              style={{ whiteSpace: 'pre-wrap' }}
+                              style={{ whiteSpace: 'pre-wrap', height: 126, overflow: 'hidden' }}
                               ref={node => {
                                 this[`nodeRef_${item.task_id}`] = node;
                               }}
