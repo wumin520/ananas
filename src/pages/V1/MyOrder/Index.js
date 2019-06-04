@@ -52,6 +52,9 @@ class orderList extends PureComponent {
     const { location } = this.props;
     const { query } = location;
     params.task_id = query.task_id || 0;
+    if (query.deq) {
+      params.type = 20;
+    }
     this.getOrderData(params);
   }
 

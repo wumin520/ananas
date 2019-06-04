@@ -76,7 +76,7 @@ const columns = [
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 
-const OrderDetail = memo(({ loading, data, pageInfo, radioOnChange }) => {
+const OrderDetail = memo(({ loading, data, pageInfo, radioOnChange, orderType }) => {
   const extraContent = (
     <div style={{ marginBottom: 20 }} className={styles.extraContent}>
       <RadioGroup onChange={radioOnChange} defaultValue="10">
@@ -91,7 +91,13 @@ const OrderDetail = memo(({ loading, data, pageInfo, radioOnChange }) => {
       loading={loading}
       bordered={false}
       title={<FormattedMessage id="app.homePage.todayOrder" defaultMessage="" />}
-      extra={<Link to="/order/Index">{'订单列表>'}</Link>}
+      extra={
+        orderType == 0 ? (
+          <Link to="/order/Index">{'订单列表>'}</Link>
+        ) : (
+          <Link to="/order/Index?deq=1">{'订单列表>'}</Link>
+        )
+      }
       style={{ marginTop: 24 }}
     >
       {extraContent}
