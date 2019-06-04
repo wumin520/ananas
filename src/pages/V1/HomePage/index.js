@@ -64,6 +64,8 @@ class Index extends Component {
     };
     if (type === '20') {
       params.state = 4;
+      delete params.start_time;
+      delete params.end_time;
     }
     const { dispatch } = this.props;
     dispatch({
