@@ -1,12 +1,17 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Card, Button, Icon, List, message } from 'antd';
+import { Card, Button, Icon, List, message, Pagination } from 'antd';
 import { router } from 'umi';
 
 import * as clipboard from 'clipboard-polyfill';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 import styles from './Favorite.less';
+
+const params = {
+  per_page: 10,
+  page: 1,
+};
 
 @connect(({ favorite, loading, setting }) => ({
   favorite,
@@ -24,6 +29,7 @@ class Favorite extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'favorite/queryFavoriteList',
+      payload: params,
     });
   };
 
@@ -32,9 +38,16 @@ class Favorite extends PureComponent {
     router.push(`/fangdan/qf/info?qf=${val}`);
   };
 
+  onPageChange = (page, pageSize) => {
+    console.log(page, pageSize);
+    params.page = page;
+    this.fetchList();
+  };
+
   render() {
+    /* eslint-disable */
     const {
-      favorite: { list },
+      favorite: { list, page_info },
       loading,
       setting,
     } = this.props;
@@ -106,7 +119,7 @@ class Favorite extends PureComponent {
             <List
               rowKey="id"
               loading={loading}
-              grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
+              grid={{ gutter: 24, lg: 5, md: 2, sm: 1, xs: 1 }}
               dataSource={[...list]}
               renderItem={item =>
                 item ? (
@@ -164,6 +177,14 @@ class Favorite extends PureComponent {
             />
           </div>
         </PageHeaderWrapper>
+        <Pagination
+          style={{ marginTop: 20 }}
+          hideOnSinglePage={true}
+          onChange={this.onPageChange}
+          defaultCurrent={1}
+          total={page_info.total_num}
+          pageSize="10"
+        />
       </div>
     );
   }

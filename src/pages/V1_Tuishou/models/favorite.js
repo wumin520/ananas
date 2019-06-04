@@ -10,6 +10,9 @@ export default {
 
   state: {
     list: [],
+    page_info: {
+      total_num: 0,
+    },
   },
 
   effects: {
@@ -20,6 +23,7 @@ export default {
           type: 'saveState',
           payload: {
             list: res.payload.list,
+            page_info: res.payload.page_info,
           },
         });
       }
