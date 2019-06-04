@@ -83,6 +83,18 @@ class TuishouSignin extends Component {
         <div className="ant-upload-text">{btnText}</div>
       </div>
     );
+    const beforeUpload = file => {
+      const isLt5M = file.size / 1024 / 1024 < 5;
+      if (file.type !== 'image/jpeg' && file.type !== 'image/jpg' && file.type !== 'image/png') {
+        message.error('只支持格式jpg，jpeg，png，请重新选择！');
+        return false;
+      }
+      if (!isLt5M) {
+        message.error('照片不能超过5MB');
+      }
+      return isLt5M;
+    };
+
     const uploadProps = {
       name: 'avatar',
       listType: 'picture-card',
@@ -98,6 +110,7 @@ class TuishouSignin extends Component {
           type: 'avatar',
         };
       },
+      beforeUpload,
     };
     const props = {
       name: 'file',
@@ -111,13 +124,7 @@ class TuishouSignin extends Component {
           type: 'avatar',
         };
       },
-      beforeUpload: file => {
-        const isLt5M = file.size / 1024 / 1024 < 5;
-        if (!isLt5M) {
-          message.error('照片不能超过5MB');
-        }
-        return isLt5M;
-      },
+      beforeUpload,
     };
     return (
       <div style={{ width: 544, margin: '0 auto' }}>
