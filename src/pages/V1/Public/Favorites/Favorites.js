@@ -373,7 +373,7 @@ class Favorites extends Component {
   };
 
   render() {
-    const { tsTaskData } = this.props;
+    const { tsTaskData, currentUser } = this.props;
     const { sortTitle, isShowBottomFlow } = this.state;
     const pageInfo = tsTaskData.page_info;
 
@@ -445,12 +445,16 @@ class Favorites extends Component {
             src="https://cdn.youlianyc.com/image/static/6ab6eb39bfeb90284639ca913ca3bb560cadde1c.jpg"
             alt=""
           />
-          <img
-            className={styles.g_flow_img}
-            onClick={this.jumpToFav.bind(this)}
-            src="https://cdn.youlianyc.com/image/static/3fe383e2ce3febc8ab634b643db391240863c4e8.jpg"
-            alt=""
-          />
+          {currentUser.ts_state === 1 ? (
+            <img
+              className={styles.g_flow_img}
+              onClick={this.jumpToFav.bind(this)}
+              src="https://cdn.youlianyc.com/image/static/3fe383e2ce3febc8ab634b643db391240863c4e8.jpg"
+              alt=""
+            />
+          ) : (
+            ''
+          )}
         </div>
 
         {/* foot */}

@@ -10,6 +10,11 @@ import styles from './Dashboard.less';
 
 const time = moment().format('YYYY-MM-DD');
 const endTime = `${time} 00:00:00`;
+const params = {
+  ordered_time_for: endTime,
+  per_page: 5,
+  page: 1,
+};
 
 @connect(({ loading, dashboard, order }) => ({
   loading: loading.models.dashboard,
@@ -24,19 +29,30 @@ class Dashboard extends Component {
     dispatch({
       type: 'dashboard/queryHomeData',
     });
+    this.getTodayOrder();
+  }
+
+  componentWillUnmount() {
+    params.page = 1;
+  }
+
+  getTodayOrder() {
+    const { dispatch } = this.props;
     dispatch({
       type: 'order/queryOrder',
-      payload: {
-        ordered_time_for: endTime,
-      },
+      payload: params,
     });
   }
+
+  onChange = page => {
+    params.page = page;
+    this.getTodayOrder();
+  };
 
   render() {
     /* eslint-disable */
     const { loading, dashboard, orderData } = this.props;
-    const { list } = orderData;
-    console.log('list==>', list);
+    const { list, page_info } = orderData;
     const {
       head_info: { visitor_info, order_info },
       today_rebate,
@@ -230,7 +246,13 @@ class Dashboard extends Component {
             size="small"
             columns={columns}
             dataSource={list}
-            pagination={false}
+            pagination={{
+              defaultCurrent: 1,
+              current: page_info.current_page,
+              pageSize: page_info.per_page,
+              total: page_info.total_num,
+              onChange: this.onChange,
+            }}
           />
         </Card>
       </div>
