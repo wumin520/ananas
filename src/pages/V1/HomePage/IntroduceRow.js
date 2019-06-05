@@ -19,41 +19,6 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
       <Col {...topColResponsiveProps}>
         <ChartCard
           bordered={false}
-          loading={loading}
-          title="今日圈粉数"
-          action={
-            <Tooltip
-              title={
-                <div className={styles.toolP}>
-                  <p>1.今日圈粉数：今日上传收藏凭证数</p>
-                  <p>2.总圈粉数：总上传收藏凭证数</p>
-                </div>
-              }
-            >
-              <Icon type="info-circle-o" />
-            </Tooltip>
-          }
-          total={numeral(visitData.fans_info.day_order_num).format('0,0')}
-          footer={
-            <Field label={<span>总圈粉数 </span>} value={visitData.fans_info.total_order_num} />
-          }
-          contentHeight={46}
-        >
-          <MiniArea
-            color="#975FE4"
-            data={visitData.fans_info.statistics_info.map(k => {
-              return {
-                x: k.day,
-                y: k.number,
-              };
-            })}
-          />
-        </ChartCard>
-      </Col>
-
-      <Col {...topColResponsiveProps}>
-        <ChartCard
-          bordered={false}
           title={
             <FormattedMessage id="app.homePage.chart.orderAmount" defaultMessage="Total Sales" />
           }
@@ -84,6 +49,40 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
             line
             borderWidth={2}
             data={visitData.order_info.statistics_info.map(k => {
+              return {
+                x: k.day,
+                y: k.number,
+              };
+            })}
+          />
+        </ChartCard>
+      </Col>
+      <Col {...topColResponsiveProps}>
+        <ChartCard
+          bordered={false}
+          loading={loading}
+          title="今日圈粉数"
+          action={
+            <Tooltip
+              title={
+                <div className={styles.toolP}>
+                  <p>1.今日圈粉数：今日上传收藏凭证数</p>
+                  <p>2.总圈粉数：总上传收藏凭证数</p>
+                </div>
+              }
+            >
+              <Icon type="info-circle-o" />
+            </Tooltip>
+          }
+          total={numeral(visitData.fans_info.day_order_num).format('0,0')}
+          footer={
+            <Field label={<span>总圈粉数 </span>} value={visitData.fans_info.total_order_num} />
+          }
+          contentHeight={46}
+        >
+          <MiniArea
+            color="#975FE4"
+            data={visitData.fans_info.statistics_info.map(k => {
               return {
                 x: k.day,
                 y: k.number,
