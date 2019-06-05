@@ -7,8 +7,9 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './ProductDetail.less';
 
 const { Description } = DescriptionList;
-@connect(({ order, loading }) => ({
+@connect(({ order, user, loading }) => ({
   orderDetail: order.orderDetail,
+  currentUser: user.currentUser,
   loading: loading.effects['order/orderDetail'],
 }))
 class ProductDetail extends Component {
@@ -47,7 +48,7 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { loading, orderDetail, location } = this.props;
+    const { loading, orderDetail, location, currentUser } = this.props;
     const { data } = orderDetail;
     const content = <div />;
     const { deq } = location.query;
@@ -70,9 +71,13 @@ class ProductDetail extends Component {
             <Description term="优惠券">{data.coupon ? '￥' + data.coupon : '无'}</Description>
             {deq ? (
               <React.Fragment>
-                <Description term="招商ID" style={{ display: 'inline-block', width: '33.5%' }}>
-                  {data.zs_duo_id}
-                </Description>
+                {currentUser.sh_type === 1 ? (
+                  <Description term="招商ID" style={{ display: 'inline-block', width: '33.5%' }}>
+                    {data.zs_duo_id}
+                  </Description>
+                ) : (
+                  ''
+                )}
                 <Description term="商品价格" style={{ display: 'inline-block' }}>
                   ￥{data.price}
                 </Description>
@@ -82,7 +87,11 @@ class ProductDetail extends Component {
             ) : (
               <React.Fragment>
                 <Description term="商品价格">￥{data.price}</Description>
-                <Description term="招商ID">{data.zs_duo_id}</Description>
+                {currentUser.sh_type === 1 ? (
+                  <Description term="招商ID">{data.zs_duo_id}</Description>
+                ) : (
+                  ''
+                )}
               </React.Fragment>
             )}
           </DescriptionList>

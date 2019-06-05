@@ -356,7 +356,7 @@ class Step2 extends React.PureComponent {
                 不超过36个字的精简文案，突出产品亮点、需求痛点、为什么值得购买！
               </div>
             </Form.Item>
-            <Form.Item {...formItemLayout} className={styles.stepFormText} label="推广时间">
+            <Form.Item {...formItemLayout} className={styles.stepFormText} label="推广开始时间">
               {getFieldDecorator('start_time', {
                 initialValue: (editTaskInfo.start_time && moment(editTaskInfo.start_time)) || null,
                 rules: [
@@ -374,6 +374,7 @@ class Step2 extends React.PureComponent {
                   // defaultValue={moment('00:00:00')}
                 />
               )}
+              <div style={{ color: 'orange' }}>先抢先得，券抢完即终止</div>
             </Form.Item>
             {coupon_info ? (
               <React.Fragment>

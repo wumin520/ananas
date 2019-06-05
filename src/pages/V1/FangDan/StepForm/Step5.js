@@ -59,7 +59,6 @@ class Step5 extends React.PureComponent {
         message="审核通过后，您可在超多客官网-选品库中查看自己的商品推广状态"
         type="info"
         showIcon
-        closable
       />
     );
     return (

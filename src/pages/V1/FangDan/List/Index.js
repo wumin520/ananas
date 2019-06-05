@@ -306,14 +306,15 @@ class FdList extends PureComponent {
     this.setState({
       tabActiveKey: key,
     });
+    this.deq = 0;
+    this.qf = undefined;
     if (key === 'haoping') {
-      this.qf = undefined;
       params.type = 10;
     } else if (key === 'quanfen') {
       this.qf = 1;
       params.type = '30,31';
     } else if (key === 'deq') {
-      this.qf = undefined;
+      this.deq = 1;
       params.type = 20;
     }
     params.page = 1;
@@ -361,7 +362,7 @@ class FdList extends PureComponent {
                 {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
               </FormItem>
             ) : (
-              <FormItem label="商品/店铺id ">
+              <FormItem label={this.deq ? '商品id ' : '商品/店铺id '}>
                 {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
               </FormItem>
             )}
