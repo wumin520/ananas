@@ -20,7 +20,7 @@ class Header extends PureComponent {
       },
       {
         key: 3,
-        list_intro: '超多客招商入驻要求',
+        list_intro: '超多客招商认证要求',
         list_time: '2019-04-25',
       },
     ],
@@ -100,7 +100,7 @@ class Header extends PureComponent {
                       src="https://cdn.youlianyc.com/image/static/bbdad5dacc0ae98f8572d47694d7cfec0e14cda5.jpg"
                       alt=""
                     />
-                    <span>入驻须知</span>
+                    <span>认证须知</span>
                   </p>
                   <List
                     itemLayout="horizontal"

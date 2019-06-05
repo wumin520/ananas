@@ -308,7 +308,7 @@ export async function getCaptcha(params) {
     data: params,
   });
 }
-// 入驻
+// 认证
 export async function settleIn(params) {
   return request(api_pre + 'settle_in', {
     method: 'POST',

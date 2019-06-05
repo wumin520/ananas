@@ -268,7 +268,7 @@ class Index extends Component {
             <div className={styles.float1}>
               <canvas id="canvas1" className={styles.canvasDiv} />
               <div className={styles.f1Text}>
-                <p className={styles.p1}>平台准入驻推手</p>
+                <p className={styles.p1}>平台准认证推手</p>
                 <p className={styles.p2}>4,000+</p>
               </div>
             </div>
@@ -292,7 +292,7 @@ class Index extends Component {
             <div className={styles.float4}>
               <canvas id="canvas4" className={styles.canvasDiv2} />
               <div className={styles.f4Text}>
-                <p className={styles.p1}>已入驻商家</p>
+                <p className={styles.p1}>已认证商家</p>
                 <p className={styles.p2}>15,000+</p>
               </div>
             </div>

@@ -291,7 +291,7 @@ class HelpDetail extends PureComponent {
         isVisible: 'block',
         proVisible: 'none',
       }, // 控制问题和答案的显示
-      routers: '入驻须知',
+      routers: '认证须知',
       OpenKeys: 'sub1', // 默认打开第一个菜单项
       defaultSelectedKeys: '1', // 默认选中第一个
     };
@@ -319,7 +319,7 @@ class HelpDetail extends PureComponent {
 
     if (query.SelectedKeys === '1') {
       this.setState({
-        routers: '入驻须知',
+        routers: '认证须知',
       });
     } else if (query.SelectedKeys === '2') {
       this.setState({
@@ -390,7 +390,7 @@ class HelpDetail extends PureComponent {
       },
       {
         key: 3,
-        title: '3. 超多客招商入驻要求',
+        title: '3. 超多客招商认证要求',
         fb_time: '2019-4-25',
       },
     ];
@@ -458,8 +458,8 @@ class HelpDetail extends PureComponent {
             defaultOpenKeys={[OpenKeys]}
             mode="inline"
           >
-            <SubMenu key="sub1" title={<span>商家入驻</span>}>
-              <Menu.Item key="1">入驻须知</Menu.Item>
+            <SubMenu key="sub1" title={<span>商家认证</span>}>
+              <Menu.Item key="1">认证须知</Menu.Item>
               <Menu.Item key="2">商品规范</Menu.Item>
               <Menu.Item key="3">违规规则</Menu.Item>
             </SubMenu>
@@ -480,7 +480,7 @@ class HelpDetail extends PureComponent {
               <Breadcrumb.Item>帮助中心</Breadcrumb.Item>
               <Breadcrumb.Item>
                 {clickIndex > 0 && clickIndex <= 3
-                  ? '商家入驻'
+                  ? '商家认证'
                   : clickIndex === '4'
                   ? '常见问题'
                   : clickIndex === '5' || clickIndex === '6'
@@ -611,33 +611,33 @@ class HelpDetail extends PureComponent {
                   <div style={{ marginBottom: 20 }}>
                     <p style={{ fontSize: 16, fontWeight: 600, marginBottom: 10 }}>一、申请须知</p>
                     <p>
-                      用户进入超多客官网后，在导航栏顶部可以看到“登录/注册”入口菜单，注册登录后，点击“商家入驻”，输入商家相关的信息，入驻成功后即可进入放单中心页面，使用你的超多客账号密码即可登录放单系统。(
+                      用户进入超多客官网后，在导航栏顶部可以看到“登录/注册”入口菜单，注册登录后，点击“商家认证”，输入商家相关的信息，认证成功后即可进入放单中心页面，使用你的超多客账号密码即可登录放单系统。(
                       <span style={{ color: 'red' }}>
                         注意：这些信息提交后不可修改，请确认无误后再提交
                       </span>
                       )
                     </p>
                     <p>
-                      1、入驻申请资料一旦提交则不能再次进行修改，故请在提交资料前仔细检查保证资料的准确性及真实性。
+                      1、认证申请资料一旦提交则不能再次进行修改，故请在提交资料前仔细检查保证资料的准确性及真实性。
                     </p>
-                    <p>2、入驻后，请优先了解《超多客放单基本规范》后再进行放单操作！</p>
-                    <p>3、资质提交必须保证真实有效，任何时间发现资质作假，将永久取消入驻资格！</p>
+                    <p>2、认证后，请优先了解《超多客放单基本规范》后再进行放单操作！</p>
+                    <p>3、资质提交必须保证真实有效，任何时间发现资质作假，将永久取消认证资格！</p>
                   </div>
                   <div>
                     <p style={{ fontSize: 16, fontWeight: 600, marginBottom: 10 }}>
                       二、放单行为规范要求
                     </p>
                     <p>
-                      优质好单是畅销的基础，也是平台发展的关键，我们始终希望超多客能够成为好单的聚集地，我们特别欢迎有一定实力的商家入驻，放单用户应能够：
+                      优质好单是畅销的基础，也是平台发展的关键，我们始终希望超多客能够成为好单的聚集地，我们特别欢迎有一定实力的商家认证，放单用户应能够：
                     </p>
                     <p>① 有相应的经验辨别好单；</p>
                     <p>② 认真负责，能够对自己发布的单子及时监督并承担责任；</p>
                     <p>③ 能够遵守平台放单规则，以严谨的态度放单</p>
                   </div>
                   <p>
-                    为了保证平台商品提交质量和保障第三方利益，平台新入驻账号，需进行考核，考核具体要求如下：
+                    为了保证平台商品提交质量和保障第三方利益，平台新认证账号，需进行考核，考核具体要求如下：
                     <br />
-                    账号自入驻起，信用分为100，信用分过低会影响放单中心相关功能的使用，请参考信用分规则。
+                    账号自认证起，信用分为100，信用分过低会影响放单中心相关功能的使用，请参考信用分规则。
                   </p>
                   <p>若对此规则有其他疑问，请咨询招商了解。</p>
                 </Card>
