@@ -17,7 +17,7 @@ class HeadNav extends PureComponent {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { dispatch } = this.props;
     const token = getUserToken();
 
@@ -43,9 +43,10 @@ class HeadNav extends PureComponent {
   };
 
   render() {
+    /* eslint-disable */
     const { isLogin } = this.state;
     const { currentUser } = this.props;
-    const { state, phone } = currentUser;
+    const { state, phone, ts_state } = currentUser;
     const phoneStr = phone
       ? `${currentUser.phone.substr(0, 3)}****${currentUser.phone.substr(7)}`
       : '';
@@ -87,6 +88,19 @@ class HeadNav extends PureComponent {
                   ) : (
                     <a className={styles.headNavWord} href="/homePage">
                       放单中心
+                    </a>
+                  )}
+                  {ts_state === 0 ? (
+                    <a
+                      style={{ marginLeft: 20 }}
+                      className={styles.headNavWord}
+                      href="/user/tuishou-signin"
+                    >
+                      推手入驻
+                    </a>
+                  ) : (
+                    <a style={{ marginLeft: 20 }} className={styles.headNavWord} href="/tuishou">
+                      推手中心
                     </a>
                   )}
                 </div>

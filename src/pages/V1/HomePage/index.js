@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import moment from 'moment';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import PageLoading from '@/components/PageLoading';
-import { Row, Col, Icon, Dropdown, Menu, Alert } from 'antd';
+import { Row, Col, Alert } from 'antd';
 import styles from './index.less';
 
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
@@ -26,6 +26,7 @@ class Index extends Component {
   };
 
   tableType = 0;
+  orderType = 0;
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -45,7 +46,7 @@ class Index extends Component {
   reportRadioOnChange = e => {
     console.log('reportRadioOnChange -> ', e);
     const val = e.target.value;
-    const dataType = val === '0' ? 'great_review' : 'fans';
+    const dataType = val === '0' ? 'great_review' : val === '2' ? 'large_coupon' : 'fans';
     this.setState({
       dataType,
     });
@@ -62,6 +63,11 @@ class Index extends Component {
       start_time,
       end_time,
     };
+    if (type === '20') {
+      params.state = 4;
+      delete params.start_time;
+      delete params.end_time;
+    }
     const { dispatch } = this.props;
     dispatch({
       type: 'homedata/planList',
@@ -69,12 +75,13 @@ class Index extends Component {
     });
   };
 
-  getOrderData = () => {
+  getOrderData = (type = 10) => {
     const params = {
       page: 1,
       state: -1,
       ordered_time_for: start_time,
       ordered_time_to: end_time,
+      type,
     };
     const { dispatch } = this.props;
     dispatch({
@@ -84,8 +91,15 @@ class Index extends Component {
   };
 
   todayPlanRadioOnChange = e => {
-    this.getListData(e.target.value);
-    this.tableType = e.target.value === '10' ? 0 : 1;
+    const { value } = e.target;
+    this.getListData(value);
+    this.tableType = value === '10' ? 0 : value === '20' ? 2 : 1;
+  };
+
+  todayOrderRadioOnChange = e => {
+    const { value } = e.target;
+    this.getOrderData(value);
+    this.orderType = value === '10' ? 0 : 1;
   };
 
   render() {
@@ -101,20 +115,6 @@ class Index extends Component {
     console.log('taskReportInfo -> ', taskReportInfo, homedata);
     /* eslint-disable */
     const salesData = taskReportInfo[this.state.dataType];
-    const menu = (
-      <Menu>
-        <Menu.Item>操作一</Menu.Item>
-        <Menu.Item>操作二</Menu.Item>
-      </Menu>
-    );
-
-    const dropdownGroup = (
-      <span className={styles.iconGroup}>
-        <Dropdown overlay={menu} placement="bottomRight">
-          <Icon type="ellipsis" />
-        </Dropdown>
-      </span>
-    );
 
     return (
       <GridContent>
@@ -150,8 +150,9 @@ class Index extends Component {
                 <TodayOrder
                   loading={loading}
                   data={dayOrderInfo.list}
+                  orderType={this.orderType}
                   pageInfo={dayOrderInfo.page_info}
-                  dropdownGroup={dropdownGroup}
+                  radioOnChange={this.todayOrderRadioOnChange}
                 />
               </Suspense>
             </Col>

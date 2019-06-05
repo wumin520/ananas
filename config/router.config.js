@@ -18,6 +18,12 @@ export default [
         name: 'register.result',
         component: './V1/User/RegisterResult',
       },
+      // 推手注册相关路由
+      {
+        path: '/user/tuishou-signin',
+        name: 'index',
+        component: './V1/User/TuishouSignin',
+      },
       {
         component: '404',
       },
@@ -63,6 +69,11 @@ export default [
         name: 'helpDetail',
         component: './V1/Public/Help/HelpDetail',
       },
+      {
+        path: '/public/favorites',
+        name: 'favorites',
+        component: './V1/Public/Favorites/Favorites',
+      },
     ],
   },
   {
@@ -83,7 +94,7 @@ export default [
     Routes: ['src/pages/Authorized'],
     routes: [
       // dashboard
-      { path: '/', redirect: '/homePage', authority: ['admin', 'user'] },
+      // { path: '/', redirect: '/homePage', authority: ['admin', 'user'] },
       // {
       //   path: '/dashboard',
       //   name: 'dashboard1',
@@ -109,13 +120,14 @@ export default [
       //   ],
       // },
       // new homePage
-      // { path: '/', redirect: '/homePage/index', authority: ['admin', 'user'] },
+      { path: '/', redirect: '/web/index' },
       {
         path: '/homePage',
         name: 'dashboard',
         icon: 'dashboard',
         component: './V1/HomePage/index',
         hideChildrenInMenu: true,
+        authority: ['admin', 'user'],
         routes: [
           {
             path: '/homePage/index',
@@ -129,6 +141,7 @@ export default [
         path: '/fangdan',
         icon: 'form',
         name: 'fangdan',
+        authority: ['admin', 'user'],
         routes: [
           {
             path: '/fangdan/Index',
@@ -231,6 +244,12 @@ export default [
             component: './V1/FangDan/List/qfDetail',
             hideInMenu: true,
           },
+          {
+            path: '/fangdan/deqDetail',
+            name: 'generalizeDetail',
+            component: './V1/FangDan/List/deqDetail',
+            hideInMenu: true,
+          },
         ],
       },
       // myOrder
@@ -238,6 +257,7 @@ export default [
         path: '/order',
         icon: 'table',
         name: 'order',
+        authority: ['admin', 'user'],
         routes: [
           {
             path: '/order/Index',
@@ -268,6 +288,7 @@ export default [
         path: '/capitalManage',
         icon: 'profile',
         name: 'capital',
+        authority: ['admin', 'user'],
         routes: [
           {
             path: '/CapitalManage/Recharge',
@@ -327,52 +348,55 @@ export default [
           },
         ],
       },
+      // 推手中心
       {
-        path: '/list',
-        icon: 'table',
-        name: 'list',
-        hideInMenu: true,
+        path: '/tuishou',
+        name: 'dashboard',
+        icon: 'dashboard',
+        component: './V1_Tuishou/Dashboard',
+        authority: ['tuishou'],
+      },
+      {
+        path: '/tuishou-platform',
+        name: 'platform',
+        icon: 'profile',
+        authority: ['tuishou'],
         routes: [
           {
-            path: '/list/table-list',
-            name: 'searchtable',
-            component: './List/TableList',
+            name: 'h5',
+            path: '/tuishou-platform/h5',
+            component: './V1_Tuishou/Platform/H5',
+          },
+        ],
+      },
+      {
+        path: '/tuishou-account',
+        name: 'tygj',
+        icon: 'profile',
+        authority: ['tuishou'],
+        routes: [
+          {
+            name: 'pid',
+            path: '/tuishou-account/pid',
+            component: './V1_Tuishou/Account/Pid',
           },
           {
-            path: '/list/basic-list',
-            name: 'basiclist',
-            component: './List/BasicList',
+            name: 'favorite',
+            path: '/tuishou-account/favorite',
+            component: './V1_Tuishou/Account/Favorite',
           },
+        ],
+      },
+      {
+        path: '/tuishou-order',
+        name: 'tgxg',
+        icon: 'profile',
+        authority: ['tuishou'],
+        routes: [
           {
-            path: '/list/card-list',
-            name: 'cardlist',
-            component: './List/CardList',
-          },
-          {
-            path: '/list/search',
-            name: 'searchlist',
-            component: './List/List',
-            routes: [
-              {
-                path: '/list/search',
-                redirect: '/list/search/articles',
-              },
-              {
-                path: '/list/search/articles',
-                name: 'articles',
-                component: './List/Articles',
-              },
-              {
-                path: '/list/search/projects',
-                name: 'projects',
-                component: './List/Projects',
-              },
-              {
-                path: '/list/search/applications',
-                name: 'applications',
-                component: './List/Applications',
-              },
-            ],
+            name: 'order',
+            path: '/tuishou-order/index',
+            component: './V1_Tuishou/Order/List',
           },
         ],
       },

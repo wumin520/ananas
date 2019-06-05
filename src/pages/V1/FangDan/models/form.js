@@ -24,6 +24,10 @@ export default {
       detailImgRecordUrl: [],
       coupon_info: {
         coupon_discount: 0,
+        coupon_start_time: '',
+        coupon_end_time: '',
+        coupon_total_quantity: 0,
+        coupon_min_order_amount: 0,
       }, // 优惠券信息
       commission_rate: '', // 佣金比率
       commission: '',
@@ -49,6 +53,10 @@ export default {
     endTime: '',
     taskId: '',
     zs_duo_id: '',
+    editTaskInfo: {
+      recommend_reason: '',
+      start_time: '',
+    },
   },
 
   effects: {
@@ -78,6 +86,9 @@ export default {
           if (payload.qf !== undefined) {
             path = `/fangdan/qf/confirm?qf=${payload.qf}`;
           }
+          if (payload.deq !== undefined) {
+            path += `?deq=${payload.deq}`;
+          }
           yield put(routerRedux.push(path));
         }
       }
@@ -95,12 +106,14 @@ export default {
       const res = yield call(publishTask, payload);
       if (res && res.status === 'ok') {
         const taskId = res.payload.task_id;
-        let path = `/fangdan/step-form/pay?task_id=${taskId}&goods_id=${payload.goods_id}`;
-        if (payload.qf !== '') {
-          path += `&qf=${payload.qf}`;
+        if (!payload.no_redirect) {
+          let path = `/fangdan/step-form/pay?task_id=${taskId}&goods_id=${payload.goods_id}`;
+          if (payload.qf !== '') {
+            path += `&qf=${payload.qf}`;
+          }
+          console.log(path, 'publishTask 1');
+          yield put(routerRedux.push(path));
         }
-        console.log(path, 'publishTask 1');
-        yield put(routerRedux.push(path));
         yield put({
           type: 'saveState',
           payload: {
@@ -108,6 +121,7 @@ export default {
           },
         });
       }
+      return res;
     },
     *pay({ payload }, { call, put }) {
       const res = yield call(pay, payload);
@@ -165,6 +179,10 @@ export default {
             endTime: end_time,
             category_id: data.category_id,
             schedules: arr,
+            editTaskInfo: {
+              recommend_reason: data.recommend_reason,
+              start_time: data.start_time,
+            },
           },
         });
       }

@@ -7,8 +7,9 @@ import styles from './GeneralizeDetail.less';
 
 const { Description } = DescriptionList;
 const { confirm } = Modal;
-@connect(({ task, loading }) => ({
+@connect(({ task, user, loading }) => ({
   detailData: task.detailData,
+  currentUser: user.currentUser,
   loading: loading.effects['task/detailData'],
 }))
 class GeneralizeDetail extends Component {
@@ -72,7 +73,7 @@ class GeneralizeDetail extends Component {
   };
 
   render() {
-    const { loading, detailData } = this.props;
+    const { loading, detailData, currentUser } = this.props;
     const progressColumns = [
       {
         title: '推广排期时间',
@@ -142,7 +143,11 @@ class GeneralizeDetail extends Component {
               {data.coupon_price ? `￥ ${data.coupon_price}` : '无'}{' '}
             </Description>
             <Description term="商品价格">￥{data.price}</Description>
-            <Description term="招商ID">{data.zs_duo_id}</Description>
+            {currentUser.sh_type === 1 ? (
+              <Description term="招商ID">{data.zs_duo_id}</Description>
+            ) : (
+              ''
+            )}
           </DescriptionList>
           <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="推广信息" style={{ marginBottom: 32 }}>

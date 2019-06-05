@@ -1,7 +1,19 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Divider, List, Select, Upload, Icon, message } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Divider,
+  List,
+  Select,
+  Upload,
+  Icon,
+  message,
+  DatePicker,
+} from 'antd';
 import router from 'umi/router';
+import moment from 'moment';
 import { digitUppercase } from '@/utils/utils';
 import { configs } from '@/defaultSettings';
 import styles from './style.less';
@@ -15,6 +27,25 @@ const formItemLayout = {
     span: 19,
   },
 };
+// function range(start, end) {
+//   const result = [];
+//   for (let i = start; i < end; i += 1) {
+//     result.push(i);
+//   }
+//   return result;
+// }
+function disabledDate(current) {
+  // Can not select days before today and today
+  return current && current < moment().startOf('day');
+}
+
+// function disabledDateTime() {
+//   return {
+//     disabledHours: () => range(0, 24).splice(4, 20),
+//     disabledMinutes: () => range(30, 60),
+//     disabledSeconds: () => [55, 56],
+//   };
+// }
 
 @connect(({ form, loading }) => ({
   submitting: loading.effects['form/submitStepForm'],
@@ -22,12 +53,14 @@ const formItemLayout = {
   goodsDetail: form.goodsDetail,
   category_list: form.category_list,
   category_id: form.category_id,
+  editTaskInfo: form.editTaskInfo,
 }))
 @Form.create()
 class Step2 extends React.PureComponent {
   constructor(props) {
     super(props);
     this.qf = props.location.query.qf;
+    this.deq = props.location.query.deq;
   }
 
   setMainImage = (item, index) => {
@@ -78,6 +111,7 @@ class Step2 extends React.PureComponent {
     /* eslint-disable */
     const {
       form,
+      editTaskInfo,
       submitting,
       goodsDetail,
       category_list,
@@ -88,10 +122,15 @@ class Step2 extends React.PureComponent {
     const { getFieldDecorator, validateFields } = form;
     const { Option } = Select;
 
+    console.log('recommend_reason -> ', editTaskInfo);
+
     const onPrev = () => {
       let path = `/fangdan/step-form/info`;
       if (this.qf !== undefined) {
         path = `/fangdan/qf/info?qf=${this.qf}`;
+      }
+      if (this.deq !== undefined) {
+        path += `?deq=${this.deq}`;
       }
       router.push(path);
     };
@@ -109,6 +148,28 @@ class Step2 extends React.PureComponent {
               category_id: values.category_id,
             },
           });
+          if (location.query.deq !== undefined) {
+            let params = {
+              ...goodsDetail,
+              type: 20,
+              ...values,
+              no_redirect: 1,
+              images: goodsDetail.detailImgRecordUrl,
+              plan_info: [],
+            };
+            if (location.query.task_id !== undefined) {
+              params.task_id = location.query.task_id;
+            }
+            dispatch({
+              type: 'form/publishTask',
+              payload: params,
+            }).then(res => {
+              if (res.status === 'ok') {
+                router.push(`/fangdan/step-form/result?deq=1&task_id=${res.payload.task_id}`);
+              }
+            });
+            return;
+          }
           let path = `/fangdan/step-form/schedule`;
           if (location.query.qf !== undefined) {
             path = `/fangdan/qf/schedule?qf=${location.query.qf}`;
@@ -128,9 +189,11 @@ class Step2 extends React.PureComponent {
       coupon_price,
       comment_limit,
       comment_keyword,
+      commission_rate,
     } = goodsDetail;
 
     const qf = location.query.qf !== undefined;
+    const deq = location.query.deq !== undefined;
     const uploadProps = {
       name: 'file',
       action: `${configs[process.env.API_ENV].API_SERVER}/cdk/v1/web/upload`,
@@ -282,7 +345,61 @@ class Step2 extends React.PureComponent {
             </Form.Item>
           </Fragment>
         )}
-        {qf ? (
+        {deq ? (
+          <React.Fragment>
+            <Form.Item {...formItemLayout} className={styles.stepFormText} label="推荐理由">
+              {getFieldDecorator('recommend_reason', {
+                initialValue: editTaskInfo.recommend_reason,
+                rules: [{ required: true, message: '请输入推荐理由', max: 36 }],
+              })(<Input placeholder="请输入推荐理由" style={{ width: '80%' }} />)}
+              <div style={{ color: 'orange' }}>
+                不超过36个字的精简文案，突出产品亮点、需求痛点、为什么值得购买！
+              </div>
+            </Form.Item>
+            <Form.Item {...formItemLayout} className={styles.stepFormText} label="推广开始时间">
+              {getFieldDecorator('start_time', {
+                initialValue: (editTaskInfo.start_time && moment(editTaskInfo.start_time)) || null,
+                rules: [
+                  {
+                    required: true,
+                    message: `请选择推广开始时间`,
+                  },
+                ],
+              })(
+                <DatePicker
+                  format="YYYY-MM-DD 00:00:00"
+                  disabledDate={disabledDate}
+                  // disabledTime={disabledDateTime}
+                  // showToday={false}
+                  // defaultValue={moment('00:00:00')}
+                />
+              )}
+              <div style={{ color: 'orange' }}>先抢先得，券抢完即终止</div>
+            </Form.Item>
+            {coupon_info ? (
+              <React.Fragment>
+                <Form.Item {...formItemLayout} className={styles.stepFormText} label="优惠券">
+                  <span className={styles.money}>{coupon_info.coupon_discount}</span>
+                  <span className={styles.uppercase}>
+                    （{digitUppercase(coupon_info.coupon_discount)}）
+                  </span>
+                </Form.Item>
+                <Form.Item {...formItemLayout} className={styles.stepFormText} label="优惠券数量">
+                  <span className={styles.money}>{coupon_info.coupon_total_quantity}</span>
+                </Form.Item>
+              </React.Fragment>
+            ) : (
+              ''
+            )}
+            <Form.Item {...formItemLayout} className={styles.stepFormText} label="券后价">
+              <span className={styles.money}>{coupon_price}</span>
+              <span className={styles.uppercase}>（{digitUppercase(coupon_price)}）</span>
+            </Form.Item>
+            <Form.Item {...formItemLayout} className={styles.stepFormText} label="佣金比例">
+              <span className={styles.money}>{commission_rate}%</span>
+            </Form.Item>
+          </React.Fragment>
+        ) : qf ? (
           ''
         ) : (
           <React.Fragment>

@@ -165,6 +165,11 @@ class FdList extends PureComponent {
       this.setState({
         tabActiveKey: 'quanfen',
       });
+    } else if (location.query.deq) {
+      params.type = 20;
+      this.setState({
+        tabActiveKey: 'deq',
+      });
     }
     this.getListData(params);
   }
@@ -242,6 +247,9 @@ class FdList extends PureComponent {
     if (/^3[0|1]$/.test(item.type)) {
       path = `/fangdan/qfDetail`;
     }
+    if (item.type === 20) {
+      path = `/fangdan/deqDetail`;
+    }
     // router.push(`${path}?task_id=${item.task_id}`);
     window.open(`${path}?task_id=${item.task_id}`); // 0523 新窗口打开
   };
@@ -261,6 +269,10 @@ class FdList extends PureComponent {
     if (/^3[0|1]$/.test(item.type)) {
       path = `/order/qf`;
     }
+    if (item.type === 20) {
+      router.push(`${path}?deq=1&task_id=${item.task_id}`);
+      return;
+    }
     router.push(`${path}?task_id=${item.task_id}`);
   };
 
@@ -270,6 +282,8 @@ class FdList extends PureComponent {
     if (/^3[0|1]$/.test(item.type)) {
       const qf = item.type === 30 ? 0 : 1;
       url += `&qf=${qf}`;
+    } else if (item.type === 20) {
+      url += `&deq=1`;
     }
     return url;
   };
@@ -292,12 +306,16 @@ class FdList extends PureComponent {
     this.setState({
       tabActiveKey: key,
     });
+    this.deq = 0;
+    this.qf = undefined;
     if (key === 'haoping') {
-      this.qf = undefined;
       params.type = 10;
     } else if (key === 'quanfen') {
       this.qf = 1;
       params.type = '30,31';
+    } else if (key === 'deq') {
+      this.deq = 1;
+      params.type = 20;
     }
     params.page = 1;
     params.task_id = 0;
@@ -344,7 +362,7 @@ class FdList extends PureComponent {
                 {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
               </FormItem>
             ) : (
-              <FormItem label="商品/店铺id ">
+              <FormItem label={this.deq ? '商品id ' : '商品/店铺id '}>
                 {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
               </FormItem>
             )}
@@ -540,6 +558,10 @@ class FdList extends PureComponent {
       {
         key: 'haoping',
         tab: '免单试用',
+      },
+      {
+        key: 'deq',
+        tab: '优惠券推广',
       },
       {
         key: 'quanfen',

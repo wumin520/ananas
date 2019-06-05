@@ -1,0 +1,289 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/utils/utils.less';
+
+.ant-popover-inner {
+  width: 325px;
+  height: 320px;
+  background: rgba(0, 0, 0, 0.85) !important;
+}
+
+.mb12 {
+  margin-bottom: 12px;
+}
+
+.fav_main {
+  padding-top: 66px;
+  padding-bottom: 40px;
+  font-weight: 400;
+  font-family: PingFang-SC-Regular, sans-serif;
+  background: #f6f7f8;
+
+  .fav_top_banner {
+    height: 240px;
+    text-align: center;
+    background: url(https://cdn.youlianyc.com/image/static/e711ffd56fe6fb1333ef0c82396d1e4a511a820a.jpg)
+      #fa541c bottom center no-repeat;
+    background-size: 1128px;
+
+    .fav_top_banner_con {
+      width: 1128px;
+      margin: 0 auto;
+
+      .fav_top_title {
+        padding-top: 64px;
+        color: #fff;
+        font-weight: 400;
+        font-size: 32px;
+        font-family: PingFang-SC-Regular, sans-serif;
+        line-height: 40px;
+      }
+    }
+  }
+
+  .top_icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1128px;
+    margin: -100px auto 0;
+    padding: 36px 54px;
+    font-size: 16px;
+    text-align: center;
+    background: #fff;
+
+    .top_img_icon {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 24px;
+    }
+  }
+
+  .sort_block {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 1128px;
+    height: 64px;
+    margin: 24px auto 0;
+    padding-left: 24px;
+    background: #fff;
+
+    .sort_item {
+      margin-right: 48px;
+      color: rgba(0, 0, 0, 0.45);
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .sort_item_selected {
+      color: #fa541c;
+
+      &.up {
+        position: relative;
+        &::after {
+          content: '';
+          background: url(https://cdn.youlianyc.com/image/static/42216800d036fe87ca0098ba19a9f9ed307e6dbd.jpg);
+          background-size: 12px 12px;
+        }
+      }
+
+      &.down {
+        position: relative;
+        &::after {
+          content: '';
+          background: url(https://cdn.youlianyc.com/image/static/8b455ec7d17f8084a2e1e45c9b77e7a18b4c418e.jpg);
+          background-size: 12px 12px;
+        }
+      }
+    }
+
+    .default {
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 6px;
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background: url(https://cdn.youlianyc.com/image/static/d6a66239f7ea47eb4e2900145dd556ac9d7b7c90.jpg);
+        background-size: 12px 12px;
+      }
+      &:hover {
+        position: relative;
+        color: #fa541c;
+        &::after {
+          content: '';
+          position: absolute;
+          top: 6px;
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          background: url(https://cdn.youlianyc.com/image/static/63f2f244b43cc9acbca0466debdeb3f1cf8eeaea.jpg);
+          background-size: 12px 12px;
+        }
+      }
+    }
+  }
+
+  .fav_list {
+    width: 1128px;
+    margin: 24px auto 0;
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 12px;
+
+    .fav_item {
+      position: relative;
+      float: left;
+      width: 208px;
+      margin-right: 22px;
+      margin-bottom: 24px;
+      background: #fff;
+      cursor: pointer;
+
+      &:nth-child(5n + 5) {
+        margin-right: 0;
+      }
+
+      &:hover {
+        .flow_fav_show {
+          display: block;
+        }
+      }
+
+      .fav_item_img {
+        width: 208px;
+        height: 208px;
+        margin-bottom: 12px;
+      }
+
+      .icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+      }
+
+      .flow_fav_show {
+        position: absolute;
+        top: 177px;
+        display: none;
+        width: 100%;
+
+        .flow_fav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          & > .fav {
+            flex: 1;
+            padding: 5px 0;
+            color: #fff;
+            font-size: 14px;
+            text-align: center;
+            background: #fa541c;
+
+            &:first-child {
+              border-right: 1px solid #fff;
+            }
+          }
+        }
+      }
+
+      .fav_item_info {
+        padding: 0 12px;
+
+        .fav_pro_name {
+          margin-bottom: 12px;
+          overflow: hidden;
+          color: rgba(0, 0, 0, 0.85);
+          font-size: 14px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .fav_info_block {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 12px;
+
+          .fav_info_left {
+            font-size: 14px;
+
+            .price {
+              color: #f5222d;
+              font-weight: 600;
+              font-family: PingFang-SC-Semibold, sans-serif;
+            }
+          }
+
+          .origin_price {
+            text-decoration: line-through;
+          }
+
+          .fav_coupon {
+            box-sizing: content-box;
+            height: 22px;
+            color: #f5222d;
+            line-height: 22px;
+            border: 1px solid #f5222d;
+
+            .fav_coupon_word {
+              display: inline-block;
+              padding: 0 4px;
+              color: #fff;
+              background: #f5222d;
+            }
+
+            .fav_coupon_price {
+              padding: 0 8px 0 2px;
+            }
+          }
+        }
+      }
+
+      .shop_name {
+        height: 32px;
+        padding-left: 12px;
+        overflow: hidden;
+        line-height: 32px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        background: #fafafa;
+
+        & > img {
+          width: 20px;
+          height: 20px;
+          margin-right: 6px;
+          margin-bottom: 4px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+  .page_block {
+    width: 1128px;
+    margin: 24px auto 0;
+    text-align: right;
+  }
+}
+
+.g_flow {
+  position: fixed;
+  right: 28px;
+  bottom: 130px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  .g_flow_img {
+    margin-bottom: 16px;
+  }
+  .ant_back_top_inner {
+    position: static;
+  }
+}

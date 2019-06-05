@@ -1,6 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { stringify } from 'qs';
 import { login, getCaptcha, signout, autoLogin } from '@/services/api';
+import { settleIn } from '@/services/tuishou_api';
 import { setUserToken, setAuthority, setShState } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
@@ -39,12 +40,32 @@ export default {
       const response = yield call(login, payload);
       // Login successfully
       if (response.status === 'ok') {
+        let currentAuthority = 'admin';
+        if (response.payload.ts_state) {
+          currentAuthority = 'tuishou';
+        }
         yield put({
           type: 'changeLoginStatus',
           payload: {
             res: response,
-            currentAuthority: 'admin',
+            currentAuthority,
             setToken: 1,
+          },
+        });
+        const redirect = getRedirectUrl();
+        yield put(routerRedux.replace(redirect || homePath));
+      }
+    },
+
+    *tuishouSettleIn({ payload }, { call, put }) {
+      const response = yield call(settleIn, payload);
+      // Login successfully
+      if (response.status === 'ok') {
+        yield put({
+          type: 'changeLoginStatus',
+          payload: {
+            res: response,
+            currentAuthority: 'tuishou',
           },
         });
         const redirect = getRedirectUrl();

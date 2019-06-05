@@ -1,4 +1,5 @@
 import { query as queryUsers, queryCurrent } from '@/services/user';
+import { setAuthority, getAuthority } from '@/utils/authority';
 
 export default {
   namespace: 'user',
@@ -45,9 +46,25 @@ export default {
       };
     },
     saveCurrentUser(state, action) {
+      const { payload } = action;
+      if (payload.state && payload.ts_state) {
+        localStorage.setItem('superUser', 1);
+        // 即是推手也是商家
+        if (window.location.href.indexOf('tuishou') > -1 && getAuthority()[0] !== 'tuishou') {
+          setAuthority('tuishou');
+          window.location.reload();
+        } else if (
+          window.location.href.indexOf('tuishou') === -1 &&
+          getAuthority()[0] !== 'admin'
+        ) {
+          setAuthority('admin');
+          window.location.reload();
+        }
+        console.log(window.location.href, '1');
+      }
       return {
         ...state,
-        currentUser: action.payload || {},
+        currentUser: payload || {},
       };
     },
     changeNotifyCount(state, action) {

@@ -269,6 +269,7 @@ class Register extends Component {
               </Col>
               <Col span={8}>
                 <Button
+                  style={{ padding: 0 }}
                   size="large"
                   disabled={count}
                   className={styles.getCaptcha}

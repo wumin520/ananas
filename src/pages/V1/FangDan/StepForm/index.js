@@ -50,10 +50,20 @@ export default class StepForm extends PureComponent {
       title = '商品圈粉';
       location.query.type === '31' ? (title = '店铺圈粉') : '';
     }
+    let breadcrumbList = [];
+    if (location.query.deq !== undefined) {
+      title = '新增优惠券推广';
+      breadcrumbList = [
+        { title: '首页', href: '/' },
+        { title: '放单中心', href: '/' },
+        { title: '优惠券推广', href: '/' },
+      ];
+    }
     return (
       <PageHeaderWrapper
         title={title}
         tabActiveKey={location.pathname}
+        breadcrumbList={breadcrumbList}
         content="快速提升转化率/快速聚集人气/宝贝流量"
       >
         <Card bordered={false}>
@@ -61,8 +71,14 @@ export default class StepForm extends PureComponent {
             <Steps current={this.getCurrentStep()} className={styles.steps}>
               <Step title="校验商品" />
               <Step title="编辑推广" />
-              <Step title="推广排期" />
-              <Step title="支付" />
+              <Step
+                style={location.query.deq !== undefined ? { display: 'none' } : {}}
+                title="推广排期"
+              />
+              <Step
+                style={location.query.deq !== undefined ? { display: 'none' } : {}}
+                title="支付"
+              />
               <Step title="完成" />
             </Steps>
             {children}

@@ -42,3 +42,21 @@ export function render(oldRender) {
       }
     );
 }
+
+export function onRouteChange({ location }) {
+  // console.log('onRouteChange -> ', location, routes, action);
+  const sf = () => {
+    const st = setTimeout(() => {
+      const adEl = document.getElementById('qidian_wpa_2852167740_101498');
+      if (adEl) {
+        adEl.style.display = 'none';
+      } else {
+        sf();
+      }
+      clearTimeout(st);
+    }, 0);
+  };
+  if (/^\/homePage|fangdan|order|CapitalManage|tuishou|favorites/.test(location.pathname)) {
+    sf();
+  }
+}

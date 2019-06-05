@@ -46,3 +46,6 @@ export function setInviteCode(inviteCode) {
 export function getInviteCode() {
   return localStorage.getItem('inviteCode');
 }
+export function superUser() {
+  return localStorage.getItem('superUser') || 1;
+}

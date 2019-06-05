@@ -22,8 +22,13 @@ class SelectSettleIn extends Component {
           <p className={styles.select_title}>推手入驻</p>
           <p className={styles.select_desc}>适合有流量的个人或团队推广，流量变现</p>
           <p className={`${styles.select_desc} ${styles.select_limit}`}>需实名认证</p>
-          <Button disabled className={styles.btn_select}>
-            暂未开放
+          <Button
+            className={styles.btn_select}
+            type="primary"
+            // eslint-disable-next-line
+            onClick={this.toGo.bind(this, '/user/tuishou-signin')}
+          >
+            立即入驻
           </Button>
         </div>
         <div className={`${styles.select_item} ${styles.ml64}`}>

@@ -155,6 +155,33 @@ export async function pay(params) {
 export async function checkPrivige(params) {
   return request(api_pre + `check_privige?${stringify(params)}`);
 }
+
+// 官网选品库商品
+export async function tsTaskList(params) {
+  return request(api_pre + `ts/task/list?${stringify(params)}`);
+}
+
+// 官网选品库商品 移除收藏
+export async function tsRemoveCollect(params) {
+  return request(api_pre + `ts/task/collection/remove`, {
+    method: 'POST',
+    data: params,
+  });
+}
+
+// 官网选品库商品 加入收藏
+export async function tsAddCollect(params) {
+  return request(api_pre + `ts/task/collection/add`, {
+    method: 'POST',
+    data: params,
+  });
+}
+
+// 官网选品库商品
+export async function tsTaskGoodsUrl(params) {
+  return request(api_pre + `ts/task/goods/uri?${stringify(params)}`);
+}
+
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }

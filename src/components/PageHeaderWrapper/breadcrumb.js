@@ -92,6 +92,7 @@ const conversionFromLocation = (routerLocation, breadcrumbNameMap, props) => {
 export const conversionBreadcrumbList = props => {
   const { breadcrumbList } = props;
   const { routes, params, routerLocation, breadcrumbNameMap } = getBreadcrumbProps(props);
+
   if (breadcrumbList && breadcrumbList.length) {
     return {
       routes: conversionFromProps(props),
