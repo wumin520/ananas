@@ -44,7 +44,6 @@ export function render(oldRender) {
 }
 
 export function onRouteChange({ location }) {
-  // bacon(location.pathname);
   // console.log('onRouteChange -> ', location, routes, action);
   const sf = () => {
     const st = setTimeout(() => {
