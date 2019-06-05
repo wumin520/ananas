@@ -47,7 +47,7 @@ export function onRouteChange({ location }) {
   // console.log('onRouteChange -> ', location, routes, action);
   const sf = () => {
     const st = setTimeout(() => {
-      const adEl = document.getElementById('qidian_wpa_2852167740_101498');
+      const adEl = document.getElementById('qidian_wpa_2852167740_101505');
       if (adEl) {
         adEl.style.display = 'none';
       } else {
