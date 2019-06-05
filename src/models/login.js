@@ -40,11 +40,15 @@ export default {
       const response = yield call(login, payload);
       // Login successfully
       if (response.status === 'ok') {
+        let currentAuthority = 'admin';
+        if (response.payload.ts_state) {
+          currentAuthority = 'tuishou';
+        }
         yield put({
           type: 'changeLoginStatus',
           payload: {
             res: response,
-            currentAuthority: 'admin',
+            currentAuthority,
             setToken: 1,
           },
         });
