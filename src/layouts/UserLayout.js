@@ -78,7 +78,7 @@ class UserLayout extends Component {
                     />
                   </Link>
                   <span className={styles.slogan}>
-                    {pathname.indexOf('tuishou') > -1 ? '推手入驻' : '一站式导购服务'}
+                    {pathname.indexOf('tuishou') > -1 ? '推手认证' : '一站式导购服务'}
                   </span>
                 </Col>
                 <Col span={12}>

@@ -16,7 +16,7 @@ class MerchantsSettled extends PureComponent {
         <div className={styles.ms_top}>
           <div className={styles.ms_banner}>pic</div>
           <div className={styles.ms_word}>
-            <p className={styles.title}>招募拼多多商家入驻</p>
+            <p className={styles.title}>招募拼多多商家认证</p>
             <p className={styles.subtitle}>连接商业 共创未来</p>
           </div>
         </div>

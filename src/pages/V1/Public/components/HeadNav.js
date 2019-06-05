@@ -83,7 +83,7 @@ class HeadNav extends PureComponent {
                 <div>
                   {state === 0 ? (
                     <a className={styles.headNavWord} href="/user/settlein">
-                      招商/商家入驻
+                      招商/商家认证
                     </a>
                   ) : (
                     <a className={styles.headNavWord} href="/homePage">
@@ -96,7 +96,7 @@ class HeadNav extends PureComponent {
                       className={styles.headNavWord}
                       href="/user/tuishou-signin"
                     >
-                      推手入驻
+                      推手认证
                     </a>
                   ) : (
                     <a style={{ marginLeft: 20 }} className={styles.headNavWord} href="/tuishou">

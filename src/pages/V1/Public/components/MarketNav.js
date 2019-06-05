@@ -77,7 +77,7 @@ class MarketNav extends PureComponent {
               首页
             </Link>
             <Link className={styles.nav_link} to="/market/MerchantsSettled">
-              商家入驻
+              商家认证
             </Link>
             <Link className={styles.nav_link} to="/public/helpCenter">
               帮助中心
@@ -94,7 +94,7 @@ class MarketNav extends PureComponent {
 
                 {state === 0 ? (
                   <Link to="/user/settlein" className={styles.btn_apply}>
-                    申请入驻
+                    申请认证
                   </Link>
                 ) : (
                   <Link to="/homePage" className={styles.btn_apply}>

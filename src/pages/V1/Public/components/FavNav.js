@@ -97,7 +97,7 @@ class FavNav extends PureComponent {
 
                 {tsState === 0 ? (
                   <Link to="/user/tuishou-signin" className={styles.btn_apply}>
-                    申请入驻
+                    申请认证
                   </Link>
                 ) : (
                   <Link to="/tuishou" className={styles.btn_apply}>
