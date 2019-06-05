@@ -183,7 +183,7 @@ class Favorite extends PureComponent {
           onChange={this.onPageChange}
           defaultCurrent={1}
           total={page_info.total_num}
-          pageSize="10"
+          pageSize={10}
         />
       </div>
     );
