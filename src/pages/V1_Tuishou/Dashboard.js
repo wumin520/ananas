@@ -175,7 +175,7 @@ class Dashboard extends Component {
             <ChartCard
               title="今日访客数"
               action={
-                <Tooltip title="当日移动版网页和选品库单品推广的uv总计 曲线展示近30日uv ">
+                <Tooltip title="当日移动版网页推广的uv总计 曲线展示近30日uv ">
                   <Icon type="info-circle-o" />
                 </Tooltip>
               }
