@@ -82,10 +82,10 @@ class Index extends PureComponent {
           'https://cdn.youlianyc.com/image/static/526746a209d504d6d9c43270767ff76e928aedc2.jpg',
         title: '优惠券推广',
         description: `适用于：
-          宝贝月销量≥50
-          宝贝评价数≥50
-          DSR评分≥4.8分
-          佣金比例≥30%`,
+宝贝月销量≥200
+宝贝评价数≥40
+佣金比例≥30%
+优惠券价格/购买价格≥20%`,
       },
     ];
 
