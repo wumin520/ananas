@@ -55,9 +55,11 @@ class AboutUs extends Component {
               alt=""
             />
             <p className={styles.qq_title}>商务合作</p>
-            <Button className={styles.btn_QQ} type="primary" onClick={this.info}>
-              QQ交谈
-            </Button>
+            <a target="blank" href="http://q.url.cn/ABIcOS?_type=wpa&qidian=true">
+              <Button className={styles.btn_QQ} type="primary">
+                QQ交谈
+              </Button>
+            </a>
           </div>
           <div className={`${styles.qq_item} ${styles.ml64}`}>
             <img
@@ -66,9 +68,11 @@ class AboutUs extends Component {
               alt=""
             />
             <p className={styles.qq_title}>商家咨询</p>
-            <Button className={styles.btn_QQ} type="primary" onClick={this.info}>
-              QQ交谈
-            </Button>
+            <a target="blank" href="http://q.url.cn/ABIcOS?_type=wpa&qidian=true">
+              <Button className={styles.btn_QQ} type="primary">
+                QQ交谈
+              </Button>
+            </a>
           </div>
         </div>
 
