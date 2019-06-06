@@ -79,7 +79,7 @@ export default {
           cancelText: '放弃',
           okText: '去认证',
           onOk: () => {
-            router.push('/tuishou-account/pid');
+            router.push('/user/tuishou-signin');
           },
         });
         return;
