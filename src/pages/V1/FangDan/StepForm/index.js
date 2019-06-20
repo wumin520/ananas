@@ -52,11 +52,11 @@ export default class StepForm extends PureComponent {
     }
     let breadcrumbList = [];
     if (location.query.deq !== undefined) {
-      title = '新增优惠券推广';
+      title = '新增高佣推广';
       breadcrumbList = [
         { title: '首页', href: '/' },
         { title: '放单中心', href: '/' },
-        { title: '优惠券推广', href: '/' },
+        { title: '高佣推广', href: '/' },
       ];
     }
     return (
