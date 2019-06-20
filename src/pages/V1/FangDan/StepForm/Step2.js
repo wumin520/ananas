@@ -54,6 +54,7 @@ function disabledDate(current) {
   category_list: form.category_list,
   category_id: form.category_id,
   editTaskInfo: form.editTaskInfo,
+  pddZSId: form.pddZSId,
 }))
 @Form.create()
 class Step2 extends React.PureComponent {
@@ -156,6 +157,7 @@ class Step2 extends React.PureComponent {
               no_redirect: 1,
               images: goodsDetail.detailImgRecordUrl,
               plan_info: [],
+              zs_duo_id: this.props.pddZSId,
             };
             if (location.query.task_id !== undefined) {
               params.task_id = location.query.task_id;
