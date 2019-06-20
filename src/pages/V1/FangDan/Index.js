@@ -64,6 +64,18 @@ class Index extends PureComponent {
       {
         actions: ['列表', '+新增'],
         state: 1,
+        type: 3,
+        avatar:
+          'https://cdn.youlianyc.com/image/static/526746a209d504d6d9c43270767ff76e928aedc2.jpg',
+        title: '高佣推广',
+        description: `适用于：
+          宝贝月销量≥200
+          宝贝评价数≥40
+          佣金比例≥50%`,
+      },
+      {
+        actions: ['列表', '+新增'],
+        state: 1,
         type: 2,
         avatar:
           'https://cdn.youlianyc.com/image/static/5c75983b5efea8cef21ec34f25972cb946983272.jpg',
@@ -73,19 +85,6 @@ class Index extends PureComponent {
           店铺收藏数低
           宝贝权重不高
           店铺权重不高`,
-      },
-      {
-        actions: ['列表', '+新增'],
-        state: 1,
-        type: 3,
-        avatar:
-          'https://cdn.youlianyc.com/image/static/526746a209d504d6d9c43270767ff76e928aedc2.jpg',
-        title: '优惠券推广',
-        description: `适用于：
-          宝贝月销量≥200
-          宝贝评价数≥40
-          佣金比例≥30%
-          优惠券价格/购买价格≥20%`,
       },
     ];
 
