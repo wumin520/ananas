@@ -94,7 +94,7 @@ class Index extends PureComponent {
         type: 2,
         avatar:
           'https://cdn.youlianyc.com/image/static/b506a5e8c8c2c467d9bf26b695746268187db04b.jpg',
-        title: '店铺圈粉',
+        title: '店铺收藏',
         description: `提高店铺收藏数`,
       },
       {
@@ -103,7 +103,7 @@ class Index extends PureComponent {
         type: 2,
         avatar:
           'https://cdn.youlianyc.com/image/static/f90b52f7970908277319d34c556fbaf656323549.jpg',
-        title: '商品圈粉',
+        title: '商品收藏',
         description: `提高单个商品收藏数`,
       },
     ];
@@ -188,7 +188,7 @@ class Index extends PureComponent {
     return (
       <div>
         <Modal
-          title="请选择圈粉收藏推广的类型"
+          title="请选择收藏推广的类型"
           footer={null}
           visible={visible}
           onOk={this.handleOk}

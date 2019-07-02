@@ -42,13 +42,13 @@ export default class StepForm extends PureComponent {
     // console.log(location, '1');
     let title = '新增推广';
     if (location.pathname.indexOf('/qf/') > -1 || location.query.qf !== undefined) {
-      title = '商品圈粉';
-      location.query.qf === '1' ? (title = '店铺圈粉') : '';
+      title = '商品收藏';
+      location.query.qf === '1' ? (title = '店铺收藏') : '';
     }
     // step 5
     if (location.query.type) {
-      title = '商品圈粉';
-      location.query.type === '31' ? (title = '店铺圈粉') : '';
+      title = '商品收藏';
+      location.query.type === '31' ? (title = '店铺收藏') : '';
     }
     let breadcrumbList = [];
     if (location.query.deq !== undefined) {
