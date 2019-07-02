@@ -317,9 +317,9 @@ class orderList extends PureComponent {
     const extraContent = (
       <div className={styles.extraContent}>
         <RadioGroup onChange={this.radioGroupOnChange} defaultValue="30,31">
-          <RadioButton value="30,31">全部圈粉</RadioButton>
-          <RadioButton value="30">商品圈粉</RadioButton>
-          <RadioButton value="31">店铺圈粉</RadioButton>
+          <RadioButton value="30,31">全部收藏</RadioButton>
+          <RadioButton value="30">商品收藏</RadioButton>
+          <RadioButton value="31">店铺收藏</RadioButton>
         </RadioGroup>
       </div>
     );
@@ -329,10 +329,10 @@ class orderList extends PureComponent {
           <Card bordered={false}>
             <Row>
               <Col sm={12} xs={24}>
-                <Info title="今日圈粉" value={orderNumInfo.daily_num} bordered />
+                <Info title="今日收藏" value={orderNumInfo.daily_num} bordered />
               </Col>
               <Col sm={12} xs={24}>
-                <Info title="累计圈粉" value={orderNumInfo.total_num} />
+                <Info title="累计收藏" value={orderNumInfo.total_num} />
               </Col>
             </Row>
           </Card>

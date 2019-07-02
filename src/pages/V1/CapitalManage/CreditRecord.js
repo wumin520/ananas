@@ -71,7 +71,7 @@ class CreditRecord extends Component {
       dataIndex: 'pointDeduct',
     },
     {
-      title: '放单-免单试用推广',
+      title: '放单-试用推广',
       dataIndex: 'backQ',
     },
     {

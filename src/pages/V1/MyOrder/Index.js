@@ -507,7 +507,7 @@ class orderList extends PureComponent {
     const tabList = [
       {
         key: 'haoping',
-        tab: '免单试用',
+        tab: '试用推广',
       },
       {
         key: 'deq',
