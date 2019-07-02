@@ -465,11 +465,11 @@ class PlanList extends PureComponent {
         },
       },
       {
-        title: '圈粉类型',
+        title: '收藏类型',
         key: 'type',
         width: 100,
         render: item => {
-          return <span>{item.type === 30 ? '商品圈粉' : '店铺圈粉'}</span>;
+          return <span>{item.type === 30 ? '商品收藏' : '店铺收藏'}</span>;
         },
       },
       {
@@ -544,9 +544,9 @@ class PlanList extends PureComponent {
     const extraContent = this.qf ? (
       <div className={styles.extraContent}>
         <RadioGroup onChange={this.radioGroupOnChange} defaultValue="30,31">
-          <RadioButton value="30,31">全部圈粉</RadioButton>
-          <RadioButton value="30">商品圈粉</RadioButton>
-          <RadioButton value="31">店铺圈粉</RadioButton>
+          <RadioButton value="30,31">全部收藏</RadioButton>
+          <RadioButton value="30">商品收藏</RadioButton>
+          <RadioButton value="31">店铺收藏</RadioButton>
         </RadioGroup>
       </div>
     ) : (

@@ -7,7 +7,7 @@ export default {
   'menu.fangdan.stepform.schedule': '推广排期',
   'menu.fangdan.stepform.pay': '支付',
   'menu.fangdan.stepform.result': '完成',
-  'menu.fangdan.quanfen': '圈粉收藏',
+  'menu.fangdan.quanfen': '收藏推广',
   'menu.fangdan.quanfen.info': '第一步',
   'menu.fangdan.quanfen.confirm': '编辑推广',
   'menu.fangdan.quanfen.schedule': '推广排期',

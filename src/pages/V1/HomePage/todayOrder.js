@@ -80,7 +80,7 @@ const OrderDetail = memo(({ loading, data, pageInfo, radioOnChange, orderType })
   const extraContent = (
     <div style={{ marginBottom: 20 }} className={styles.extraContent}>
       <RadioGroup onChange={radioOnChange} defaultValue="10">
-        <RadioButton value="10">免单试用</RadioButton>
+        <RadioButton value="10">试用推广</RadioButton>
         <RadioButton value="20">高佣推广</RadioButton>
       </RadioGroup>
     </div>
