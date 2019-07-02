@@ -54,12 +54,11 @@ class Index extends PureComponent {
         state: 1,
         avatar:
           'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
-        title: '免单试用推广',
+        title: '试用推广',
         description: `适用于：
-          基础销量偏低
-          宝贝流量较少
-          宝贝销评破零
-          DSR评分低`,
+        1、快速提高基础销量
+        2、快速积累基础好评
+        3、快速提升店铺DSR评分和权重`,
       },
       {
         actions: ['列表', '+新增'],
@@ -68,10 +67,11 @@ class Index extends PureComponent {
         avatar:
           'https://cdn.youlianyc.com/image/static/526746a209d504d6d9c43270767ff76e928aedc2.jpg',
         title: '高佣推广',
-        description: `适用于：
-          宝贝月销量≥200
-          宝贝评价数≥40
-          佣金比例≥50%`,
+        description: `提报要求：
+        1、宝贝月销量≥200
+        2、宝贝评价数≥40
+        3、佣金比例≥50%
+        4、支持专属佣金设置（推广ID：3662914）`,
       },
       {
         actions: ['列表', '+新增'],
@@ -79,12 +79,11 @@ class Index extends PureComponent {
         type: 2,
         avatar:
           'https://cdn.youlianyc.com/image/static/5c75983b5efea8cef21ec34f25972cb946983272.jpg',
-        title: '圈粉收藏推广',
+        title: '收藏推广',
         description: `适用于：
-          宝贝收藏数低
-          店铺收藏数低
-          宝贝权重不高
-          店铺权重不高`,
+        1、支持店铺或商品收藏
+        2、提高店铺或商品收藏权重
+        3、提高店铺或商品推广转化率`,
       },
     ];
 

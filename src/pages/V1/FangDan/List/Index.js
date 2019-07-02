@@ -557,7 +557,7 @@ class FdList extends PureComponent {
     const tabList = [
       {
         key: 'haoping',
-        tab: '免单试用',
+        tab: '试用推广',
       },
       {
         key: 'deq',
@@ -565,7 +565,7 @@ class FdList extends PureComponent {
       },
       {
         key: 'quanfen',
-        tab: '圈粉收藏',
+        tab: '收藏推广',
       },
     ];
     console.log(match, '1');

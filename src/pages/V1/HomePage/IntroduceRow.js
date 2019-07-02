@@ -61,13 +61,13 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
         <ChartCard
           bordered={false}
           loading={loading}
-          title="今日圈粉数"
+          title="今日收藏数"
           action={
             <Tooltip
               title={
                 <div className={styles.toolP}>
-                  <p>1.今日圈粉数：今日上传收藏凭证数</p>
-                  <p>2.总圈粉数：总上传收藏凭证数</p>
+                  <p>1.今日收藏数：今日上传收藏凭证数</p>
+                  <p>2.总收藏数：总上传收藏凭证数</p>
                 </div>
               }
             >
@@ -76,7 +76,7 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           }
           total={numeral(visitData.fans_info.day_order_num).format('0,0')}
           footer={
-            <Field label={<span>总圈粉数 </span>} value={visitData.fans_info.total_order_num} />
+            <Field label={<span>总收藏数 </span>} value={visitData.fans_info.total_order_num} />
           }
           contentHeight={46}
         >

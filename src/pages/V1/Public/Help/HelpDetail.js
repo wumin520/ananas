@@ -117,7 +117,7 @@ class HelpDetail extends PureComponent {
       dataIndex: 'pointDeduct',
     },
     {
-      title: '放单-免单试用推广',
+      title: '放单-试用推广',
       dataIndex: 'backQ',
     },
     {
@@ -378,7 +378,7 @@ class HelpDetail extends PureComponent {
       {
         key: 1,
         title: '1. 系统检测商品硬性条件',
-        answer: `免单试用推广商品要求：1.	属于拼多多商品，商品上架中 2.	推广多多进宝，状态必须为推广中 3.	临期商品不得提审`,
+        answer: `试用推广商品要求：1.	属于拼多多商品，商品上架中 2.	推广多多进宝，状态必须为推广中 3.	临期商品不得提审`,
         fb_time: '2019-4-25',
       },
       {
@@ -583,7 +583,7 @@ class HelpDetail extends PureComponent {
                 </Card>
               ) : globalKey === 1 ? (
                 <Card title={EnterData[0].title} bordered={false}>
-                  <p>免单试用推广商品要求：</p>
+                  <p>试用推广商品要求：</p>
                   <p>1. 属于拼多多商品，商品上架中</p>
                   <p>2. 推广多多进宝，状态必须为推广中</p>
                   <p>3. 临期商品不得提审</p>

@@ -534,11 +534,11 @@ class PlanList extends PureComponent {
     const tabList = [
       {
         key: 'haoping',
-        tab: '免单试用',
+        tab: '试用推广',
       },
       {
         key: 'quanfen',
-        tab: '圈粉收藏',
+        tab: '收藏推广',
       },
     ];
     const extraContent = this.qf ? (
