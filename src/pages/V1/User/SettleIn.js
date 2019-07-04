@@ -62,6 +62,7 @@ class settleIn extends Component {
     const { form, submitting } = this.props;
     const { inviteCode, selectShCode } = this.state;
     const { getFieldDecorator } = form;
+    console.log(inviteCode, 'inviteCode');
     return (
       <div className={styles.main}>
         <Alert
@@ -141,12 +142,12 @@ class settleIn extends Component {
           </FormItem>
           <FormItem>
             {getFieldDecorator('invitation_code', {
-              initialValue: inviteCode.trim(),
+              initialValue: '',
               rules: [
                 {
                   required: true,
                   whitespace: true,
-                  message: '请输入邀请码',
+                  message: '请输入邀请码（请联系推荐人获取）',
                   transform: value => {
                     return value.trim();
                   },
