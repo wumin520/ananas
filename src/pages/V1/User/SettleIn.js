@@ -27,11 +27,12 @@ class settleIn extends Component {
   };
 
   componentWillMount() {
+    /* eslint-disable */
     let inviteS = getInviteCode();
-    if (!inviteS || inviteS === '') {
-      // console.log('settleln getInviteCode() --> inviteS', inviteS);
-      inviteS = '91b9c8ddc0';
-    }
+    // if (!inviteS || inviteS === '') {
+    // console.log('settleln getInviteCode() --> inviteS', inviteS);
+    // inviteS = '91b9c8ddc0';
+    // }
     this.setState({
       inviteCode: inviteS,
     });
@@ -142,7 +143,7 @@ class settleIn extends Component {
           </FormItem>
           <FormItem>
             {getFieldDecorator('invitation_code', {
-              initialValue: '',
+              initialValue: inviteCode,
               rules: [
                 {
                   required: true,
