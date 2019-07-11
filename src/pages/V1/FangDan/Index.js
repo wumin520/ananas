@@ -57,7 +57,7 @@ class Index extends PureComponent {
         title: '试用推广',
         description: `适用于：
         1、快速提高基础销量
-        2、快速积累基础好评
+        2、快速积累客观评价反馈
         3、快速提升店铺DSR评分和权重`,
       },
       {
