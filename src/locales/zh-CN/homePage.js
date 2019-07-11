@@ -1,7 +1,7 @@
 export default {
   'app.homePage.chart.fangdanAmount': '今日放单量',
   'app.homePage.chart.orderAmount': '今日订单数',
-  'app.homePage.chart.commentAmount': '好评率',
+  'app.homePage.chart.commentAmount': '评价率',
   'app.homePage.chart.creditPoint': '当前信用分',
   'app.homePage.table.promotionCode': '推广编号',
   'app.homePage.table.product': '商品',
