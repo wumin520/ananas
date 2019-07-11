@@ -406,6 +406,37 @@ export default [
           },
         ],
       },
+      // 招商代理中心
+      {
+        path: '/zhaoshang',
+        name: 'dashboard',
+        icon: 'dashboard',
+        component: './V1_Zhaoshang/Dashboard',
+        authority: ['zhaoshang'],
+      },
+      {
+        path: '/zhaoshang-capital',
+        name: 'proxyCapital',
+        icon: 'profile',
+        authority: ['zhaoshang'],
+        routes: [
+          {
+            name: 'capital',
+            path: '/zhaoshang-capital/capital',
+            component: './V1_Zhaoshang/Capital/Capital',
+          },
+          {
+            name: 'withdraw',
+            path: '/zhaoshang-capital/withdraw',
+            component: './V1_Zhaoshang/Capital/Withdraw',
+          },
+          {
+            name: 'payee',
+            path: '/zhaoshang-capital/payee',
+            component: './V1_Zhaoshang/Capital/Payee',
+          },
+        ],
+      },
       {
         path: '/profile',
         name: 'profile',

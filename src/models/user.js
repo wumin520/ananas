@@ -53,6 +53,9 @@ export default {
         if (window.location.href.indexOf('tuishou') > -1 && getAuthority()[0] !== 'tuishou') {
           setAuthority('tuishou');
           window.location.reload();
+        } else if (window.location.href.indexOf('zhaoshang') > -1) {
+          setAuthority('zhaoshang');
+          // window.location.reload();
         } else if (
           window.location.href.indexOf('tuishou') === -1 &&
           getAuthority()[0] !== 'admin'
