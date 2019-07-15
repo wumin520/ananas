@@ -415,6 +415,54 @@ export default [
         authority: ['zhaoshang'],
       },
       {
+        path: '/zhaoshang-manage',
+        name: 'proxyManage',
+        icon: 'profile',
+        authority: ['zhaoshang'],
+        routes: [
+          {
+            name: 'manageList',
+            path: '/zhaoshang-manage/manageList',
+            component: './V1_Zhaoshang/Manage/ManageList',
+          },
+        ],
+      },
+      {
+        path: '/zhaoshang-promotion',
+        name: 'proxyPromotion',
+        icon: 'profile',
+        authority: ['zhaoshang'],
+        routes: [
+          {
+            name: 'plan',
+            path: '/zhaoshang-promotion/plan',
+            component: './V1_Zhaoshang/Promotion/Plan',
+          },
+          {
+            path: '/zhaoshang-promotion/promotionDetail',
+            name: 'promotionDetail',
+            component: './V1_Zhaoshang/Promotion/PromotionDetail',
+            hideInMenu: true,
+          },
+          {
+            path: '/zhaoshang-promotion/promotionOrder',
+            name: 'promotionOrder',
+            component: './V1_Zhaoshang/Promotion/PromotionOrder',
+          },
+          {
+            path: '/zhaoshang-promotion/orderDetail',
+            name: 'orderDetail',
+            component: './V1_Zhaoshang/Promotion/OrderDetail',
+            hideInMenu: true,
+          },
+          {
+            path: '/zhaoshang-promotion/collect',
+            name: 'collect',
+            component: './V1_Zhaoshang/Promotion/Collect',
+          },
+        ],
+      },
+      {
         path: '/zhaoshang-capital',
         name: 'proxyCapital',
         icon: 'profile',
