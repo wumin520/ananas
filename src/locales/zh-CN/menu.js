@@ -24,6 +24,7 @@ export default {
   'menu.proxyCapital.capital': '我的资金',
   'menu.proxyCapital.withdraw': '账户提现',
   'menu.proxyCapital.payee': '设置收款账户',
+  'menu.proxyCapital.withdrawSuccess': '提现成功',
   'menu.tygj.pid': 'pid管理',
   'menu.tygj.favorite': '收藏管理',
   'menu.tgxg': '推广效果',

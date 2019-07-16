@@ -1,6 +1,7 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
 import { Card, Button, Form, Input, Alert } from 'antd';
+import Link from 'umi/link';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 // import Result from '@/components/Result';
@@ -8,9 +9,10 @@ import styles from './styles.less';
 
 const content = <div />;
 
-@connect(({ withdraw, loading }) => ({
-  withdrawData: withdraw.withdrawData,
-  loading: loading.models.withdraw,
+@connect(({ capital, loading }) => ({
+  assetInfo: capital.assetInfo,
+  payeeInfo: capital.payeeInfo,
+  loading: loading.models.capital,
 }))
 @Form.create()
 class Withdraw extends PureComponent {
@@ -21,7 +23,7 @@ class Withdraw extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'withdraw/exchangePage',
+      type: 'capital/withdrawAccount',
     });
   }
 
@@ -46,10 +48,10 @@ class Withdraw extends PureComponent {
     const { form } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
         const { dispatch } = this.props;
         dispatch({
-          type: 'withdraw/exchange',
+          type: 'capital/withdrawApply',
           payload: values,
         });
       }
@@ -57,9 +59,18 @@ class Withdraw extends PureComponent {
   };
 
   render() {
-    const { form, withdrawData } = this.props;
+    const { form, assetInfo, payeeInfo } = this.props;
     const { getFieldDecorator } = form;
     const { visible } = this.state;
+
+    const alertText = (
+      <Fragment>
+        <div>
+          <span style={{ marginRight: '20px' }}>请设置收款账户</span>
+          <Link to="/zhaoshang-capital/payee">去设置</Link>
+        </div>
+      </Fragment>
+    );
 
     const formItemLayout = {
       labelCol: {
@@ -90,19 +101,13 @@ class Withdraw extends PureComponent {
         <Card>
           <p className={styles.title}>提现</p>
           <div style={{ display: 'inline-block' }}>
-            {visible ? (
-              <Alert
-                message="请设置收款账户"
-                type="info"
-                showIcon
-                closable
-                afterClose={this.handleClose}
-              />
+            {visible && payeeInfo.name === '' ? (
+              <Alert message={alertText} showIcon closable afterClose={this.handleClose} />
             ) : null}
           </div>
           <div className={styles.formBlock}>
             <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-              <Form.Item label="账户余额">￥{withdrawData.balance}</Form.Item>
+              <Form.Item label="账户余额">￥{assetInfo.balance}</Form.Item>
               <Form.Item label="提现金额">
                 {getFieldDecorator('money', {
                   rules: [
@@ -120,13 +125,18 @@ class Withdraw extends PureComponent {
               </Form.Item>
             </Form>
           </div>
-          <hr />
           <div>
-            <ul>
-              <li style={{ marginBottom: '10px', fontWeight: 'bold' }}>提现说明</li>
-              <li>提现账户名：cc公司</li>
-              <li>提现银行卡： xx银行 1234564522</li>
-            </ul>
+            {payeeInfo.name !== '' ? (
+              <ul>
+                <li style={{ marginBottom: '10px', fontWeight: 'bold' }}>提现说明</li>
+                <li>提现账户名：{payeeInfo.name}</li>
+                <li>
+                  提现银行卡：{payeeInfo.bank_name} {payeeInfo.bank_card}
+                </li>
+              </ul>
+            ) : (
+              ''
+            )}
             <ul>
               <li style={{ marginBottom: '10px', fontWeight: 'bold' }}>申请提现需满足以下条件：</li>
               <li>1.账户余额≥100</li>

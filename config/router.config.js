@@ -435,6 +435,12 @@ export default [
             path: '/zhaoshang-capital/payee',
             component: './V1_Zhaoshang/Capital/Payee',
           },
+          {
+            name: 'withdrawSuccess',
+            path: '/zhaoshang-capital/withdrawSuccess',
+            hideInMenu: true,
+            component: './V1_Zhaoshang/Capital/WithdrawSuccess',
+          },
         ],
       },
       {

@@ -1,91 +1,107 @@
-import { getAssetList, getExchangeList, getRewardList, frozenTaskList } from '@/services/api';
+import {
+  withdrawRecord,
+  settledRecord,
+  withdrawApply,
+  withdrawAccount,
+  withdrawAccountUpdate,
+} from '@/services/api';
+import { message } from 'antd';
+import router from 'umi/router';
 
 export default {
   namespace: 'capital',
-
   state: {
-    assetData: {
-      asset_info: {
-        balance: 0,
-        frozen_balance: 0,
-        expend_balance: 0,
-      },
+    assetInfo: {
+      settled_balance: 0, // 已结算金额
+      balance: 0, // 余额
+    },
+    withdrawData: {
       list: [],
-      type_select: [],
       page_info: {},
     },
-    exchangeData: {
-      asset_info: {
-        balance: 0,
-        forzen_balance: 0,
-        expend_balance: 0,
-      },
+    settledData: {
       list: [],
-      type_select: [],
       page_info: {},
     },
-    rewardData: {
-      asset_info: {
-        balance: 0,
-        forzen_balance: 0,
-        expend_balance: 0,
-      },
-      list: [],
-      type_select: [],
-      page_info: {},
+    payeeInfo: {
+      name: '',
+      bank_name: '',
+      bank_address: '',
+      bank_card: '',
+      blis_no: '',
+      blis_img: '',
     },
-    freezeData: {
-      head_info: {
-        forzen_balance: 0,
-        forzen_num: 0,
+    withdrawSuccessInfo: {
+      info: {
+        bank_address: '',
+        bank_card: '',
+        bank_name: '',
+        blis_img: '',
+        blis_no: '',
+        name: '',
       },
-      list: [],
-      type_select: [],
-      page_info: {},
+      money: 0,
     },
   },
 
   effects: {
-    *getAssetList({ payload }, { call, put }) {
-      const res = yield call(getAssetList, payload);
+    *getWithdrawRecord({ payload }, { call, put }) {
+      const res = yield call(withdrawRecord, payload);
       if (res && res.code === 200) {
         yield put({
           type: 'saveData',
           payload: {
-            assetData: res.payload,
+            withdrawData: res.payload,
+            assetInfo: res.payload.assets,
           },
         });
       }
     },
-    *getExchangeList({ payload }, { call, put }) {
-      const res = yield call(getExchangeList, payload);
+    *getSettledRecord({ payload }, { call, put }) {
+      const res = yield call(settledRecord, payload);
       if (res && res.code === 200) {
         yield put({
           type: 'saveData',
           payload: {
-            exchangeData: res.payload,
+            settledData: res.payload,
+            assetInfo: res.payload.assets,
           },
         });
       }
     },
-    *getRewardDataList({ payload }, { call, put }) {
-      const res = yield call(getRewardList, payload);
+    *withdrawApply({ payload }, { call, put }) {
+      const res = yield call(withdrawApply, payload);
       if (res && res.code === 200) {
         yield put({
           type: 'saveData',
           payload: {
-            rewardData: res.payload,
+            withdrawSuccessInfo: res.payload,
+          },
+        });
+        router.push('/zhaoshang-capital/withdrawSuccess');
+      }
+    },
+    *withdrawAccount({ payload }, { call, put }) {
+      const res = yield call(withdrawAccount, payload);
+      const p = res.payload;
+      if (res && res.code === 200) {
+        yield put({
+          type: 'saveData',
+          payload: {
+            payeeInfo: p.info,
+            assetInfo: p.assets,
           },
         });
       }
     },
-    *frozenTaskList({ payload }, { call, put }) {
-      const res = yield call(frozenTaskList, payload);
+    *withdrawAccountUpdate({ payload }, { call, put }) {
+      const res = yield call(withdrawAccountUpdate, payload);
       if (res && res.code === 200) {
+        message.success(`设置成功`);
         yield put({
           type: 'saveData',
           payload: {
-            freezeData: res.payload,
+            payeeInfo: res.payload.info,
           },
         });
       }

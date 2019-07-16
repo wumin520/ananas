@@ -1,9 +1,10 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import Link from 'umi/link';
 import { Card, Row, Col, Button, Form, DatePicker, Table, Tabs, Badge } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import router from 'umi/router';
+import moment from 'moment';
 
 import styles from './styles.less';
 
@@ -13,109 +14,98 @@ const FormItem = Form.Item;
 
 let params = {
   page: 1,
-  type: -1,
+  start_time: '',
+  end_time: '',
 };
 
 const content = <div />;
 
 @connect(({ capital, loading }) => ({
-  assetData: capital.assetData,
-  rewardData: capital.rewardData,
-  exchangeData: capital.exchangeData,
+  assetInfo: capital.assetInfo,
+  withdrawData: capital.withdrawData,
+  settledData: capital.settledData,
   loading: loading.models.capital,
 }))
 @Form.create()
 class Capital extends PureComponent {
   state = {
-    pagination: {},
-    changeType: -1,
+    tabType: 0,
+    startTime: '',
+    endTime: '',
   };
 
   componentDidMount() {
-    this.getAssetList(params);
+    this.getSettledRecord(params);
   }
 
-  getAssetList = p => {
+  getWithdrawRecord = p => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'capital/getAssetList',
-      payload: {
-        page: p.page,
-        type: p.type,
-      },
+      type: 'capital/getWithdrawRecord',
+      payload: p,
     });
   };
 
-  getRewardList = p => {
+  getSettledRecord = p => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'capital/getRewardDataList',
-      payload: {
-        page: p.page,
-        type: p.type,
-      },
+      type: 'capital/getSettledRecord',
+      payload: p,
     });
   };
 
   // tabs切换
   tabsClick = value => {
-    const { dispatch } = this.props;
+    const { form } = this.props;
+    form.resetFields();
     params = {
       page: 1,
-      tradeType: -1,
-      page_no: 1,
     };
     if (value === 'withdraw') {
-      dispatch({
-        type: 'capital/getExchangeList',
-        payload: {
-          page: params.page_no,
-        },
-      });
-    } else if (value === 'trade') {
-      this.getAssetList(params);
-      this.tabType = 0;
-    } else if (value === 'reward') {
-      this.tabType = 1;
-      this.getRewardList(params);
+      this.setState({ tabType: 1 });
+      this.getWithdrawRecord(params);
+    } else if (value === 'settlement') {
+      this.setState({ tabType: 0 });
+      this.getSettledRecord(params);
     }
   };
 
   clearAll = () => {
+    const { tabType } = this.state;
     params = {
       page: 1,
-      type: -1,
     };
     const { form } = this.props;
     form.resetFields();
-    if (this.tabType === 1) {
-      this.getRewardList(params);
+    if (tabType === 1) {
+      this.getWithdrawRecord(params);
     } else {
-      this.getAssetList(params);
+      this.getSettledRecord(params);
     }
   };
 
-  handleTableChange = (pagination, filters, sorter) => {
-    // eslint-disable-next-line
-    const pager = { ...this.state.pagination };
-    pager.current = pagination.current;
+  onChangeDate = date => {
+    const startTimeTemp = moment(date[0]).format('YYYY-MM-DD');
+    const endTimeTemp = moment(date[1]).format('YYYY-MM-DD');
     this.setState({
-      pagination: pager,
-    });
-    this.fetch({
-      results: pagination.pageSize,
-      page: pagination.current,
-      sortField: sorter.field,
-      sortOrder: sorter.order,
-      ...filters,
+      startTime: startTimeTemp,
+      endTime: endTimeTemp,
     });
   };
 
-  setAgeSort = () => {
-    if (this.tabType === 1) {
-      this.getRewardList(params);
+  // 查询
+  handleSearch = e => {
+    e.preventDefault();
+    const { startTime, endTime, tabType } = this.state;
+    params = {
+      page: 1,
+      start_time: startTime,
+      end_Time: endTime,
+    };
+    if (tabType === 1) {
+      this.getWithdrawRecord(params);
     } else {
-      this.getAssetList(params);
+      this.getSettledRecord(params);
     }
   };
 
@@ -123,29 +113,23 @@ class Capital extends PureComponent {
     router.push(url);
   };
 
-  changePage = p => {
-    const { changeType } = this.state;
-    params = {
-      page: p,
-      type: changeType,
-    };
-    if (this.tabType === 1) {
-      this.getRewardList(params);
+  changePage = currPage => {
+    params.page = currPage;
+    const { tabType } = this.state;
+    if (tabType === 1) {
+      this.getWithdrawRecord(params);
     } else {
-      this.getAssetList(params);
+      this.getSettledRecord(params);
     }
   };
 
   render() {
     const {
-      assetData,
-      exchangeData,
+      withdrawData,
+      settledData,
+      assetInfo,
       form: { getFieldDecorator },
     } = this.props;
-
-    // const toFreeze = () => {
-    //   router.push('CapitalManage/FreezeDetail');
-    // }
 
     const Info = ({ title, value, bordered, linkName, url }) => (
       <div className={styles.headerInfo}>
@@ -195,20 +179,12 @@ class Capital extends PureComponent {
     ];
 
     const FilterBlock = () => (
-      <Fragment>
-        <Form layout="inline">
+      <div>
+        <Form onSubmit={this.handleSearch} layout="inline">
           <FormItem label="">
-            {getFieldDecorator('range-picker', {
-              rules: [
-                {
-                  type: 'array',
-                  // required: true,
-                  message: '请选择时间!',
-                },
-              ],
-            })(<RangePicker />)}
+            {getFieldDecorator('range-picker', {})(<RangePicker onChange={this.onChangeDate} />)}
           </FormItem>
-          <Button style={{ marginLeft: 8, marginTop: 4 }} type="primary" onClick={this.setAgeSort}>
+          <Button style={{ marginLeft: 8, marginTop: 4 }} type="primary" htmlType="submit">
             查询
           </Button>
           <Button style={{ marginLeft: 8, marginTop: 4 }} onClick={this.clearAll}>
@@ -216,7 +192,7 @@ class Capital extends PureComponent {
           </Button>
         </Form>
         <br />
-      </Fragment>
+      </div>
     );
 
     return (
@@ -226,20 +202,15 @@ class Capital extends PureComponent {
             <Row>
               <Col sm={12} xs={24}>
                 <Info
-                  title="可用余额"
-                  value={assetData.asset_info.balance}
+                  title="可提现金额(元)"
+                  value={assetInfo.balance}
                   linkName="提现"
-                  url="/Capital/withdraw"
+                  url="/zhaoshang-capital/withdraw"
                   bordered
                 />
               </Col>
               <Col sm={12} xs={24}>
-                <Info
-                  title="冻结金额"
-                  value={assetData.asset_info.frozen_balance}
-                  linkName=""
-                  url=""
-                />
+                <Info title="已结算金额(元)" value={assetInfo.settled_balance} linkName="" url="" />
               </Col>
             </Row>
           </Card>
@@ -250,12 +221,12 @@ class Capital extends PureComponent {
                 <FilterBlock />
                 <Table
                   columns={columns}
-                  dataSource={assetData.list}
+                  dataSource={settledData.list}
                   pagination={{
                     defaultCurrent: 1,
-                    current: assetData.page_info.current_page,
-                    pageSize: assetData.page_info.per_page,
-                    total: assetData.page_info.total_num,
+                    current: settledData.page_info.current_page,
+                    pageSize: settledData.page_info.per_page,
+                    total: settledData.page_info.total_num,
                     onChange: this.changePage,
                   }}
                 />
@@ -264,12 +235,12 @@ class Capital extends PureComponent {
                 <FilterBlock />
                 <Table
                   columns={columns2}
-                  dataSource={exchangeData.list}
+                  dataSource={withdrawData.list}
                   pagination={{
                     defaultCurrent: 1,
-                    current: exchangeData.page_info.current_page,
-                    pageSize: exchangeData.page_info.per_page,
-                    total: exchangeData.page_info.total_num,
+                    current: withdrawData.page_info.current_page,
+                    pageSize: withdrawData.page_info.per_page,
+                    total: withdrawData.page_info.total_num,
                     onChange: this.changePage,
                   }}
                 />
