@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, DatePicker } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import moment from 'moment';
+import { router } from 'umi';
 import styles from './ManageList.less';
 
 const FormItem = Form.Item;
@@ -107,7 +108,8 @@ class ManageList extends PureComponent {
 
   goPlan = item => {
     const path = `/zhaoshang-promotion/plan`;
-    window.open(`${path}?sh_id=${item.sh_id}`); // 0523 新窗口打开
+    router.push(`${path}?sh_id=${item.sh_id}`);
+    // window.open(`${path}?sh_id=${item.sh_id}`); // 0523 新窗口打开
   };
 
   // 接口

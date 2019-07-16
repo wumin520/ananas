@@ -3,7 +3,6 @@ import { connect } from 'dva';
 import { Card, Badge, Table, Divider, Row, Col } from 'antd';
 import DescriptionList from '@/components/DescriptionList';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-// import styles from './PromotionDetail.less';
 
 const { Description } = DescriptionList;
 @connect(({ promotion, loading }) => ({
@@ -57,10 +56,11 @@ class PromotionDetail extends Component {
     const { data } = detailData;
     const planInfo = detailData.plan_info;
     const content = <div />;
+    const taskId = `推广编号: ${data.task_id}`;
     return (
       <PageHeaderWrapper title="推广详情" loading={loading} content={content}>
         <Card bordered={false} style={{ marginBottom: 26 }}>
-          <DescriptionList size="large" title="推广编号：" style={{ marginBottom: 32 }}>
+          <DescriptionList size="large" title={taskId} style={{ marginBottom: 32 }}>
             <Description term="推广状态">
               <Badge status={data.state_color} text={data.state_desc} />
             </Description>
@@ -72,18 +72,18 @@ class PromotionDetail extends Component {
           <Card title="商品信息">
             <DescriptionList size="large" title="商品信息" style={{ marginBottom: 32 }}>
               <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
-                <Col md={5} sm={24}>
+                <Col md={3} sm={24}>
                   <div>
                     <img
                       src={data.img}
                       alt="img"
-                      style={{ width: 65, heigth: 65, marginLeft: 10 }}
+                      style={{ width: 120, heigth: 120, marginLeft: 10 }}
                     />
                   </div>
                 </Col>
                 <Col md={18} sm={24} style={{ marginBottom: 32 }}>
                   <Description term="">
-                    <p>{data.title}</p>
+                    <a style={{ fontSize: 16 }}>{data.title}</a>
                   </Description>
                   <Description term="商品id">{data.goods_id}</Description>
                   <Description term="优惠券">

@@ -188,29 +188,39 @@ export async function tsTaskGoodsUrl(params) {
   return request(api_pre + `ts/task/goods/uri?${stringify(params)}`);
 }
 
+// 代理-首页
+export async function homeList(params) {
+  return request(`/work/v1/home?${stringify(params)}`);
+}
+
 // 代理-商家列表
 export async function manageList(params) {
-  return request(`/v1/sh_list?${stringify(params)}`);
+  return request(`/work/v1/sh_list?${stringify(params)}`);
 }
 
 // 代理-商家推广排期列表
 export async function promotionList(params) {
-  return request(`/v1/task/plan_list?${stringify(params)}`);
+  return request(`/work/v1/task/plan_list?${stringify(params)}`);
 }
 
 // 代理-排期详情信息
 export async function promotionDetail(params) {
-  return request(`/v1/task/plan_detail?${stringify(params)}`);
+  return request(`/work/v1/task/plan_detail?${stringify(params)}`);
 }
 
 // 代理 订单列表
 export async function promotionOrder(params) {
-  return request(`/v1/order/list?${stringify(params)}`);
+  return request(`/work/v1/order/list?${stringify(params)}`);
+}
+
+// 代理-订单详情
+export async function proOrderDetail(params) {
+  return request(`/work/v1/order/detail?${stringify(params)}`);
 }
 
 // 收藏列表
 export async function collectList(params) {
-  return request(`/v1/order/fans/list?${stringify(params)}`);
+  return request(`/work/v1/order/fans/list?${stringify(params)}`);
 }
 
 export async function queryProjectNotice() {

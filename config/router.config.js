@@ -411,7 +411,7 @@ export default [
         path: '/zhaoshang',
         name: 'dashboard',
         icon: 'dashboard',
-        component: './V1_Zhaoshang/Dashboard',
+        component: './V1_Zhaoshang/HomePage/index',
         authority: ['zhaoshang'],
       },
       {

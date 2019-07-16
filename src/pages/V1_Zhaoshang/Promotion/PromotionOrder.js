@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-// import router from 'umi/router';
 import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, DatePicker } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import moment from 'moment';
+// import { router } from 'umi';
 import styles from './Plan.less';
 
 const FormItem = Form.Item;
@@ -38,9 +38,9 @@ class PromotionOrder extends PureComponent {
     this.columns = [
       {
         title: '订单编号',
-        dataIndex: 'order_id',
-        key: 'order_id',
-        width: 160,
+        dataIndex: 'p_order_id',
+        key: 'p_order_id',
+        width: 100,
       },
       {
         key: 'sh_name',
@@ -106,20 +106,7 @@ class PromotionOrder extends PureComponent {
   }
 
   componentDidMount() {
-    // const { location } = this.props;
     params.type = 10;
-    // if (location.query.qf !== undefined) {
-    //   params.type = '30,31';
-    //   this.setState({
-    //     tabActiveKey: 'quanfen',
-    //   });
-    // } else if (location.query.deq) {
-    //   params.type = 20;
-    //   this.setState({
-    //     tabActiveKey: 'deq',
-    //   });
-    // }
-    // params.sh_id = location.query.sh_id;
     this.getOrderData(params);
   }
 
@@ -180,13 +167,7 @@ class PromotionOrder extends PureComponent {
 
   goDetail = item => {
     const path = `/zhaoshang-promotion/orderDetail`;
-    // if (/^3[0|1]$/.test(item.type)) {
-    //   path = `/zhaoshang-promotion/orderDetail`;
-    // }
-    // if (item.type === 20) {
-    //   path = `/zhaoshang-promotion/orderDetail`;
-    // }
-    window.open(`${path}?order_id=${item.order_id}`); // 0523 新窗口打开
+    window.open(`${path}?order_id=${item.order_id}`);
   };
 
   onChange = page => {

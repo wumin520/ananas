@@ -36,11 +36,11 @@ class Plan extends PureComponent {
         title: '投放时间',
         dataIndex: 'plan_time',
         key: 'plan_time',
-        width: 160,
+        width: 150,
       },
       {
         key: 'mall_name',
-        title: '商户名称',
+        title: '店铺名称',
         width: 120,
         dataIndex: 'mall_name',
       },
@@ -77,7 +77,7 @@ class Plan extends PureComponent {
         },
       },
       {
-        title: '状态',
+        title: '排期状态',
         width: 100,
         render(item) {
           return <Badge status={item.state_color} text={item.state_desc} />;
@@ -117,17 +117,17 @@ class Plan extends PureComponent {
   componentDidMount() {
     const { location } = this.props;
     params.type = 10;
-    // if (location.query.qf !== undefined) {
-    //   params.type = '30,31';
-    //   this.setState({
-    //     tabActiveKey: 'quanfen',
-    //   });
-    // } else if (location.query.deq) {
-    //   params.type = 20;
-    //   this.setState({
-    //     tabActiveKey: 'deq',
-    //   });
-    // }
+    if (location.query.qf !== undefined) {
+      params.type = '30,31';
+      this.setState({
+        tabActiveKey: 'quanfen',
+      });
+    } else if (location.query.deq) {
+      params.type = 20;
+      this.setState({
+        tabActiveKey: 'deq',
+      });
+    }
     params.sh_id = location.query.sh_id;
     this.getListData(params);
   }
@@ -189,13 +189,7 @@ class Plan extends PureComponent {
   };
 
   goDetail = item => {
-    let path = `/zhaoshang-promotion/promotionDetail`;
-    if (/^3[0|1]$/.test(item.type)) {
-      path = `/zhaoshang-promotion/promotionDetail`;
-    }
-    if (item.type === 20) {
-      path = `/zhaoshang-promotion/promotionDetail`;
-    }
+    const path = `/zhaoshang-promotion/promotionDetail`;
     window.open(`${path}?task_plan_id=${item.task_plan_id}`); // 0523 新窗口打开
   };
 

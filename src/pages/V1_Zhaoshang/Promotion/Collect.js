@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 // import router from 'umi/router';
-import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Radio } from 'antd';
+import { Table, Card, Row, Col, Input, Button, Form, Select, Radio } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './Plan.less';
 
@@ -13,6 +13,7 @@ const { Option } = Select;
 let params = {
   page: 1, // 翻页参数
   task_id: 0, // 推广编号
+  sh_id: 0,
   goods_id: 0, // 商品id
   state: -1,
   type: 30, // 推广类型 30-收藏商品 31-收藏店铺
@@ -28,16 +29,22 @@ class Collect extends PureComponent {
     super(props);
     this.columns = [
       {
-        title: '推广编号',
-        dataIndex: 'task_id',
-        key: 'task_id',
+        dataIndex: 'nick_name',
+        key: 'nick_name',
+        title: '用户昵称',
         width: 90,
       },
       {
-        key: 'goods_id',
-        title: '商品id',
+        key: 'task_id',
+        dataIndex: 'task_id',
+        title: '推广编号',
         width: 120,
-        dataIndex: 'goods_id',
+      },
+      {
+        key: 'sh_name',
+        dataIndex: 'sh_name',
+        title: '商户名称',
+        width: 120,
       },
       {
         title: '商品',
@@ -57,116 +64,10 @@ class Collect extends PureComponent {
         },
       },
       {
-        title: '提交时间',
-        dataIndex: 'created_at',
-        key: 'created_at',
+        title: '上传时间',
+        dataIndex: 'proof_time',
+        key: 'proof_time',
         width: 160,
-      },
-      {
-        title: '券后价',
-        dataIndex: 'after_coupon_price',
-        key: 'after_coupon_price',
-        width: 100,
-        render: item => {
-          return <span>￥{item}</span>;
-        },
-      },
-      {
-        key: 'coupon_price',
-        width: 80,
-        title: '优惠券',
-        dataIndex: 'coupon_price',
-        render: val => {
-          return <span>{val ? `￥ ${val}` : '无'}</span>;
-        },
-      },
-      {
-        title: '状态',
-        width: 100,
-        render(item) {
-          return <Badge status={item.state_color} text={item.state_desc} />;
-        },
-      },
-      {
-        title: '推广份数',
-        width: 150,
-        render: item => {
-          return (
-            <p style={{ textAlign: 'left' }}>
-              <span>发放份数 {item.total_amount}</span>
-              <br />
-              <span>下单人数 {item.order_num}</span>
-              <br />
-            </p>
-          );
-        },
-      },
-    ];
-    this.dpColumns = [
-      {
-        title: '推广编号',
-        dataIndex: 'task_id',
-        key: 'task_id',
-        width: 90,
-      },
-      {
-        key: 'goods_id',
-        title: '商品/店铺id',
-        width: 120,
-        dataIndex: 'goods_id',
-      },
-      {
-        title: '商品/店铺名称',
-        width: 143,
-        render: val => {
-          return (
-            <a
-              className={styles.pro}
-              href={val.goods_url}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <img src={val.img} alt="a" style={{ width: 50, heigth: 50, marginRight: 5 }} />
-              <span className={styles.goodsName}> {val.title}</span>
-            </a>
-          );
-        },
-      },
-      {
-        title: '提交时间',
-        dataIndex: 'created_at',
-        key: 'created_at',
-        width: 160,
-      },
-      {
-        title: '收藏类型',
-        key: 'type',
-        width: 100,
-        render: item => {
-          return <span>{item.type === 30 ? '商品收藏' : '店铺收藏'}</span>;
-        },
-      },
-      {
-        title: '状态',
-        width: 100,
-        render(item) {
-          return <Badge status={item.state_color} text={item.state_desc} />;
-        },
-      },
-      {
-        title: '推广份数',
-        width: 150,
-        render: item => {
-          return (
-            <p style={{ textAlign: 'left' }}>
-              <span>发放份数 {item.total_amount}</span>
-              <br />
-              <span>收藏人数 {item.order_num}</span>
-              <br />
-              {/** <span>评价人数 {item.comment_num}</span> */}
-            </p>
-          );
-        },
       },
     ];
   }
@@ -188,38 +89,32 @@ class Collect extends PureComponent {
   // 查询
   handleSearch = e => {
     e.preventDefault();
-    const { dispatch, form } = this.props;
+    const { form } = this.props;
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       const values = {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
-
       params.page = 1;
       params.task_id = values.task_id || 0;
+      params.sh_id = values.sh_id || 0;
       params.goods_id = values.goods_id || 0;
       params.state = values.state || -1;
-
-      dispatch({
-        type: 'promotion/collectData',
-        payload: params,
-      });
+      this.getListData(params);
     });
   };
 
   // 重置
   handleFormReset = () => {
-    const { form, dispatch } = this.props;
+    const { form } = this.props;
     form.resetFields();
     params.page = 1;
+    params.sh_id = 0;
     params.task_id = 0;
     params.goods_id = 0;
     params.state = -1;
-    dispatch({
-      type: 'promotion/collectData',
-      payload: params,
-    });
+    this.getListData(params);
   };
 
   onChange = page => {
@@ -228,7 +123,6 @@ class Collect extends PureComponent {
   };
 
   radioGroupOnChange = e => {
-    // console.log('radioGroupOnChange -> ', e);
     params.type = e.target.value;
     params = {
       page: 1,
@@ -237,8 +131,6 @@ class Collect extends PureComponent {
       state: -1,
       type: e.target.value,
     };
-    // let { columns } = this;
-
     this.getListData(params);
   };
 
@@ -256,18 +148,20 @@ class Collect extends PureComponent {
               {getFieldDecorator('task_id')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
-          {/** 筛选店铺/商品 字段都为 goods_id, 后端查询两者已兼容 */}
-          <Col md={5} sm={24}>
-            {params.type === 10 ? (
+
+          {params.type === '31' ? (
+            <Col md={5} sm={24}>
               <FormItem label="商品id ">
                 {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
               </FormItem>
-            ) : (
-              <FormItem label={this.deq ? '商品id ' : '商品/店铺id '}>
-                {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
+            </Col>
+          ) : (
+            <Col md={5} sm={24}>
+              <FormItem label="店铺id">
+                {getFieldDecorator('sh_id')(<Input placeholder="请输入" />)}
               </FormItem>
-            )}
-          </Col>
+            </Col>
+          )}
           <Col md={5} sm={24}>
             <FormItem label="状态">
               {getFieldDecorator('state')(
@@ -308,14 +202,55 @@ class Collect extends PureComponent {
   render() {
     // 表格数据
     const { collectData } = this.props;
-    const { columns, dpColumns } = this;
-    let tableColumns = columns;
-    // console.log('params.type=====>>>>', params.type);
-    if (params.type === 31) {
-      tableColumns = dpColumns;
+    let { columns } = this;
+    const dpColumns = [
+      {
+        title: '用户昵称',
+        dataIndex: 'nick_name',
+        key: 'nick_name',
+        width: 90,
+      },
+      {
+        title: '推广编号',
+        dataIndex: 'task_id',
+        key: 'task_id',
+        width: 90,
+      },
+      {
+        key: 'goods_id',
+        title: '店铺编号',
+        width: 120,
+        dataIndex: 'goods_id',
+      },
+      {
+        title: '店铺',
+        width: 143,
+        render: val => {
+          return (
+            <a
+              className={styles.pro}
+              href={val.goods_url}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img src={val.img} alt="a" style={{ width: 50, heigth: 50, marginRight: 5 }} />
+              <span className={styles.goodsName}> {val.title}</span>
+            </a>
+          );
+        },
+      },
+      {
+        title: '上传时间',
+        dataIndex: 'proof_time',
+        key: 'proof_time',
+        width: 160,
+      },
+    ];
+
+    if (params.type === '31') {
+      columns = dpColumns;
     }
     const content = <div />;
-
     const extraContent = (
       <div className={styles.extraContent}>
         <RadioGroup onChange={this.radioGroupOnChange} defaultValue="30">
@@ -326,14 +261,14 @@ class Collect extends PureComponent {
     );
 
     return (
-      <PageHeaderWrapper title="放单列表" content={content}>
+      <PageHeaderWrapper title="收藏列表" content={content}>
         <div className={styles.standardList}>
           <Card className={styles.customStyleCard} extra={extraContent}>
             <div className={styles.tableList}>
               <div className={styles.tableListForm}>{this.renderForm()}</div>
               <Table
                 rowKey={item => item.id}
-                columns={tableColumns}
+                columns={columns}
                 dataSource={collectData.list}
                 pagination={{
                   defaultCurrent: 1,

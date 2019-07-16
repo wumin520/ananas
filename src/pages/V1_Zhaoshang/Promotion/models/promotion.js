@@ -1,4 +1,10 @@
-import { promotionList, promotionDetail, promotionOrder, collectList } from '@/services/api';
+import {
+  promotionList,
+  promotionDetail,
+  promotionOrder,
+  proOrderDetail,
+  collectList,
+} from '@/services/api';
 
 export default {
   namespace: 'promotion',
@@ -11,6 +17,7 @@ export default {
       amount: '500',
     },
     listData: {
+      // 推广列表
       list: [
         {
           task_id: '',
@@ -20,15 +27,18 @@ export default {
       state_select: [],
       page_info: {},
     },
+    // 推广详情
     detailData: {
       data: {},
       plan_info: [],
     },
+    // 收藏列表
     collectData: {
       list: [],
       state_select: [],
       page_info: {},
     },
+    // 订单列表
     orderData: {
       list: [
         {
@@ -38,16 +48,12 @@ export default {
       state_select: [],
       page_info: {},
     },
-    // finishData: {},
-    // planDownData: {},
-    // planUpData: {},
-    // planData: {
-    //   list: [],
-    //   header_info: {},
-    //   state_select: [],
-    //   type_select: [],
-    //   page_info: {},
-    // },
+    // 订单详情
+    proDetailData: {
+      order_info: {},
+      product_info: {},
+      shop_info: {},
+    },
   },
 
   effects: {
@@ -78,6 +84,15 @@ export default {
         },
       });
     },
+    *proDetailData({ payload }, { call, put }) {
+      const res = yield call(proOrderDetail, payload);
+      yield put({
+        type: 'saveState',
+        payload: {
+          proDetailData: res.payload,
+        },
+      });
+    },
     *collectData({ payload }, { call, put }) {
       const res = yield call(collectList, payload);
       yield put({
@@ -87,57 +102,6 @@ export default {
         },
       });
     },
-    // *finishMessage({ payload }, { call, put }) {
-    //   const res = yield call(taskFinish, payload);
-    //   yield put({
-    //     type: 'saveState',
-    //     payload: {
-    //       finishData: res.finishData,
-    //     },
-    //   });
-    //   if (res.code === 200) {
-    //     message.success(res.payload.msg);
-    //   } else {
-    //     message.success(res.payload.message);
-    //   }
-    // },
-    // *planDownData({ payload }, { call, put }) {
-    //   const res = yield call(planDown, payload);
-    //   yield put({
-    //     type: 'saveState',
-    //     payload: {
-    //       planDownData: res.planDownData,
-    //     },
-    //   });
-    //   if (res.code === 200) {
-    //     message.success(res.payload.msg);
-    //   } else {
-    //     message.success(res.message);
-    //   }
-    // },
-    // *planUpData({ payload }, { call, put }) {
-    //   const res = yield call(planUp, payload);
-    //   yield put({
-    //     type: 'saveState',
-    //     payload: {
-    //       planUpData: res.planUpData,
-    //     },
-    //   });
-    //   if (res.code === 200) {
-    //     message.success(res.payload.msg);
-    //   } else {
-    //     message.success(res.message);
-    //   }
-    // },
-    // *planList({ payload }, { call, put }) {
-    //   const res = yield call(planList, payload);
-    //   yield put({
-    //     type: 'saveState',
-    //     payload: {
-    //       planData: res.payload,
-    //     },
-    //   });
-    // },
   },
 
   reducers: {
