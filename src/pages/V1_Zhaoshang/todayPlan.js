@@ -1,5 +1,5 @@
 import React, { memo, Fragment } from 'react';
-import { Card, Table, Badge, Divider, Radio } from 'antd';
+import { Card, Table, Badge, Radio } from 'antd';
 import Link from 'umi/link';
 import styles from './todayPlan.less';
 
@@ -78,9 +78,11 @@ const defaultColumns = [
     title: '操作',
     render: record => (
       <Fragment>
-        <Link to={`/fangdan/list/generalizeDetail?&task_id=${record.task_id}`}>查看</Link>
-        <Divider type="vertical" />
-        <Link to={`/order/Index?task_id=${record.task_id}`}>订单明细</Link>
+        <Link to={`/zhaoshang-promotion/promotionDetail?task_plan_id=${record.task_plan_id}`}>
+          查看
+        </Link>
+        {/* <Divider type="vertical" /> */}
+        {/* <Link to={`/order/Index?task_id=${record.task_id}`}>订单明细</Link> */}
       </Fragment>
     ),
   },
@@ -144,9 +146,11 @@ const qfColumns = [
     title: '操作',
     render: record => (
       <Fragment>
-        <Link to={`/fangdan/qfDetail?&task_id=${record.task_id}`}>查看</Link>
-        <Divider type="vertical" />
-        <Link to={`/order/qf?task_id=${record.task_id}`}>推广效果</Link>
+        <Link to={`/zhaoshang-promotion/promotionDetail?task_plan_id=${record.task_plan_id}`}>
+          查看
+        </Link>
+        {/* <Divider type="vertical" />
+        <Link to={`/order/qf?task_id=${record.task_id}`}>推广效果</Link> */}
       </Fragment>
     ),
   },

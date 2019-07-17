@@ -102,8 +102,15 @@ class List extends PureComponent {
   }
 
   componentDidMount() {
-    params.type = 10;
+    // params.type = 10;
     this.getListData(params);
+  }
+
+  componentWillUnmount() {
+    params = {
+      state: '',
+      page: 1,
+    };
   }
 
   // 接口
@@ -133,9 +140,15 @@ class List extends PureComponent {
       console.log(err, fieldsValue, 'err', params);
 
       params.page = 1;
-      params.shop_code = values.shop_code || 0;
-      params.shop_name = values.shop_name || 0;
-      params.phone = values.phone || 0;
+      const def = keys => {
+        for (let i = 0; i < keys.length; i += 1) {
+          const key = keys[i];
+          if (values[key]) {
+            params[key] = values[key];
+          }
+        }
+      };
+      def(['shop_code', 'shop_name', 'phone']);
       params.state = values.state || '';
 
       dispatch({

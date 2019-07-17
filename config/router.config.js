@@ -427,6 +427,19 @@ export default [
         authority: ['zhaoshang'],
       },
       {
+        path: '/zhaoshang-businesses',
+        name: 'businessesManage',
+        icon: 'dashboard',
+        authority: ['zhaoshang'],
+        routes: [
+          {
+            name: 'list',
+            path: '/zhaoshang-businesses/list',
+            component: './V1_Zhaoshang/Businesses/List',
+          },
+        ],
+      },
+      {
         path: '/zhaoshang-promotion',
         name: 'proxyPromotion',
         icon: 'profile',
@@ -458,18 +471,6 @@ export default [
             path: '/zhaoshang-promotion/collect',
             name: 'collect',
             component: './V1_Zhaoshang/Promotion/Collect',
-          },]
-      },
-      {
-        path: '/zhaoshang-businesses',
-        name: 'businessesManage',
-        icon: 'dashboard',
-        authority: ['zhaoshang'],
-        routes: [
-          {
-            name: 'list',
-            path: '/zhaoshang-businesses/list',
-            component: './V1_Zhaoshang/Businesses/List',
           },
         ],
       },
