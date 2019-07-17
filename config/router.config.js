@@ -24,6 +24,18 @@ export default [
         name: 'index',
         component: './V1/User/TuishouSignin',
       },
+      // 代理招商
+      { path: '/user/zhaoshang-login', name: 'login', component: './V1_Zhaoshang/User/Login' },
+      {
+        path: '/user/zhaoshang-register',
+        name: 'register',
+        component: './V1_Zhaoshang/User/Register',
+      },
+      {
+        path: '/user/zhaoshang-register-result',
+        name: 'register.result',
+        component: './V1_Zhaoshang/User/RegisterResult',
+      },
       {
         component: '404',
       },
@@ -446,6 +458,18 @@ export default [
             path: '/zhaoshang-promotion/collect',
             name: 'collect',
             component: './V1_Zhaoshang/Promotion/Collect',
+          },]
+      },
+      {
+        path: '/zhaoshang-businesses',
+        name: 'businessesManage',
+        icon: 'dashboard',
+        authority: ['zhaoshang'],
+        routes: [
+          {
+            name: 'list',
+            path: '/zhaoshang-businesses/list',
+            component: './V1_Zhaoshang/Businesses/List',
           },
         ],
       },

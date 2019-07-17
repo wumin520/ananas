@@ -18,9 +18,10 @@ class MiniArea extends React.PureComponent {
       xAxis,
       yAxis,
       animate = true,
+      chartPadding,
     } = this.props;
 
-    const padding = [36, 5, 30, 5];
+    const padding = chartPadding || [36, 5, 30, 5];
 
     const scaleProps = {
       x: {

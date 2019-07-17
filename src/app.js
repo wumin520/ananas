@@ -45,9 +45,11 @@ export function render(oldRender) {
 
 export function onRouteChange({ location }) {
   // console.log('onRouteChange -> ', location, routes, action);
-  const adEl = document.getElementById('qidian_wpa_2852167740_101505');
+  const adContainerId = 'qidian_wpa_2852167740_101505';
+  let adEl = document.getElementById(adContainerId);
   const sf = () => {
     const st = setTimeout(() => {
+      adEl = document.getElementById(adContainerId);
       if (adEl) {
         adEl.style.display = 'none';
       } else {
@@ -56,7 +58,9 @@ export function onRouteChange({ location }) {
       clearTimeout(st);
     }, 0);
   };
-  if (/^\/homePage|fangdan|order|CapitalManage|tuishou|favorites/.test(location.pathname)) {
+  if (
+    /^\/homePage|fangdan|order|CapitalManage|tuishou|favorites|zhaoshang/.test(location.pathname)
+  ) {
     sf();
   } else if (adEl) {
     adEl.style.display = 'block';

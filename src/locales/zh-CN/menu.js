@@ -26,6 +26,8 @@ export default {
   'menu.proxyPromotion.promotionOrder': '商家推广效果-订单',
   'menu.proxyPromotion.orderDetail': '订单详情',
   'menu.proxyPromotion.collect': '商家推广效果-收藏',
+  'menu.businessesManage': '商家管理',
+  'menu.businessesManage.list': '商家列表',
   'menu.proxyCapital': '资金管理',
   'menu.proxyCapital.capital': '我的资金',
   'menu.proxyCapital.withdraw': '账户提现',
