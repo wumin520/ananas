@@ -210,7 +210,9 @@ const deqColumns = [
     title: '操作',
     render: record => (
       <Fragment>
-        <Link to={`/fangdan/deqDetail?&task_id=${record.task_id}`}>查看</Link>
+        <Link to={`/zhaoshang-promotion/promotionDetail?task_plan_id=${record.task_plan_id}`}>
+          查看
+        </Link>
         {/* <Divider type="vertical" /> */}
         {/* <Link to={`/order/Index?task_id=${record.task_id}&deq=1`}>推广效果</Link> */}
       </Fragment>
@@ -239,13 +241,7 @@ const todayPlan = memo(({ data, loading, radioOnChange, tableType }) => {
       loading={loading}
       bordered={false}
       title="今日推广中"
-      extra={
-        tableType === 1 ? (
-          <Link to={`/zhaoshang/fangdan/plan?qf=${tableType}`}>{'全部推广>'}</Link>
-        ) : (
-          <Link to="/zhaoshang/fangdan/plan">{'全部推广>'}</Link>
-        )
-      }
+      extra={<Link to={`/zhaoshang-promotion/plan?tableType=${tableType}`}>{'全部推广>'}</Link>}
       style={{ marginTop: 24 }}
     >
       {extraContent}

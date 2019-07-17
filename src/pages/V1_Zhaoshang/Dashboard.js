@@ -22,7 +22,7 @@ const TodayPlan = React.lazy(() => import('./todayPlan'));
 class Dashboard extends Component {
   constructor(options) {
     super(options);
-    this.tableType = 1;
+    this.tableType = 0;
   }
 
   componentWillMount() {

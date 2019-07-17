@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import router from 'umi/router';
 import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Modal, DatePicker } from 'antd';
+import Link from 'umi/link';
+
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './List.less';
 
@@ -21,7 +23,7 @@ let params = {
   loading: loading.effects['businesses/fetchBasic'],
 }))
 @Form.create()
-class FdList extends PureComponent {
+class List extends PureComponent {
   constructor(props) {
     super(props);
     this.columns = [
@@ -89,7 +91,11 @@ class FdList extends PureComponent {
         title: '操作',
         width: 120,
         render: item => {
-          return <a href={`/${item.sh_id}`}>推广记录</a>;
+          return (
+            <Link to={`/zhaoshang-promotion/plan?shop_code=${item.shop_code}&sh_id=${item.sh_id}`}>
+              推广记录
+            </Link>
+          );
         },
       },
     ];
@@ -305,9 +311,9 @@ class FdList extends PureComponent {
     // 表格数据
     const { listData } = this.props;
     const content = <div />;
-
+    const title = <div style={{ marginTop: 12 }}>商家列表</div>;
     return (
-      <PageHeaderWrapper title="商家列表" content={content}>
+      <PageHeaderWrapper title={title} content={content}>
         <div className={styles.standardList}>
           <Card className={styles.customStyleCard}>
             <div className={styles.tableList}>
@@ -332,4 +338,4 @@ class FdList extends PureComponent {
   }
 }
 
-export default FdList;
+export default List;
