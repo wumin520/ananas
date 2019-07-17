@@ -151,14 +151,14 @@ class Collect extends PureComponent {
 
           {params.type === '31' ? (
             <Col md={5} sm={24}>
-              <FormItem label="商品id ">
-                {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
+              <FormItem label="店铺id">
+                {getFieldDecorator('sh_id')(<Input placeholder="请输入" />)}
               </FormItem>
             </Col>
           ) : (
             <Col md={5} sm={24}>
-              <FormItem label="店铺id">
-                {getFieldDecorator('sh_id')(<Input placeholder="请输入" />)}
+              <FormItem label="商品id ">
+                {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
               </FormItem>
             </Col>
           )}

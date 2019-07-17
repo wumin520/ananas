@@ -411,21 +411,8 @@ export default [
         path: '/zhaoshang',
         name: 'dashboard',
         icon: 'dashboard',
-        component: './V1_Zhaoshang/HomePage/index',
+        component: './V1_Zhaoshang/Dashboard',
         authority: ['zhaoshang'],
-      },
-      {
-        path: '/zhaoshang-manage',
-        name: 'proxyManage',
-        icon: 'profile',
-        authority: ['zhaoshang'],
-        routes: [
-          {
-            name: 'manageList',
-            path: '/zhaoshang-manage/manageList',
-            component: './V1_Zhaoshang/Manage/ManageList',
-          },
-        ],
       },
       {
         path: '/zhaoshang-promotion',

@@ -102,6 +102,7 @@ class PromotionDetail extends Component {
         </Card>
         <Card title="推广排期" bordered={false}>
           <Table
+            rowKey={item => item.id}
             style={{ marginBottom: 16 }}
             pagination={false}
             loading={loading}

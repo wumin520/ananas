@@ -31,10 +31,11 @@ class OrderDetail extends Component {
     const productInfo = proDetailData.product_info;
     const shopInfo = proDetailData.shop_info;
     const content = <div />;
+    const orderId = `订单编号： ${orderInfo.p_order_id}`;
     return (
       <PageHeaderWrapper title="订单详情" loading={loading} content={content}>
         <Card bordered={false} style={{ marginBottom: 26 }}>
-          <DescriptionList size="large" title="订单编号：" style={{ marginBottom: 32 }}>
+          <DescriptionList size="large" title={orderId} style={{ marginBottom: 32 }}>
             <Description term="订单状态">
               <Badge status={orderInfo.state_color} text={orderInfo.state_desc} />
             </Description>

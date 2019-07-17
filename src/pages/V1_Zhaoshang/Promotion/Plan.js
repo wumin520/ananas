@@ -105,7 +105,7 @@ class Plan extends PureComponent {
         },
       },
     ];
-    this.qf = props.location.query.qf !== undefined;
+    this.tableType = props.location.query.tableType !== undefined;
   }
 
   state = {
@@ -117,12 +117,12 @@ class Plan extends PureComponent {
   componentDidMount() {
     const { location } = this.props;
     params.type = 10;
-    if (location.query.qf !== undefined) {
+    if (location.query.tableType === 2) {
       params.type = '30,31';
       this.setState({
         tabActiveKey: 'quanfen',
       });
-    } else if (location.query.deq) {
+    } else if (location.query.tableType === 1) {
       params.type = 20;
       this.setState({
         tabActiveKey: 'deq',
@@ -202,15 +202,14 @@ class Plan extends PureComponent {
     this.setState({
       tabActiveKey: key,
     });
-    this.deq = 0;
-    this.qf = undefined;
+    this.tableType = 0;
     if (key === 'haoping') {
       params.type = 10;
     } else if (key === 'quanfen') {
-      this.qf = 1;
+      this.tableType = 1;
       params.type = '30,31';
     } else if (key === 'deq') {
-      this.deq = 1;
+      this.tableType = 2;
       params.type = 20;
     }
     params.page = 1;
@@ -326,16 +325,17 @@ class Plan extends PureComponent {
       },
     ];
 
-    const extraContent = this.qf ? (
-      <div className={styles.extraContent}>
-        <RadioGroup onChange={this.radioGroupOnChange} defaultValue="30">
-          <RadioButton value="30">商品收藏</RadioButton>
-          <RadioButton value="31">店铺收藏</RadioButton>
-        </RadioGroup>
-      </div>
-    ) : (
-      ''
-    );
+    const extraContent =
+      tabActiveKey === 'quanfen' ? (
+        <div className={styles.extraContent}>
+          <RadioGroup onChange={this.radioGroupOnChange} defaultValue="30">
+            <RadioButton value="30">商品收藏</RadioButton>
+            <RadioButton value="31">店铺收藏</RadioButton>
+          </RadioGroup>
+        </div>
+      ) : (
+        ''
+      );
 
     return (
       <PageHeaderWrapper
