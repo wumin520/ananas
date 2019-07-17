@@ -20,8 +20,6 @@ export default {
   'menu.tygj': '通用工具',
   'menu.platform': '推广工具',
   'menu.platform.h5': '移动端网页',
-  'menu.proxyManage': '商家管理',
-  'menu.proxyManage.manageList': '商家列表',
   'menu.proxyPromotion': '商家推广概况',
   'menu.proxyPromotion.plan': '商家推广计划',
   'menu.proxyPromotion.promotionDetail': '推广详情',

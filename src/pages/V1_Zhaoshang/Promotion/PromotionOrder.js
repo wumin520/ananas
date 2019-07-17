@@ -3,7 +3,6 @@ import { connect } from 'dva';
 import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, DatePicker } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import moment from 'moment';
-// import { router } from 'umi';
 import styles from './Plan.less';
 
 const FormItem = Form.Item;
@@ -15,8 +14,8 @@ let params = {
   task_id: 0, // 推广编号
   goods_id: 0, // 商品id
   p_order_id: 0, // 订单编号
-  state: -1, // 状态-1 全部 0待支付，1待审核，2进行中，3审核驳回 4 清算中 5 已结算
-  type: 10, // 推广类型 全部 10试用 20-高佣
+  state: -1,
+  type: 10,
   ordered_time_for: '',
   ordered_time_to: '',
 };
@@ -102,7 +101,6 @@ class PromotionOrder extends PureComponent {
         },
       },
     ];
-    this.qf = props.location.query.qf !== undefined;
   }
 
   componentDidMount() {
@@ -175,20 +173,15 @@ class PromotionOrder extends PureComponent {
     this.getOrderData(params);
   };
 
-  handleTabChange = (key, val) => {
-    console.log('handleTabChange', key, val);
+  handleTabChange = key => {
     this.setState({
       tabActiveKey: key,
     });
-    this.deq = 0;
-    this.qf = undefined;
     if (key === 'haoping') {
       params.type = 10;
     } else if (key === 'quanfen') {
-      this.qf = 1;
       params.type = '30,31';
     } else if (key === 'deq') {
-      this.deq = 1;
       params.type = 20;
     }
     params.page = 1;

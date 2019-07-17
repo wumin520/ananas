@@ -17,8 +17,8 @@ let params = {
   sh_id: 0,
   goods_id: 0, // 商品id
   mall_id: 0, // 店铺编号
-  state: -1, // 状态-1 全部 0待支付，1待审核，2进行中，3审核驳回 4 清算中 5 已结算
-  type: 10, // 推广类型 全部 10-免单全返 20-大额券推广 30-圈粉-收藏商品 31-圈粉-收藏店铺 注意：多个“,”隔开，eg:圈粉全部：30,31 默认：10
+  state: -1,
+  type: 10,
   start_time: '',
   end_time: '',
 };
@@ -105,7 +105,6 @@ class Plan extends PureComponent {
         },
       },
     ];
-    this.tableType = props.location.query.tableType !== undefined;
   }
 
   state = {
@@ -202,14 +201,9 @@ class Plan extends PureComponent {
     this.setState({
       tabActiveKey: key,
     });
-    this.tableType = 0;
     if (key === 'haoping') {
       params.type = 10;
-    } else if (key === 'quanfen') {
-      this.tableType = 1;
-      params.type = '30,31';
     } else if (key === 'deq') {
-      this.tableType = 2;
       params.type = 20;
     }
     params.page = 1;
@@ -254,10 +248,9 @@ class Plan extends PureComponent {
               {getFieldDecorator('mall_id')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
-          {/** 筛选店铺/商品 字段都为 goods_id, 后端查询两者已兼容 */}
           <Col md={5} sm={24}>
             <FormItem label="商品编号">
-              {getFieldDecorator('goods_id')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('goods_id')(<Input placeholder="请输入拼多多商品id" />)}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
