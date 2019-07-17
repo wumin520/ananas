@@ -11,7 +11,8 @@ p {
 
 .content0 {
   position: relative;
-  padding: 208px 0 288px;
+  height: 704px;
+  padding-top: 220px;
   text-align: center;
   background: url('https://cdn.youlianyc.com/image/static/2d88eb9e6b7b73ab5c019d568ee3c9aea32571ea.jpg')
     no-repeat;
@@ -46,6 +47,66 @@ p {
     font-size: 24px;
     font-family: PingFang-SC-Regular, sans-serif;
     line-height: 32px;
+  }
+}
+
+.content0_1 {
+  position: relative;
+  height: 704px;
+  padding-top: 108px;
+
+  .mask {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(248, 87, 166, 1) 0%, rgba(255, 88, 88, 1) 100%);
+  }
+
+  .act_con {
+    position: relative;
+    z-index: 2;
+    width: 1128px;
+    margin: 0 auto;
+
+    .act_block {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgba(255, 255, 255, 1);
+      font-weight: 100;
+      font-size: 48px;
+      font-family: PingFangSC-Thin, sans-serif;
+
+      .act_right {
+        .act_right_img {
+          display: inline-block;
+          width: 675px;
+          height: 480px;
+        }
+      }
+
+      .desc {
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 400;
+        font-size: 20px;
+        font-family: PingFangSC-Regular, sans-serif;
+        line-height: 40px;
+      }
+      .btn {
+        display: inline-block;
+        box-sizing: content-box;
+        width: 192px;
+        height: 40px;
+        color: #eb2f96;
+        font-size: 16px;
+        line-height: 40px;
+        text-align: center;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 4px;
+      }
+    }
   }
 }
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { setInviteCode } from '@/utils/authority';
 import router from 'umi/router';
-import { Button } from 'antd';
+import { Button, Carousel } from 'antd';
+import Link from 'umi/link';
 import styles from './index.less';
 
 import Footer from '../components/Footer';
@@ -123,11 +124,41 @@ class Index extends Component {
         <NavOfficial bgColor={bgColor} opacity={opacity} />
 
         {/* {con0} */}
-        <div className={styles.content0}>
+        {/* <div className={styles.content0}>
           <div className={styles.mask} />
           <p className={styles.p1}>赋能百万推手 打造极致爆款</p>
           <p className={styles.p2}>社群导购 + 内容服务 + 数字化营销 = 超多客</p>
-        </div>
+        </div> */}
+        <Carousel autoplay>
+          <div className={styles.content0}>
+            <div className={styles.mask} />
+            <p className={styles.p1}>赋能百万推手 打造极致爆款</p>
+            <p className={styles.p2}>社群导购 + 内容服务 + 数字化营销 = 超多客</p>
+          </div>
+          <div className={styles.content0_1}>
+            <div className={styles.mask} />
+            <div className={styles.act_con}>
+              <div className={styles.act_block}>
+                <div className={styles.act_left}>
+                  <p>充值就送 惊喜多多</p>
+                  <p className={styles.desc}>2019新老用户回馈充值返现活动</p>
+                  <p className={styles.desc}>充值最高送3000元，充得多送得多！</p>
+                  <Link className={styles.btn} to="/CapitalManage/Recharge">
+                    查看详情
+                  </Link>
+                </div>
+                <div className={styles.act_right}>
+                  <img
+                    className={styles.act_right_img}
+                    src="https://cdn.youlianyc.com/image/static/0226b6c564a73722ac1e1251173c3e39f36571a7.jpg"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </Carousel>
+
         {/* {con1} */}
         <div className={`${styles.content_block} ${styles.bgf6f7f8}`}>
           <div className={`${styles.content1} ${styles.content_center}`}>

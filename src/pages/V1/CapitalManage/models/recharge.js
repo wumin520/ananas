@@ -1,4 +1,4 @@
-import { rechargeSubmit, rechargeGetQrcode, rechargeCheck } from '@/services/api';
+import { rechargeSubmit, rechargeGetQrcode, rechargeCheck, rechargeActivity } from '@/services/api';
 import { routerRedux } from 'dva/router';
 
 export default {
@@ -11,6 +11,9 @@ export default {
       imgCode: '',
     },
     state: '',
+    rechargeActivity: {
+      reward_list: [],
+    },
   },
 
   effects: {
@@ -33,6 +36,18 @@ export default {
           type: 'saveData',
           payload: {
             qrcodeInfo: res.payload,
+          },
+        });
+      }
+      return res;
+    },
+    *rechargeActivity({ payload }, { call, put }) {
+      const res = yield call(rechargeActivity, payload);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'saveData',
+          payload: {
+            rechargeActivity: res.payload,
           },
         });
       }
