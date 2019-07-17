@@ -116,12 +116,12 @@ class Plan extends PureComponent {
   componentDidMount() {
     const { location } = this.props;
     params.type = 10;
-    if (location.query.tableType === 2) {
+    if (location.query.tableType === '1') {
       params.type = '30,31';
       this.setState({
         tabActiveKey: 'quanfen',
       });
-    } else if (location.query.tableType === 1) {
+    } else if (location.query.tableType === '2') {
       params.type = 20;
       this.setState({
         tabActiveKey: 'deq',
@@ -232,8 +232,9 @@ class Plan extends PureComponent {
     const {
       form: { getFieldDecorator },
     } = this.props;
-    const { listData } = this.props;
+    const { listData, location } = this.props;
     const stateSelect = listData.state_select;
+    const shopCode = location.query.shop_code;
 
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
@@ -245,7 +246,9 @@ class Plan extends PureComponent {
           </Col>
           <Col md={5} sm={24}>
             <FormItem label="店铺编号">
-              {getFieldDecorator('mall_id')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('mall_id', { initialValue: shopCode })(
+                <Input placeholder="请输入" />
+              )}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
