@@ -237,8 +237,8 @@ class CapitalDetail extends PureComponent {
                 <Info
                   title="可用余额"
                   value={assetData.asset_info.balance}
-                  linkName="提现"
-                  url="/CapitalManage/withdraw"
+                  linkName=""
+                  url=""
                   bordered
                 />
               </Col>
