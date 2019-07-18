@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { setInviteCode } from '@/utils/authority';
 import router from 'umi/router';
-import { Button, Carousel } from 'antd';
+import { Button, Carousel, Icon } from 'antd';
 import Link from 'umi/link';
 import styles from './index.less';
 
@@ -114,8 +114,27 @@ class Index extends Component {
     router.push(path);
   };
 
+  next = () => {
+    this.setRef.slick.slickNext();
+  };
+
+  prev = () => {
+    this.setRef.slick.slickPrev();
+  };
+
+  setRef = ref => {
+    this.setRef = ref;
+  };
+
   render() {
     const { bgColor, opacity } = this.state;
+    const bannersSetting = {
+      dots: true,
+      lazyLoad: true,
+      autoplay: true,
+      autoplaySpeed: 5000, // 轮播间隔时长
+      speed: 800, // 切换速度
+    };
 
     return (
       <div className={styles.main}>
@@ -124,40 +143,49 @@ class Index extends Component {
         <NavOfficial bgColor={bgColor} opacity={opacity} />
 
         {/* {con0} */}
-        {/* <div className={styles.content0}>
-          <div className={styles.mask} />
-          <p className={styles.p1}>赋能百万推手 打造极致爆款</p>
-          <p className={styles.p2}>社群导购 + 内容服务 + 数字化营销 = 超多客</p>
-        </div> */}
-        <Carousel autoplay>
-          <div className={styles.content0}>
-            <div className={styles.mask} />
-            <p className={styles.p1}>赋能百万推手 打造极致爆款</p>
-            <p className={styles.p2}>社群导购 + 内容服务 + 数字化营销 = 超多客</p>
-          </div>
-          <div className={styles.content0_1}>
-            <div className={styles.mask} />
-            <div className={styles.act_con}>
-              <div className={styles.act_block}>
-                <div className={styles.act_left}>
-                  <p>充值就送 惊喜多多</p>
-                  <p className={styles.desc}>2019新老用户回馈充值返现活动</p>
-                  <p className={styles.desc}>充值最高送3000元，充得多送得多！</p>
-                  <Link className={styles.btn} to="/CapitalManage/Recharge">
-                    查看详情
-                  </Link>
-                </div>
-                <div className={styles.act_right}>
-                  <img
-                    className={styles.act_right_img}
-                    src="https://cdn.youlianyc.com/image/static/0226b6c564a73722ac1e1251173c3e39f36571a7.jpg"
-                    alt=""
-                  />
+        <div className={styles.banners}>
+          <Carousel {...bannersSetting} ref={this.setRef}>
+            <div className={styles.content0}>
+              <div className={styles.mask} />
+              <p className={styles.p1}>赋能百万推手 打造极致爆款</p>
+              <p className={styles.p2}>社群导购 + 内容服务 + 数字化营销 = 超多客</p>
+            </div>
+            <div className={styles.content0_1}>
+              <div className={styles.mask} />
+              <div className={styles.act_con}>
+                <div className={styles.act_block}>
+                  <div className={styles.act_left}>
+                    <p>充值就送 惊喜多多</p>
+                    <p className={styles.desc}>2019新老用户回馈充值返现活动</p>
+                    <p className={styles.desc}>充值最高送3000元，充得多送得多！</p>
+                    <Link className={styles.btn} to="/public/rechargeActivity">
+                      查看详情
+                    </Link>
+                  </div>
+                  <div className={styles.act_right}>
+                    <img
+                      className={styles.act_right_img}
+                      src="https://cdn.youlianyc.com/image/static/0226b6c564a73722ac1e1251173c3e39f36571a7.jpg"
+                      alt=""
+                    />
+                  </div>
                 </div>
               </div>
             </div>
+          </Carousel>
+          <div className={styles.icon_block}>
+            <Icon
+              type="left"
+              className={`${styles.icon} ${styles.icon_prev}`}
+              onClick={this.prev}
+            />
+            <Icon
+              type="right"
+              className={`${styles.icon} ${styles.icon_next}`}
+              onClick={this.next}
+            />
           </div>
-        </Carousel>
+        </div>
 
         {/* {con1} */}
         <div className={`${styles.content_block} ${styles.bgf6f7f8}`}>

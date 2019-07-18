@@ -9,6 +9,37 @@ p {
   margin-bottom: 0;
 }
 
+.banners {
+  &:hover {
+    .icon_block {
+      position: relative;
+      top: -360px;
+      display: block;
+      width: 1128px;
+      margin: 0 auto;
+
+      .icon {
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 35px;
+        line-height: 55px;
+        background: rgba(0, 0, 0, 0.25);
+      }
+      .icon_prev {
+        left: 0;
+      }
+      .icon_next {
+        right: 0;
+      }
+    }
+  }
+  .icon_block {
+    display: none;
+  }
+}
+
 .content0 {
   position: relative;
   height: 704px;
