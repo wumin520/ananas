@@ -95,7 +95,7 @@ export default {
     },
 
     *logout(_, { call, put }) {
-      const isZs = _.payload.zs;
+      const isZs = _.payload && _.payload.zs;
       const logoutApi = isZs ? zsSignout : signout;
       const response = yield call(logoutApi);
       if (response && response.status === 'ok') {
