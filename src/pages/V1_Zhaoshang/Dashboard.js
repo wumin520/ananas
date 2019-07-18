@@ -154,7 +154,7 @@ class Dashboard extends Component {
       const item = cdata[i];
       visitData.push({
         x: `${item.day}(${item.week_day})`,
-        y: item.expect_income,
+        y: parseInt(item.expect_income, 10),
       });
     }
     console.log('cdata -> ', cdata, visitData);
@@ -178,7 +178,7 @@ class Dashboard extends Component {
       label: {
         formatter: val => {
           console.log('yAxis -> ', val);
-          return val;
+          return parseInt(val, 10);
         },
       },
       grid: {
@@ -235,7 +235,7 @@ class Dashboard extends Component {
                           line={true}
                           height={180}
                           data={visitData}
-                          chartPadding={[15, 25, 40, 30]}
+                          chartPadding={[15, 25, 40, 45]}
                           xAxis={xAxis}
                           yAxis={yAxis}
                         />
