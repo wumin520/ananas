@@ -70,9 +70,7 @@ const defaultColumns = [
     title: '操作',
     render: record => (
       <Fragment>
-        <Link to={`/zhaoshang-promotion/promotionDetail?task_plan_id=${record.task_plan_id}`}>
-          查看
-        </Link>
+        <Link to={`/work/promotion/promotionDetail?task_plan_id=${record.task_plan_id}`}>查看</Link>
         {/* <Divider type="vertical" /> */}
         {/* <Link to={`/order/Index?task_id=${record.task_id}`}>订单明细</Link> */}
       </Fragment>
@@ -138,9 +136,7 @@ const qfColumns = [
     title: '操作',
     render: record => (
       <Fragment>
-        <Link to={`/zhaoshang-promotion/promotionDetail?task_plan_id=${record.task_plan_id}`}>
-          查看
-        </Link>
+        <Link to={`/work/promotion/promotionDetail?task_plan_id=${record.task_plan_id}`}>查看</Link>
         {/* <Divider type="vertical" />
         <Link to={`/order/qf?task_id=${record.task_id}`}>推广效果</Link> */}
       </Fragment>
@@ -206,9 +202,7 @@ const deqColumns = [
     title: '操作',
     render: record => (
       <Fragment>
-        <Link to={`/zhaoshang-promotion/promotionDetail?task_plan_id=${record.task_plan_id}`}>
-          查看
-        </Link>
+        <Link to={`/work/promotion/promotionDetail?task_plan_id=${record.task_plan_id}`}>查看</Link>
         {/* <Divider type="vertical" /> */}
         {/* <Link to={`/order/Index?task_id=${record.task_id}&deq=1`}>推广效果</Link> */}
       </Fragment>
@@ -237,7 +231,7 @@ const todayPlan = memo(({ data, loading, radioOnChange, tableType }) => {
       loading={loading}
       bordered={false}
       title="今日推广中"
-      extra={<Link to={`/zhaoshang-promotion/plan?tableType=${tableType}`}>{'全部推广>'}</Link>}
+      extra={<Link to={`/work/promotion/plan?tableType=${tableType}`}>{'全部推广>'}</Link>}
       style={{ marginTop: 24 }}
     >
       {extraContent}

@@ -41,6 +41,29 @@ export default [
       },
     ],
   },
+  // 招商 user
+  {
+    path: '/work/user',
+    component: '../layouts/UserLayout',
+    routes: [
+      // 代理招商
+      {
+        path: '/work/user',
+        redirect: '/work/user/login',
+      },
+      { path: '/work/user/login', name: 'login', component: './V1_Zhaoshang/User/Login' },
+      {
+        path: '/work/user/register',
+        name: 'register',
+        component: './V1_Zhaoshang/User/Register',
+      },
+      {
+        path: '/work/user/register-result',
+        name: 'register.result',
+        component: './V1_Zhaoshang/User/RegisterResult',
+      },
+    ],
+  },
   // public
   {
     path: '/market',
@@ -420,111 +443,98 @@ export default [
       },
       // 招商代理中心
       {
-        path: '/zhaoshang',
+        path: '/work',
+        name: 'work',
+        icon: 'dashboard',
+        hideInMenu: true,
+        authority: ['zhaoshang'],
+        redirect: '/work/dashboard',
+      },
+      {
+        path: '/work/dashboard',
         name: 'dashboard',
         icon: 'dashboard',
         component: './V1_Zhaoshang/Dashboard',
         authority: ['zhaoshang'],
       },
       {
-        path: '/zhaoshang-businesses',
+        path: '/work/businesses',
         name: 'businessesManage',
         icon: 'line-chart',
         authority: ['zhaoshang'],
         routes: [
           {
+            path: '/work/businesses/',
+            redirect: '/work/businesses/list',
+          },
+          {
             name: 'list',
-            path: '/zhaoshang-businesses/list',
+            path: '/work/businesses/list',
             component: './V1_Zhaoshang/Businesses/List',
           },
         ],
       },
       {
-        path: '/zhaoshang-promotion',
+        path: '/work/promotion/',
         name: 'proxyPromotion',
         icon: 'mail',
         authority: ['zhaoshang'],
         routes: [
           {
             name: 'plan',
-            path: '/zhaoshang-promotion/plan',
+            path: '/work/promotion/plan',
             component: './V1_Zhaoshang/Promotion/Plan',
           },
           {
-            path: '/zhaoshang-promotion/promotionDetail',
+            path: '/work/promotion/promotionDetail',
             name: 'promotionDetail',
             component: './V1_Zhaoshang/Promotion/PromotionDetail',
             hideInMenu: true,
           },
           {
-            path: '/zhaoshang-promotion/promotionOrder',
+            path: '/work/promotion/promotionOrder',
             name: 'promotionOrder',
             component: './V1_Zhaoshang/Promotion/PromotionOrder',
           },
           {
-            path: '/zhaoshang-promotion/orderDetail',
+            path: '/work/promotion/orderDetail',
             name: 'orderDetail',
             component: './V1_Zhaoshang/Promotion/OrderDetail',
             hideInMenu: true,
           },
           {
-            path: '/zhaoshang-promotion/collect',
+            path: '/work/promotion/collect',
             name: 'collect',
             component: './V1_Zhaoshang/Promotion/Collect',
           },
         ],
       },
       {
-        path: '/zhaoshang-capital',
+        path: '/work/capital/',
         name: 'proxyCapital',
         icon: 'profile',
         authority: ['zhaoshang'],
         routes: [
           {
             name: 'capital',
-            path: '/zhaoshang-capital/capital',
+            path: '/work/capital/capital',
             component: './V1_Zhaoshang/Capital/Capital',
           },
           {
             name: 'withdraw',
-            path: '/zhaoshang-capital/withdraw',
+            path: '/work/capital/withdraw',
             component: './V1_Zhaoshang/Capital/Withdraw',
           },
           {
             name: 'payee',
-            path: '/zhaoshang-capital/payee',
+            path: '/work/capital/payee',
             component: './V1_Zhaoshang/Capital/Payee',
           },
           {
             name: 'withdrawSuccess',
-            path: '/zhaoshang-capital/withdrawSuccess',
+            path: '/work/capital/withdrawSuccess',
             hideInMenu: true,
             component: './V1_Zhaoshang/Capital/WithdrawSuccess',
-          },
-        ],
-      },
-      {
-        path: '/profile',
-        name: 'profile',
-        icon: 'profile',
-        hideInMenu: true,
-        routes: [
-          // profile
-          {
-            path: '/profile/basic',
-            name: 'basic',
-            component: './Profile/BasicProfile',
-          },
-          {
-            path: '/profile/basic/:id',
-            name: 'basic',
-            component: './Profile/BasicProfile',
-          },
-          {
-            path: '/profile/advanced',
-            name: 'advanced',
-            authority: ['admin'],
-            component: './Profile/AdvancedProfile',
           },
         ],
       },
@@ -570,88 +580,6 @@ export default [
             name: 'trigger',
             hideInMenu: true,
             component: './Exception/TriggerException',
-          },
-        ],
-      },
-      {
-        name: 'account',
-        icon: 'user',
-        path: '/account',
-        hideInMenu: true,
-        routes: [
-          {
-            path: '/account/center',
-            name: 'center',
-            component: './Account/Center/Center',
-            routes: [
-              {
-                path: '/account/center',
-                redirect: '/account/center/articles',
-              },
-              {
-                path: '/account/center/articles',
-                component: './Account/Center/Articles',
-              },
-              {
-                path: '/account/center/applications',
-                component: './Account/Center/Applications',
-              },
-              {
-                path: '/account/center/projects',
-                component: './Account/Center/Projects',
-              },
-            ],
-          },
-          {
-            path: '/account/settings',
-            name: 'settings',
-            component: './Account/Settings/Info',
-            routes: [
-              {
-                path: '/account/settings',
-                redirect: '/account/settings/base',
-              },
-              {
-                path: '/account/settings/base',
-                component: './Account/Settings/BaseView',
-              },
-              {
-                path: '/account/settings/security',
-                component: './Account/Settings/SecurityView',
-              },
-              {
-                path: '/account/settings/binding',
-                component: './Account/Settings/BindingView',
-              },
-              {
-                path: '/account/settings/notification',
-                component: './Account/Settings/NotificationView',
-              },
-            ],
-          },
-        ],
-      },
-      //  editor
-      {
-        name: 'editor',
-        icon: 'highlight',
-        path: '/editor',
-        hideInMenu: true,
-        routes: [
-          {
-            path: '/editor/flow',
-            name: 'flow',
-            component: './Editor/GGEditor/Flow',
-          },
-          {
-            path: '/editor/mind',
-            name: 'mind',
-            component: './Editor/GGEditor/Mind',
-          },
-          {
-            path: '/editor/koni',
-            name: 'koni',
-            component: './Editor/GGEditor/Koni',
           },
         ],
       },

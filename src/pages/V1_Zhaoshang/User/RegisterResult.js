@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'umi-plugin-react/locale';
 import { Button } from 'antd';
 import Link from 'umi/link';
 import Result from '@/components/Result';
@@ -12,9 +11,9 @@ const actions = (
         <FormattedMessage id="app.register-result.view-mailbox" />
       </Button>
     </a> */}
-    <Link to="/">
+    <Link to="/work">
       <Button size="large" type="primary">
-        <FormattedMessage id="app.register-result.back-home" />
+        返回登录页
       </Button>
     </Link>
   </div>

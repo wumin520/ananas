@@ -78,7 +78,7 @@ export default {
             withdrawSuccessInfo: res.payload,
           },
         });
-        router.push('/zhaoshang-capital/withdrawSuccess');
+        router.push('/work/capital/withdrawSuccess');
       }
     },
     *withdrawAccount({ payload }, { call, put }) {

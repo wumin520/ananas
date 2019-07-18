@@ -48,7 +48,7 @@ class Register extends Component {
     const account = form.getFieldValue('mobile');
     if (register.status === 'ok') {
       router.push({
-        pathname: '/user/zhaoshang-register-result',
+        pathname: '/work/user/register-result',
         state: {
           mobile: account,
           payload: register.payload,
@@ -261,7 +261,7 @@ class Register extends Component {
           </FormItem>
           <FormItem style={{ textAlign: 'center' }}>
             已有超多客账号？
-            <Link to="/User/zhaoshang-login">直接登录</Link>
+            <Link to="/work/User/login">直接登录</Link>
           </FormItem>
         </Form>
       </div>

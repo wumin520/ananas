@@ -58,9 +58,7 @@ export function onRouteChange({ location }) {
       clearTimeout(st);
     }, 0);
   };
-  if (
-    /^\/homePage|fangdan|order|CapitalManage|tuishou|favorites|zhaoshang/.test(location.pathname)
-  ) {
+  if (/^\/homePage|fangdan|order|CapitalManage|tuishou|favorites|work/.test(location.pathname)) {
     sf();
   } else if (adEl) {
     adEl.style.display = 'block';

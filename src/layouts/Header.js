@@ -72,7 +72,7 @@ class HeaderView extends Component {
       dispatch({
         type: 'login/logout',
         payload: {
-          zs: location.pathname.indexOf('zhaoshang') > -1 ? 1 : 0,
+          zs: location.pathname.indexOf('work/') > -1 ? 1 : 0,
         },
       });
     }

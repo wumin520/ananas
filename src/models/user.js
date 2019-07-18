@@ -52,15 +52,14 @@ export default {
       const { payload } = action;
       const role = getAuthority()[0];
       if (
-        window.location.href.indexOf('zhaoshang') > -1 &&
+        window.location.href.indexOf('work/') > -1 &&
         payload.info &&
         payload.info.type === 1 &&
         role !== 'zhaoshang'
       ) {
         setAuthority('zhaoshang');
         window.location.reload();
-      }
-      if (payload.state && payload.ts_state) {
+      } else if (payload.state && payload.ts_state) {
         localStorage.setItem('superUser', 1);
         // 即是推手也是商家
         if (window.location.href.indexOf('tuishou') > -1 && getAuthority()[0] !== 'tuishou') {

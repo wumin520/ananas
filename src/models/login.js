@@ -111,7 +111,7 @@ export default {
         // redirect
         let loginPath = '/user/login';
         if (isZs) {
-          loginPath = '/user/zhaoshang-login';
+          loginPath = '/work/user/login';
         }
         if (window.location.pathname !== loginPath) {
           yield put(

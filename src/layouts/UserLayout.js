@@ -81,13 +81,13 @@ class UserLayout extends Component {
                     {/* eslint-disable */
                     pathname.indexOf('tuishou') > -1
                       ? '推手认证'
-                      : pathname.indexOf('zhaoshang') > -1
+                      : pathname.indexOf('work/') > -1
                       ? '超多客代理系统'
                       : '一站式导购服务'}
                   </span>
                 </Col>
                 <Col span={12}>
-                  {pathname.indexOf('zhaoshang') === -1 ? (
+                  {pathname.indexOf('work/') === -1 ? (
                     <Link to="/web/index">
                       <Button
                         style={{ float: 'right' }}

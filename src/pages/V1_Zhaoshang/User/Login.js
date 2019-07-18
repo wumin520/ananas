@@ -202,7 +202,7 @@ class LoginPage extends Component {
           </Submit>
           <div className={styles.other}>
             还没有超多客账号？
-            <Link to="/user/zhaoshang-register">立即注册</Link>
+            <Link to="/work/user/register">立即注册</Link>
           </div>
         </Login>
       </div>

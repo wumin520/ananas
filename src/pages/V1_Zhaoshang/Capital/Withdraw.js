@@ -67,7 +67,7 @@ class Withdraw extends PureComponent {
       <Fragment>
         <div>
           <span style={{ marginRight: '20px' }}>请设置收款账户</span>
-          <Link to="/zhaoshang-capital/payee">去设置</Link>
+          <Link to="/work/capital/payee">去设置</Link>
         </div>
       </Fragment>
     );

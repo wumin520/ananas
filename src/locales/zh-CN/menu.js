@@ -1,4 +1,5 @@
 export default {
+  'menu.work': '招商代理系统',
   'menu.fangdan': '放单中心',
   'menu.fangdan.index': '我要放单',
   'menu.fangdan.stepform': '试用推广',

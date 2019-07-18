@@ -36,7 +36,7 @@ export default class GlobalHeader extends PureComponent {
           <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
         </span>
         {currentUser.shop_name}，欢迎登录超多客
-        {location.pathname.indexOf('zhaoshang') > -1 ? '招商代理系统' : '放单系统'}
+        {location.pathname.indexOf('work/') > -1 ? '招商代理系统' : '放单系统'}
         <RightContent {...this.props} />
       </div>
     );

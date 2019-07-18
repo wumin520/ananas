@@ -164,7 +164,7 @@ class PromotionOrder extends PureComponent {
   };
 
   goDetail = item => {
-    const path = `/zhaoshang-promotion/orderDetail`;
+    const path = `/work/promotion/orderDetail`;
     window.open(`${path}?order_id=${item.order_id}`);
   };
 

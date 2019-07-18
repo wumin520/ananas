@@ -205,7 +205,7 @@ class Capital extends PureComponent {
                   title="可提现金额(元)"
                   value={assetInfo.balance}
                   linkName="提现"
-                  url="/zhaoshang-capital/withdraw"
+                  url="/work/capital/withdraw"
                   bordered
                 />
               </Col>

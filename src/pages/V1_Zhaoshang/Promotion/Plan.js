@@ -188,7 +188,7 @@ class Plan extends PureComponent {
   };
 
   goDetail = item => {
-    const path = `/zhaoshang-promotion/promotionDetail`;
+    const path = `/work/promotion/promotionDetail`;
     window.open(`${path}?task_plan_id=${item.task_plan_id}`); // 0523 新窗口打开
   };
 

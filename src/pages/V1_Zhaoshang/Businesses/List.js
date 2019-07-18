@@ -92,7 +92,7 @@ class List extends PureComponent {
         width: 120,
         render: item => {
           return (
-            <Link to={`/zhaoshang-promotion/plan?shop_code=${item.shop_code}&sh_id=${item.sh_id}`}>
+            <Link to={`/work/promotion/plan?shop_code=${item.shop_code}&sh_id=${item.sh_id}`}>
               推广记录
             </Link>
           );

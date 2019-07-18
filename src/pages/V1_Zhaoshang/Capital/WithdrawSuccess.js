@@ -19,7 +19,7 @@ class RechargePaySuccess extends PureComponent {
     const { withdrawSuccessInfo } = this.props;
     const { info } = withdrawSuccessInfo;
     const onFinish = () => {
-      router.push('/zhaoshang-capital/capital');
+      router.push('/work/capital/capital');
     };
 
     const actions = (
