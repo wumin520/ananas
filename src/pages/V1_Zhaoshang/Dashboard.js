@@ -99,7 +99,9 @@ class Dashboard extends Component {
               size="large"
               src={currentUser.avatar}
             >
-              {currentUser.info.name.substr(0, 1).toUpperCase()}
+              {currentUser.info &&
+                currentUser.info.name &&
+                currentUser.info.name.substr(0, 1).toUpperCase()}
             </Avatar>
           </div>
           <div className={styles.content}>
