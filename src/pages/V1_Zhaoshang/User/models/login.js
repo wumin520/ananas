@@ -1,6 +1,5 @@
 import { routerRedux } from 'dva/router';
-import { stringify } from 'qs';
-import { login, getCaptcha, zsSignout } from '@/services/zhaoshang_api';
+import { login, getCaptcha } from '@/services/zhaoshang_api';
 import { settleIn } from '@/services/tuishou_api';
 import { setUserToken, setAuthority, setShState } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
@@ -24,7 +23,7 @@ const getRedirectUrl = () => {
   }
   return redirect;
 };
-const homePath = '/web/index';
+const homePath = '/work';
 
 export default {
   namespace: 'zslogin',
@@ -70,32 +69,6 @@ export default {
 
     *getCaptcha({ payload }, { call }) {
       yield call(getCaptcha, payload);
-    },
-
-    *logout(_, { call, put }) {
-      const response = yield call(zsSignout);
-      if (response && response.status === 'ok') {
-        yield put({
-          type: 'changeLoginStatus',
-          payload: {
-            status: false,
-            currentAuthority: 'guest',
-            delToken: 1,
-          },
-        });
-        reloadAuthorized();
-        // redirect
-        if (window.location.pathname !== '/user/login') {
-          yield put(
-            routerRedux.replace({
-              pathname: '/user/login',
-              search: stringify({
-                redirect: window.location.href,
-              }),
-            })
-          );
-        }
-      }
     },
   },
 
