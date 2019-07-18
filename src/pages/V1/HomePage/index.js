@@ -25,7 +25,7 @@ const end_time = `${time} 23:59:59`;
 class Index extends Component {
   state = {
     dataType: 'great_review',
-    isShowPop: 0,
+    isShowPop: 0, // 活动弹框 0 不显示 1 显示
   };
 
   tableType = 0;
@@ -42,7 +42,7 @@ class Index extends Component {
     this.getOrderData();
 
     // storage -> isShowPop -> false 不显示充值活动弹框
-    const isShowPop = getStorage('isShowPop');
+    const isShowPop = getStorage('isShowPop') || '1';
     this.setState({
       isShowPop,
     });
@@ -151,7 +151,6 @@ class Index extends Component {
               alt=""
             />
           </Link>
-          s
           <Icon
             type="close"
             style={{
