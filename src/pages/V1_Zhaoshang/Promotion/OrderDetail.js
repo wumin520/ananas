@@ -57,7 +57,9 @@ class OrderDetail extends Component {
                 </Col>
                 <Col md={18} sm={24} style={{ marginBottom: 32 }}>
                   <Description term="">
-                    <a style={{ fontSize: 16 }}>{productInfo.title}</a>
+                    <a href={productInfo.goods_url} style={{ fontSize: 16 }}>
+                      {productInfo.title}
+                    </a>
                   </Description>
                   <Description term="商品id">{productInfo.goods_id}</Description>
                   <Description term="优惠券">
