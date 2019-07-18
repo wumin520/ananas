@@ -60,7 +60,7 @@ class List extends PureComponent {
         title: '累计放款总额',
         dataIndex: 'total_balance',
         render: val => {
-          return <span>{val ? `￥ ${val}` : '无'}</span>;
+          return <span>{val ? `￥ ${val}` : ''}</span>;
         },
       },
       {

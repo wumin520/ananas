@@ -53,7 +53,7 @@ class BasicLayout extends React.Component {
     dispatch({
       type: 'user/fetchCurrent',
       payload: {
-        zs: location.pathname.indexOf('work/') > -1 ? 1 : 0,
+        zs: location.pathname.indexOf('work') > -1 ? 1 : 0,
       },
     });
     dispatch({

@@ -30,7 +30,7 @@ export default {
       });
     },
     *fetchCurrent(_, { call, put }) {
-      const queryUserInfo = _.payload.zs === 1 ? accountInfo : queryCurrent;
+      const queryUserInfo = _.payload && _.payload.zs === 1 ? accountInfo : queryCurrent;
       const response = yield call(queryUserInfo);
       if (response.status === 'ok') {
         yield put({

@@ -29,6 +29,7 @@ function AuthComponent({ children, location, routerData }) {
     });
     return authorities;
   };
+
   /* eslint-disable */
   return (
     <Authorized

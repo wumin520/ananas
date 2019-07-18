@@ -195,7 +195,9 @@ export default class GlobalHeaderRight extends PureComponent {
             showViewMore
           />
         </NoticeIcon> */}
-        {location.pathname.indexOf('work/') === -1 && currentUser.bd_info.nickname ? (
+        {location.pathname.indexOf('work/') === -1 &&
+        currentUser.bd_info &&
+        currentUser.bd_info.nickname ? (
           <Popover content={content} trigger="hover">
             <Icon type="message" /> 联系运营
           </Popover>

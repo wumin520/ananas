@@ -35,7 +35,7 @@ export default class GlobalHeader extends PureComponent {
         <span className={styles.trigger} onClick={this.toggle}>
           <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
         </span>
-        {currentUser.shop_name}，欢迎登录超多客
+        {currentUser.shop_name || (currentUser.info && currentUser.info.name)}，欢迎登录超多客
         {location.pathname.indexOf('work/') > -1 ? '招商代理系统' : '放单系统'}
         <RightContent {...this.props} />
       </div>

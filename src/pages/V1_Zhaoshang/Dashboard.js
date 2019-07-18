@@ -99,7 +99,7 @@ class Dashboard extends Component {
               size="large"
               src={currentUser.avatar}
             >
-              代
+              {currentUser.info.name.substr(0, 1).toUpperCase()}
             </Avatar>
           </div>
           <div className={styles.content}>
@@ -126,7 +126,7 @@ class Dashboard extends Component {
 
     const qrcodePop = (
       <div className={styles.qrcodePop}>
-        <div>打开微信扫描二维码</div>
+        <div>扫一扫添加运营企业微信</div>
         <img src={bd_info.qrcode} />
       </div>
     );
