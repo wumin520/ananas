@@ -1,6 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { stringify } from 'qs';
 import { login, getCaptcha, signout, autoLogin } from '@/services/api';
+import { zsSignout } from '@/services/zhaoshang_api';
 import { settleIn } from '@/services/tuishou_api';
 import { setUserToken, setAuthority, setShState } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
@@ -94,7 +95,9 @@ export default {
     },
 
     *logout(_, { call, put }) {
-      const response = yield call(signout);
+      const isZs = _.payload.zs;
+      const logoutApi = isZs ? zsSignout : signout;
+      const response = yield call(logoutApi);
       if (response && response.status === 'ok') {
         yield put({
           type: 'changeLoginStatus',
@@ -106,10 +109,14 @@ export default {
         });
         reloadAuthorized();
         // redirect
-        if (window.location.pathname !== '/user/login') {
+        let loginPath = '/user/login';
+        if (isZs) {
+          loginPath = '/user/zhaoshang-login';
+        }
+        if (window.location.pathname !== loginPath) {
           yield put(
             routerRedux.replace({
-              pathname: '/user/login',
+              pathname: loginPath,
               search: stringify({
                 redirect: window.location.href,
               }),

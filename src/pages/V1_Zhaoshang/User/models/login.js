@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { stringify } from 'qs';
-import { login, getCaptcha, signout } from '@/services/zhaoshang_api';
+import { login, getCaptcha, zsSignout } from '@/services/zhaoshang_api';
 import { settleIn } from '@/services/tuishou_api';
 import { setUserToken, setAuthority, setShState } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
@@ -73,7 +73,7 @@ export default {
     },
 
     *logout(_, { call, put }) {
-      const response = yield call(signout);
+      const response = yield call(zsSignout);
       if (response && response.status === 'ok') {
         yield put({
           type: 'changeLoginStatus',

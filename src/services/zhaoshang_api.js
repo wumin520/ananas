@@ -44,7 +44,7 @@ export async function signup(params) {
   return postData(`sign_up`, params);
 }
 // 登出
-export async function signout(params) {
+export async function zsSignout(params) {
   return postData(`sign_out`, params);
 }
 // sms code

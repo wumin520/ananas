@@ -47,10 +47,14 @@ class BasicLayout extends React.Component {
   componentDidMount() {
     const {
       dispatch,
+      location,
       route: { routes, path, authority },
     } = this.props;
     dispatch({
       type: 'user/fetchCurrent',
+      payload: {
+        zs: location.pathname.indexOf('zhaoshang') > -1 ? 1 : 0,
+      },
     });
     dispatch({
       type: 'setting/getSetting',
