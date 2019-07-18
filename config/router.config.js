@@ -429,7 +429,7 @@ export default [
       {
         path: '/zhaoshang-businesses',
         name: 'businessesManage',
-        icon: 'dashboard',
+        icon: 'line-chart',
         authority: ['zhaoshang'],
         routes: [
           {
@@ -442,7 +442,7 @@ export default [
       {
         path: '/zhaoshang-promotion',
         name: 'proxyPromotion',
-        icon: 'profile',
+        icon: 'mail',
         authority: ['zhaoshang'],
         routes: [
           {
