@@ -56,7 +56,6 @@ class RechargeActivity extends Component {
           <Link className={`${styles.btn_toRecharge}`} to="/CapitalManage/Recharge">
             立即充值
           </Link>
-          <hr />
           <div className={styles.attention}>
             <div className={styles.title}>温馨提示</div>
             <div className={styles.desc}>

@@ -1,6 +1,11 @@
 @import '~antd/lib/style/themes/default.less';
 @import '~@/utils/utils.less';
 
+@font-face {
+  font-family: 'DINMittelschriftStd';
+  src: url('https://cdn.youlianyc.com/m/DINMittelschriftStd.ttf');
+}
+
 .recharge_block {
   overflow: hidden;
 
@@ -48,7 +53,7 @@
     line-height: 40px;
   }
   .rechargeAct_desc2 {
-    color: rgba(0, 0, 0, 0.45);
+    color: rgba(56, 158, 13, 1);
   }
 
   .act_list_block {
@@ -84,6 +89,8 @@
           color: #faad14;
 
           .reward {
+            display: inline-block;
+            margin: 15px 4px 0;
             color: #fa541c;
             font-weight: bold;
             font-size: 45px;
@@ -92,6 +99,7 @@
         }
         .btn {
           margin: 16px 16px 24px;
+          padding: 4px 0;
           color: #fff;
           background: #faad14;
           border-radius: 32px;
@@ -117,9 +125,11 @@
   }
 
   .attention {
-    margin: 32px 0 120px;
+    margin: 0 0 120px;
+    padding-top: 32px;
     color: rgba(0, 0, 0, 0.45);
     font-size: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.09);
 
     .title {
       margin-bottom: 16px;

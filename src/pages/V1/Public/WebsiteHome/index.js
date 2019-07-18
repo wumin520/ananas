@@ -133,7 +133,7 @@ class Index extends Component {
       lazyLoad: true,
       autoplay: true,
       autoplaySpeed: 5000, // 轮播间隔时长
-      speed: 800, // 切换速度
+      speed: 1000, // 切换速度
     };
 
     return (
