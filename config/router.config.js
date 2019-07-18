@@ -74,6 +74,11 @@ export default [
         name: 'favorites',
         component: './V1/Public/Favorites/Favorites',
       },
+      {
+        path: '/public/rechargeActivity',
+        name: 'rechargeActivity',
+        component: './V1/Public/RechargeActivity',
+      },
     ],
   },
   {
@@ -314,6 +319,7 @@ export default [
           {
             path: '/CapitalManage/Withdraw',
             name: 'withdraw',
+            hideInMenu: true, // 190716 隐藏放单中心提现页面
             component: './V1/CapitalManage/Withdraw',
           },
           {

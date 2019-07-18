@@ -1,0 +1,137 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/utils/utils.less';
+
+.recharge_block {
+  overflow: hidden;
+
+  .recharge_top {
+    width: 100%;
+    height: 400px;
+    margin-top: 64px;
+    overflow: hidden;
+    background: #95de64;
+
+    .ms_banner {
+      width: 1200px;
+      height: 400px;
+      margin: 0 auto;
+      font-size: 0;
+      background: url(https://cdn.youlianyc.com/image/static/8dfdc8949589435caeeca186a99368c5cdab8992.jpg)
+        top center no-repeat;
+    }
+  }
+}
+
+.rechargeAct_block {
+  width: 1200px;
+  margin: 0 auto;
+
+  .rechargeAct_title {
+    display: inline-block;
+    width: 180px;
+    height: 40px;
+    margin: 80px 0 32px;
+    background: url(https://cdn.youlianyc.com/image/static/aacdf544d991d42099dda03d15910357f4c7044d.jpg)
+      no-repeat;
+  }
+
+  .rechargeAct_title2 {
+    background: url(https://cdn.youlianyc.com/image/static/9e05eb806fc8b3c57f382b72810b6bdcbea428a8.jpg)
+      no-repeat;
+  }
+
+  .rechargeAct_desc {
+    color: rgba(56, 158, 13, 1);
+    font-weight: 400;
+    font-size: 20px;
+    font-family: PingFangSC-Regular, sans-serif;
+    line-height: 40px;
+  }
+  .rechargeAct_desc2 {
+    color: rgba(0, 0, 0, 0.45);
+  }
+
+  .act_list_block {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 64px;
+    font-weight: 500;
+    font-size: 24px;
+    font-family: PingFang-SC-Medium, sans-serif;
+    line-height: 32px;
+    text-align: center;
+
+    .act_item {
+      margin-right: 32px;
+      background: linear-gradient(180deg, rgba(255, 128, 8, 1) 0%, rgba(255, 200, 55, 1) 100%);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+
+      .title {
+        margin: 16px 20px;
+        color: #fff;
+      }
+
+      .reward_block {
+        margin: 0 16px 16px;
+        overflow: hidden;
+        background: #fff;
+        border-radius: 12px;
+
+        .reward_money {
+          margin-top: 20px;
+          color: #faad14;
+
+          .reward {
+            color: #fa541c;
+            font-weight: bold;
+            font-size: 45px;
+            font-family: 'DINMittelschriftStd', sans-serif;
+          }
+        }
+        .btn {
+          margin: 16px 16px 24px;
+          color: #fff;
+          background: #faad14;
+          border-radius: 32px;
+        }
+      }
+    }
+  }
+
+  .btn_toRecharge {
+    display: inline-block;
+    box-sizing: content-box;
+    width: 256px;
+    height: 64px;
+    margin: 64px 0;
+    color: #fff;
+    font-weight: 500;
+    font-size: 24px;
+    font-family: PingFangSC-Medium, sans-serif;
+    line-height: 64px;
+    text-align: center;
+    background: rgba(82, 196, 26, 1);
+    border-radius: 4px;
+  }
+
+  .attention {
+    margin: 32px 0 120px;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 20px;
+
+    .title {
+      margin-bottom: 16px;
+      font-weight: 500;
+      font-family: PingFang-SC-Medium, sans-serif;
+    }
+
+    .desc {
+      font-weight: 400;
+      font-size: 20px;
+      font-family: PingFangSC-Regular, sans-serif;
+      line-height: 40px;
+    }
+  }
+}

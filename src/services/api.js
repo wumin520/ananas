@@ -71,6 +71,11 @@ export async function frozenTaskList(params) {
   return request(`/v1/web/account/frozen_task_list?${stringify(params)}`);
 }
 
+// 充值活动
+export async function rechargeActivity() {
+  return request(`/v1/web/activity/recharge`);
+}
+
 // 充值提交
 export async function rechargeSubmit(params) {
   return request('/v1/web/account/recharge_submit', {

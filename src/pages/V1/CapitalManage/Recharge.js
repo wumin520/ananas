@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
-import { Card, Button, Form, Select, Input } from 'antd';
+import { Card, Button, Form, Select, Input, Alert, Icon } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 // import Result from '@/components/Result';
@@ -10,12 +10,26 @@ const { Option } = Select;
 
 const content = <div />;
 
-@connect(({ loading }) => ({
+@connect(({ recharge, loading }) => ({
+  rechargeActivity: recharge.rechargeActivity,
   loading: loading.models.recharge,
 }))
 @Form.create()
 class Recharge extends PureComponent {
-  state = {};
+  state = {
+    curIndex: 0,
+    rechargeMoney: 0,
+    isInput: true, // 是否可自定义金额
+  };
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'recharge/rechargeActivity',
+    }).then(() => {
+      this.selectedAct(0);
+    });
+  }
 
   handleSubmit = e => {
     e.preventDefault();
@@ -35,8 +49,31 @@ class Recharge extends PureComponent {
     });
   };
 
+  // 充值活动
+  selectedAct = index => {
+    const { rechargeActivity } = this.props;
+    if (!rechargeActivity || !rechargeActivity.reward_list) {
+      this.setState({
+        isInput: false,
+      });
+      return;
+    }
+    const rechargeMoney =
+      index === rechargeActivity.reward_list.length
+        ? 0
+        : rechargeActivity.reward_list[index].recharge;
+    const isInput = index !== rechargeActivity.reward_list.length;
+    this.setState({
+      curIndex: index,
+      rechargeMoney,
+      isInput,
+    });
+  };
+
   render() {
-    const { form } = this.props;
+    const { form, rechargeActivity } = this.props;
+    const { curIndex, rechargeMoney, isInput } = this.state;
+    const rewardList = rechargeActivity.reward_list;
     const { getFieldDecorator } = form;
 
     const formItemLayout = {
@@ -66,19 +103,74 @@ class Recharge extends PureComponent {
       <PageHeaderWrapper title="我要充值" content={content}>
         <Card>
           <p className={styles.title}>充值</p>
+          {rechargeActivity.recharge_tip ? (
+            <Alert message={rechargeActivity.recharge_tip} type="info" showIcon />
+          ) : (
+            ''
+          )}
+          {/* 充值活动 */}
+          <div className={styles.recharge_actBlock}>
+            {rewardList &&
+              rewardList.length &&
+              rewardList.map((e, index) => (
+                <div
+                  className={`${styles.re_act_item} ${
+                    curIndex === index ? styles.selectedItem : ''
+                  }`}
+                  onClick={this.selectedAct.bind(this, index)}
+                  key={e.reward}
+                >
+                  <p>冲{e.recharge}</p>
+                  <p className={styles.reward}>送￥{e.reward}奖励金</p>
+                  {curIndex === index ? (
+                    <Fragment>
+                      <span className={styles.triangle_topRight} />
+                      <Icon className={styles.triangle_icon} type="check" />
+                    </Fragment>
+                  ) : (
+                    ''
+                  )}
+                </div>
+              ))}
+            {rewardList ? (
+              <div
+                className={`${styles.re_act_item} ${
+                  curIndex === rewardList.length ? styles.selectedItem : ''
+                }`}
+                onClick={this.selectedAct.bind(this, rewardList.length)}
+              >
+                <p className={styles.autoMoney}>自定义金额</p>
+                {curIndex === rewardList.length ? (
+                  <Fragment>
+                    <span className={styles.triangle_topRight} />
+                    <Icon className={styles.triangle_icon} type="check" />
+                  </Fragment>
+                ) : (
+                  ''
+                )}
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
             <Form.Item label="充值金额">
               {getFieldDecorator('rechargeMoney', {
+                initialValue: rechargeMoney,
                 rules: [
                   {
                     required: true,
                     message: '请输入充值金额!',
                   },
-                  {
-                    validator: this.validateToNextPassword,
-                  },
                 ],
-              })(<Input style={{ width: 200 }} type="number" placeholder="请输入充值金额" />)}{' '}
+              })(
+                <Input
+                  style={{ width: 200 }}
+                  type="number"
+                  placeholder="请输入充值金额"
+                  disabled={isInput}
+                />
+              )}{' '}
               元
             </Form.Item>
             <Form.Item label="支付类型">

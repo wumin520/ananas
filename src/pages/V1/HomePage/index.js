@@ -3,8 +3,10 @@ import { connect } from 'dva';
 import moment from 'moment';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import PageLoading from '@/components/PageLoading';
-import { Row, Col, Alert } from 'antd';
+import { Row, Col, Alert, Icon } from 'antd';
+import { Link } from 'umi';
 import styles from './index.less';
+import { getStorage, setStorage } from '@/utils/authority';
 
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
 const TodayOrder = React.lazy(() => import('./todayOrder'));
@@ -23,6 +25,7 @@ const end_time = `${time} 23:59:59`;
 class Index extends Component {
   state = {
     dataType: 'great_review',
+    isShowPop: 0,
   };
 
   tableType = 0;
@@ -37,6 +40,12 @@ class Index extends Component {
     });
     this.getListData();
     this.getOrderData();
+
+    // storage -> isShowPop -> false 不显示充值活动弹框
+    const isShowPop = getStorage('isShowPop');
+    this.setState({
+      isShowPop,
+    });
   }
 
   componentWillUnmount() {
@@ -44,7 +53,7 @@ class Index extends Component {
   }
 
   reportRadioOnChange = e => {
-    console.log('reportRadioOnChange -> ', e);
+    // console.log('reportRadioOnChange -> ', e);
     const val = e.target.value;
     const dataType = val === '0' ? 'great_review' : val === '2' ? 'large_coupon' : 'fans';
     this.setState({
@@ -102,9 +111,16 @@ class Index extends Component {
     this.orderType = value === '10' ? 0 : 1;
   };
 
+  closePop = () => {
+    this.setState({
+      isShowPop: 0,
+    });
+    setStorage('isShowPop', 0);
+  };
+
   render() {
-    const { loading } = this.props;
-    const { homedata } = this.props;
+    const { loading, homedata } = this.props;
+    const { isShowPop } = this.state;
 
     const headInfo = homedata.head_info;
     const taskList = homedata.planData.list;
@@ -112,13 +128,43 @@ class Index extends Component {
     // const hotRank = homedata.hot_rank;
     const dayOrderInfo = homedata.orderData;
     const noticeInfo = homedata.notice_info;
-    console.log('taskReportInfo -> ', taskReportInfo, homedata);
+    const rechargeActivityState = homedata.recharge_activity_state;
+    const actShow = isShowPop === '1' && rechargeActivityState === 1;
     /* eslint-disable */
     const salesData = taskReportInfo[this.state.dataType];
 
     return (
       <GridContent>
         <Alert message={noticeInfo} type="info" showIcon style={{ marginBottom: 20 }} />
+        <div
+          style={{
+            position: 'absolute',
+            top: '25%',
+            left: '25%',
+            zIndex: '1000',
+            display: actShow ? 'block' : 'none',
+          }}
+        >
+          <Link to="/public/rechargeActivity">
+            <img
+              src="https://cdn.youlianyc.com/image/static/69012a2bdb29abab0cf42a5800000e3728d39447.jpg"
+              alt=""
+            />
+          </Link>
+          s
+          <Icon
+            type="close"
+            style={{
+              position: 'absolute',
+              right: '20px',
+              top: '20px',
+              zIndex: 1001,
+              fontSize: '20px',
+              color: '#fff',
+            }}
+            onClick={this.closePop}
+          />
+        </div>
         <Suspense fallback={<PageLoading />}>
           <IntroduceRow loading={loading} visitData={headInfo} />
         </Suspense>
