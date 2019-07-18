@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import router from 'umi/router';
-import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, Modal, DatePicker } from 'antd';
+import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, DatePicker } from 'antd';
 import Link from 'umi/link';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -10,8 +9,6 @@ import styles from './List.less';
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
-
-const { confirm } = Modal;
 
 let params = {
   page: 1, // 翻页参数
@@ -57,7 +54,7 @@ class List extends PureComponent {
       {
         key: 'total_balance',
         width: 80,
-        title: '累计放款总额',
+        title: '累计充值',
         dataIndex: 'total_balance',
         render: val => {
           return <span>{val ? `￥ ${val}` : ''}</span>;
@@ -160,92 +157,12 @@ class List extends PureComponent {
 
   // 重置
   handleFormReset = () => {
-    const { form, dispatch } = this.props;
+    const { form } = this.props;
     form.resetFields();
     params = {};
     params.page = 1;
     params.state = '';
-
-    dispatch({
-      type: 'task/fetchBasic',
-      payload: params,
-    });
-  };
-
-  taskFinish = item => {
-    const { dispatch } = this.props;
-    const thises = this;
-    confirm({
-      title: '确认要终止吗？',
-      content: '推广终止后不能恢复，商品将立即下线，确认要终止吗？',
-      okText: '确定',
-      cancelText: '取消',
-      onOk() {
-        dispatch({
-          type: 'task/finishMessage',
-          payload: {
-            page: 1,
-            task_id: item.task_id,
-          },
-        }).then(() => {
-          thises.getListData();
-        });
-      },
-    });
-  };
-
-  goDetail = item => {
-    let path = `/fangdan/list/generalizeDetail`;
-    if (/^3[0|1]$/.test(item.type)) {
-      path = `/fangdan/qfDetail`;
-    }
-    if (item.type === 20) {
-      path = `/fangdan/deqDetail`;
-    }
-    // router.push(`${path}?task_id=${item.task_id}`);
-    window.open(`${path}?task_id=${item.task_id}`); // 0523 新窗口打开
-  };
-
-  goPay = item => {
-    let path = `/fangdan/step-form/pay?task_id=${item.task_id}&goods_id=${
-      item.goods_id
-    }&need_fetch=1`;
-    path = this.addQFQuery(item, path);
-    router.push(path);
-  };
-
-  // 订单明细
-  goOrder = item => {
-    // console.log('this:', item.task_id);
-    let path = `/order/Index`;
-    if (/^3[0|1]$/.test(item.type)) {
-      path = `/order/qf`;
-    }
-    if (item.type === 20) {
-      router.push(`${path}?deq=1&task_id=${item.task_id}`);
-      return;
-    }
-    router.push(`${path}?task_id=${item.task_id}`);
-  };
-
-  addQFQuery = (item, path) => {
-    // console.log('item -> ', item);
-    let url = path;
-    if (/^3[0|1]$/.test(item.type)) {
-      const qf = item.type === 30 ? 0 : 1;
-      url += `&qf=${qf}`;
-    } else if (item.type === 20) {
-      url += `&deq=1`;
-    }
-    return url;
-  };
-
-  // 编辑
-  goRedact = item => {
-    let path = item.type === 10 ? `/fangdan/step-form/confirm` : `/fangdan/qf/confirm`;
-    path += `?task_id=${item.task_id}&goods_id=${item.goods_id}&action=edit`;
-    path = this.addQFQuery(item, path);
-    router.push(path);
+    this.getListData(params);
   };
 
   onChange = page => {
@@ -259,7 +176,6 @@ class List extends PureComponent {
     } = this.props;
     const { listData } = this.props;
     const stateSelect = listData.state_select;
-    // const typeSelect = listData.type_select;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 6, lg: 12, xl: 24 }}>

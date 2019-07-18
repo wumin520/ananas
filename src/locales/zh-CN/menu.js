@@ -23,7 +23,7 @@ export default {
   'menu.platform.h5': '移动端网页',
   'menu.proxyPromotion': '商家推广概况',
   'menu.proxyPromotion.plan': '商家推广计划',
-  'menu.proxyPromotion.promotionDetail': '推广详情',
+  'menu.proxyPromotion.promotionDetail': '推广排期详情',
   'menu.proxyPromotion.promotionOrder': '商家推广效果-订单',
   'menu.proxyPromotion.orderDetail': '订单详情',
   'menu.proxyPromotion.collect': '商家推广效果-收藏',

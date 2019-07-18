@@ -58,7 +58,7 @@ class PromotionDetail extends Component {
     const content = <div />;
     const taskId = `推广编号: ${data.task_id}`;
     return (
-      <PageHeaderWrapper title="推广详情" loading={loading} content={content}>
+      <PageHeaderWrapper title="推广排期详情" loading={loading} content={content}>
         <Card bordered={false} style={{ marginBottom: 26 }}>
           <DescriptionList size="large" title={taskId} style={{ marginBottom: 32 }}>
             <Description term="推广状态">
@@ -83,7 +83,9 @@ class PromotionDetail extends Component {
                 </Col>
                 <Col md={18} sm={24} style={{ marginBottom: 32 }}>
                   <Description term="">
-                    <a style={{ fontSize: 16 }}>{data.title}</a>
+                    <a href={data.goods_url} style={{ fontSize: 16 }}>
+                      {data.title}
+                    </a>
                   </Description>
                   <Description term="商品id">{data.goods_id}</Description>
                   <Description term="优惠券">
@@ -95,7 +97,7 @@ class PromotionDetail extends Component {
             </DescriptionList>
             <Divider style={{ marginBottom: 32 }} />
             <DescriptionList size="large" title="所属店铺信息" style={{ marginBottom: 32 }}>
-              <Description term="店铺名称">{data.title}</Description>
+              <Description term="店铺名称">{data.mall_name}</Description>
               <Description term="店铺编号">{data.mall_id}</Description>
             </DescriptionList>
           </Card>

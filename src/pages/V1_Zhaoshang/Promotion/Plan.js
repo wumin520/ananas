@@ -201,10 +201,11 @@ class Plan extends PureComponent {
     this.setState({
       tabActiveKey: key,
     });
-    if (key === 'haoping') {
-      params.type = 10;
-    } else if (key === 'deq') {
+    params.type = 10;
+    if (key === 'deq') {
       params.type = 20;
+    } else if (key === 'quanfen') {
+      params.type = 30;
     }
     params.page = 1;
     params.task_id = 0;

@@ -145,3 +145,61 @@
     margin-top: 6px;
   }
 }
+.salesCard {
+  .salesBar {
+    padding: 0 0 32px 32px;
+  }
+  .salesRank {
+    padding: 0 32px 32px 72px;
+    .rankingTitle {
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+  :global {
+    .ant-tabs-bar {
+      padding-left: 16px;
+      .ant-tabs-nav .ant-tabs-tab {
+        padding-top: 16px;
+        padding-bottom: 14px;
+        line-height: 24px;
+      }
+    }
+    .ant-tabs-extra-content {
+      padding-right: 24px;
+      line-height: 55px;
+    }
+    .ant-card-head {
+      position: relative;
+    }
+    .ant-card-head-title {
+      align-items: normal;
+    }
+  }
+}
+
+.headerInfo {
+  position: relative;
+  text-align: center;
+  & > span {
+    display: inline-block;
+    margin-bottom: 4px;
+    color: @text-color-secondary;
+    font-size: @font-size-base;
+    line-height: 22px;
+  }
+  & > p {
+    margin: 0;
+    color: @heading-color;
+    font-size: 24px;
+    line-height: 32px;
+  }
+  & > em {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 56px;
+    background-color: @border-color-split;
+  }
+}

@@ -2,16 +2,16 @@
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 
 import React, { Component, Suspense } from 'react';
-import { Alert, Avatar, Col, Card, Row, Descriptions, Icon, Button, message, Popover } from 'antd';
+import { Alert, Avatar, Col, Card, Row, Tooltip, Icon, Button, Tabs, message, Popover } from 'antd';
 import { connect } from 'dva';
 import * as clipboard from 'clipboard-polyfill';
 import moment from 'moment';
 
-import { MiniArea } from '@/components/Charts';
+import { MiniArea, ChartCard } from '@/components/Charts';
 import PageLoading from '@/components/PageLoading';
-
 import styles from './Dashboard.less';
 
+const { TabPane } = Tabs;
 const TodayPlan = React.lazy(() => import('./todayPlan'));
 
 @connect(({ user, dashboard, loading }) => ({
@@ -83,7 +83,6 @@ class Dashboard extends Component {
       dashboard: { bd_info, sh_info, income_info, notice_info, today_info, list, page_info },
     } = this.props;
     const noticeInfo = '通知';
-    console.log(currentUser, dashboard, '');
     const pageHeaderContent =
       currentUser && Object.keys(currentUser).length ? (
         <div className={styles.pageHeaderContent}>
@@ -193,6 +192,14 @@ class Dashboard extends Component {
       },
     };
 
+    const Info = ({ title, value, bordered }) => (
+      <div className={styles.headerInfo}>
+        <span>{title}</span>
+        <p>{value}</p>
+        {bordered && <em />}
+      </div>
+    );
+    const incomes = `￥${today_info.sh_recharge}`;
     /* eslint-disable */
     return (
       <div className={styles.zsDashboard}>
@@ -204,56 +211,145 @@ class Dashboard extends Component {
           </div>
           <Row gutter={10}>
             <Col span={14}>
-              <Card title="收入概况">
-                <div className={styles.income_} style={{ display: 'flex' }}>
-                  <div style={{ flex: 'auto' }}>
-                    <div>今日预计分成(元)</div>
-                    <div className={styles.todayEarn}>￥{income_info.today_expect_income}</div>
-                  </div>
-                  <div style={{ flex: 'auto' }}>
-                    <div>累计预计分成(元)</div>
-                    <div className={styles.totalEarn}>￥{income_info.total_expect_income}</div>
-                  </div>
-                </div>
-                <div style={{ marginTop: 30, paddingBottom: 30 }}>收入趋势</div>
-                <div style={{ marginTop: 30, paddingBottom: 20 }}>
-                  <MiniArea
-                    line={true}
-                    height={180}
-                    data={visitData}
-                    chartPadding={[5, 25, 30, 25]}
-                    xAxis={xAxis}
-                    yAxis={yAxis}
-                  />
+              <Card bodyStyle={{ paddingTop: 0 }}>
+                <div className={styles.salesCard}>
+                  <Tabs size="large" tabBarStyle={{ marginBottom: 24 }}>
+                    <TabPane tab="收入概况" key="sales">
+                      <div className={styles.income_} style={{ display: 'flex' }}>
+                        <div style={{ flex: 'auto' }}>
+                          <div>今日预计分成(元)</div>
+                          <div className={styles.todayEarn}>
+                            ￥{income_info.today_expect_income}
+                          </div>
+                        </div>
+                        <div style={{ flex: 'auto' }}>
+                          <div>累计预计分成(元)</div>
+                          <div className={styles.totalEarn}>
+                            ￥{income_info.total_expect_income}
+                          </div>
+                        </div>
+                      </div>
+                      <div style={{ marginTop: 30, paddingBottom: 30 }}>收入趋势</div>
+                      <div style={{ marginTop: 30, paddingBottom: 20 }}>
+                        <MiniArea
+                          line={true}
+                          height={180}
+                          data={visitData}
+                          chartPadding={[15, 25, 40, 30]}
+                          xAxis={xAxis}
+                          yAxis={yAxis}
+                        />
+                      </div>
+                    </TabPane>
+                  </Tabs>
                 </div>
               </Card>
             </Col>
             <Col span={10}>
-              <Card title="商家推广情况">
-                <Descriptions title="商家数据" layout="vertical">
-                  <Descriptions.Item label="新商家入驻">{today_info.new_sh_num}</Descriptions.Item>
-                  <Descriptions.Item label="今日商家充值">
-                    ￥{today_info.sh_recharge}
-                  </Descriptions.Item>
-                </Descriptions>
-                <Descriptions title="商家推广情况" layout="vertical">
-                  <Descriptions.Item label="试用推广">
-                    {today_info.great_review_num}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="高佣推广">
-                    {today_info.large_coupon_num}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="收藏推广">{today_info.fans_num}</Descriptions.Item>
-                </Descriptions>
-                <Descriptions title="商家推广效果" layout="vertical">
-                  <Descriptions.Item label="试用订单数">
-                    {today_info.sy_order_num}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="高佣订单数">
-                    {today_info.large_coupon_order_num}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="收藏数">{today_info.sc_order_num}</Descriptions.Item>
-                </Descriptions>
+              <Card loading={loading} bordered={false} bodyStyle={{ padding: 0 }}>
+                <div className={styles.salesCard}>
+                  <Tabs size="large" tabBarStyle={{ marginBottom: 24 }}>
+                    <TabPane tab="商家推广概况" key="sales">
+                      <ChartCard
+                        bordered={false}
+                        title="商家数据"
+                        action={
+                          <Tooltip
+                            title={
+                              <div className={styles.toolP}>
+                                <p>1.新商家入驻：今日商家入驻人数</p>
+                                <p>2.今日商家充值：今日内商家充值总金额</p>
+                              </div>
+                            }
+                          >
+                            <Icon type="info-circle-o" />
+                          </Tooltip>
+                        }
+                        loading={loading}
+                        contentHeight={80}
+                      >
+                        <Row>
+                          <Col sm={12} xs={24}>
+                            <Info title="新商家入驻" value={today_info.new_sh_num} bordered />
+                          </Col>
+                          <Col sm={12} xs={24}>
+                            <Info title="今日商家充值" value={incomes} />
+                          </Col>
+                        </Row>
+                      </ChartCard>
+                      <ChartCard
+                        bordered={false}
+                        title="商家推广情况"
+                        action={
+                          <Tooltip
+                            title={
+                              <div className={styles.toolP}>
+                                <p>
+                                  1.试用推广：今日进行中的试用推广数，0点下架的不计算在内，其余时间下架的仍计算在内
+                                </p>
+                                <p>
+                                  2.高佣推广：今日进行中的高佣推广数，0点下架的不计算在内，其余时间下架的仍计算在内
+                                </p>
+                                <p>3.收藏推广：今日进行中的收藏推广数</p>
+                              </div>
+                            }
+                          >
+                            <Icon type="info-circle-o" />
+                          </Tooltip>
+                        }
+                        loading={loading}
+                        contentHeight={80}
+                      >
+                        <Row>
+                          <Col sm={8} xs={24}>
+                            <Info title="试用推广" value={today_info.great_review_num} bordered />
+                          </Col>
+                          <Col sm={8} xs={24}>
+                            <Info title="高佣推广" value={today_info.large_coupon_num} bordered />
+                          </Col>
+                          <Col sm={8} xs={24}>
+                            <Info title="收藏推广" value={today_info.fans_num} />
+                          </Col>
+                        </Row>
+                      </ChartCard>
+                      <ChartCard
+                        bordered={false}
+                        title="商家推广效果"
+                        action={
+                          <Tooltip
+                            title={
+                              <div className={styles.toolP}>
+                                <p>1.试用订单数：包含无效订单</p>
+                                <p>2.高佣订单数：包含无效订单</p>
+                                <p>3.收藏数：上传截图的人数</p>
+                              </div>
+                            }
+                          >
+                            <Icon type="info-circle-o" />
+                          </Tooltip>
+                        }
+                        loading={loading}
+                        contentHeight={80}
+                      >
+                        <Row>
+                          <Col sm={8} xs={24}>
+                            <Info title="试用订单数" value={today_info.sy_order_num} bordered />
+                          </Col>
+                          <Col sm={8} xs={24}>
+                            <Info
+                              title="高佣订单数"
+                              value={today_info.large_coupon_order_num}
+                              bordered
+                            />
+                          </Col>
+                          <Col sm={8} xs={24}>
+                            <Info title="收藏数" value={today_info.sc_order_num} />
+                          </Col>
+                        </Row>
+                      </ChartCard>
+                    </TabPane>
+                  </Tabs>
+                </div>
               </Card>
             </Col>
           </Row>

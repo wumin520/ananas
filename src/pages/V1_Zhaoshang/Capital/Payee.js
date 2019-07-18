@@ -166,7 +166,7 @@ class PayeeAdd extends PureComponent {
     // 设置收款账户
     const payeeAddHtml = (
       <Card>
-        <p className={styles.title}>提现</p>
+        <p className={styles.title}>设置收款账户</p>
         <div style={{ display: 'inline-block' }}>
           {visible ? (
             <Alert
