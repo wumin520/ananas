@@ -16,16 +16,16 @@ const defaultColumns = [
     },
   },
   {
+    key: 'mall_name',
+    title: '店铺名称',
+    width: 120,
+    dataIndex: 'mall_name',
+  },
+  {
     key: '1',
     title: '推广编号',
     width: 100,
     dataIndex: 'task_plan_id',
-  },
-  {
-    key: 'goods_id',
-    title: '商品id',
-    width: 120,
-    dataIndex: 'goods_id',
   },
   {
     key: '2',
@@ -48,14 +48,6 @@ const defaultColumns = [
     title: '券后价',
     dataIndex: 'after_coupon_price',
     render: val => `￥ ${val}`,
-  },
-  {
-    key: '4',
-    title: '优惠券',
-    dataIndex: 'coupon_price',
-    render: val => {
-      return <span>{val ? `￥ ${val}` : '无'}</span>;
-    },
   },
   {
     key: '5',
