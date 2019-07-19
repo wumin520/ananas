@@ -38,14 +38,10 @@ class Index extends Component {
         type: 'homedata/fetch',
       });
     });
+
+    this.showPop();
     this.getListData();
     this.getOrderData();
-
-    // storage -> isShowPop -> false 不显示充值活动弹框
-    const isShowPop = getStorage('isShowPop') || '1';
-    this.setState({
-      isShowPop,
-    });
   }
 
   componentWillUnmount() {
@@ -58,6 +54,18 @@ class Index extends Component {
     const dataType = val === '0' ? 'great_review' : val === '2' ? 'large_coupon' : 'fans';
     this.setState({
       dataType,
+    });
+  };
+
+  showPop = () => {
+    // storage -> storageDate   弹框一天只弹一次
+    const today = moment(new Date()).format('YYYY-MM-DD');
+    const isShowPop = today === getStorage('storageDate') ? '0' : '1';
+    if (today !== getStorage('storageDate')) {
+      setStorage('storageDate', today);
+    }
+    this.setState({
+      isShowPop,
     });
   };
 
@@ -115,7 +123,6 @@ class Index extends Component {
     this.setState({
       isShowPop: 0,
     });
-    setStorage('isShowPop', 0);
   };
 
   render() {
@@ -129,6 +136,8 @@ class Index extends Component {
     const dayOrderInfo = homedata.orderData;
     let noticeInfo = homedata.notice_info;
     const rechargeActivityState = homedata.recharge_activity_state;
+
+    // rechargeActivityState === 1  活动有效期内
     const actShow = isShowPop === '1' && rechargeActivityState === 1;
 
     if (rechargeActivityState === 1) {
