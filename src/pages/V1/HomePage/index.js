@@ -135,7 +135,7 @@ class Index extends Component {
 
     return (
       <GridContent>
-        <Alert message={noticeInfo} type="info" showIcon style={{ marginBottom: 20 }} />
+        <Alert message={noticeInfo} type="warning" showIcon style={{ marginBottom: 20 }} />
         <div
           style={{
             position: 'absolute',
