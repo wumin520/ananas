@@ -70,7 +70,7 @@ class Index extends PureComponent {
         description: `提报要求：
         1、宝贝月销量≥200
         2、宝贝评价数≥40
-        3、佣金比例≥50%
+        3、佣金比例≥20%
         4、支持专属佣金设置（推广ID：3662914）`,
       },
       {
