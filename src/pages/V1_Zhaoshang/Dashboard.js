@@ -153,8 +153,8 @@ class Dashboard extends Component {
     for (let i = 0; i < cdata.length; i += 1) {
       const item = cdata[i];
       visitData.push({
-        x: `${item.day}(${item.week_day})`,
-        y: parseInt(item.expect_income, 10),
+        x: item.day,
+        y: item.expect_income,
       });
     }
     console.log('cdata -> ', cdata, visitData);
