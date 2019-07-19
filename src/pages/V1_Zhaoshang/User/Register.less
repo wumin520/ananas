@@ -1,0 +1,134 @@
+@import '~antd/lib/style/themes/default.less';
+
+.main {
+  width: 388px;
+  margin: 0 auto;
+  padding: 40px 40px 2px;
+  background: #fff;
+
+  :global {
+    .ant-form-item {
+      margin-bottom: 24px;
+    }
+    .antd-pro-pages-v1-user-register-getCaptcha {
+      font-size: 14px !important;
+    }
+  }
+
+  h3 {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  .getCaptcha {
+    display: block;
+    width: 100%;
+  }
+
+  .submit {
+    width: 50%;
+  }
+
+  .login {
+    float: right;
+    line-height: @btn-height-lg;
+  }
+}
+
+.success,
+.warning,
+.error {
+  transition: color 0.3s;
+}
+
+.success {
+  color: @success-color;
+}
+
+.warning {
+  color: @warning-color;
+}
+
+.error {
+  color: @error-color;
+}
+
+.progress-pass > .progress {
+  :global {
+    .ant-progress-bg {
+      background-color: @warning-color;
+    }
+  }
+}
+.select_block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 1128px;
+  margin: 120px auto 0;
+
+  .ml64 {
+    margin-left: 64px;
+  }
+
+  .select_item {
+    flex: 1;
+    padding: 0 0 64px;
+    font-family: PingFang-SC-Regular, sans-serif;
+    text-align: center;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 4px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+
+    .select_img {
+      position: relative;
+      top: -60px;
+      width: 120px;
+      height: 120px;
+      background: rgba(255, 255, 255, 1);
+      border-radius: 60px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.09);
+    }
+
+    .select_title {
+      margin: 0 0 32px;
+      color: rgba(0, 0, 0, 0.65);
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 32px;
+    }
+
+    .select_desc {
+      width: 292px;
+      height: 44px;
+      margin: 32px auto 16px;
+      color: rgba(0, 0, 0, 0.45);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 22px;
+      text-align: left;
+    }
+
+    .select_limit {
+      margin: 0 auto 16px;
+      color: #13c2c2;
+
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        margin-right: 8px;
+        background: rgba(19, 194, 194, 1);
+        border-radius: 3px;
+      }
+    }
+
+    .btn_select {
+      width: 192px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 4px;
+    }
+  }
+}

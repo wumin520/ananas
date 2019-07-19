@@ -1,7 +1,5 @@
 import { routerRedux } from 'dva/router';
-import { stringify } from 'qs';
-import { login, getCaptcha, signout, autoLogin } from '@/services/api';
-import { zsSignout } from '@/services/zhaoshang_api';
+import { login, getCaptcha } from '@/services/zhaoshang_api';
 import { settleIn } from '@/services/tuishou_api';
 import { setUserToken, setAuthority, setShState } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
@@ -25,10 +23,10 @@ const getRedirectUrl = () => {
   }
   return redirect;
 };
-const homePath = '/web/index';
+const homePath = '/work';
 
 export default {
-  namespace: 'login',
+  namespace: 'zslogin',
 
   state: {
     status: undefined,
@@ -41,15 +39,10 @@ export default {
       const response = yield call(login, payload);
       // Login successfully
       if (response.status === 'ok') {
-        let currentAuthority = 'admin';
-        if (response.payload.ts_state) {
-          currentAuthority = 'tuishou';
-        }
         yield put({
           type: 'changeLoginStatus',
           payload: {
             res: response,
-            currentAuthority,
             setToken: 1,
           },
         });
@@ -74,56 +67,8 @@ export default {
       }
     },
 
-    *autoLogin({ payload }, { call, put }) {
-      const response = yield call(autoLogin, payload);
-      if (response && response.status === 'ok') {
-        yield put({
-          type: 'changeLoginStatus',
-          payload: {
-            res: response,
-            currentAuthority: 'admin',
-            setToken: 1,
-          },
-        });
-        const redirect = getRedirectUrl();
-        yield put(routerRedux.replace(redirect || homePath));
-      }
-    },
-
     *getCaptcha({ payload }, { call }) {
       yield call(getCaptcha, payload);
-    },
-
-    *logout(_, { call, put }) {
-      const isZs = _.payload && _.payload.zs;
-      const logoutApi = isZs ? zsSignout : signout;
-      const response = yield call(logoutApi);
-      if (response && response.status === 'ok') {
-        yield put({
-          type: 'changeLoginStatus',
-          payload: {
-            status: false,
-            currentAuthority: 'guest',
-            delToken: 1,
-          },
-        });
-        reloadAuthorized();
-        // redirect
-        let loginPath = '/user/login';
-        if (isZs) {
-          loginPath = '/work/user/login';
-        }
-        if (window.location.pathname !== loginPath) {
-          yield put(
-            routerRedux.replace({
-              pathname: loginPath,
-              search: stringify({
-                redirect: window.location.href,
-              }),
-            })
-          );
-        }
-      }
     },
   },
 
@@ -132,15 +77,14 @@ export default {
       console.log('reducers -> changeLoginStatus -> payload -> ', payload);
       if (payload.setToken) {
         /* eslint-disable */
-        const { token, sh_state } = payload.res.payload;
+        const { token } = payload.res.payload;
         window.cdk_token = token;
         setUserToken(token);
-        setShState(sh_state);
       } else if (payload.delToken) {
         setUserToken('');
         setShState('');
       }
-      setAuthority(payload.currentAuthority);
+      setAuthority('zhaoshang');
       return {
         ...state,
         ...payload,

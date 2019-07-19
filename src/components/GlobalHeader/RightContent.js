@@ -72,6 +72,7 @@ export default class GlobalHeaderRight extends PureComponent {
       onMenuClick,
       onNoticeClear,
       theme,
+      location,
     } = this.props;
 
     const menu = (
@@ -95,7 +96,7 @@ export default class GlobalHeaderRight extends PureComponent {
         </Menu.Item>
       </Menu>
     );
-    const content = (
+    const content = currentUser.bd_info ? (
       <div className={styles.bd_info_block}>
         <div className={styles.contact_top}>
           <img className={styles.bd_img} src={currentUser.bd_info.avatar} />
@@ -112,6 +113,8 @@ export default class GlobalHeaderRight extends PureComponent {
           </p>
         </div>
       </div>
+    ) : (
+      ''
     );
     const noticeData = this.getNoticeData();
     const unreadMsg = this.getUnreadData(noticeData);
@@ -192,14 +195,16 @@ export default class GlobalHeaderRight extends PureComponent {
             showViewMore
           />
         </NoticeIcon> */}
-        {currentUser.bd_info.nickname ? (
+        {location.pathname.indexOf('work/') === -1 &&
+        currentUser.bd_info &&
+        currentUser.bd_info.nickname ? (
           <Popover content={content} trigger="hover">
             <Icon type="message" /> 联系运营
           </Popover>
         ) : (
           ''
         )}
-        {currentUser.phone ? (
+        {currentUser.phone || currentUser.info.name ? (
           <HeaderDropdown overlay={menu}>
             <span className={`${styles.action} ${styles.account}`}>
               <Avatar
@@ -211,7 +216,7 @@ export default class GlobalHeaderRight extends PureComponent {
                 }
                 alt="avatar"
               />
-              <span className={styles.name}>{currentUser.phone}</span>
+              <span className={styles.name}>{currentUser.phone || currentUser.info.name}</span>
             </span>
           </HeaderDropdown>
         ) : (

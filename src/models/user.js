@@ -1,4 +1,5 @@
 import { query as queryUsers, queryCurrent } from '@/services/user';
+import { accountInfo } from '@/services/zhaoshang_api';
 import { setAuthority, getAuthority } from '@/utils/authority';
 
 export default {
@@ -16,6 +17,7 @@ export default {
         qq: '',
         qq_url: '',
       },
+      info: {}, // 招商代理
     },
   },
 
@@ -28,7 +30,8 @@ export default {
       });
     },
     *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
+      const queryUserInfo = _.payload && _.payload.zs === 1 ? accountInfo : queryCurrent;
+      const response = yield call(queryUserInfo);
       if (response.status === 'ok') {
         yield put({
           type: 'saveCurrentUser',
@@ -47,20 +50,26 @@ export default {
     },
     saveCurrentUser(state, action) {
       const { payload } = action;
-      if (payload.state && payload.ts_state) {
+      const role = getAuthority()[0];
+      const setAuthorityAndReload = val => {
+        setAuthority(val);
+        window.location.reload();
+      };
+      if (
+        window.location.href.indexOf('work/') > -1 &&
+        payload.info &&
+        payload.info.type === 1 &&
+        role !== 'zhaoshang'
+      ) {
+        setAuthorityAndReload('zhaoshang');
+      } else if (payload.state && payload.ts_state) {
         localStorage.setItem('superUser', 1);
         // 即是推手也是商家
-        if (window.location.href.indexOf('tuishou') > -1 && getAuthority()[0] !== 'tuishou') {
-          setAuthority('tuishou');
-          window.location.reload();
-        } else if (
-          window.location.href.indexOf('tuishou') === -1 &&
-          getAuthority()[0] !== 'admin'
-        ) {
-          setAuthority('admin');
-          window.location.reload();
+        if (window.location.href.indexOf('tuishou') > -1 && role !== 'tuishou') {
+          setAuthorityAndReload('tuishou');
+        } else if (window.location.href.indexOf('tuishou') === -1 && role !== 'admin') {
+          setAuthorityAndReload('admin');
         }
-        console.log(window.location.href, '1');
       }
       return {
         ...state,

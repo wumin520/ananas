@@ -52,6 +52,7 @@ const PageHeaderWrapper = ({
       {title && content && (
         <MenuContext.Consumer>
           {value => {
+            console.log(value, restProps, '11111');
             return (
               <PageHeader
                 wide={contentWidth === 'Fixed'}

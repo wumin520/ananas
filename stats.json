@@ -1,0 +1,167 @@
+
+> ant-design-pro@2.3.1 build /Users/wumin/youlian/ananas
+> umi build && npm run functions:build
+
+ WARNING  Compiled with 0 warnings15:52:07
+
+File sizes after gzip:
+
+  505.9 KB   dist/vendors.dbdf2d12.async.js
+  400.04 KB  dist/umi.87581d12.js
+  170.78 KB  dist/viz.e8944c44.async.js
+  39.53 KB   dist/vendors.0b09f9d9.chunk.css
+  25.11 KB   dist/layouts__BasicLayout.d1c4f7c9.async.js
+  8.87 KB    dist/p__V1__FangDan__StepForm.c58610e4.async.js
+  8.2 KB     dist/umi.bba25dfb.css
+  7.61 KB    dist/p__V1__Public__Help__HelpDetail.29b72b96.async.js
+  5.05 KB    dist/p__V1__Public__HelpCenter.b657d55f.async.js
+  3.97 KB    dist/p__V1__Public__Favorites__Favorites.18cfcc29.async.js
+  3.95 KB    dist/p__V1__CapitalManage__RechargePay.0974317f.async.js
+  3.92 KB    dist/p__V1__FangDan__Index.dedb1455.async.js
+  3.89 KB    dist/p__Account__Center__Center.9af50992.async.js
+  3.84 KB    dist/p__Account__Settings__Info.6fcac74a.async.js
+  3.56 KB    dist/p__V1__User__Login.c5ab607e.async.js
+  3.44 KB    dist/layouts__BasicLayout.e7b1bd1d.chunk.css
+  3.3 KB     dist/78.4cbec1b9.async.js
+  3.25 KB    dist/p__V1__CapitalManage__CreditRecord.1655b9ad.async.js
+  3.25 KB    dist/p__V1__FangDan__List__Index.a03e45e8.async.js
+  3.21 KB    dist/p__Profile__AdvancedProfile.fc1150ec.async.js
+  3.02 KB    dist/p__V1__FangDan__List__PlanList.5a1c848c.async.js
+  2.82 KB    dist/p__V1__Public__WebsiteHome__index.6b3601bb.async.js
+  2.81 KB    dist/p__V1__MyOrder__Index.5f113022.async.js
+  2.64 KB    dist/p__V1_Tuishou__Order__List.19d37c08.async.js
+  2.62 KB    dist/p__V1__MyOrder__qfList.c2ce5b6c.async.js
+  2.51 KB    dist/p__V1__User__Register.5cdd4fcc.async.js
+  2.39 KB    dist/pwacompat.min.js
+  2.38 KB    dist/p__V1__User__TuishouSignin.97969499.async.js
+  2.14 KB    dist/p__V1_Tuishou__Dashboard.e9b65f14.async.js
+  2.02 KB    dist/p__V1__Public__Matrix.7218d7eb.async.js
+  1.97 KB    dist/p__V1__CapitalManage__CapitalDetail.c24edb8b.async.js
+  1.96 KB    dist/p__V1_Tuishou__Account__Favorite.6310834e.async.js
+  1.88 KB    dist/p__V1__CapitalManage__Withdraw.82891174.async.js
+  1.88 KB    dist/p__V1_Tuishou__Platform__H5.5a158c01.async.js
+  1.87 KB    dist/p__V1__Public__MarketPromotion.b989bceb.async.js
+  1.76 KB    dist/p__V1__User__SettleIn.a190e60f.async.js
+  1.75 KB    dist/p__V1__HomePage__index.ff2eb296.async.js
+  1.67 KB    dist/p__V1__CapitalManage__FreezeDetail.f70c0bc1.async.js
+  1.63 KB    dist/p__V1__FangDan__models__form.js.2ceb73c2.async.js
+  1.62 KB    dist/p__V1__FangDan__List__GeneralizeDetail.407bf719.async.js
+  1.56 KB    dist/p__V1__FangDan__List__qfDetail.704e9e3d.async.js
+  1.54 KB    dist/p__Profile__BasicProfile.c0028738.async.js
+  1.52 KB    dist/p__V1__MyOrder__ProductDetail.303a7bac.async.js
+  1.47 KB    dist/p__V1__FangDan__List__deqDetail.5785afd9.async.js
+  1.45 KB    dist/p__V1__MyOrder__qfDetail.b2756ae7.async.js
+  1.43 KB    dist/p__V1__Public__Favorites__Favorites.aba24b6c.chunk.css
+  1.37 KB    dist/p__V1__Public__AboutUs.28f3c519.async.js
+  1.33 KB    dist/p__V1__Public__WebsiteHome__index.8b2202b9.chunk.css
+  1.31 KB    dist/p__V1_Tuishou__Account__Pid.b7264745.async.js
+  1.29 KB    dist/82.37f2a5a5.async.js
+  1.29 KB    dist/p__V1__Public__HelpCenter.96de6272.chunk.css
+  1.25 KB    dist/p__V1__CapitalManage__RuleCDK.c83260ba.async.js
+  1.23 KB    dist/p__V1__Public__Matrix.a4ec1b17.chunk.css
+  1.21 KB    dist/p__Account__Center__Center.6a56fc9a.chunk.css
+  1.16 KB    dist/p__V1__HomePage__index.72834da5.chunk.css
+  1.13 KB    dist/79.24f10e18.async.js
+  1.09 KB    dist/layouts__UserLayout.e21013fd.async.js
+  1.08 KB    dist/p__V1__CapitalManage__Recharge.e212541b.async.js
+  1.07 KB    dist/p__V1__Public__MarketPromotion.d66efc2d.chunk.css
+  1.06 KB    dist/81.1f652562.async.js
+  1.02 KB    dist/p__V1__CapitalManage__WithdrawSuccess.dba85ee1.async.js
+  1.02 KB    dist/p__V1__MyOrder__qfList.fb5d3818.chunk.css
+  1.02 KB    dist/80.8dbe5bd6.async.js
+  1.01 KB    dist/p__Result__Success.2193b881.async.js
+  1020 B     dist/p__V1_Tuishou__Order__List.b70789d3.chunk.css
+  1014 B     dist/p__V1__MyOrder__Index.945b8963.chunk.css
+  1011 B     dist/p__V1__CapitalManage__CreditRecord.3258f987.chunk.css
+  982 B      dist/p__V1__User__SelectSettleIn.9e72940c.async.js
+  953 B      dist/p__V1__Public__MerchantsSettled.b573d8eb.async.js
+  904 B      dist/p__V1__FangDan__StepForm.25221c90.chunk.css
+  898 B      dist/p__V1__FangDan__Index.5f669e78.chunk.css
+  869 B      dist/p__V1__Public__Favorites__models__favorites.js.770afc6e.async.js
+  849 B      dist/p__V1_Tuishou__Account__Favorite.e0fe1bb5.chunk.css
+  844 B      dist/p__V1__CapitalManage__RechargePaySuccess.fb204bef.async.js
+  843 B      dist/p__V1__Public__Help__HelpDetail.a4c61f4e.chunk.css
+  832 B      dist/p__Account__Settings__Info.8700337e.chunk.css
+  806 B      dist/p__V1__CapitalManage__RechargePayError.80d6fbab.async.js
+  791 B      dist/p__V1_Tuishou__Platform__H5.6df6be20.chunk.css
+  780 B      dist/p__V1__FangDan__List__models__task.js.70120135.async.js
+  771 B      dist/p__V1__HomePage__models__home.js.fe89b1a4.async.js
+  752 B      dist/p__Editor__GGEditor__Mind.4957898c.async.js
+  745 B      dist/p__Editor__GGEditor__Koni.25607137.async.js
+  734 B      dist/p__Exception__TriggerException.aa9ea874.async.js
+  690 B      dist/p__V1__CapitalManage__models__recharge.js.8333140b.async.js
+  685 B      dist/p__V1__MyOrder__models__order.js.1027a81e.async.js
+  677 B      dist/p__Result__Error.0fa5f9be.async.js
+  656 B      dist/p__V1__Public__AboutUs.87975066.chunk.css
+  625 B      dist/p__Account__Settings__models__geographic.js.95963ddd.async.js
+  609 B      dist/p__V1__Public__MerchantsSettled.61528975.chunk.css
+  575 B      dist/78.18163f31.chunk.css
+  564 B      dist/p__V1__User__models__register.js.e84229f1.async.js
+  549 B      dist/p__V1__User__RegisterResult.24cf41de.async.js
+  549 B      dist/p__V1__CapitalManage__models__capital.js.570daba7.async.js
+  531 B      dist/layouts__UserLayout.82c370f9.chunk.css
+  531 B      dist/p__V1__CapitalManage__models__withdraw.js.8e30f351.async.js
+  507 B      dist/p__V1_Tuishou__models__pid.js.d81153b2.async.js
+  500 B      dist/p__V1_Tuishou__models__favorite.js.08ff78ba.async.js
+  478 B      dist/p__V1_Tuishou__models__dashboard.js.c9e06b66.async.js
+  474 B      dist/p__Editor__GGEditor__Flow.988d7410.async.js
+  466 B      dist/p__V1__User__Login.27fe85e1.chunk.css
+  445 B      dist/p__Exception__models__error.js.bf1de98f.async.js
+  439 B      dist/p__Profile__models__profile.js.e75bd339.async.js
+  439 B      dist/p__V1__CapitalManage__models__profile.js.a7309919.async.js
+  437 B      dist/p__V1_Tuishou__models__platform.js.d458d401.async.js
+  430 B      dist/p__V1_Tuishou__models__order.js.42c97ac0.async.js
+  414 B      dist/p__V1__CapitalManage__models__creditList.js.48bb3162.async.js
+  385 B      dist/p__V1__User__TuishouSignin.0c3b8fab.chunk.css
+  384 B      dist/p__V1__CapitalManage__RechargePay.f494fc3f.chunk.css
+  316 B      dist/p__Profile__AdvancedProfile.cc24c2c4.chunk.css
+  274 B      dist/p__Exception__404.ca46297d.async.js
+  273 B      dist/p__Exception__500.7c9e848d.async.js
+  269 B      dist/p__404.edcb273a.async.js
+  190 B      dist/p__V1_Tuishou__Dashboard.6aa37002.chunk.css
+  157 B      dist/p__V1__User__RegisterResult.b05294c2.chunk.css
+  117 B      dist/p__Profile__BasicProfile.21c807ad.chunk.css
+  113 B      dist/p__Exception__TriggerException.5da55db4.chunk.css
+
+
+> ant-design-pro@2.3.1 functions:build /Users/wumin/youlian/ananas
+> npm run generateMock && netlify-lambda build ./lambda
+
+
+> ant-design-pro@2.3.1 generateMock /Users/wumin/youlian/ananas
+> node ./scripts/generateMock
+
+get files: api.js, chart.js, geographic.js, home.js, notices.js, profile.js, route.js, rule.js, user.js
+--------------------------------------------------------------------------------
+finsh merge file
+netlify-lambda: Building functions
+Hash: 38e60f1ac7e8420c93bb
+Version: webpack 4.29.6
+Time: 2758ms
+Built at: 2019-06-10 15:52:18
+ Asset     Size  Chunks             Chunk Names
+api.js  940 KiB       0  [emitted]  api
+Entrypoint api = api.js
+ [29] ../node_modules/body-parser/index.js 2.59 KiB {0} [built]
+ [60] ../node_modules/serverless-http/lib/response.js 2.13 KiB {0} [built]
+[188] ./api.js 238 bytes {0} [built]
+[189] ../node_modules/express/index.js 224 bytes {0} [built]
+[190] ../node_modules/express/lib/express.js 2.29 KiB {0} [built]
+[274] ../node_modules/serverless-http/serverless-http.js 1.53 KiB {0} [built]
+[275] ../node_modules/serverless-http/lib/finish.js 889 bytes {0} [built]
+[276] ../node_modules/serverless-http/lib/get-handler.js 649 bytes {0} [built]
+[277] ../node_modules/serverless-http/lib/clean-up-event.js 458 bytes {0} [built]
+[278] ../node_modules/serverless-http/lib/get-body.js 398 bytes {0} [built]
+[282] ../node_modules/serverless-http/lib/is-binary.js 1.08 KiB {0} [built]
+[283] ../node_modules/serverless-http/lib/dispatch.js 324 bytes {0} [built]
+[284] ../node_modules/serverless-http/lib/request.js 2.29 KiB {0} [built]
+[285] ./mock/matchMock.js 2.98 KiB {0} [built]
+[286] ../node_modules/path-to-regexp/index.js 9.16 KiB {0} [built]
+    + 275 hidden modules
+
+WARNING in ../node_modules/express/lib/view.js 81:13-25
+Critical dependency: the request of a dependency is an expression
+ @ ../node_modules/express/lib/application.js
+ @ ../node_modules/express/lib/express.js
+ @ ../node_modules/express/index.js
+ @ ./api.js

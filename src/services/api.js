@@ -2,6 +2,7 @@ import { stringify } from 'qs';
 import request from '@/utils/request';
 /* eslint-disable */
 const api_pre = `/v1/web/`;
+const api_zs = `/v1/web/`;
 
 // server api
 export async function queryServerTest(params) {
@@ -187,6 +188,31 @@ export async function tsTaskGoodsUrl(params) {
   return request(api_pre + `ts/task/goods/uri?${stringify(params)}`);
 }
 
+// 代理-商家推广排期列表
+export async function promotionList(params) {
+  return request(`/work/v1/task/plan_list?${stringify(params)}`);
+}
+
+// 代理-排期详情信息
+export async function promotionDetail(params) {
+  return request(`/work/v1/task/plan_detail?${stringify(params)}`);
+}
+
+// 代理 订单列表
+export async function promotionOrder(params) {
+  return request(`/work/v1/order/list?${stringify(params)}`);
+}
+
+// 代理-订单详情
+export async function proOrderDetail(params) {
+  return request(`/work/v1/order/detail?${stringify(params)}`);
+}
+
+// 收藏列表
+export async function collectList(params) {
+  return request(`/work/v1/order/fans/list?${stringify(params)}`);
+}
+
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }
@@ -330,6 +356,42 @@ export async function signout(params) {
 // 自动登录
 export async function autoLogin(params) {
   return request(api_pre + 'sign_in/interior', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+// 招商代理---资产统计
+export async function assetsInfo() {
+  return request('/work/v1/assets/info');
+}
+
+// 招商代理---提现记录
+export async function withdrawRecord(params) {
+  return request(`/work/v1/assets/withdraw/record?${stringify(params)}`);
+}
+
+// 招商代理---结算记录
+export async function settledRecord(params) {
+  return request(`/work/v1/assets/settled/record?${stringify(params)}`);
+}
+
+// 招商代理---申请提现
+export async function withdrawApply(params) {
+  return request('/work/v1/assets/withdraw/apply', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+// 招商代理---提现账号信息
+export async function withdrawAccount(params) {
+  return request(`/work/v1/assets/withdraw/account?${stringify(params)}`);
+}
+
+// 招商代理--- 更新提现账号信息
+export async function withdrawAccountUpdate(params) {
+  return request('/work/v1/assets/withdraw/account', {
     method: 'POST',
     data: params,
   });

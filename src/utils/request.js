@@ -106,7 +106,11 @@ request.interceptors.response.use(async response => {
       // message.error('请先登录');
       setUserToken('');
       setShState('');
-      router.push('/web/index');
+      let path = '/web/index';
+      if (window.location.href.indexOf('work') > -1) {
+        path = '/work/user/login';
+      }
+      router.push(path);
     } else if (res.code >= 40000) {
       message.error(res.message);
     }

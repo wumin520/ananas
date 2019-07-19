@@ -78,20 +78,29 @@ class UserLayout extends Component {
                     />
                   </Link>
                   <span className={styles.slogan}>
-                    {pathname.indexOf('tuishou') > -1 ? '推手认证' : '一站式导购服务'}
+                    {/* eslint-disable */
+                    pathname.indexOf('tuishou') > -1
+                      ? '推手认证'
+                      : pathname.indexOf('work/') > -1
+                      ? '超多客代理系统'
+                      : '一站式导购服务'}
                   </span>
                 </Col>
                 <Col span={12}>
-                  <Link to="/web/index">
-                    <Button
-                      style={{ float: 'right' }}
-                      type="primary"
-                      ghost
-                      className={styles.btnBackHome}
-                    >
-                      返回首页
-                    </Button>
-                  </Link>
+                  {pathname.indexOf('work/') === -1 ? (
+                    <Link to="/web/index">
+                      <Button
+                        style={{ float: 'right' }}
+                        type="primary"
+                        ghost
+                        className={styles.btnBackHome}
+                      >
+                        返回首页
+                      </Button>
+                    </Link>
+                  ) : (
+                    ''
+                  )}
                 </Col>
               </Row>
             </div>
