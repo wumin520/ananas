@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
-import { Card, Button, Form, Input, Alert, Icon } from 'antd';
+import { Card, Button, Form, Input, Icon } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 // import Result from '@/components/Result';
@@ -20,7 +20,6 @@ class Recharge extends PureComponent {
     curIndex: 0,
     rechargeMoney: 0,
     isInput: true, // 是否可自定义金额
-    visible: true,
   };
 
   componentDidMount() {
@@ -71,13 +70,15 @@ class Recharge extends PureComponent {
     });
   };
 
-  handleClose = () => {
-    this.setState({ visible: false });
+  inputChange = event => {
+    this.setState({
+      rechargeMoney: event.target.value,
+    });
   };
 
   render() {
     const { form, rechargeActivity } = this.props;
-    const { curIndex, rechargeMoney, isInput, visible } = this.state;
+    const { curIndex, rechargeMoney, isInput } = this.state;
     const rewardList = rechargeActivity.reward_list;
     const { getFieldDecorator } = form;
 
@@ -108,17 +109,6 @@ class Recharge extends PureComponent {
       <PageHeaderWrapper title="我要充值" content={content}>
         <Card>
           <p className={styles.title}>充值</p>
-          {rechargeActivity.recharge_tip && visible ? (
-            <Alert
-              message={rechargeActivity.recharge_tip}
-              type="warning"
-              showIcon
-              closable
-              afterClose={this.handleClose}
-            />
-          ) : (
-            ''
-          )}
           {/* 充值活动 */}
           <div className={styles.recharge_actBlock}>
             {rewardList &&
@@ -180,6 +170,7 @@ class Recharge extends PureComponent {
                   type="number"
                   placeholder="请输入充值金额"
                   disabled={isInput}
+                  onChange={this.inputChange}
                 />
               )}{' '}
               元

@@ -127,9 +127,21 @@ class Index extends Component {
     const taskReportInfo = homedata.task_report_info;
     // const hotRank = homedata.hot_rank;
     const dayOrderInfo = homedata.orderData;
-    const noticeInfo = homedata.notice_info;
+    let noticeInfo = homedata.notice_info;
     const rechargeActivityState = homedata.recharge_activity_state;
     const actShow = isShowPop === '1' && rechargeActivityState === 1;
+
+    if (rechargeActivityState === 1) {
+      noticeInfo = (
+        <div>
+          {noticeInfo}
+          <Link style={{ marginLeft: '20px', color: '#2F54EB' }} to="/public/rechargeActivity">
+            查看详情>
+          </Link>
+        </div>
+      );
+    }
+
     /* eslint-disable */
     const salesData = taskReportInfo[this.state.dataType];
 
