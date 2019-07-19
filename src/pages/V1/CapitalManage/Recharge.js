@@ -70,6 +70,12 @@ class Recharge extends PureComponent {
     });
   };
 
+  inputChange = event => {
+    this.setState({
+      rechargeMoney: event.target.value,
+    });
+  };
+
   render() {
     const { form, rechargeActivity } = this.props;
     const { curIndex, rechargeMoney, isInput } = this.state;
@@ -164,6 +170,7 @@ class Recharge extends PureComponent {
                   type="number"
                   placeholder="请输入充值金额"
                   disabled={isInput}
+                  onChange={this.inputChange}
                 />
               )}{' '}
               元
