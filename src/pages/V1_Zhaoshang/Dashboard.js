@@ -204,15 +204,19 @@ class Dashboard extends Component {
     return (
       <div className={styles.zsDashboard}>
         <GridContent>
-          <Alert message={notice_info} type="info" showIcon style={{ marginBottom: 20 }} />
+          {notice_info ? (
+            <Alert message={notice_info} type="info" showIcon style={{ marginBottom: 20 }} />
+          ) : (
+            ''
+          )}
           <div className={styles.row}>
             <div className={styles.content}>{pageHeaderContent}</div>
             <div className={styles.extraContent}>{extraContent}</div>
           </div>
           <Row gutter={10}>
             <Col span={14}>
-              <Card bodyStyle={{ paddingTop: 0 }}>
-                <div className={styles.salesCard}>
+              <Card bordered={false} bodyStyle={{ paddingTop: 0 }}>
+                <div>
                   <Tabs size="large" tabBarStyle={{ marginBottom: 24 }}>
                     <TabPane tab="收入概况" key="sales">
                       <div className={styles.income_} style={{ display: 'flex' }}>
@@ -229,13 +233,13 @@ class Dashboard extends Component {
                           </div>
                         </div>
                       </div>
-                      <div style={{ marginTop: 30, paddingBottom: 30 }}>收入趋势</div>
+                      <div style={{ marginTop: 30, paddingBottom: 28 }}>收入趋势</div>
                       <div style={{ marginTop: 30, paddingBottom: 20 }}>
                         <MiniArea
                           line={true}
                           height={180}
                           data={visitData}
-                          chartPadding={[15, 25, 40, 45]}
+                          chartPadding={[15, 30, 40, 30]}
                           xAxis={xAxis}
                           yAxis={yAxis}
                         />
