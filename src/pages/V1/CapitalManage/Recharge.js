@@ -1,12 +1,12 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
-import { Card, Button, Form, Select, Input, Alert, Icon } from 'antd';
+import { Card, Button, Form, Input, Alert, Icon } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 // import Result from '@/components/Result';
 import styles from './styles.less';
 
-const { Option } = Select;
+// const { Option } = Select;
 
 const content = <div />;
 
@@ -20,6 +20,7 @@ class Recharge extends PureComponent {
     curIndex: 0,
     rechargeMoney: 0,
     isInput: true, // 是否可自定义金额
+    visible: true,
   };
 
   componentDidMount() {
@@ -60,7 +61,7 @@ class Recharge extends PureComponent {
     }
     const rechargeMoney =
       index === rechargeActivity.reward_list.length
-        ? 0
+        ? ''
         : rechargeActivity.reward_list[index].recharge;
     const isInput = index !== rechargeActivity.reward_list.length;
     this.setState({
@@ -70,9 +71,13 @@ class Recharge extends PureComponent {
     });
   };
 
+  handleClose = () => {
+    this.setState({ visible: false });
+  };
+
   render() {
     const { form, rechargeActivity } = this.props;
-    const { curIndex, rechargeMoney, isInput } = this.state;
+    const { curIndex, rechargeMoney, isInput, visible } = this.state;
     const rewardList = rechargeActivity.reward_list;
     const { getFieldDecorator } = form;
 
@@ -103,8 +108,14 @@ class Recharge extends PureComponent {
       <PageHeaderWrapper title="我要充值" content={content}>
         <Card>
           <p className={styles.title}>充值</p>
-          {rechargeActivity.recharge_tip ? (
-            <Alert message={rechargeActivity.recharge_tip} type="info" showIcon />
+          {rechargeActivity.recharge_tip && visible ? (
+            <Alert
+              message={rechargeActivity.recharge_tip}
+              type="warning"
+              showIcon
+              closable
+              afterClose={this.handleClose}
+            />
           ) : (
             ''
           )}
@@ -120,7 +131,7 @@ class Recharge extends PureComponent {
                   onClick={this.selectedAct.bind(this, index)}
                   key={e.reward}
                 >
-                  <p>冲{e.recharge}</p>
+                  <p>充{e.recharge}</p>
                   <p className={styles.reward}>送￥{e.reward}奖励金</p>
                   {curIndex === index ? (
                     <Fragment>
@@ -132,7 +143,7 @@ class Recharge extends PureComponent {
                   )}
                 </div>
               ))}
-            {rewardList ? (
+            {rewardList && rewardList.length ? (
               <div
                 className={`${styles.re_act_item} ${
                   curIndex === rewardList.length ? styles.selectedItem : ''
@@ -173,10 +184,16 @@ class Recharge extends PureComponent {
               )}{' '}
               元
             </Form.Item>
-            <Form.Item label="支付类型">
+            {/* <Form.Item label="支付类型">
               <Select defaultValue="1" style={{ width: 200 }}>
                 <Option value="1">充值</Option>
               </Select>
+            </Form.Item> */}
+            <Form.Item label="应付">
+              <span style={{ fontSize: '18px', fontWeight: 'bold', color: 'orange' }}>
+                {rechargeMoney === '' ? 0 : rechargeMoney}
+              </span>{' '}
+              元
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">

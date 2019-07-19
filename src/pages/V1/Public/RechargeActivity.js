@@ -7,6 +7,7 @@ import HeadNav from './components/HeadNav';
 import ActNav from './components/ActNav';
 
 import styles from './styles.less';
+import { getStorage } from '@/utils/authority';
 
 const rewardList = [
   { reward: 500, recharge: 3000 },
@@ -19,7 +20,24 @@ const rewardList = [
   loading: loading.models.recharge,
 }))
 class RechargeActivity extends Component {
+  state = {
+    path: '/CapitalManage/Recharge',
+  };
+
+  componentDidMount() {
+    if (!getStorage('token')) {
+      this.setState({
+        path: '/user/login',
+      });
+    } else if (getStorage('sh_state') === '0') {
+      this.setState({
+        path: '/user/settlein',
+      });
+    }
+  }
+
   render() {
+    const { path } = this.state;
     return (
       <div>
         <HeadNav />
@@ -53,7 +71,7 @@ class RechargeActivity extends Component {
               </div>
             ))}
           </div>
-          <Link className={`${styles.btn_toRecharge}`} to="/CapitalManage/Recharge">
+          <Link className={`${styles.btn_toRecharge}`} to={path}>
             立即充值
           </Link>
           <div className={styles.attention}>
