@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
+import { formatMessage } from 'umi-plugin-react/locale';
 import Link from 'umi/link';
 import router from 'umi/router';
 import { Form, Input, Button, Row, Col, Icon } from 'antd';
@@ -152,7 +152,9 @@ class Register extends Component {
     const { count, captchaImg } = this.state;
     return (
       <div className={styles.main}>
-        <h3 style={{ textAlign: 'center' }}>申请代理</h3>
+        <h2 style={{ textAlign: 'center', fontWeight: 600 }}>超多客代理系统</h2>
+        <p className={styles.desc}>为您提供运营解决方案，提升公司业务</p>
+        <h3>申请代理</h3>
         <Form
           ref={eform => {
             this.loginForm = eform;
@@ -168,7 +170,7 @@ class Register extends Component {
                   message: formatMessage({ id: 'validation.phone-number.required' }),
                 },
               ],
-            })(<Input size="large" placeholder="公司单位名称" />)}
+            })(<Input size="large" placeholder="输入公司名称" />)}
           </FormItem>
           <FormItem>
             {getFieldDecorator('mobile', {
@@ -183,12 +185,7 @@ class Register extends Component {
                   message: formatMessage({ id: 'validation.phone-number.wrong-format' }),
                 },
               ],
-            })(
-              <Input
-                size="large"
-                placeholder={formatMessage({ id: 'form.phone-number.placeholder' })}
-              />
-            )}
+            })(<Input size="large" placeholder="11位手机号" />)}
           </FormItem>
           <FormItem>
             <Row gutter={8}>
@@ -200,12 +197,7 @@ class Register extends Component {
                       message: formatMessage({ id: 'validation.verification-code.required' }),
                     },
                   ],
-                })(
-                  <Input
-                    size="large"
-                    placeholder={formatMessage({ id: 'form.verification-code.placeholder' })}
-                  />
-                )}
+                })(<Input size="large" placeholder="输入验证码" />)}
               </Col>
               <Col span={8}>
                 <Button
@@ -234,7 +226,7 @@ class Register extends Component {
                       message: '请输入图片验证码',
                     },
                   ],
-                })(<Input size="large" placeholder="图片验证码" />)}
+                })(<Input size="large" placeholder="输入右侧验证码" />)}
               </Col>
               <Col span={6}>
                 <img
@@ -248,21 +240,26 @@ class Register extends Component {
               </Col>
             </Row>
           </FormItem>
-          <FormItem>
-            <Button
-              style={{ width: '100%', fontSize: '14px' }}
-              size="large"
-              loading={submitting}
-              type="primary"
-              htmlType="submit"
-            >
-              <FormattedMessage id="app.register.register" />
-            </Button>
-          </FormItem>
-          <FormItem style={{ textAlign: 'center' }}>
-            已有超多客账号？
-            <Link to="/work/User/login">直接登录</Link>
-          </FormItem>
+          <Row type="flex" align="middle" gutter={8}>
+            <Col span={12}>
+              <FormItem>
+                <Button
+                  style={{ width: '100%', fontSize: '14px' }}
+                  size="large"
+                  loading={submitting}
+                  type="primary"
+                  htmlType="submit"
+                >
+                  立即申请
+                </Button>
+              </FormItem>
+            </Col>
+            <Col span={11}>
+              <FormItem style={{ textAlign: 'right' }}>
+                <Link to="/work/User/login">使用已有账户登录</Link>
+              </FormItem>
+            </Col>
+          </Row>
         </Form>
       </div>
     );
