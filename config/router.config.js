@@ -44,7 +44,7 @@ export default [
   // 招商 user
   {
     path: '/work/user',
-    component: '../layouts/UserLayout',
+    // component: '../layouts/UserLayout',
     routes: [
       // 代理招商
       {

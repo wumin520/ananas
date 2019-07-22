@@ -91,6 +91,8 @@ class LoginPage extends Component {
     }/cdk/work/v1/phrase?_version=`;
     return (
       <div className={styles.main}>
+        <h2 style={{ textAlign: 'center', fontWeight: 600 }}>超多客代理系统</h2>
+        <p className={styles.desc}>为您提供运营解决方案，提升公司业务</p>
         <Login
           defaultActiveKey={type}
           onTabChange={this.onTabChange}
@@ -190,19 +192,18 @@ class LoginPage extends Component {
             />
           </Tab>
           {/* <div>
-            <Checkbox checked={autoLogin} onChange={this.changeAutoLogin}>
-              <FormattedMessage id="app.login.remember-me" />
-            </Checkbox>
-            <a style={{ float: 'right' }} href="">
-              <FormattedMessage id="app.login.forgot-password" />
-            </a>
-          </div> */}
+              <Checkbox checked={autoLogin} onChange={this.changeAutoLogin}>
+                <FormattedMessage id="app.login.remember-me" />
+              </Checkbox>
+              <a style={{ float: 'right' }} href="">
+                <FormattedMessage id="app.login.forgot-password" />
+              </a>
+            </div> */}
           <Submit loading={submitting}>
             <FormattedMessage id="app.login.login" />
           </Submit>
           <div className={styles.other}>
-            还没有超多客账号？
-            <Link to="/work/user/register">立即注册</Link>
+            <Link to="/work/user/register">{'立即申请成为代理 >'}</Link>
           </div>
         </Login>
       </div>

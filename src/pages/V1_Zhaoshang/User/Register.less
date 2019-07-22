@@ -1,10 +1,15 @@
 @import '~antd/lib/style/themes/default.less';
 
+:global(#root) {
+  background: url('https://cdn.youlianyc.com/image/static/224ebb3689dd2680883ea9c4a08440052c8f0206.jpg')
+    no-repeat;
+  background-size: 100% 100%;
+}
 .main {
   width: 388px;
   margin: 0 auto;
-  padding: 40px 40px 2px;
-  background: #fff;
+  padding: 100px 40px 2px;
+  // background: #fff;
 
   :global {
     .ant-form-item {
@@ -35,6 +40,12 @@
   }
 }
 
+.desc {
+  margin-bottom: 30px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+  text-align: center;
+}
 .success,
 .warning,
 .error {
