@@ -216,18 +216,24 @@ class Dashboard extends Component {
           <Row gutter={10}>
             <Col span={14}>
               <Card bordered={false} bodyStyle={{ paddingTop: 0 }}>
-                <div>
+                <div className={styles.incomeMessage}>
                   <Tabs size="large" tabBarStyle={{ marginBottom: 24 }}>
                     <TabPane tab="收入概况" key="sales">
                       <div className={styles.income_} style={{ display: 'flex' }}>
                         <div style={{ flex: 'auto' }}>
-                          <div>今日预计分成(元)</div>
+                          <div>今日预计订单分成(元)</div>
                           <div className={styles.todayEarn}>
                             ￥{income_info.today_expect_income}
                           </div>
                         </div>
                         <div style={{ flex: 'auto' }}>
-                          <div>累计预计分成(元)</div>
+                          <div>今日预计会员分成(元)</div>
+                          <div className={styles.todayEarn}>
+                            ￥{income_info.today_expect_income}
+                          </div>
+                        </div>
+                        <div style={{ flex: 'auto' }}>
+                          <div>累计预计总分成(元)</div>
                           <div className={styles.totalEarn}>
                             ￥{income_info.total_expect_income}
                           </div>
@@ -246,6 +252,32 @@ class Dashboard extends Component {
                       </div>
                     </TabPane>
                   </Tabs>
+                  <div className={styles.rules}>
+                    <Tooltip
+                      title={
+                        <div className={styles.toolP}>
+                          <p>
+                            1.有效订单分成
+                            <br />
+                            分成比例：交易额*2%；
+                          </p>
+                          <p>
+                            2.会员分成：
+                            <br />
+                            充值黄金会员：每个1000元；
+                            <br />
+                            充值白金会员：每个1500元；
+                            <br />
+                            充值钻石会员：每个2000元。
+                          </p>
+                          <p>每月25日结算上月会员分成及有效订单分成。</p>
+                        </div>
+                      }
+                    >
+                      <Icon type="question-circle" className={styles.icon} />
+                    </Tooltip>
+                    分成规则
+                  </div>
                 </div>
               </Card>
             </Col>
@@ -266,7 +298,7 @@ class Dashboard extends Component {
                               </div>
                             }
                           >
-                            <Icon type="info-circle-o" />
+                            <Icon type="question-circle" />
                           </Tooltip>
                         }
                         loading={loading}
@@ -298,7 +330,7 @@ class Dashboard extends Component {
                               </div>
                             }
                           >
-                            <Icon type="info-circle-o" />
+                            <Icon type="question-circle" />
                           </Tooltip>
                         }
                         loading={loading}
@@ -329,7 +361,7 @@ class Dashboard extends Component {
                               </div>
                             }
                           >
-                            <Icon type="info-circle-o" />
+                            <Icon type="question-circle" />
                           </Tooltip>
                         }
                         loading={loading}

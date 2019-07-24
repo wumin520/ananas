@@ -135,6 +135,25 @@ class Step4 extends React.PureComponent {
         title: '金额',
         dataIndex: 'rebate_money',
         key: 'rebate_money',
+        render: (value, row, index) => {
+          const obj = {
+            children: value,
+            row,
+            props: {},
+          };
+
+          obj.props.colSpan = 0;
+
+          const valObj = {
+            0: 1,
+            1: 2,
+            2: 1,
+            3: 1,
+          };
+          if ({}.hasOwnProperty.call(valObj, index)) obj.props.colSpan = valObj[index];
+
+          return obj;
+        },
       },
       {
         title: '数量',
@@ -148,19 +167,36 @@ class Step4 extends React.PureComponent {
       },
     ];
 
-    const data = [
+    let data = [
       {
         id: 1,
-        reward_type: location.query.qf === undefined ? '用户返款' : '平台服务费',
+        reward_type: '推广费用',
         ...taskPayInfo,
       },
     ];
+    const syData = [
+      {
+        id: 1,
+        reward_type: '用户返款',
+        ...taskPayInfo,
+      },
+      {
+        id: 2,
+        reward_type: '平台服务费',
+        rebate_money: '剩余免费额度￥500，000.00  超出部分收取5%服务费',
+        num: '1000',
+      },
+    ];
+
     const chargeUrl = this.chargeUrl || '';
     const radioStyle = {
       display: 'block',
       height: '30px',
       lineHeight: '30px',
     };
+    if (location.query.qf === undefined) {
+      data = syData;
+    }
     return (
       <Fragment>
         {taskPayInfo.can_pay == 1 ? (
@@ -191,6 +227,11 @@ class Step4 extends React.PureComponent {
               columns={columns}
               dataSource={data}
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col style={{ textAlign: 'right', marginTop: 10 }} push={6} span={12}>
+            服务费抵扣：-￥{taskPayInfo.total_money}元
           </Col>
         </Row>
         <Row>

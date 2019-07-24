@@ -472,6 +472,11 @@ export default [
             path: '/work/businesses/list',
             component: './V1_Zhaoshang/Businesses/List',
           },
+          {
+            name: 'record',
+            path: '/work/businesses/record',
+            component: './V1_Zhaoshang/Businesses/Record',
+          },
         ],
       },
       {

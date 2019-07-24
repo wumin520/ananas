@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, DatePicker } from 'antd';
-import Link from 'umi/link';
+import { Table, Card, Row, Col, Input, Button, Form, Select, DatePicker } from 'antd';
+// import Link from 'umi/link';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './List.less';
@@ -20,7 +20,7 @@ let params = {
   loading: loading.effects['businesses/fetchBasic'],
 }))
 @Form.create()
-class List extends PureComponent {
+class Record extends PureComponent {
   constructor(props) {
     super(props);
     this.columns = [
@@ -33,87 +33,39 @@ class List extends PureComponent {
             <div>
               <a>{item.shop_name}</a>
               <div>店铺编号：{item.shop_code}</div>
-              <div>注册时间：{item.created_at}</div>
             </div>
           );
         },
       },
       {
-        title: '联系方式',
+        title: '购买会员等级',
         key: 'contact',
         width: 100,
-        render: item => {
-          return (
-            <div>
-              <div>手机号：{item.phone}</div>
-              <div>qq号：{item.qq}</div>
-            </div>
-          );
-        },
       },
       {
         key: 'total_balance',
         width: 80,
-        title: '累计充值',
+        title: '购买金额',
         dataIndex: 'total_balance',
         render: val => {
-          return <span>{val ? `￥ ${val}` : ''}</span>;
+          return <span>{`￥ ${val}`}</span>;
         },
       },
       {
-        title: '资产余额',
+        title: '结算金额',
+        key: 'total_balance',
+        width: 150,
+        dataIndex: 'total_balance',
+        render: val => {
+          return <span>{`￥ ${val}`}</span>;
+        },
+      },
+      {
+        title: '购买时间',
         key: 'balance',
         width: 150,
         render: item => {
-          return (
-            <p style={{ textAlign: 'left' }}>
-              <span>账户余额：{item.balance}</span>
-              <br />
-              <span>冻结中：{item.frozen_balance}</span>
-              <br />
-              <span>累计推广支出：{item.outcome}</span>
-            </p>
-          );
-        },
-      },
-      {
-        title: '会员等级',
-        key: 'balance',
-        width: 150,
-        render: item => {
-          return (
-            <p style={{ textAlign: 'left' }}>
-              <span>普通会员</span>
-              <br />
-              <span>有效期：{item.outcome}</span>
-            </p>
-          );
-        },
-      },
-
-      {
-        title: '账号状态',
-        key: 'state',
-        width: 100,
-        render(item) {
-          return <Badge status={item.state_color} text={item.state_desc} />;
-        },
-      },
-      {
-        title: '操作',
-        width: 120,
-        render: item => {
-          return (
-            <div>
-              <Link to={`/work/promotion/plan?shop_code=${item.shop_code}&sh_id=${item.sh_id}`}>
-                推广记录
-              </Link>
-              <br />
-              <Link to={`/work/businesses/record?shop_code=${item.shop_code}&sh_id=${item.sh_id}`}>
-                会员购买记录
-              </Link>
-            </div>
-          );
+          return <span>{item.outcome}</span>;
         },
       },
     ];
@@ -195,19 +147,17 @@ class List extends PureComponent {
     const {
       form: { getFieldDecorator },
     } = this.props;
-    const { listData } = this.props;
+    const { listData, location } = this.props;
     const stateSelect = listData.state_select;
+    const shopCode = location.query.shop_code;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 6, lg: 12, xl: 24 }}>
           <Col md={5} sm={24}>
             <FormItem label="店铺编号">
-              {getFieldDecorator('shop_code')(<Input placeholder="请输入" />)}
-            </FormItem>
-          </Col>
-          <Col md={5} sm={24}>
-            <FormItem label="商户手机">
-              {getFieldDecorator('phone')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('shop_code', { initialValue: shopCode })(
+                <Input placeholder="请输入拼多多id" />
+              )}
             </FormItem>
           </Col>
           <Col md={5} sm={24}>
@@ -215,13 +165,12 @@ class List extends PureComponent {
               {getFieldDecorator('shop_name')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
-
           <Col md={5} sm={24}>
-            <FormItem label="状态">
+            <FormItem label="会员等级">
               {getFieldDecorator('state')(
                 <Select
-                  style={{ width: '100%' }}
-                  placeholder="全部"
+                  // style={{ width: '100%' }}
+                  placeholder="请选择"
                   onChange={this.selectTypeChange}
                 >
                   {stateSelect.length &&
@@ -247,7 +196,7 @@ class List extends PureComponent {
         </Row>
         <Row>
           <Col md={8} sm={24}>
-            <FormItem label="注册时间">{getFieldDecorator('created_at')(<RangePicker />)}</FormItem>
+            <FormItem label="购买时间">{getFieldDecorator('created_at')(<RangePicker />)}</FormItem>
           </Col>
         </Row>
       </Form>
@@ -262,7 +211,7 @@ class List extends PureComponent {
     // 表格数据
     const { listData } = this.props;
     const content = <div />;
-    const title = <div style={{ marginTop: 12 }}>商家列表</div>;
+    const title = <div style={{ marginTop: 12 }}>会员购买记录</div>;
     return (
       <PageHeaderWrapper title={title} content={content}>
         <div className={styles.standardList}>
@@ -289,4 +238,4 @@ class List extends PureComponent {
   }
 }
 
-export default List;
+export default Record;

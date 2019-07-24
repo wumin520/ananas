@@ -43,14 +43,14 @@ class Index extends PureComponent {
     const {
       // list: { list },
       loading,
-      setting,
+      // setting,
     } = this.props;
 
-    const { primaryColor } = setting;
+    // const { primaryColor } = setting;
 
     const listTemp = [
       {
-        actions: ['列表', '+新增'],
+        // actions: ['列表', '+新增'],
         state: 1,
         avatar:
           'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
@@ -70,7 +70,7 @@ class Index extends PureComponent {
 2、招商推广ID：3662914，招商团长佣金可设置为0`,
       },
       {
-        actions: ['列表', '+新增'],
+        // actions: ['列表', '+新增'],
         state: 1,
         type: 3,
         avatar:
@@ -91,7 +91,7 @@ class Index extends PureComponent {
 4、支持专属佣金设置，推广ID：3662914`,
       },
       {
-        actions: ['列表', '+新增'],
+        // actions: ['列表', '+新增'],
         state: 1,
         type: 2,
         avatar:
@@ -113,7 +113,7 @@ class Index extends PureComponent {
 
     const qfList = [
       {
-        actions: ['+新增'],
+        // actions: ['+新增'],
         state: 1,
         type: 2,
         avatar:
@@ -122,7 +122,7 @@ class Index extends PureComponent {
         description: `提高店铺收藏数`,
       },
       {
-        actions: ['+新增'],
+        // actions: ['+新增'],
         state: 1,
         type: 2,
         avatar:
@@ -166,44 +166,44 @@ class Index extends PureComponent {
         {item.state ? '' : <div className={styles.upgradeTag}>升级中</div>}
       </div>
     );
-    const onTabChange = (index, item) => {
-      if (!item.state) {
-        return;
-      }
-      console.log('onTabChange -> ', index, item);
-      if (item.type === 2 && index === 2) {
-        this.setState({
-          visible: true,
-        });
-        return;
-      }
-      if (index === 1) {
-        let path = `/fangdan/list`;
-        if (item.type === 2) {
-          path += '?qf=1';
-        } else if (item.type === 3) {
-          path += '?deq=1';
-        }
-        router.push(path);
-        return;
-      }
-      if (item.type === 3) {
-        router.push('/fangdan/step-form/info?deq=1');
-        return;
-      }
-      const { dispatch } = this.props;
-      dispatch({
-        type: 'form/checkPrivige',
-        payload: {
-          type: 0,
-        },
-      }).then(res => {
-        if (res && res.status === 'ok') {
-          router.push('/fangdan/step-form');
-        }
-      });
-      // console.log('onTabChange', 1, index);
-    };
+    // const onTabChange = (index, item) => {
+    //   if (!item.state) {
+    //     return;
+    //   }
+    //   console.log('onTabChange -> ', index, item);
+    //   if (item.type === 2 && index === 2) {
+    //     this.setState({
+    //       visible: true,
+    //     });
+    //     return;
+    //   }
+    //   if (index === 1) {
+    //     let path = `/fangdan/list`;
+    //     if (item.type === 2) {
+    //       path += '?qf=1';
+    //     } else if (item.type === 3) {
+    //       path += '?deq=1';
+    //     }
+    //     router.push(path);
+    //     return;
+    //   }
+    //   if (item.type === 3) {
+    //     router.push('/fangdan/step-form/info?deq=1');
+    //     return;
+    //   }
+    //   const { dispatch } = this.props;
+    //   dispatch({
+    //     type: 'form/checkPrivige',
+    //     payload: {
+    //       type: 0,
+    //     },
+    //   }).then(res => {
+    //     if (res && res.status === 'ok') {
+    //       router.push('/fangdan/step-form');
+    //     }
+    //   });
+    //   // console.log('onTabChange', 1, index);
+    // };
 
     const { visible } = this.state;
     const { Meta } = Card;
@@ -249,7 +249,7 @@ class Index extends PureComponent {
             <List
               rowKey="id"
               loading={loading}
-              itemLayout="vertical"
+              // grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
               dataSource={[...listTemp]}
               renderItem={item =>
                 item ? (
@@ -257,23 +257,23 @@ class Index extends PureComponent {
                     <Card
                       hoverable
                       className={styles.card}
-                      actions={[
-                        <a
-                          onClick={() => {
-                            onTabChange(1, item);
-                          }}
-                        >
-                          {item.actions && item.actions[0]}
-                        </a>,
-                        <a
-                          style={item.state ? { color: primaryColor } : {}}
-                          onClick={() => {
-                            onTabChange(2, item);
-                          }}
-                        >
-                          {item.actions && item.actions[1]}
-                        </a>,
-                      ]}
+                      // actions={[
+                      //   <a
+                      //     onClick={() => {
+                      //       onTabChange(1, item);
+                      //     }}
+                      //   >
+                      //     {item.actions && item.actions[0]}
+                      //   </a>,
+                      //   <a
+                      //     style={item.state ? { color: primaryColor } : {}}
+                      //     onClick={() => {
+                      //       onTabChange(2, item);
+                      //     }}
+                      //   >
+                      //     {item.actions && item.actions[1]}
+                      //   </a>,
+                      // ]}
                     >
                       <Card.Meta
                         avatar={<img alt="" className={styles.cardAvatar} src={item.avatar} />}
