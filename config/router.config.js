@@ -389,6 +389,30 @@ export default [
           },
         ],
       },
+      // complaint
+      {
+        path: '/complaint',
+        icon: 'profile',
+        name: 'complaint',
+        authority: ['admin', 'user'],
+        routes: [
+          {
+            path: '/complaint/complaintList',
+            name: 'complaintList',
+            component: './V1/Complaint/ComplaintList',
+          },
+          {
+            path: '/complaint/complaintDetail',
+            name: 'ComplaintDetail',
+            component: './V1/Complaint/ComplaintDetail',
+          },
+          {
+            path: '/complaint/myComplaint',
+            name: 'myComplaint',
+            component: './V1/Complaint/MyComplaint',
+          },
+        ],
+      },
       // 推手中心
       {
         path: '/tuishou',

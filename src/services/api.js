@@ -2,7 +2,6 @@ import { stringify } from 'qs';
 import request from '@/utils/request';
 /* eslint-disable */
 const api_pre = `/v1/web/`;
-const api_zs = `/v1/web/`;
 
 // server api
 export async function queryServerTest(params) {
@@ -187,6 +186,24 @@ export async function tsAddCollect(params) {
 // 官网选品库商品
 export async function tsTaskGoodsUrl(params) {
   return request(api_pre + `ts/task/goods/uri?${stringify(params)}`);
+}
+
+// 提交申诉
+export async function orderComplain(params) {
+  return request(api_pre + `order/complain`, {
+    method: 'POST',
+    data: params,
+  });
+}
+
+// 订单申诉列表
+export async function orderComplainList(params) {
+  return request(api_pre + `order/complain/list?${stringify(params)}`);
+}
+
+// 订单申诉详情
+export async function orderComplainDetail(params) {
+  return request(api_pre + `order/complain/detail?${stringify(params)}`);
 }
 
 // 代理-商家推广排期列表
