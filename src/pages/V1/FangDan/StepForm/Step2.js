@@ -352,7 +352,7 @@ class Step2 extends React.PureComponent {
             <Form.Item {...formItemLayout} className={styles.stepFormText} label="推荐理由">
               {getFieldDecorator('recommend_reason', {
                 initialValue: editTaskInfo.recommend_reason,
-                rules: [{ required: true, message: '请输入推荐理由', max: 36 }],
+                // rules: [{ required: true, message: '请输入推荐理由', max: 36 }],
               })(<Input placeholder="请输入推荐理由" style={{ width: '80%' }} />)}
               <div style={{ color: 'orange' }}>
                 不超过36个字的精简文案，突出产品亮点、需求痛点、为什么值得购买！
