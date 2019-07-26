@@ -228,8 +228,7 @@ class Step4 extends React.PureComponent {
       },
     ];
     if (location.query.qf === undefined && memberInfo[0].level === 0) {
-      // data = otherData;
-      data = syhyData;
+      data = otherData;
     } else if (location.query.qf === undefined && memberInfo[0].level !== 0) {
       data = syhyData;
     }
@@ -273,6 +272,7 @@ class Step4 extends React.PureComponent {
             />
           </Col>
         </Row>
+
         <Row>
           <Col style={{ textAlign: 'right', marginTop: 10 }} push={6} span={12}>
             {location.query.qf === undefined && memberInfo[0].level !== 0 ? (

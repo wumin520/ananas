@@ -143,7 +143,6 @@ class Record extends PureComponent {
     } = this.props;
     const { recordData, location } = this.props;
     const stateSelect = recordData.member_level;
-    console.log('stateSelect===', stateSelect);
     const shopCode = location.query.shop_code;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
