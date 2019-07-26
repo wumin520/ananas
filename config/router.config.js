@@ -404,6 +404,7 @@ export default [
           {
             path: '/complaint/complaintDetail',
             name: 'ComplaintDetail',
+            hideInMenu: true,
             component: './V1/Complaint/ComplaintDetail',
           },
           {

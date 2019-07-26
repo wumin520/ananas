@@ -26,12 +26,16 @@ class MyComplaint extends PureComponent {
   handleSubmit = e => {
     e.preventDefault();
     const { form } = this.props;
+    const { fileList } = this.state;
     form.validateFieldsAndScroll((err, values) => {
-      console.log('values: ', values);
+      // console.log('values: ', values);
+      const arr = [];
+      if (fileList.length > 0) {
+        fileList.map(val => arr.push(val.response.payload.url));
+      }
+      const param = { ...values, images: arr };
       if (!err) {
         const { dispatch } = this.props;
-        const param = { ...values };
-        console.log('param: ', param);
         dispatch({
           type: 'complaint/orderComplain',
           payload: param,

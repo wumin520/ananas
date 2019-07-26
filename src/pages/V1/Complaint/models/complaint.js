@@ -1,5 +1,5 @@
 import { orderComplain, orderComplainList, orderComplainDetail } from '@/services/api';
-import { routerRedux } from 'dva/router';
+import router from 'umi/router';
 
 export default {
   namespace: 'complaint',
@@ -11,14 +11,18 @@ export default {
       state_select: [],
       page_info: {},
     },
-    complaintDetail: {},
+    complaintDetail: {
+      compain_data: {},
+      order_data: {},
+      task_data: {},
+    },
   },
 
   effects: {
     *orderComplain({ payload }, { call }) {
       const res = yield call(orderComplain, payload);
       if (res && res.code === 200) {
-        routerRedux.push('/complaint/complaintList');
+        router.push('/complaint/complaintList');
       }
     },
     *getOrderComplainList({ payload }, { call, put }) {
