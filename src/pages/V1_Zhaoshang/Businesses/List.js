@@ -1,6 +1,19 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, DatePicker } from 'antd';
+import {
+  Table,
+  Card,
+  Row,
+  Col,
+  Input,
+  Button,
+  Form,
+  Select,
+  Badge,
+  DatePicker,
+  Tooltip,
+  Icon,
+} from 'antd';
 import Link from 'umi/link';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -78,15 +91,34 @@ class List extends PureComponent {
       },
       {
         title: '会员等级',
-        key: 'balance',
         width: 150,
         render: item => {
           return (
-            <p style={{ textAlign: 'left' }}>
-              <span>普通会员</span>
+            <div style={{ textAlign: 'left' }}>
+              <span>{item.member_name}</span>
               <br />
-              <span>有效期：{item.outcome}</span>
-            </p>
+              <p>{item.member_end_time ? `${item.member_end_time}到期` : '期限：永久'}</p>
+              {item.member_list.length > 1 ? (
+                <Tooltip>
+                  {/* title={
+                  <div>
+                    {item.member_list.map(val => {
+                      <p>
+                        {val.name}
+                        <br />
+                        {val.end_time ? `${val.end_time}到期` : '期限：永久'}
+                      </p>;
+                    })}
+                  </div>
+                } */}
+                  <Button type="small" style={{ lineHeight: 2, height: 22 }}>
+                    <Icon type="small-dash" />
+                  </Button>
+                </Tooltip>
+              ) : (
+                ''
+              )}
+            </div>
           );
         },
       },
@@ -270,7 +302,7 @@ class List extends PureComponent {
             <div className={styles.tableList}>
               <div className={styles.tableListForm}>{this.renderForm()}</div>
               <Table
-                rowKey={item => item.sh_id}
+                rowKey={item => item.member_level}
                 columns={this.columns}
                 dataSource={listData.list}
                 pagination={{

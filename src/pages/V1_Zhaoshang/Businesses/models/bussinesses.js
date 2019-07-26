@@ -1,4 +1,4 @@
-import { shlist } from '@/services/zhaoshang_api';
+import { shlist, memberRecord } from '@/services/zhaoshang_api';
 
 export default {
   namespace: 'businesses',
@@ -17,33 +17,9 @@ export default {
       task_info: {},
       page_info: {},
     },
-    detailData: {
-      data: {
-        coupon_info: {},
-      },
-      plan_list: [],
-    },
-    orderData: {
-      list: [
-        {
-          ordered_datetime: '',
-          harvest_time: '',
-          proof_time: '',
-          paid_datetime: '',
-        },
-      ],
-      order_num_info: {},
-      state_select: [],
-      page_info: {},
-    },
-    finishData: {},
-    planDownData: {},
-    planUpData: {},
-    planData: {
+    // 会员购买记录
+    recordData: {
       list: [],
-      header_info: {},
-      state_select: [],
-      type_select: [],
       page_info: {},
     },
   },
@@ -55,6 +31,15 @@ export default {
         type: 'saveState',
         payload: {
           listData: res.payload,
+        },
+      });
+    },
+    *recordData({ payload }, { call, put }) {
+      const res = yield call(memberRecord, payload);
+      yield put({
+        type: 'saveState',
+        payload: {
+          recordData: res.payload,
         },
       });
     },

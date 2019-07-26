@@ -12,12 +12,12 @@ const { Option } = Select;
 
 let params = {
   page: 1, // 翻页参数
-  state: '',
+  member_level: 0,
 };
 
 @connect(({ businesses, loading }) => ({
-  listData: businesses.listData,
-  loading: loading.effects['businesses/fetchBasic'],
+  recordData: businesses.recordData,
+  loading: loading.effects['businesses/recordData'],
 }))
 @Form.create()
 class Record extends PureComponent {
@@ -26,8 +26,8 @@ class Record extends PureComponent {
     this.columns = [
       {
         title: '商户名称',
-        width: 143,
         key: 'shop_name',
+        width: 143,
         render: item => {
           return (
             <div>
@@ -39,34 +39,33 @@ class Record extends PureComponent {
       },
       {
         title: '购买会员等级',
-        key: 'contact',
+        key: 'member_name',
+        dataIndex: 'member_name',
         width: 100,
       },
       {
-        key: 'total_balance',
+        key: 'member_amount',
         width: 80,
         title: '购买金额',
-        dataIndex: 'total_balance',
+        dataIndex: 'member_amount',
         render: val => {
           return <span>{`￥ ${val}`}</span>;
         },
       },
       {
         title: '结算金额',
-        key: 'total_balance',
+        key: 'settle_amount',
         width: 150,
-        dataIndex: 'total_balance',
+        dataIndex: 'settle_amount',
         render: val => {
           return <span>{`￥ ${val}`}</span>;
         },
       },
       {
         title: '购买时间',
-        key: 'balance',
+        key: 'buy_time',
+        dataIndex: 'buy_time',
         width: 150,
-        render: item => {
-          return <span>{item.outcome}</span>;
-        },
       },
     ];
   }
@@ -78,7 +77,7 @@ class Record extends PureComponent {
 
   componentWillUnmount() {
     params = {
-      state: '',
+      member_level: 0,
       page: 1,
     };
   }
@@ -87,7 +86,7 @@ class Record extends PureComponent {
   getListData = () => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'businesses/fetchBasic',
+      type: 'businesses/recordData',
       payload: params,
     });
   };
@@ -95,19 +94,18 @@ class Record extends PureComponent {
   // 查询
   handleSearch = e => {
     e.preventDefault();
-    const { dispatch, form } = this.props;
+    const { form } = this.props;
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       const values = {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
-      const times = fieldsValue.created_at;
+      const times = fieldsValue.end_time;
       if (times instanceof Array) {
         params.start_time = times[0].format('YYYY-MM-DD HH:MM:SS');
         params.end_time = times[1].format('YYYY-MM-DD HH:MM:SS');
       }
-      console.log(err, fieldsValue, 'err', params);
 
       params.page = 1;
       const def = keys => {
@@ -118,13 +116,9 @@ class Record extends PureComponent {
           }
         }
       };
-      def(['shop_code', 'shop_name', 'phone']);
-      params.state = values.state || '';
-
-      dispatch({
-        type: 'businesses/fetchBasic',
-        payload: params,
-      });
+      def(['shop_code', 'shop_name']);
+      params.member_level = values.member_level || '';
+      this.getListData(params);
     });
   };
 
@@ -134,7 +128,7 @@ class Record extends PureComponent {
     form.resetFields();
     params = {};
     params.page = 1;
-    params.state = '';
+    params.member_level = '';
     this.getListData(params);
   };
 
@@ -147,8 +141,8 @@ class Record extends PureComponent {
     const {
       form: { getFieldDecorator },
     } = this.props;
-    const { listData, location } = this.props;
-    const stateSelect = listData.state_select;
+    const { recordData, location } = this.props;
+    const stateSelect = recordData.member_level;
     const shopCode = location.query.shop_code;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
@@ -167,13 +161,9 @@ class Record extends PureComponent {
           </Col>
           <Col md={5} sm={24}>
             <FormItem label="会员等级">
-              {getFieldDecorator('state')(
-                <Select
-                  // style={{ width: '100%' }}
-                  placeholder="请选择"
-                  onChange={this.selectTypeChange}
-                >
-                  {stateSelect.length &&
+              {getFieldDecorator('member_level')(
+                <Select placeholder="请选择" onChange={this.selectTypeChange}>
+                  {stateSelect.length > 0 &&
                     stateSelect.map(e => (
                       <Option key={e.value} value={e.value}>
                         {e.name}
@@ -196,7 +186,7 @@ class Record extends PureComponent {
         </Row>
         <Row>
           <Col md={8} sm={24}>
-            <FormItem label="购买时间">{getFieldDecorator('created_at')(<RangePicker />)}</FormItem>
+            <FormItem label="购买时间">{getFieldDecorator('end_time')(<RangePicker />)}</FormItem>
           </Col>
         </Row>
       </Form>
@@ -209,7 +199,7 @@ class Record extends PureComponent {
 
   render() {
     // 表格数据
-    const { listData } = this.props;
+    const { recordData } = this.props;
     const content = <div />;
     const title = <div style={{ marginTop: 12 }}>会员购买记录</div>;
     return (
@@ -221,12 +211,12 @@ class Record extends PureComponent {
               <Table
                 rowKey={item => item.sh_id}
                 columns={this.columns}
-                dataSource={listData.list}
+                dataSource={recordData.list}
                 pagination={{
                   defaultCurrent: 1,
-                  current: parseInt(listData.page_info.current_page, 10),
-                  pageSize: listData.page_info.per_page,
-                  total: listData.page_info.total_num,
+                  current: parseInt(recordData.page_info.current_page, 10),
+                  pageSize: recordData.page_info.per_page,
+                  total: recordData.page_info.total_num,
                   onChange: this.onChange,
                 }}
               />

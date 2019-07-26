@@ -81,13 +81,6 @@ class GeneralizeDetail extends Component {
         key: 'plan_time',
       },
       {
-        title: '状态',
-        key: 'state',
-        render(item) {
-          return <Badge status={item.state_color} text={item.state_desc} />;
-        },
-      },
-      {
         title: '投放份数',
         render: item => {
           return <span>{item.total_amount}</span>;
@@ -106,6 +99,17 @@ class GeneralizeDetail extends Component {
           //   );
           // }
           // return <span>{operation}</span>;
+        },
+      },
+      {
+        title: '状态',
+        key: 'state',
+        render(item) {
+          let option = '';
+          if (item.state !== 4) {
+            option = <Badge status={item.state_color} text={item.state_desc} />;
+          }
+          return option;
         },
       },
       // {
@@ -134,24 +138,28 @@ class GeneralizeDetail extends Component {
             <Description term="申请时间">{data.created_at}</Description>
             <Description term="推广状态">
               <Badge status={data.state_color} text={data.state_desc} />
-              <p>
-                <Tooltip
-                  title={
-                    <div className={styles.toolP}>
-                      <p>手动终止：主动终止推广</p>
-                      <p>系统终止：因券或佣金等变更下架终止</p>
-                      <p>自然终止：推广结束后自动终止</p>
-                    </div>
-                  }
-                >
-                  <Icon type="question-circle" style={{ marginRight: 8 }} />
-                </Tooltip>
-                手动终止
-              </p>
+              {data.state === 6 ? (
+                <p>
+                  <Tooltip
+                    title={
+                      <div className={styles.toolP}>
+                        <p>手动终止：主动终止推广</p>
+                        <p>系统终止：因券或佣金等变更下架终止</p>
+                        <p>自然终止：推广结束后自动终止</p>
+                      </div>
+                    }
+                  >
+                    <Icon type="question-circle" style={{ marginRight: 8 }} />
+                  </Tooltip>
+                  {data.finsh_desc}：{data.finish_time}
+                </p>
+              ) : (
+                ''
+              )}
             </Description>
             <Description term="推广份数">{data.total_amount}</Description>
             <Description term="返现金额">￥{data.rebate_price}</Description>
-            <Description term="平台服务费">￥{data.rebate_price}</Description>
+            <Description term="平台服务费">￥{data.service_money}</Description>
           </DescriptionList>
           <Card title="商品信息">
             <DescriptionList size="large" title="商品信息" style={{ marginBottom: 32 }}>
@@ -175,7 +183,7 @@ class GeneralizeDetail extends Component {
                   <Description term="优惠券">
                     {data.coupon_price ? `￥ ${data.coupon_price}` : '无'}{' '}
                   </Description>
-                  <Description term="券后价">￥{data.price}</Description>
+                  <Description term="券后价">￥{data.after_coupon_price}</Description>
                 </Col>
               </Row>
             </DescriptionList>

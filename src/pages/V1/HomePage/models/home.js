@@ -6,6 +6,11 @@ export default {
 
   state: {
     head_info: {
+      asset_info: {
+        balance: 0,
+        reward_balance: 0,
+        frozen_balance: 0,
+      },
       task_info: {
         day_task_amount: 0, // 今日放单量
         total_amount: 0, // 总放单量

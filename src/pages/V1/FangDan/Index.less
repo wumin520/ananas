@@ -43,13 +43,18 @@
   }
   .item {
     min-height: 120px;
+    padding: 10px 0 20px;
     white-space: pre-wrap;
     -webkit-line-clamp: 6 !important;
+    border-top: 1px solid #e8e8e8;
   }
 
   :global {
     .ant-list .ant-list-item-content-single {
       max-width: 100%;
+    }
+    .ant-list-split .ant-list-item {
+      border: none;
     }
   }
 }

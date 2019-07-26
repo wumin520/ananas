@@ -8,6 +8,7 @@ const api_zs = `/v1/web/`;
 export async function queryServerTest(params) {
   return request(`/v1/wechat/register/reward?${stringify(params)}`);
 }
+
 // 放单列表
 export async function taskList(params) {
   return request(`/v1/web/task/list?${stringify(params)}`);

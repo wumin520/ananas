@@ -8,6 +8,9 @@ export default {
   state: {
     list: [],
     currentUser: {
+      shop_name: '',
+      shop_code: '',
+      avatar: '',
       bd_info: {
         name: '',
         avatar: '',
@@ -17,6 +20,13 @@ export default {
         qq: '',
         qq_url: '',
       },
+      sh_type: 0,
+      member_info: {
+        level: 0,
+        name: '',
+        end_at: '',
+      },
+      greetings: '',
       info: {}, // 招商代理
     },
   },

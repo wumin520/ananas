@@ -3,7 +3,8 @@ import { connect } from 'dva';
 import moment from 'moment';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import PageLoading from '@/components/PageLoading';
-import { Row, Col, Alert, Icon } from 'antd';
+import { Row, Col, Alert, Icon, Avatar, Card, Tag, Button, Tooltip } from 'antd';
+import { ChartCard } from '@/components/Charts';
 import { Link } from 'umi';
 import styles from './index.less';
 import { getStorage, setStorage } from '@/utils/authority';
@@ -18,8 +19,9 @@ const time = moment().format('YYYY-MM-DD');
 const start_time = `${time} 00:00:00`;
 const end_time = `${time} 23:59:59`;
 
-@connect(({ loading, homedata }) => ({
+@connect(({ loading, homedata, user }) => ({
   homedata,
+  currentUser: user.currentUser,
   loading: loading.effects['homedata/fetch'],
 }))
 class Index extends Component {
@@ -126,17 +128,22 @@ class Index extends Component {
   };
 
   render() {
-    const { loading, homedata } = this.props;
+    const { loading, homedata, currentUser } = this.props;
     const { isShowPop } = this.state;
 
     const headInfo = homedata.head_info;
+    const creditInfo = headInfo.credit_info;
     const taskList = homedata.planData.list;
     const taskReportInfo = homedata.task_report_info;
+    // 余额
+    const assetInfo = headInfo.asset_info;
     // const hotRank = homedata.hot_rank;
     const dayOrderInfo = homedata.orderData;
     let noticeInfo = homedata.notice_info;
     const rechargeActivityState = homedata.recharge_activity_state;
-
+    const { greetings, avatar } = currentUser;
+    const memberInfo = currentUser.member_info;
+    const bdInfo = currentUser.bd_info;
     // rechargeActivityState === 1  活动有效期内
     const actShow = isShowPop === '1' && rechargeActivityState === 1;
 
@@ -158,9 +165,94 @@ class Index extends Component {
     /* eslint-disable */
     const salesData = taskReportInfo[this.state.dataType];
 
+    const pageHeaderContent = (
+      <div>
+        <Row gutter={{ md: 6, lg: 12, xl: 24 }} className={styles.borderLine}>
+          <Col md={16} sm={24}>
+            <div className={styles.pageHeaderContent}>
+              <div className={styles.avatar}>
+                <Avatar size="large" src={avatar} />
+              </div>
+              <div className={styles.content}>
+                <div className={styles.titleTags}>
+                  <div className={styles.contentTitle}>{greetings}</div>
+                  <Tag>{memberInfo.name}</Tag>
+                </div>
+                <div className={styles.member}>
+                  <p style={{ marginRight: 10 }}>会员到期时间：{memberInfo.end_at}</p>
+                  <Button type="danger" style={{ marginLeft: 10, borderColor: 'red' }}>
+                    开通会员
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Col>
+          <Col md={8} sm={24}>
+            <ChartCard
+              loading={loading}
+              bordered={false}
+              title="当前信用分"
+              action={
+                <Tooltip
+                  title={
+                    <div className={styles.toolP}>
+                      <p>当前的信用情况，请保证信用良好，以防影响您的正常使用</p>
+                    </div>
+                  }
+                >
+                  <Icon type="info-circle-o" />
+                </Tooltip>
+              }
+              total={creditInfo.credit_score}
+              footer={
+                <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
+                  <span className={styles.trendT0 + creditInfo.credit_level}>
+                    {creditInfo.limit_info}
+                  </span>
+                </div>
+              }
+              contentHeight={46}
+              className={styles.score}
+            />
+          </Col>
+        </Row>
+        <Row className={styles.flex_}>
+          <Col className={styles.auto_}>
+            <p className={styles.yue}>
+              账户余额：<span className={styles.money}>￥{assetInfo.balance}</span>
+              <Button
+                href="/CapitalManage/Recharge"
+                type="danger"
+                style={{ marginLeft: 10, borderColor: 'red' }}
+              >
+                充值
+              </Button>
+            </p>
+            <p className={styles.desc_}>余额可用于发布所有推广活动</p>
+          </Col>
+          <Col className={styles.auto_}>
+            <p className={styles.yue}>
+              奖励金：<span className={styles.money}>￥{assetInfo.reward_balance}</span>
+            </p>
+            <p className={styles.desc_}>奖励金可用于收藏推广</p>
+          </Col>
+          <Col className={styles.auto_none}>
+            <p className={styles.yue}>
+              冻结余额：<span className={styles.money}>￥{assetInfo.frozen_balance}</span>
+            </p>
+            <p className={styles.desc_}>冻结余额用于推广担保</p>
+          </Col>
+        </Row>
+      </div>
+    );
+
     return (
       <GridContent>
-        <Alert message={noticeInfo} type="warning" showIcon style={{ marginBottom: 20 }} />
+        {noticeInfo ? (
+          <Alert message={noticeInfo} type="warning" showIcon style={{ marginBottom: 20 }} />
+        ) : (
+          ''
+        )}
         <div
           style={{
             position: 'absolute',
@@ -189,9 +281,28 @@ class Index extends Component {
             onClick={this.closePop}
           />
         </div>
-        <Suspense fallback={<PageLoading />}>
-          <IntroduceRow loading={loading} visitData={headInfo} />
-        </Suspense>
+        <Row className={styles.header}>
+          <Col md={16} sm={24} style={{ flex: 'auto', marginRight: 20 }}>
+            <Card style={{ marginBottom: 10 }}>
+              <div className={styles.content}>{pageHeaderContent}</div>
+            </Card>
+            <Suspense fallback={<PageLoading />}>
+              <IntroduceRow loading={loading} visitData={headInfo} />
+            </Suspense>
+          </Col>
+          <Col md={7} sm={24}>
+            <Card>
+              <div style={{ textAlign: 'center' }}>
+                <p className={styles.headline}>商家店铺专业运营指导</p>
+                <p className={styles.label}>
+                  {bdInfo.label}-{bdInfo.name}
+                </p>
+                <img className={styles.qrcode} src={bdInfo.qrcode} />
+              </div>
+            </Card>
+          </Col>
+        </Row>
+
         <Suspense fallback={null}>
           <SalesCard
             radioGroupOnChange={this.reportRadioOnChange}

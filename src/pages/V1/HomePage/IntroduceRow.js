@@ -1,9 +1,8 @@
 import React, { memo } from 'react';
 import { Row, Col, Icon, Tooltip } from 'antd';
-import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import numeral from 'numeral';
-import styles from './index.less';
-import { ChartCard, MiniProgress, Field, MiniArea } from '@/components/Charts';
+// import styles from './index.less';
+import { ChartCard } from '@/components/Charts';
 
 const topColResponsiveProps = {
   xs: 24,
@@ -19,43 +18,30 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
       <Col {...topColResponsiveProps}>
         <ChartCard
           bordered={false}
-          title={
-            <FormattedMessage id="app.homePage.chart.orderAmount" defaultMessage="Total Sales" />
-          }
+          title="今日推广数"
           action={
-            <Tooltip
-              title={
-                <div className={styles.toolP}>
-                  <p>1.今日订单数：今日内所有推广产生的实时订单数</p>
-                  <p>2.总订单数：所有推广产生的订单总和</p>
-                </div>
-              }
-            >
+            <Tooltip title={<p>今日推广数：今日进行中的推广个数，实时变动</p>}>
               <Icon type="info-circle-o" />
             </Tooltip>
           }
           loading={loading}
           total={() => <p>{visitData.order_info.day_order_num}</p>}
-          footer={
-            <Field
-              label={<span>总订单数</span>}
-              value={`${numeral(visitData.order_info.total_order_num).format('0,0')}`}
-            />
-          }
           contentHeight={46}
-        >
-          <MiniArea
-            animate={false}
-            line
-            borderWidth={2}
-            data={visitData.order_info.statistics_info.map(k => {
-              return {
-                x: k.day,
-                y: k.number,
-              };
-            })}
-          />
-        </ChartCard>
+        />
+      </Col>
+      <Col {...topColResponsiveProps}>
+        <ChartCard
+          bordered={false}
+          loading={loading}
+          title="今日订单数"
+          action={
+            <Tooltip title={<p>今日订单数：今日下单的试用+高佣订单综合，实时变动</p>}>
+              <Icon type="info-circle-o" />
+            </Tooltip>
+          }
+          total={numeral(visitData.comment_info.good_comment_rate).format('0,0')}
+          contentHeight={46}
+        />
       </Col>
       <Col {...topColResponsiveProps}>
         <ChartCard
@@ -63,72 +49,15 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           loading={loading}
           title="今日收藏数"
           action={
-            <Tooltip
-              title={
-                <div className={styles.toolP}>
-                  <p>1.今日收藏数：今日上传收藏凭证数</p>
-                  <p>2.总收藏数：总上传收藏凭证数</p>
-                </div>
-              }
-            >
+            <Tooltip title={<p>今日收藏数：今日收藏推广店铺+商品的人数综合，实时变动</p>}>
               <Icon type="info-circle-o" />
             </Tooltip>
           }
           total={numeral(visitData.fans_info.day_order_num).format('0,0')}
-          footer={
-            <Field label={<span>总收藏数 </span>} value={visitData.fans_info.total_order_num} />
-          }
           contentHeight={46}
-        >
-          <MiniArea
-            color="#975FE4"
-            data={visitData.fans_info.statistics_info.map(k => {
-              return {
-                x: k.day,
-                y: k.number,
-              };
-            })}
-          />
-        </ChartCard>
+        />
       </Col>
-
-      {/** <Col {...topColResponsiveProps}>
-        <ChartCard
-          bordered={false}
-          loading={loading}
-          title={
-            <FormattedMessage id="app.homePage.chart.commentAmount" defaultMessage="Payments" />
-          }
-          action={
-            <Tooltip
-              title={
-                <div className={styles.toolP}>
-                  <p>1.免单率：推广订单产生的免单率</p>
-                  <p>2.总免单数：所有订单产生的免单数总和</p>
-                </div>
-              }
-            >
-              <Icon type="info-circle-o" />
-            </Tooltip>
-          }
-          total={visitData.comment_info.good_comment_rate}
-          footer={
-            <Field label={<span>总免单数</span>} value={visitData.comment_info.good_comment_num} />
-          }
-          contentHeight={46}
-        >
-          <MiniBar
-            data={visitData.comment_info.statistics_info.map(k => {
-              return {
-                x: k.day.toString(),
-                y: k.number,
-              };
-            })}
-          />
-        </ChartCard>
-      </Col> */}
-
-      <Col {...topColResponsiveProps}>
+      {/* <Col {...topColResponsiveProps}>
         <ChartCard
           loading={loading}
           bordered={false}
@@ -169,7 +98,7 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
             color="#3490ff"
           />
         </ChartCard>
-      </Col>
+      </Col> */}
     </Row>
   );
 });

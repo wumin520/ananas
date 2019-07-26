@@ -80,7 +80,16 @@ class Dashboard extends Component {
       currentUser,
       dashboard,
       loading,
-      dashboard: { bd_info, sh_info, income_info, notice_info, today_info, list, page_info },
+      dashboard: {
+        bd_info,
+        sh_info,
+        income_info,
+        sharing_rules,
+        notice_info,
+        today_info,
+        list,
+        page_info,
+      },
     } = this.props;
     const noticeInfo = '通知';
     const pageHeaderContent =
@@ -226,12 +235,16 @@ class Dashboard extends Component {
                             ￥{income_info.today_expect_income}
                           </div>
                         </div>
-                        <div style={{ flex: 'auto' }}>
-                          <div>今日预计会员分成(元)</div>
-                          <div className={styles.todayEarn}>
-                            ￥{income_info.today_expect_income}
+                        {income_info.show_member_income === 1 ? (
+                          <div style={{ flex: 'auto' }}>
+                            <div>今日预计会员分成(元)</div>
+                            <div className={styles.todayEarn}>
+                              ￥{income_info.today_member_income}
+                            </div>
                           </div>
-                        </div>
+                        ) : (
+                          ''
+                        )}
                         <div style={{ flex: 'auto' }}>
                           <div>累计预计总分成(元)</div>
                           <div className={styles.totalEarn}>
@@ -255,8 +268,9 @@ class Dashboard extends Component {
                   <div className={styles.rules}>
                     <Tooltip
                       title={
-                        <div className={styles.toolP}>
-                          <p>
+                        <div>
+                          {sharing_rules}
+                          {/* <p>
                             1.有效订单分成
                             <br />
                             分成比例：交易额*2%；
@@ -270,7 +284,7 @@ class Dashboard extends Component {
                             <br />
                             充值钻石会员：每个2000元。
                           </p>
-                          <p>每月25日结算上月会员分成及有效订单分成。</p>
+                          <p>每月25日结算上月会员分成及有效订单分成。</p> */}
                         </div>
                       }
                     >
