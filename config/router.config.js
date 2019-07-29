@@ -114,6 +114,11 @@ export default [
         name: 'rechargeActivity',
         component: './V1/Public/RechargeActivity',
       },
+      {
+        path: '/public/VIP',
+        name: 'VIP',
+        component: './V1/Public/VIP/VIP',
+      },
     ],
   },
   {
@@ -386,6 +391,12 @@ export default [
             name: 'withdrawSuccess',
             hideInMenu: true,
             component: './V1/CapitalManage/WithdrawSuccess',
+          },
+          {
+            path: '/CapitalManage/CheckoutVip',
+            name: 'checkoutVip',
+            hideInMenu: true,
+            component: './V1/CapitalManage/CheckoutVip',
           },
         ],
       },

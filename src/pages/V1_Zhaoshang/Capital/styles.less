@@ -290,6 +290,39 @@
 .formBlock {
   margin-bottom: 30px;
   border-bottom: 1px solid #ccc;
+
+  .type_tab {
+    position: relative;
+    display: inline-block;
+    margin: 20px 20px 0 0;
+    padding: 10px 50px;
+    border: 1px solid #e5e5e5;
+
+    &.selected_tab {
+      color: #1890ff;
+      background-color: #e6f7ff;
+      border: 1px solid #91d5ff;
+    }
+
+    .triangle_topRight {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+      width: 0;
+      height: 0;
+      border-top: 30px solid #1890ff;
+      border-left: 50px solid transparent;
+    }
+
+    .triangle_icon {
+      position: absolute;
+      top: 3px;
+      right: 6px;
+      z-index: 1;
+      color: #fff;
+    }
+  }
 }
 
 .information {

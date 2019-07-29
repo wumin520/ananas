@@ -415,3 +415,81 @@
     border: 1px solid #91d5ff;
   }
 }
+
+.VIP_block {
+  .top_tabs {
+    display: flex;
+    justify-content: flex-start;
+
+    .tab {
+      position: relative;
+      margin: 20px 20px 20px 0;
+      padding: 20px 40px;
+      border: 1px solid #e5e5e5;
+
+      &.selectedItem {
+        color: #1890ff;
+        background-color: #e6f7ff;
+        border: 1px solid #91d5ff;
+      }
+      .triangle_topRight {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 0;
+        height: 0;
+        border-top: 30px solid #1890ff;
+        border-right: 50px solid transparent;
+      }
+      .triangle_txt {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        z-index: 2;
+        color: #fff;
+        font-size: 13px;
+        transform: rotate(-30deg);
+      }
+    }
+  }
+
+  .select_Vip_info {
+    padding: 24px;
+    background-color: #e6f7ff;
+    border: 1px solid #91d5ff;
+
+    .col1890ff {
+      color: #1890ff;
+    }
+
+    .label_title {
+      display: inline-block;
+      width: 80px;
+      margin-bottom: 8px;
+      color: #999;
+    }
+
+    .describe {
+      margin-top: 20px;
+      padding-top: 10px;
+      color: #999;
+      border-top: 1px dotted #1890ff;
+    }
+  }
+
+  .paid_block {
+    margin-top: 50px;
+    text-align: center;
+
+    .need_price {
+      font-weight: 500;
+      font-size: 20px;
+    }
+
+    .btn_paid {
+      width: 150px;
+      margin: 16px 0;
+    }
+  }
+}

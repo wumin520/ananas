@@ -18,6 +18,7 @@ class PayeeAdd extends PureComponent {
   state = {
     visible: true,
     imageUrl: '',
+    type: 1,
   };
 
   componentDidMount() {
@@ -37,11 +38,11 @@ class PayeeAdd extends PureComponent {
   handleSubmit = e => {
     e.preventDefault();
     const { form } = this.props;
-    const { imageUrl } = this.state;
+    const { imageUrl, type } = this.state;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const { dispatch } = this.props;
-        const param = { ...values, blis_img: imageUrl };
+        const param = { ...values, blis_img: imageUrl, type };
         dispatch({
           type: 'capital/withdrawAccountUpdate',
           payload: param,
@@ -50,10 +51,16 @@ class PayeeAdd extends PureComponent {
     });
   };
 
+  changeType = type => {
+    this.setState({
+      type,
+    });
+  };
+
   render() {
     const { form, payeeInfo } = this.props;
     const { getFieldDecorator } = form;
-    const { visible, imageUrl } = this.state;
+    const { visible, imageUrl, type } = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -110,9 +117,10 @@ class PayeeAdd extends PureComponent {
           </div>
         ) : null}
         <Row className={styles.list_h} type="flex" justify="start">
-          <Col span={6}>收款公司名称：</Col>
+          <Col span={6}>{type === 1 ? '收款公司名称：' : '收款人姓名：'}</Col>
           <Col span={10}>{payeeInfo.name}</Col>
         </Row>
+
         <Row className={styles.list_h} type="flex" justify="start">
           <Col span={6}>开户银行：</Col>
           <Col span={10}>{payeeInfo.bank_name}</Col>
@@ -125,16 +133,22 @@ class PayeeAdd extends PureComponent {
           <Col span={6}>银行账号：</Col>
           <Col span={10}>{payeeInfo.bank_card}</Col>
         </Row>
-        <Row className={styles.list_h} type="flex" justify="start">
-          <Col span={6}>营业执照号：</Col>
-          <Col span={10}>{payeeInfo.blis_no}</Col>
-        </Row>
-        <Row className={styles.list_h} type="flex" justify="start">
-          <Col span={6}>营业执照扫描件：</Col>
-          <Col span={10}>
-            <img style={{ width: '120px', height: '120px' }} alt="" src={payeeInfo.blis_img} />
-          </Col>
-        </Row>
+        {type === 1 ? (
+          <Fragment>
+            <Row className={styles.list_h} type="flex" justify="start">
+              <Col span={6}>营业执照号：</Col>
+              <Col span={10}>{payeeInfo.blis_no}</Col>
+            </Row>
+            <Row className={styles.list_h} type="flex" justify="start">
+              <Col span={6}>营业执照扫描件：</Col>
+              <Col span={10}>
+                <img style={{ width: '120px', height: '120px' }} alt="" src={payeeInfo.blis_img} />
+              </Col>
+            </Row>
+          </Fragment>
+        ) : (
+          ''
+        )}
       </Card>
     );
 
@@ -163,7 +177,7 @@ class PayeeAdd extends PureComponent {
       },
     };
 
-    // 设置收款账户
+    // 设置收款账户--公司
     const payeeAddHtml = (
       <Card>
         <p className={styles.title}>设置收款账户</p>
@@ -180,16 +194,63 @@ class PayeeAdd extends PureComponent {
         </div>
         <div className={styles.formBlock}>
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-            <Form.Item label="收款公司名称：">
-              {getFieldDecorator('name', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入收款公司名称!',
-                  },
-                ],
-              })(<Input style={{ width: 200 }} type="text" placeholder="请输入收款公司名称" />)}
+            <Form.Item label="选择收款类型">
+              {getFieldDecorator('type', {})(
+                <div>
+                  <div
+                    className={`${styles.type_tab} ${type === 1 ? styles.selected_tab : ''}`}
+                    onClick={this.changeType.bind(this, 1)}
+                  >
+                    公司
+                    {type === 1 ? (
+                      <Fragment>
+                        <span className={styles.triangle_topRight} />
+                        <Icon className={styles.triangle_icon} type="check" />
+                      </Fragment>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                  <div
+                    className={`${styles.type_tab} ${type === 2 ? styles.selected_tab : ''}`}
+                    onClick={this.changeType.bind(this, 2)}
+                  >
+                    个人
+                    {type === 2 ? (
+                      <Fragment>
+                        <span className={styles.triangle_topRight} />
+                        <Icon className={styles.triangle_icon} type="check" />
+                      </Fragment>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                </div>
+              )}
             </Form.Item>
+            {type === 1 ? (
+              <Form.Item label="收款公司名称：">
+                {getFieldDecorator('name', {
+                  rules: [
+                    {
+                      required: true,
+                      message: '请输入收款公司名称!',
+                    },
+                  ],
+                })(<Input style={{ width: 200 }} type="text" placeholder="请输入收款公司名称" />)}
+              </Form.Item>
+            ) : (
+              <Form.Item label="收款人姓名：">
+                {getFieldDecorator('name', {
+                  rules: [
+                    {
+                      required: true,
+                      message: '请输入收款人姓名!',
+                    },
+                  ],
+                })(<Input style={{ width: 200 }} type="text" placeholder="请输入收款人姓名" />)}
+              </Form.Item>
+            )}
             <Form.Item label="开户银行">
               {getFieldDecorator('bank_name', {
                 rules: [
@@ -230,40 +291,46 @@ class PayeeAdd extends PureComponent {
                 </div>
               )}
             </Form.Item>
-            <Form.Item label="营业执照号：">
-              {getFieldDecorator('blis_no', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入营业执照号!',
-                  },
-                ],
-              })(
-                <div>
-                  <Input style={{ width: 200 }} type="text" placeholder="请输入营业执照号" />
-                  <div>请填写统一社会信用代码</div>
-                </div>
-              )}
-            </Form.Item>
-            <Form.Item label="营业执照扫描件：">
-              {getFieldDecorator('blis_img', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请选择!',
-                  },
-                ],
-              })(
-                <div className="clearfix">
-                  <div>
-                    请上传营业执照扫描件(其他组织请上传《单位法人证书》)，支持bmp,png,jpeg格式，文件大小不超过2M。
-                  </div>
-                  <Upload {...uploadProps} listType="picture">
-                    {imageUrl ? null : uploadButton}
-                  </Upload>
-                </div>
-              )}
-            </Form.Item>
+            {type === 1 ? (
+              <Fragment>
+                <Form.Item label="营业执照号：">
+                  {getFieldDecorator('blis_no', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输入营业执照号!',
+                      },
+                    ],
+                  })(
+                    <div>
+                      <Input style={{ width: 200 }} type="text" placeholder="请输入营业执照号" />
+                      <div>请填写统一社会信用代码</div>
+                    </div>
+                  )}
+                </Form.Item>
+                <Form.Item label="营业执照扫描件：">
+                  {getFieldDecorator('blis_img', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择!',
+                      },
+                    ],
+                  })(
+                    <div className="clearfix">
+                      <div>
+                        请上传营业执照扫描件(其他组织请上传《单位法人证书》)，支持bmp,png,jpeg格式，文件大小不超过2M。
+                      </div>
+                      <Upload {...uploadProps} listType="picture">
+                        {imageUrl ? null : uploadButton}
+                      </Upload>
+                    </div>
+                  )}
+                </Form.Item>
+              </Fragment>
+            ) : (
+              ''
+            )}
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
                 确认

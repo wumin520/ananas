@@ -72,6 +72,11 @@ export async function frozenTaskList(params) {
   return request(`/v1/web/account/frozen_task_list?${stringify(params)}`);
 }
 
+// 会员购买记录
+export async function memberRecordList(params) {
+  return request(`/v1/web/buy/member/record?${stringify(params)}`);
+}
+
 // 充值活动
 export async function rechargeActivity() {
   return request(`/v1/web/activity/recharge`);
@@ -96,6 +101,11 @@ export async function rechargeCheck(params) {
     method: 'POST',
     data: params,
   });
+}
+
+// 提现页面信息获取
+export async function memberList() {
+  return request(`/v1/web/member/list`);
 }
 
 // 提现页面信息获取
