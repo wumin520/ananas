@@ -43,16 +43,11 @@ class VIP extends Component {
     const { top } = this.state;
     const { memberListData } = this.props;
 
-    // In the fifth row, other columns are merged into first column
-    // by setting it's colSpan to be 0
-    const renderContent = (value, row, index) => {
+    const renderContent = value => {
       const obj = {
         children: value,
         props: {},
       };
-      if (index === 4) {
-        obj.props.colSpan = 0;
-      }
       return obj;
     };
 
@@ -60,54 +55,56 @@ class VIP extends Component {
       {
         title: 'VIP特权',
         colSpan: 2,
-        dataIndex: 'tel',
+        dataIndex: 'title',
+        width: 100,
         render: (value, row, index) => {
           const obj = {
             children: value,
+            row,
             props: {},
           };
-          if (index === 2) {
-            obj.props.rowSpan = 2;
-          }
-          // These two are merged into above cell
-          if (index === 3) {
-            obj.props.rowSpan = 0;
-          }
-          if (index === 4) {
-            obj.props.colSpan = 0;
-          }
+
+          obj.props.rowSpan = 0;
+
+          const valObj = {
+            0: 2,
+            2: 6,
+            8: 5,
+          };
+          if ({}.hasOwnProperty.call(valObj, index)) obj.props.rowSpan = valObj[index];
+
           return obj;
         },
       },
       {
-        title: '功能解析',
+        title: '',
         colSpan: 0,
-        dataIndex: 'phone',
+        dataIndex: 'title_sub',
+        render: renderContent,
+      },
+      {
+        title: '功能解析',
+        dataIndex: 'function',
         render: renderContent,
       },
       {
         title: '普通商家 体验3天',
-        dataIndex: 'address',
+        dataIndex: 'function_1',
         render: renderContent,
       },
       {
         title: '黄金会员 ￥4000/年',
-        dataIndex: 'name',
-        render: (text, row, index) => {
-          if (index < 4) {
-            return <a href="/">{text}</a>;
-          }
-          return {
-            children: <a href="/">{text}</a>,
-            props: {
-              colSpan: 5,
-            },
-          };
-        },
+        dataIndex: 'function_2',
+        render: renderContent,
       },
       {
         title: '白金会员 ￥6000/年',
-        dataIndex: 'age',
+        dataIndex: 'function_3',
+        render: renderContent,
+      },
+      {
+        title: '铂金会员 ￥6000/年',
+        dataIndex: 'function_4',
         render: renderContent,
       },
     ];
@@ -115,35 +112,133 @@ class VIP extends Component {
     const data = [
       {
         key: '1',
-        name: 'John Brown',
-        age: 32,
-        tel: '0571-22098909',
-        phone: 18889898989,
-        address: 'New York No. 1 Lake Park',
+        title: '特色服务',
+        title_sub: '专属运营1对1服务',
+        function: '5年运营定制方案全程跟踪服务',
+        function_1: '空',
+        function_2: '空',
+        function_3: '勾',
+        function_4: '勾',
       },
       {
         key: '2',
-        name: 'Jim Green',
-        tel: '0571-22098333',
-        phone: 18889898888,
-        age: 42,
-        address: 'London No. 1 Lake Park',
+        title: '特色服务',
+        title_sub: '线下电商大会',
+        function: '10年电商平台运营经验大牛分享',
+        function_1: '空',
+        function_2: '空',
+        function_3: '空',
+        function_4: '勾',
       },
       {
         key: '3',
-        name: 'Joe Black',
-        age: 32,
-        tel: '0575-22098909',
-        phone: 18900010002,
-        address: 'Sidney No. 1 Lake Park',
+        title: '独家功能',
+        title_sub: '精准用户画像',
+        function: '地域/性别/等级',
+        function_1: '空',
+        function_2: '空',
+        function_3: '勾',
+        function_4: '勾',
       },
       {
         key: '4',
-        name: 'Jim Red',
-        age: 18,
-        tel: '0575-22098909',
-        phone: 18900010002,
-        address: 'London No. 2 Lake Park',
+        title: '独家功能',
+        title_sub: '每日订单分时段控制',
+        function: '精细化控制每日用户转化',
+        function_1: '空',
+        function_2: '空',
+        function_3: '空',
+        function_4: '勾',
+      },
+      {
+        key: '5',
+        title: '独家功能',
+        title_sub: '自定义购买路径转化',
+        function: '精准控制打造计划的数据匹配',
+        function_1: '空',
+        function_2: '空',
+        function_3: '勾',
+        function_4: '勾',
+      },
+      {
+        key: '6',
+        title: '独家功能',
+        title_sub: '宝贝权重优化',
+        function: '快速提升宝贝、店铺权重',
+        function_1: '不赠送',
+        function_2: '赠送￥1000',
+        function_3: '赠送￥3000',
+        function_4: '赠送￥5000',
+      },
+      {
+        key: '7',
+        title: '独家功能',
+        title_sub: '店铺DSR优化',
+        function: '快速提升全维度UV产值排名',
+        function_1: '收取10%',
+        function_2: '免费额度50万，超出收取10%',
+        function_3: '免费额度100万，超出收取8%',
+        function_4: '免费额度200万，超出收取5%',
+      },
+      {
+        key: '8',
+        title: '独家功能',
+        title_sub: '爆款打造',
+        function: '流量黄金推荐位，冲销量必备',
+        function_1: '',
+        function_2: '5个',
+        function_3: '10个',
+        function_4: '30个',
+      },
+      {
+        key: '9',
+        title: '基础服务',
+        title_sub: '免费店铺绑定数',
+        function: '发布活动需要绑定对应店铺',
+        function_1: '不限制',
+        function_2: '不限制',
+        function_3: '不限制',
+        function_4: '不限制',
+      },
+      {
+        key: '10',
+        title: '基础服务',
+        title_sub: '用户实名认证',
+        function: '手机号认证',
+        function_1: '勾',
+        function_2: '勾',
+        function_3: '勾',
+        function_4: '勾',
+      },
+      {
+        key: '11',
+        title: '基础服务',
+        title_sub: '优先审核',
+        function: '发布推广后系统安排优先审核',
+        function_1: '空',
+        function_2: '空',
+        function_3: '勾',
+        function_4: '勾',
+      },
+      {
+        key: '12',
+        title: '基础服务',
+        title_sub: '短信服务',
+        function: '每日推广状态提醒',
+        function_1: '勾',
+        function_2: '勾',
+        function_3: '勾',
+        function_4: '勾',
+      },
+      {
+        key: '13',
+        title: '基础服务',
+        title_sub: '置顶推广',
+        function: '提高宝贝曝光率',
+        function_1: '每天￥2/次',
+        function_2: '每天免费1次',
+        function_3: '每天免费1次',
+        function_4: '每天免费1次',
       },
     ];
 
@@ -217,7 +312,7 @@ class VIP extends Component {
           </div>
 
           <div className={styles.VIP_details}>
-            <Table columns={columns} dataSource={data} bordered />
+            <Table columns={columns} dataSource={data} pagination={false} bordered />
           </div>
         </div>
 
