@@ -11,8 +11,8 @@ import {
   Select,
   Badge,
   DatePicker,
-  Tooltip,
   Icon,
+  Popover,
 } from 'antd';
 import Link from 'umi/link';
 
@@ -40,7 +40,6 @@ class List extends PureComponent {
       {
         title: '商户名称',
         width: 143,
-        key: 'shop_name',
         render: item => {
           return (
             <div>
@@ -53,7 +52,6 @@ class List extends PureComponent {
       },
       {
         title: '联系方式',
-        key: 'contact',
         width: 100,
         render: item => {
           return (
@@ -75,7 +73,6 @@ class List extends PureComponent {
       },
       {
         title: '资产余额',
-        key: 'balance',
         width: 150,
         render: item => {
           return (
@@ -93,28 +90,31 @@ class List extends PureComponent {
         title: '会员等级',
         width: 150,
         render: item => {
+          console.log('item.member_list===', item.member_list);
+          const memberPop = (
+            <div>
+              {item.member_list.map(val => {
+                // console.log('item.member_list===', item.member_list, val);
+                return (
+                  <p>
+                    {val.name}:{val.level > 10 ? `${val.end_time}到期` : val.end_time}
+                  </p>
+                );
+              })}
+            </div>
+          );
+
           return (
             <div style={{ textAlign: 'left' }}>
               <span>{item.member_name}</span>
               <br />
-              <p>{item.member_end_time ? `${item.member_end_time}到期` : '期限：永久'}</p>
+              <p>{item.member_end_time ? `${item.member_end_time}到期` : '永久'}</p>
               {item.member_list.length > 1 ? (
-                <Tooltip>
-                  {/* title={
-                  <div>
-                    {item.member_list.map(val => {
-                      <p>
-                        {val.name}
-                        <br />
-                        {val.end_time ? `${val.end_time}到期` : '期限：永久'}
-                      </p>;
-                    })}
-                  </div>
-                } */}
+                <Popover placement="right" content={memberPop}>
                   <Button type="small" style={{ lineHeight: 2, height: 22 }}>
                     <Icon type="small-dash" />
                   </Button>
-                </Tooltip>
+                </Popover>
               ) : (
                 ''
               )}
@@ -302,7 +302,7 @@ class List extends PureComponent {
             <div className={styles.tableList}>
               <div className={styles.tableListForm}>{this.renderForm()}</div>
               <Table
-                rowKey={item => item.member_level}
+                rowKey={item => item.qq}
                 columns={this.columns}
                 dataSource={listData.list}
                 pagination={{

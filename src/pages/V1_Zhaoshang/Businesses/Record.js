@@ -55,7 +55,7 @@ class Record extends PureComponent {
       {
         title: '结算金额',
         key: 'settle_amount',
-        width: 150,
+        width: 100,
         dataIndex: 'settle_amount',
         render: val => {
           return <span>{`￥ ${val}`}</span>;
@@ -117,7 +117,7 @@ class Record extends PureComponent {
         }
       };
       def(['shop_code', 'shop_name']);
-      params.member_level = values.member_level || '';
+      params.member_level = values.member_level || 0;
       this.getListData(params);
     });
   };
@@ -128,7 +128,7 @@ class Record extends PureComponent {
     form.resetFields();
     params = {};
     params.page = 1;
-    params.member_level = '';
+    params.member_level = 0;
     this.getListData(params);
   };
 
@@ -143,6 +143,7 @@ class Record extends PureComponent {
     } = this.props;
     const { recordData, location } = this.props;
     const stateSelect = recordData.member_level;
+    console.log('stateSelect===', stateSelect);
     const shopCode = location.query.shop_code;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
@@ -163,7 +164,7 @@ class Record extends PureComponent {
             <FormItem label="会员等级">
               {getFieldDecorator('member_level')(
                 <Select placeholder="请选择" onChange={this.selectTypeChange}>
-                  {stateSelect.length > 0 &&
+                  {stateSelect &&
                     stateSelect.map(e => (
                       <Option key={e.value} value={e.value}>
                         {e.name}

@@ -205,10 +205,10 @@ class Step4 extends React.PureComponent {
         ...taskPayInfo,
       },
     ];
-    if (location.query.qf === undefined && memberInfo.level === 0) {
-      data = syData;
-    } else if (location.query.qf === undefined && memberInfo.level !== 0) {
+    if (location.query.qf === undefined && memberInfo[0].level === 0) {
       data = otherData;
+    } else if (location.query.qf === undefined && memberInfo[0].level !== 0) {
+      data = syhyData;
     }
     const chargeUrl = this.chargeUrl || '';
     const radioStyle = {
@@ -250,7 +250,7 @@ class Step4 extends React.PureComponent {
             />
             {/* <Tooltip className={styles.toolts}
               title={
-                <p>免费额度和商品佣金可抵扣服务费</p>
+                <p>提示文案</p>
               }
               >
               <Icon type="question-circle" style={{ marginRight: 8 }} />
@@ -260,12 +260,12 @@ class Step4 extends React.PureComponent {
 
         <Row>
           <Col style={{ textAlign: 'right', marginTop: 10 }} push={6} span={12}>
-            {location.query.qf === undefined && memberInfo.level !== 0 ? (
+            {location.query.qf === undefined && memberInfo[0].level !== 0 ? (
               <Tooltip title={<p>免费额度和商品佣金可抵扣服务费</p>}>
                 <Icon type="question-circle" style={{ marginRight: 8 }} />
                 服务费抵扣：-￥{taskPayInfo.free_service_money}元
               </Tooltip>
-            ) : location.query.qf === undefined && memberInfo.level === 0 ? (
+            ) : location.query.qf === undefined && memberInfo[0].level === 0 ? (
               <Tooltip title={<p>收取{taskPayInfo.service_rate}服务费</p>}>
                 <Icon type="question-circle" style={{ marginRight: 8 }} />
                 服务费：￥{taskPayInfo.service_money}

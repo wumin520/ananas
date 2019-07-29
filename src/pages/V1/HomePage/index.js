@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import moment from 'moment';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import PageLoading from '@/components/PageLoading';
-import { Row, Col, Alert, Icon, Avatar, Card, Tag, Button, Tooltip } from 'antd';
+import { Row, Col, Alert, Icon, Avatar, Card, Tag, Button, Tooltip, Popover } from 'antd';
 import { ChartCard } from '@/components/Charts';
 import { Link } from 'umi';
 import styles from './index.less';
@@ -164,7 +164,32 @@ class Index extends Component {
 
     /* eslint-disable */
     const salesData = taskReportInfo[this.state.dataType];
+    console.log('memberInfo[0]====>>>', memberInfo[0]);
+    let href_jump = '';
+    if (memberInfo[0].level === 10) {
+      // 开通会员
+      href_jump = '/public/VIP';
+    } else {
+      // 续费会员
+      href_jump = '/CapitalManage/CheckoutVip';
+    }
 
+    const memberPop = (
+      <div className={styles.memberPop}>
+        <div className={styles.pop_title}>我的会员</div>
+        <div className={styles.content}>
+          {memberInfo &&
+            memberInfo.map(val => {
+              return (
+                <p>
+                  {val.name}：{val.level > 10 ? `${val.end_at}到期` : val.end_at}
+                </p>
+              );
+            })}
+        </div>
+        <span>购买多重会员套餐时，采用累加延长制优先享受高一级服务</span>
+      </div>
+    );
     const pageHeaderContent = (
       <div>
         <Row gutter={{ md: 6, lg: 12, xl: 24 }} className={styles.borderLine}>
@@ -176,14 +201,28 @@ class Index extends Component {
               <div className={styles.content}>
                 <div className={styles.titleTags}>
                   <div className={styles.contentTitle}>{greetings}</div>
-                  <Tag>{memberInfo.name}</Tag>
+                  {memberInfo && memberInfo[0].level !== 0 ? (
+                    <Popover placement="right" content={memberPop}>
+                      <Tag>{memberInfo[0].name}</Tag>
+                    </Popover>
+                  ) : (
+                    ''
+                  )}
                 </div>
-                <div className={styles.member}>
-                  <p style={{ marginRight: 10 }}>会员到期时间：{memberInfo.end_at}</p>
-                  <Button type="danger" style={{ marginLeft: 10, borderColor: 'red' }}>
-                    开通会员
-                  </Button>
-                </div>
+                {memberInfo[0].level !== 0 ? (
+                  <div className={styles.member}>
+                    <p style={{ marginRight: 10 }}>会员到期时间：{memberInfo[0].end_at}</p>
+                    <Button
+                      type="danger"
+                      href={href_jump}
+                      style={{ marginLeft: 10, borderColor: 'red' }}
+                    >
+                      {memberInfo[0].level === 10 ? '开通会员' : '续费会员'}
+                    </Button>
+                  </div>
+                ) : (
+                  ''
+                )}
               </div>
             </div>
           </Col>
@@ -195,7 +234,7 @@ class Index extends Component {
               action={
                 <Tooltip
                   title={
-                    <div className={styles.toolP}>
+                    <div>
                       <p>当前的信用情况，请保证信用良好，以防影响您的正常使用</p>
                     </div>
                   }

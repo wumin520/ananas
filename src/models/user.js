@@ -21,11 +21,13 @@ export default {
         qq_url: '',
       },
       sh_type: 0,
-      member_info: {
-        level: 0,
-        name: '',
-        end_at: '',
-      },
+      member_info: [
+        {
+          level: 0,
+          name: '',
+          end_at: '',
+        },
+      ],
       greetings: '',
       info: {}, // 招商代理
     },

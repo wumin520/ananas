@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Card, Button, Icon, List, Modal } from 'antd';
+import { Card, Button, Icon, List, Modal, Tag } from 'antd';
 import { router } from 'umi';
 
 import Ellipsis from '@/components/Ellipsis';
@@ -54,7 +54,7 @@ class Index extends PureComponent {
         state: 1,
         label: ['试用标签', '啦啦啦'],
         avatar:
-          'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
+          'https://cdn.youlianyc.com/image/static/acb251fe8b2dea609b5902ea1f35049841cef6fd.jpg',
         title: '试用推广',
         keywords: '快速提升关键词排名/加购率/转化率/快速聚集人气/宝贝流量',
         description: `推广场景：
@@ -77,7 +77,7 @@ class Index extends PureComponent {
         label: ['试用标签', '啦啦啦'],
         type: 3,
         avatar:
-          'https://cdn.youlianyc.com/image/static/526746a209d504d6d9c43270767ff76e928aedc2.jpg',
+          'https://cdn.youlianyc.com/image/static/987b0e82149da8a8edb8f38ed048e6523bbed4dc.jpg',
         title: '高佣推广',
         keywords: '快速提升关键词排名/加购率/转化率/快速聚集人气/宝贝流量',
         description: `推广场景：
@@ -100,7 +100,7 @@ class Index extends PureComponent {
         label: ['试用标签', '啦啦啦'],
         type: 2,
         avatar:
-          'https://cdn.youlianyc.com/image/static/5c75983b5efea8cef21ec34f25972cb946983272.jpg',
+          'https://cdn.youlianyc.com/image/static/ce77e786bc929fef024746da9738bdc9d8230fd8.jpg',
         title: '收藏推广',
         keywords: '快速提升关键词排名/加购率/转化率/快速聚集人气/宝贝流量',
         description: `推广场景：
@@ -266,13 +266,11 @@ class Index extends PureComponent {
                         title={titleContent(item)}
                         description={
                           <div>
-                            {/* {item.label && item.label.length > 0
+                            {item.label && item.label.length > 0
                               ? item.label.map(element => {
-                                  <div>
-                                    <Tag>{element}</Tag>
-                                  </div>;
+                                  return <Tag>{element}</Tag>;
                                 })
-                              : ''} */}
+                              : ''}
                             <p style={{ marginBottom: 10 }}>{item.keywords}</p>
                             <Ellipsis className={styles.item} lines={3}>
                               {item.description}

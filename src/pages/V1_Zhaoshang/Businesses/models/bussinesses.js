@@ -11,7 +11,18 @@ export default {
       amount: '500',
     },
     listData: {
-      list: [],
+      list: [
+        {
+          member_list: [
+            {
+              level: 0,
+              name: '',
+              start_time: '',
+              end_time: '',
+            },
+          ],
+        },
+      ],
       type_select: [],
       state_select: [],
       task_info: {},
