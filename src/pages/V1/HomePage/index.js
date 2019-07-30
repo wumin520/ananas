@@ -144,7 +144,10 @@ class Index extends Component {
       noticeInfo = (
         <div>
           {noticeInfo}
-          <Link style={{ marginLeft: '20px', color: '#2F54EB' }} to="/public/rechargeActivity">
+          <Link
+            style={{ marginLeft: '20px', color: '#2F54EB' }}
+            to="public/helpDetail?SelectedKeys=9&OpenKeys=sub4"
+          >
             查看详情>
           </Link>
         </div>

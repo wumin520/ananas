@@ -116,7 +116,7 @@ class HeadNav extends PureComponent {
             <div>
               <a
                 className={styles.headNavWord}
-                href="/public/helpDetail?SelectedKeys=1&OpenKeys=sub1"
+                href="/public/helpDetail?SelectedKeys=9&OpenKeys=sub4"
               >
                 帮助中心
               </a>

@@ -341,18 +341,28 @@ class HelpDetail extends PureComponent {
       this.setState({
         routers: '意见反馈',
       });
+    } else if (query.SelectedKeys === '9') {
+      this.setState({
+        routers: '公告  /  发布时间：2019-7-30 14:00',
+      });
     }
   }
 
   // 点击菜单
   handleClick = e => {
+    let routerValue = '';
+    if (e.key === '9') {
+      routerValue = `${e.item.props.children}  /  发布时间：2019-7-30 14:00`;
+    } else {
+      routerValue = e.item.props.children;
+    }
     this.setState({
       clickIndex: e.key,
       visible: {
         isVisible: 'block',
         proVisible: 'none',
       },
-      routers: e.item.props.children,
+      routers: routerValue,
     });
   };
 
@@ -458,14 +468,14 @@ class HelpDetail extends PureComponent {
             defaultOpenKeys={[OpenKeys]}
             mode="inline"
           >
+            <SubMenu key="sub4" title={<span>通知公告</span>}>
+              <Menu.Item key="9">公告</Menu.Item>
+            </SubMenu>
             <SubMenu key="sub1" title={<span>商家认证</span>}>
               <Menu.Item key="1">认证须知</Menu.Item>
               <Menu.Item key="2">商品规范</Menu.Item>
               <Menu.Item key="3">违规规则</Menu.Item>
             </SubMenu>
-            {/* <SubMenu key="sub2" title={<span>通知公告</span>}>
-              <Menu.Item key="4">公告</Menu.Item>
-            </SubMenu> */}
             <SubMenu key="sub2" title={<span>常见问题</span>}>
               <Menu.Item key="4">常见问题</Menu.Item>
             </SubMenu>
@@ -485,6 +495,8 @@ class HelpDetail extends PureComponent {
                   ? '常见问题'
                   : clickIndex === '5' || clickIndex === '6'
                   ? '客服中心'
+                  : clickIndex === '9'
+                  ? '通知公告'
                   : ''}
               </Breadcrumb.Item>
               <Breadcrumb.Item>
@@ -566,10 +578,41 @@ class HelpDetail extends PureComponent {
                     <p>咨询时间： 9:30-18:30 （周六周日正常审核商品）</p>
                   </Card>
                 </div>
-              ) : (
+              ) : clickIndex === '6' ? (
                 <Card title="意见反馈" bordered={false} style={{ width: 872 }}>
                   <p>感谢您宝贵的意见和建议！反馈邮箱：wang.xiao@qianka.com</p>
                 </Card>
+              ) : clickIndex === '9' ? (
+                <Card title="关于收取服务费通知" bordered={false} style={{ width: 872 }}>
+                  尊敬的客户：
+                  <br />
+                  <br />
+                  您好！感谢您一直以来的支持和厚爱！
+                  <br />
+                  <br />
+                  为了能持续给您提供更多的优质服务，超多客将于2019年8月1日起调整发布推广活动相关服务费标准。
+                  <br />
+                  <br />
+                  收费标准如下：
+                  <br />
+                  <br />
+                  一、计费时间：
+                  <br />
+                  <br />
+                  1、对于2019年8月1日之前的发布的推广活动按原来标准执行。
+                  <br />
+                  <br />
+                  2、2019年8月1日之后发布的推广活动按以下新标准执行。
+                  <br />
+                  <br />
+                  二、计费标准：
+                  <br />
+                  <br />
+                  收取推广费用的10%作为服务费，可用佣金抵扣
+                  本通知自即日起执行。在此提醒您合理安排推广活动。感谢您的支持和配合！
+                </Card>
+              ) : (
+                ''
               )}
             </div>
             <div style={{ display: proVisible, width: '100%' }}>
