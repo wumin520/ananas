@@ -143,7 +143,7 @@ class GeneralizeDetail extends Component {
               )}
             </Description>
             <Description term="推广份数">{data.total_amount}</Description>
-            <Description term="推广费用">￥{data.rebate_price}</Description>
+            <Description term="推广费用">￥{data.frozen_money}</Description>
           </DescriptionList>
           <Card title="商品信息">
             <DescriptionList size="large" title="商品信息" style={{ marginBottom: 32 }}>
