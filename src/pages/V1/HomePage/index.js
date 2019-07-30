@@ -164,7 +164,7 @@ class Index extends Component {
 
     /* eslint-disable */
     const salesData = taskReportInfo[this.state.dataType];
-    console.log('memberInfo[0]====>>>', memberInfo[0]);
+    console.log('creditInfo.credit_level====>>>', creditInfo.credit_level);
     let href_jump = '';
     if (memberInfo[0].level === 10) {
       // 开通会员
@@ -203,7 +203,17 @@ class Index extends Component {
                   <div className={styles.contentTitle}>{greetings}</div>
                   {memberInfo && memberInfo[0].level !== 0 ? (
                     <Popover placement="right" content={memberPop}>
-                      <Tag>{memberInfo[0].name}</Tag>
+                      {memberInfo[0].level === 10 ? (
+                        <Tag>普通{memberInfo[0].name}</Tag>
+                      ) : memberInfo[0].level === 20 ? (
+                        <Tag className={styles.tag20}>黄金会员{memberInfo[0].name}</Tag>
+                      ) : memberInfo[0].level === 30 ? (
+                        <Tag className={styles.tag30}>白金会员{memberInfo[0].name}</Tag>
+                      ) : memberInfo[0].level === 40 ? (
+                        <Tag className={styles.tag40}>钻石会员{memberInfo[0].name}</Tag>
+                      ) : (
+                        ''
+                      )}
                     </Popover>
                   ) : (
                     ''
@@ -212,13 +222,9 @@ class Index extends Component {
                 {memberInfo[0].level !== 0 ? (
                   <div className={styles.member}>
                     <p style={{ marginRight: 10 }}>会员到期时间：{memberInfo[0].end_at}</p>
-                    <Button
-                      type="danger"
-                      href={href_jump}
-                      style={{ marginLeft: 10, borderColor: 'red' }}
-                    >
-                      {memberInfo[0].level === 10 ? '开通会员' : '续费会员'}
-                    </Button>
+                    <a href={href_jump} style={{ marginLeft: 10, borderColor: 'red' }}>
+                      {memberInfo[0].level === 10 ? '开通会员>' : '续费会员>'}
+                    </a>
                   </div>
                 ) : (
                   ''
@@ -257,28 +263,38 @@ class Index extends Component {
         </Row>
         <Row className={styles.flex_}>
           <Col className={styles.auto_}>
-            <p className={styles.yue}>
-              账户余额：<span className={styles.money}>￥{assetInfo.balance}</span>
-              <Button
-                href="/CapitalManage/Recharge"
-                type="danger"
-                style={{ marginLeft: 10, borderColor: 'red' }}
-              >
-                充值
-              </Button>
-            </p>
+            <div className={styles.yue}>
+              账户余额
+              <div className={styles.price_}>
+                <p className={styles.money}>￥{assetInfo.balance}</p>
+                <Button
+                  href="/CapitalManage/Recharge"
+                  type="primary"
+                  size="small"
+                  style={{ marginLeft: 15, marginRight: 20 }}
+                >
+                  充值
+                </Button>
+              </div>
+            </div>
             <p className={styles.desc_}>余额可用于发布所有推广活动</p>
           </Col>
           <Col className={styles.auto_}>
-            <p className={styles.yue}>
-              奖励金：<span className={styles.money}>￥{assetInfo.reward_balance}</span>
-            </p>
+            <div className={styles.yue}>
+              奖励金
+              <div className={styles.price_}>
+                <p className={styles.money}>￥{assetInfo.reward_balance}</p>
+              </div>
+            </div>
             <p className={styles.desc_}>奖励金可用于收藏推广</p>
           </Col>
           <Col className={styles.auto_none}>
-            <p className={styles.yue}>
-              冻结余额：<span className={styles.money}>￥{assetInfo.frozen_balance}</span>
-            </p>
+            <div className={styles.yue}>
+              冻结余额
+              <div className={styles.price_}>
+                <p className={styles.money}>￥{assetInfo.frozen_balance}</p>
+              </div>
+            </div>
             <p className={styles.desc_}>冻结余额用于推广担保</p>
           </Col>
         </Row>
@@ -321,7 +337,7 @@ class Index extends Component {
           />
         </div>
         <Row className={styles.header}>
-          <Col md={16} sm={24} style={{ flex: 'auto', marginRight: 20 }}>
+          <Col md={17} sm={24} style={{ flex: 'auto', marginRight: 20 }}>
             <Card style={{ marginBottom: 10 }}>
               <div className={styles.content}>{pageHeaderContent}</div>
             </Card>
@@ -329,13 +345,22 @@ class Index extends Component {
               <IntroduceRow loading={loading} visitData={headInfo} />
             </Suspense>
           </Col>
-          <Col md={7} sm={24}>
+          <Col md={6} sm={24}>
             <Card>
-              <div style={{ textAlign: 'center' }}>
-                <p className={styles.headline}>商家店铺专业运营指导</p>
-                <p className={styles.label}>
-                  {bdInfo.label}-{bdInfo.name}
-                </p>
+              <div className={styles.textAlign}>
+                <div className={styles.bdInfo_avatar}>
+                  <Avatar size="large" src={bdInfo.avatar} />
+                  <div className={styles.message}>
+                    <p className={styles.bdInfoname}>{bdInfo.name}</p>
+                    <Tag color="gold">{bdInfo.label}</Tag>
+                  </div>
+                </div>
+                <div className={styles.qq_url}>
+                  <p className={styles.bdInfo_qq}>QQ: {bdInfo.qq}</p>
+                  <Button href={bdInfo.qq_url} size="small" type="primary">
+                    在线交谈
+                  </Button>
+                </div>
                 <img className={styles.qrcode} src={bdInfo.qrcode} />
               </div>
             </Card>

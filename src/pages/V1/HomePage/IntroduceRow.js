@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Row, Col, Icon, Tooltip } from 'antd';
+import { Row, Col, Icon, Tooltip, Avatar } from 'antd';
 import numeral from 'numeral';
 // import styles from './index.less';
 import { ChartCard } from '@/components/Charts';
@@ -19,6 +19,12 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
         <ChartCard
           bordered={false}
           title="今日推广数"
+          avatar={
+            <Avatar
+              size="large"
+              src="https://cdn.youlianyc.com/image/static/eeb918f0164a292d7125fff05fd9535f9dbc7235.jpg"
+            />
+          }
           action={
             <Tooltip title={<p>今日推广数：今日进行中的推广个数，实时变动</p>}>
               <Icon type="info-circle-o" />
@@ -34,6 +40,12 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           bordered={false}
           loading={loading}
           title="今日订单数"
+          avatar={
+            <Avatar
+              size="large"
+              src="https://cdn.youlianyc.com/image/static/2d671858039da9ae9e0b64632ef32b96efc22f3f.jpg"
+            />
+          }
           action={
             <Tooltip title={<p>今日订单数：今日下单的试用+高佣订单综合，实时变动</p>}>
               <Icon type="info-circle-o" />
@@ -48,6 +60,12 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
           bordered={false}
           loading={loading}
           title="今日收藏数"
+          avatar={
+            <Avatar
+              size="large"
+              src="https://cdn.youlianyc.com/image/static/ce77e786bc929fef024746da9738bdc9d8230fd8.jpg"
+            />
+          }
           action={
             <Tooltip title={<p>今日收藏数：今日收藏推广店铺+商品的人数综合，实时变动</p>}>
               <Icon type="info-circle-o" />

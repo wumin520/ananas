@@ -212,29 +212,27 @@ table {
 
 .score {
   margin-top: -20px;
-
-  .trendT01 {
-    // margin-left: 8px;
-    color: #52c41a;
-  }
-  .trendT02 {
-    // margin-left: 8px;
-    color: #3490ff;
-  }
-  .trendT03 {
-    // margin-left: 8px;
-    color: #f9ad15;
-  }
-  .trendT04 {
-    // margin-left: 8px;
-    color: #f5222d;
-  }
-  .trendT05 {
-    // margin-left: 8px;
-    color: gray;
-  }
 }
-
+.trendT01 {
+  // margin-left: 8px;
+  color: #52c41a;
+}
+.trendT02 {
+  // margin-left: 8px;
+  color: #3490ff;
+}
+.trendT03 {
+  // margin-left: 8px;
+  color: #f9ad15;
+}
+.trendT04 {
+  // margin-left: 8px;
+  color: #f5222d;
+}
+.trendT05 {
+  // margin-left: 8px;
+  color: gray;
+}
 @media screen and (max-width: @screen-lg) {
   .salesExtra {
     display: none;
@@ -283,25 +281,46 @@ table {
 }
 .header {
   display: flex;
-  .headline,
-  .label {
-    margin-bottom: 10px;
-    font-size: 16px;
-  }
-  .label {
-    color: #9ea2a7;
-  }
-  .qrcode {
+  .textAlign {
     width: 218px;
-    height: 218px;
+    margin: 0 auto;
+    .bdInfo_avatar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      .message {
+        margin: 5px 0 0 8px;
+        .bdInfoname {
+          margin-bottom: 4px;
+          color: rgba(0, 0, 0, 0.85);
+          font-weight: 500;
+          font-size: 14px;
+        }
+      }
+    }
+    .qq_url {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      .bdInfo_qq {
+        flex: auto;
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: 400;
+        font-size: 14px;
+      }
+    }
+    .qrcode {
+      width: 218px;
+      height: 218px;
+    }
   }
 }
 .borderLine {
-  border-bottom: 1px dashed #9ea2a7;
+  border-bottom: 1px solid #e8e8e8;
 }
 .pageHeaderContent {
   display: flex;
-  border-right: 1px dashed #9ea2a7;
+  border-right: 1px solid #e8e8e8;
   .avatar {
     flex: 0 1 72px;
     margin-bottom: 8px;
@@ -331,6 +350,24 @@ table {
         font-size: 20px;
         line-height: 28px;
       }
+      .tag20 {
+        color: #fff;
+        background: url('https://cdn.youlianyc.com/image/static/23dec40935f689d0938a0a5b3b39b2f1413b241b.jpg')
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .tag30 {
+        color: #fff;
+        background: url('https://cdn.youlianyc.com/image/static/3ee9b0ee961948ffa273a10b3dbe07444d97317a.jpg')
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .tag40 {
+        color: #fff;
+        background: url('https://cdn.youlianyc.com/image/static/7ad718887977dcb94ea53b9cd55a1c61d2597b4c.jpg')
+          no-repeat;
+        background-size: 100% 100%;
+      }
     }
     .member {
       display: flex;
@@ -342,7 +379,6 @@ table {
   .pop_title {
     width: 100%;
     text-align: center;
-    // background-color: #ccc;
   }
   .content {
     padding: 20px;
@@ -355,17 +391,22 @@ table {
   .auto_none {
     flex: auto;
     padding-left: 20px;
-    border-right: 1px dashed #cfd1d4;
+    border-right: 1px solid #e8e8e8;
     .yue {
+      color: rgba(0, 0, 0, 0.45);
       font-size: 14px;
-      .money {
-        color: #3490ff;
-        font-weight: 600;
-        font-size: 24px;
+      .price_ {
+        display: flex;
+        align-items: center;
+        .money {
+          flex: auto;
+          color: #000;
+          font-size: 28px;
+        }
       }
     }
     .desc_ {
-      color: rgb(162, 164, 167);
+      color: rgba(0, 0, 0, 0.65);
     }
   }
   .auto_none {
