@@ -345,6 +345,14 @@ class HelpDetail extends PureComponent {
       this.setState({
         routers: '公告  /  发布时间：2019-7-30 14:00',
       });
+    } else if (query.SelectedKeys === '7') {
+      this.setState({
+        routers: '广告服务协议',
+      });
+    } else if (query.SelectedKeys === '8') {
+      this.setState({
+        routers: '商家vip服务协议',
+      });
     }
   }
 

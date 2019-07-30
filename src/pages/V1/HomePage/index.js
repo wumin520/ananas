@@ -206,11 +206,11 @@ class Index extends Component {
                       {memberInfo[0].level === 10 ? (
                         <Tag>普通{memberInfo[0].name}</Tag>
                       ) : memberInfo[0].level === 20 ? (
-                        <Tag className={styles.tag20}>黄金会员{memberInfo[0].name}</Tag>
+                        <Tag className={styles.tag20}>{memberInfo[0].name}</Tag>
                       ) : memberInfo[0].level === 30 ? (
-                        <Tag className={styles.tag30}>白金会员{memberInfo[0].name}</Tag>
+                        <Tag className={styles.tag30}>{memberInfo[0].name}</Tag>
                       ) : memberInfo[0].level === 40 ? (
-                        <Tag className={styles.tag40}>钻石会员{memberInfo[0].name}</Tag>
+                        <Tag className={styles.tag40}>{memberInfo[0].name}</Tag>
                       ) : (
                         ''
                       )}
@@ -355,18 +355,11 @@ class Index extends Component {
                     <Tag color="gold">{bdInfo.label}</Tag>
                   </div>
                 </div>
-                <div className={styles.qq_url}>
-                  <p className={styles.bdInfo_qq}>QQ: {bdInfo.qq}</p>
-                  <Button href={bdInfo.qq_url} size="small" type="primary">
-                    在线交谈
-                  </Button>
-                </div>
                 <img className={styles.qrcode} src={bdInfo.qrcode} />
               </div>
             </Card>
           </Col>
         </Row>
-
         <Suspense fallback={null}>
           <SalesCard
             radioGroupOnChange={this.reportRadioOnChange}
