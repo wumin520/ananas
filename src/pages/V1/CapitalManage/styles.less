@@ -416,6 +416,14 @@
   }
 }
 
+.myVIP {
+  margin-top: 10px;
+}
+
+.col1890ff {
+  color: #1890ff;
+}
+
 .VIP_block {
   .top_tabs {
     display: flex;
@@ -432,7 +440,7 @@
         background-color: #e6f7ff;
         border: 1px solid #91d5ff;
       }
-      .triangle_topRight {
+      .triangle_topLeft {
         position: absolute;
         top: 0;
         left: 0;
@@ -451,6 +459,23 @@
         font-size: 13px;
         transform: rotate(-30deg);
       }
+      .triangle_bottomRight {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        width: 0;
+        height: 0;
+        border-bottom: 30px solid #1890ff;
+        border-left: 40px solid transparent;
+      }
+      .triangle_icon {
+        position: absolute;
+        right: 6px;
+        bottom: 3px;
+        z-index: 1;
+        color: #fff;
+      }
     }
   }
 
@@ -458,10 +483,6 @@
     padding: 24px;
     background-color: #e6f7ff;
     border: 1px solid #91d5ff;
-
-    .col1890ff {
-      color: #1890ff;
-    }
 
     .label_title {
       display: inline-block;

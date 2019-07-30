@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
 import { Link } from 'umi';
-import { Table, Icon } from 'antd';
+import { Table } from 'antd';
 
 import Footer from '../components/Footer';
 import HeadNav from '../components/HeadNav';
@@ -60,7 +60,11 @@ class VIP extends Component {
               }}
             />
           ) : (
-            <Icon type="check" style={{ color: '#4CA1AF', fontWeight: 'bold', fontSize: '16px' }} />
+            <img
+              src="https://cdn.youlianyc.com/image/static/70a56c842b549916caa282ee2159104e4250cb64.jpg"
+              style={{ width: '24px', height: '24px' }}
+              alt=""
+            />
           );
         return s;
       }
@@ -325,7 +329,7 @@ class VIP extends Component {
                     <div className={styles.VIPMember_bottom}>
                       <p className={styles.desc}>{e.content_one}</p>
                       <p className={styles.desc}>{e.content_two}</p>
-                      <Link className={styles.btn} to="/">
+                      <Link className={styles.btn} to="/CapitalManage/CheckoutVip">
                         立即开通
                       </Link>
                     </div>

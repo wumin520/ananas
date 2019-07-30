@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
-import { Card, Form, Button, Checkbox } from 'antd';
+import { Card, Form, Button, Checkbox, Icon } from 'antd';
 import { Link } from 'umi';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -52,11 +52,6 @@ class CheckoutVip extends PureComponent {
     });
   };
 
-  levelName = name => {
-    // eslint-disable-next-line no-nested-ternary
-    return name === '' ? '普通会员' : '';
-  };
-
   onChangeCheckbox = e => {
     console.log('e.target.checked', e.target.checked);
     this.setState({
@@ -86,36 +81,59 @@ class CheckoutVip extends PureComponent {
         <Card>
           <div>
             <strong style={{ fontSize: '20px', marginRight: '10px' }}>我的VIP会员</strong>
-            <Link to="/public/VIP">了解VIP会员服务</Link>
+            <Link className={styles.col1890ff} to="/public/VIP">
+              了解VIP会员服务
+            </Link>
           </div>
           <div className={styles.myVIP}>
             <span>
               我的账号<span className={styles.col1890ff}>{currentUser.phone}</span>，
             </span>
-            <span>会员等级{this.levelName()}</span>
+            <span>
+              会员等级
+              <span className={styles.col1890ff}>
+                {currentUser && currentUser.member_info[0].name
+                  ? currentUser.member_info[0].name
+                  : '无'}
+              </span>
+            </span>
           </div>
           <div className={styles.VIP_block}>
             <div className={styles.top_tabs}>
               {memberListData &&
                 memberListData.length > 0 &&
-                memberListData.map(e => (
-                  <div
-                    className={`${styles.tab} ${
-                      selectId === e.package_id ? styles.selectedItem : ''
-                    }`}
-                    key={e.name}
-                    onClick={this.selectVIP.bind(this, e.package_id)}
-                  >
-                    {e.name}
-                    {selectId === e.package_id ? (
-                      <Fragment>
-                        <span className={styles.triangle_topRight} />
-                        <span className={styles.triangle_txt}>推荐</span>
-                      </Fragment>
+                memberListData.map((e, index) => (
+                  <Fragment>
+                    {index > 0 ? (
+                      <div
+                        className={`${styles.tab} ${
+                          selectId === e.package_id ? styles.selectedItem : ''
+                        }`}
+                        key={e.name}
+                        onClick={this.selectVIP.bind(this, e.package_id)}
+                      >
+                        {e.name}
+                        {e.is_recommend ? (
+                          <Fragment>
+                            <span className={styles.triangle_topLeft} />
+                            <span className={styles.triangle_txt}>推荐</span>
+                          </Fragment>
+                        ) : (
+                          ''
+                        )}
+                        {selectId === e.package_id ? (
+                          <Fragment>
+                            <span className={styles.triangle_bottomRight} />
+                            <Icon type="check" className={styles.triangle_icon} />
+                          </Fragment>
+                        ) : (
+                          ''
+                        )}
+                      </div>
                     ) : (
                       ''
                     )}
-                  </div>
+                  </Fragment>
                 ))}
             </div>
             {memberListData && memberListData.length ? (
