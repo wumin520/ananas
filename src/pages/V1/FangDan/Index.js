@@ -55,10 +55,19 @@ class Index extends PureComponent {
         avatar:
           'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
         title: '试用推广',
-        description: `适用于：
-        1、快速提高基础销量
-        2、快速积累评价反馈
-        3、快速提升店铺DSR评分和权重`,
+        description: `推广场景：
+      1、新品上架，需要基础流量、销量、买家秀
+      2、老品激活，需要提高老链接的动销率，避免死链
+      3、活动补量，需要绝对安全且及时的快速补量
+      4、活动报名，需要快速满足平台活动要求，包括基础销量、基础买家秀、DSR店铺权重等
+
+推广效果：
+  1、优质种草买家秀，提高商品自然转化率
+  2、快速提高销量、买家秀数量，提升店铺DSR
+
+推广要求：
+  1、跟进服务质量，推广前需设置单品招商推广计划
+  2、招商推广ID：3662914，招商佣金可设置为0`,
       },
       {
         actions: ['列表', '+新增'],
@@ -67,11 +76,19 @@ class Index extends PureComponent {
         avatar:
           'https://cdn.youlianyc.com/image/static/526746a209d504d6d9c43270767ff76e928aedc2.jpg',
         title: '高佣推广',
-        description: `提报要求：
-        1、宝贝月销量≥200
-        2、宝贝评价数≥40
-        3、佣金比例≥20%
-        4、支持专属佣金设置（推广ID：3662914）`,
+        description: `推广场景：
+        1、站外曝光，将商品推荐到百万微信群、QQ群、公众号、小程序流量中
+        2、站外分销，吸引和发展分销团体，为商品招募百万中小代理长期合作
+
+推广效果：
+  1、快速提高商品的曝光量，快速出量
+  2、快速触达分销代理群体，稳定出量
+
+推广要求：
+  1、宝贝月销量≥200
+  2、宝贝评价数≥40
+  3、佣金比例≥20%
+  4、支持专属佣金设置，推广ID：3662914`,
       },
       {
         actions: ['列表', '+新增'],
@@ -80,10 +97,17 @@ class Index extends PureComponent {
         avatar:
           'https://cdn.youlianyc.com/image/static/5c75983b5efea8cef21ec34f25972cb946983272.jpg',
         title: '收藏推广',
-        description: `适用于：
-        1、支持店铺或商品收藏
-        2、提高店铺或商品收藏权重
-        3、提高店铺或商品推广转化率`,
+        description: `推广场景：
+        1、优化千人千面展示，提高商品自然曝光权重
+        2、优化店铺商品搜索权重，提高商品搜索排名
+
+推广效果：
+  1、定时定量增加商品和店铺的收藏数量
+  2、优质用户收藏，提高店铺和商品权重和转化率
+
+推广要求：
+  1、店铺处于正常状态，非平台处罚中
+  2、商品有常销数据，效果事半功倍`,
       },
     ];
 
@@ -110,9 +134,7 @@ class Index extends PureComponent {
 
     const content = (
       <div className={styles.pageHeaderContent}>
-        <p>
-          超多客为电商推广提供量身定制方案,快速提升商品搜索排名,带来大量免费真实用户,获得精准商品流量，提升付费转化率
-        </p>
+        <p>为商家推广提供量身定制方案，快速提升商品搜索排名，获得精准商品流量，提升购买转化率！</p>
         <div className={styles.contentLink}>
           <a>
             <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg" />{' '}
