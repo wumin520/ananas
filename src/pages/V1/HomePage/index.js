@@ -187,7 +187,7 @@ class Index extends Component {
               );
             })}
         </div>
-        <span>购买多重会员套餐时，采用累加延长制优先享受高一级服务</span>
+        <p className={styles.member_desc}>购买多重会员套餐时，采用累加延长制优先享受高一级服务</p>
       </div>
     );
     const pageHeaderContent = (
