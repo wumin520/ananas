@@ -105,7 +105,7 @@ class GeneralizeDetail extends Component {
               )}
             </Description>
             <Description term="推广份数">{data.total_amount}</Description>
-            <Description term="返现金额">￥{data.rebate_price}</Description>
+            <Description term="佣金">￥{data.commission_rate}</Description>
           </DescriptionList>
           <Card title="商品信息">
             <DescriptionList size="large" title="商品信息" style={{ marginBottom: 32 }}>
@@ -141,49 +141,6 @@ class GeneralizeDetail extends Component {
           </Card>
         </Card>
       </PageHeaderWrapper>
-
-      // <PageHeaderWrapper title="推广详情" loading={loading} content={content}>
-      //   <Card bordered={false}>
-      //     <DescriptionList size="large" title="商品信息" style={{ marginBottom: 32 }}>
-      //       <Description term="商品id">{data.goods_id}</Description>
-      //       <Description term="商品名称" className={styles.pro_name}>
-      //         {data.title}
-      //       </Description>
-      //       <Description term="">
-      //         <div className={styles.pro_img}>
-      //           <p>商品主图: </p>
-      //           <img src={data.img} alt="img" style={{ width: 65, heigth: 65, marginLeft: 10 }} />
-      //         </div>
-      //       </Description>
-      //       <Description term="优惠券">
-      //         {data.coupon_price ? `￥ ${data.coupon_price}` : '无'}{' '}
-      //       </Description>
-      //       <Description term="优惠券数量">{data.coupon_info.coupon_total_quantity}</Description>
-      //       {currentUser.sh_type === 1 ? (
-      //         <Description term="招商ID">{data.zs_duo_id}</Description>
-      //       ) : (
-      //         ''
-      //       )}
-      //       <Description term="商品价格">￥{data.price}</Description>
-      //       <Description term="佣金">{data.commission_rate}</Description>
-      //     </DescriptionList>
-      //     <Divider style={{ marginBottom: 32 }} />
-      //     <DescriptionList size="large" title="推广信息" style={{ marginBottom: 32 }}>
-      //       <Description term="推广编号">{data.task_id}</Description>
-      //       <Description term="推广状态">
-      //         <Badge status={data.state_color} text={data.state_desc} />
-      //       </Description>
-      //       {data.reject_reason ? (
-      //         <Description term="驳回原因">{data.reject_reason}</Description>
-      //       ) : (
-      //         ''
-      //       )}
-      //       <Description term="申请时间">{data.created_at}</Description>
-      //       <Description term="推广开始时间">{data.start_time}</Description>
-      //       <Description term="推荐理由">{data.recommend_reason}</Description>
-      //     </DescriptionList>
-      //   </Card>
-      // </PageHeaderWrapper>
     );
   }
 }
