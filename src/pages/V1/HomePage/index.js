@@ -204,7 +204,7 @@ class Index extends Component {
                   {memberInfo && memberInfo[0].level !== 0 ? (
                     <Popover placement="right" content={memberPop}>
                       {memberInfo[0].level === 10 ? (
-                        <Tag>普通{memberInfo[0].name}</Tag>
+                        <Tag>{memberInfo[0].name}</Tag>
                       ) : memberInfo[0].level === 20 ? (
                         <Tag className={styles.tag20}>{memberInfo[0].name}</Tag>
                       ) : memberInfo[0].level === 30 ? (
