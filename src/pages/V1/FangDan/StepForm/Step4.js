@@ -160,7 +160,29 @@ class Step4 extends React.PureComponent {
             3: 1,
           };
           if ({}.hasOwnProperty.call(valObj, index)) obj.props.colSpan = valObj[index];
-
+          if (index === 1) {
+            obj.children = (
+              <div className={styles.hint_}>
+                {value}
+                <Tooltip
+                  title={
+                    <div>
+                      {taskPayInfo.service_notice.map(val => {
+                        return (
+                          <p>
+                            {val.name}：{val.desc}
+                          </p>
+                        );
+                      })}
+                    </div>
+                  }
+                  style={{ flex: 'auto' }}
+                >
+                  <Icon type="question-circle" />
+                </Tooltip>
+              </div>
+            );
+          }
           return obj;
         },
       },
@@ -206,7 +228,8 @@ class Step4 extends React.PureComponent {
       },
     ];
     if (location.query.qf === undefined && memberInfo[0].level === 0) {
-      data = otherData;
+      // data = otherData;
+      data = syhyData;
     } else if (location.query.qf === undefined && memberInfo[0].level !== 0) {
       data = syhyData;
     }
@@ -248,16 +271,8 @@ class Step4 extends React.PureComponent {
               dataSource={data}
               className={styles.table}
             />
-            {/* <Tooltip className={styles.toolts}
-              title={
-                <p>提示文案</p>
-              }
-              >
-              <Icon type="question-circle" style={{ marginRight: 8 }} />
-            </Tooltip> */}
           </Col>
         </Row>
-
         <Row>
           <Col style={{ textAlign: 'right', marginTop: 10 }} push={6} span={12}>
             {location.query.qf === undefined && memberInfo[0].level !== 0 ? (

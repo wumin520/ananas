@@ -50,6 +50,7 @@ export default {
       service_money: 0,
       free_service_balance: 0,
       service_rate: 0,
+      service_notice: [],
     },
     schedules: [],
     startTime: '',
