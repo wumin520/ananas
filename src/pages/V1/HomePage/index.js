@@ -143,7 +143,8 @@ class Index extends Component {
     if (rechargeActivityState === 1) {
       noticeInfo = (
         <div>
-          {noticeInfo}
+          {/* {noticeInfo} */}
+          有关于超多客试用推广活动收取服务费通知
           <Link
             style={{ marginLeft: '20px', color: '#2F54EB' }}
             to="public/helpDetail?SelectedKeys=9&OpenKeys=sub4"
