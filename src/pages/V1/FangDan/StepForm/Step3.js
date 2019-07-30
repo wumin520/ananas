@@ -106,7 +106,7 @@ class EditableCell extends React.Component {
                         },
                       ],
                       //   const num = this.schedulesHash[key] || '';
-                      initialValue: record[dataIndex] || timeList[10],
+                      initialValue: record[dataIndex] || timeList[0],
                     })(
                       <Select
                         placeholder="请选择"
