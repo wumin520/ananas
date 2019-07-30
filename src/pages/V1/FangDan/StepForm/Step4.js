@@ -152,15 +152,9 @@ class Step4 extends React.PureComponent {
             row,
             props: {},
           };
-          obj.props.colSpan = 0;
-          const valObj = {
-            0: 1,
-            1: 2,
-            2: 1,
-            3: 1,
-          };
-          if ({}.hasOwnProperty.call(valObj, index)) obj.props.colSpan = valObj[index];
+
           if (index === 1) {
+            obj.props.colSpan = 2;
             obj.children = (
               <div className={styles.hint_}>
                 {value}
@@ -190,6 +184,17 @@ class Step4 extends React.PureComponent {
         title: '数量',
         dataIndex: 'num',
         key: 'num',
+        render: (value, row, index) => {
+          const obj = {
+            children: value,
+            row,
+            props: {},
+          };
+          if (index == 1) {
+            obj.props.colSpan = 0;
+          }
+          return obj;
+        },
       },
       {
         title: '合计',
@@ -216,7 +221,7 @@ class Step4 extends React.PureComponent {
         id: 2,
         reward_type: '平台服务费',
         rebate_money: `${serviceDesc}`,
-        num: `${taskPayInfo.service_money}`,
+        total_money: `${taskPayInfo.service_money}`,
       },
     ];
     // 试用-非会员

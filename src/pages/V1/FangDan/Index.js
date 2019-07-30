@@ -52,7 +52,7 @@ class Index extends PureComponent {
       {
         // actions: ['列表', '+新增'],
         state: 1,
-        label: ['试用标签', '啦啦啦'],
+        label: ['新品提升综合权重'],
         avatar:
           'https://cdn.youlianyc.com/image/static/acb251fe8b2dea609b5902ea1f35049841cef6fd.jpg',
         title: '试用推广',
@@ -74,7 +74,7 @@ class Index extends PureComponent {
       {
         // actions: ['列表', '+新增'],
         state: 1,
-        label: ['试用标签', '啦啦啦'],
+        label: ['单品精准爆款打造'],
         type: 3,
         avatar:
           'https://cdn.youlianyc.com/image/static/987b0e82149da8a8edb8f38ed048e6523bbed4dc.jpg',
@@ -271,7 +271,7 @@ class Index extends PureComponent {
                                   return <Tag>{element}</Tag>;
                                 })
                               : ''}
-                            <p style={{ marginBottom: 10 }}>{item.keywords}</p>
+                            <p style={{ marginBottom: 10, marginTop: 10 }}>{item.keywords}</p>
                             <Ellipsis className={styles.item} lines={3}>
                               {item.description}
                             </Ellipsis>
