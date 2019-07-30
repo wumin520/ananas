@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
 import { Link } from 'umi';
-import { Table } from 'antd';
+import { Table, Icon } from 'antd';
 
 import Footer from '../components/Footer';
 import HeadNav from '../components/HeadNav';
@@ -48,6 +48,22 @@ class VIP extends Component {
         children: value,
         props: {},
       };
+      if (value === 'empty' || value === 'corr') {
+        const s =
+          value === 'empty' ? (
+            <span
+              style={{
+                display: 'inline-block',
+                width: '20px',
+                height: '4px',
+                background: '#D9D9D9',
+              }}
+            />
+          ) : (
+            <Icon type="check" style={{ color: '#4CA1AF', fontWeight: 'bold', fontSize: '16px' }} />
+          );
+        return s;
+      }
       return obj;
     };
 
@@ -56,7 +72,8 @@ class VIP extends Component {
         title: 'VIP特权',
         colSpan: 2,
         dataIndex: 'title',
-        width: 100,
+        width: 120,
+        align: 'center',
         render: (value, row, index) => {
           const obj = {
             children: value,
@@ -80,32 +97,41 @@ class VIP extends Component {
         title: '',
         colSpan: 0,
         dataIndex: 'title_sub',
-        render: renderContent,
+        align: 'center',
       },
       {
         title: '功能解析',
         dataIndex: 'function',
-        render: renderContent,
+        align: 'center',
+        width: 250,
       },
       {
         title: '普通商家 体验3天',
         dataIndex: 'function_1',
         render: renderContent,
+        align: 'center',
+        width: 140,
       },
       {
         title: '黄金会员 ￥4000/年',
         dataIndex: 'function_2',
         render: renderContent,
+        align: 'center',
+        width: 140,
       },
       {
         title: '白金会员 ￥6000/年',
         dataIndex: 'function_3',
         render: renderContent,
+        align: 'center',
+        width: 140,
       },
       {
         title: '铂金会员 ￥6000/年',
         dataIndex: 'function_4',
         render: renderContent,
+        align: 'center',
+        width: 140,
       },
     ];
 
@@ -115,50 +141,50 @@ class VIP extends Component {
         title: '特色服务',
         title_sub: '专属运营1对1服务',
         function: '5年运营定制方案全程跟踪服务',
-        function_1: '空',
-        function_2: '空',
-        function_3: '勾',
-        function_4: '勾',
+        function_1: 'empty',
+        function_2: 'corr',
+        function_3: 'corr',
+        function_4: 'corr',
       },
       {
         key: '2',
         title: '特色服务',
         title_sub: '线下电商大会',
         function: '10年电商平台运营经验大牛分享',
-        function_1: '空',
-        function_2: '空',
-        function_3: '空',
-        function_4: '勾',
+        function_1: 'empty',
+        function_2: 'empty',
+        function_3: 'empty',
+        function_4: 'corr',
       },
       {
         key: '3',
         title: '独家功能',
         title_sub: '精准用户画像',
         function: '地域/性别/等级',
-        function_1: '空',
-        function_2: '空',
-        function_3: '勾',
-        function_4: '勾',
+        function_1: 'corr',
+        function_2: 'corr',
+        function_3: 'corr',
+        function_4: 'corr',
       },
       {
         key: '4',
         title: '独家功能',
         title_sub: '每日订单分时段控制',
         function: '精细化控制每日用户转化',
-        function_1: '空',
-        function_2: '空',
-        function_3: '空',
-        function_4: '勾',
+        function_1: 'empty',
+        function_2: 'empty',
+        function_3: 'empty',
+        function_4: 'empty',
       },
       {
         key: '5',
         title: '独家功能',
         title_sub: '自定义购买路径转化',
         function: '精准控制打造计划的数据匹配',
-        function_1: '空',
-        function_2: '空',
-        function_3: '勾',
-        function_4: '勾',
+        function_1: 'empty',
+        function_2: 'empty',
+        function_3: 'empty',
+        function_4: 'empty',
       },
       {
         key: '6',
@@ -185,7 +211,7 @@ class VIP extends Component {
         title: '独家功能',
         title_sub: '爆款打造',
         function: '流量黄金推荐位，冲销量必备',
-        function_1: '',
+        function_1: 'empty',
         function_2: '5个',
         function_3: '10个',
         function_4: '30个',
@@ -205,30 +231,30 @@ class VIP extends Component {
         title: '基础服务',
         title_sub: '用户实名认证',
         function: '手机号认证',
-        function_1: '勾',
-        function_2: '勾',
-        function_3: '勾',
-        function_4: '勾',
+        function_1: 'corr',
+        function_2: 'corr',
+        function_3: 'corr',
+        function_4: 'corr',
       },
       {
         key: '11',
         title: '基础服务',
         title_sub: '优先审核',
         function: '发布推广后系统安排优先审核',
-        function_1: '空',
-        function_2: '空',
-        function_3: '勾',
-        function_4: '勾',
+        function_1: 'empty',
+        function_2: 'empty',
+        function_3: 'corr',
+        function_4: 'corr',
       },
       {
         key: '12',
         title: '基础服务',
         title_sub: '短信服务',
         function: '每日推广状态提醒',
-        function_1: '勾',
-        function_2: '勾',
-        function_3: '勾',
-        function_4: '勾',
+        function_1: 'corr',
+        function_2: 'corr',
+        function_3: 'corr',
+        function_4: 'corr',
       },
       {
         key: '13',

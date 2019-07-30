@@ -58,21 +58,25 @@ class CapitalDetail extends PureComponent {
     });
   };
 
-  // 交易记录&提现记录切换
-  tabsClick = value => {
+  getMemberRecordList = p => {
     const { dispatch } = this.props;
+    dispatch({
+      type: 'capital/getMemberRecordList',
+      payload: {
+        page: p.page_no,
+      },
+    });
+  };
+
+  // 交易记录&提现记录&&会员购买记录
+  tabsClick = value => {
     params = {
       page: 1,
       tradeType: -1,
       page_no: 1,
     };
     if (value === 'member') {
-      dispatch({
-        type: 'capital/getMemberRecordList',
-        payload: {
-          page: params.page_no,
-        },
-      });
+      this.getMemberRecordList(params);
     } else if (value === 'trade') {
       this.getAssetList(params);
       this.tabType = 0;
@@ -141,8 +145,10 @@ class CapitalDetail extends PureComponent {
     };
     if (this.tabType === 1) {
       this.getRewardList(params);
-    } else {
+    } else if (this.tabType === 0) {
       this.getAssetList(params);
+    } else {
+      this.getMemberRecordList(params);
     }
   };
 
@@ -180,6 +186,16 @@ class CapitalDetail extends PureComponent {
         width: 100,
       },
       {
+        title: '交易金额',
+        dataIndex: 'money',
+        key: 'money',
+      },
+      {
+        title: '账户余额结余',
+        dataIndex: 'balance',
+        key: 'balance',
+      },
+      {
         title: '状态',
         key: 'state',
         width: 100,
@@ -187,11 +203,45 @@ class CapitalDetail extends PureComponent {
           return <Badge status={item.state_color} text={item.state_desc} />;
         },
       },
+
+      {
+        title: '说明',
+        dataIndex: 'desc',
+        key: 'desc',
+      },
+    ];
+
+    const columns1 = [
+      {
+        title: '创建时间',
+        dataIndex: 'created_at',
+        key: 'created_at',
+      },
+      {
+        title: '交易类型',
+        dataIndex: 'type',
+        key: 'type',
+        width: 100,
+      },
       {
         title: '交易金额',
         dataIndex: 'money',
         key: 'money',
       },
+      {
+        title: '奖励金结余',
+        dataIndex: 'balance',
+        key: 'balance',
+      },
+      {
+        title: '状态',
+        key: 'state',
+        width: 100,
+        render(item) {
+          return <Badge status={item.state_color} text={item.state_desc} />;
+        },
+      },
+
       {
         title: '说明',
         dataIndex: 'desc',
@@ -329,7 +379,7 @@ class CapitalDetail extends PureComponent {
                 </Form>
                 <br />
                 <Table
-                  columns={columns}
+                  columns={columns1}
                   dataSource={rewardData.list}
                   pagination={{
                     defaultCurrent: 1,
