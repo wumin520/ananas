@@ -609,6 +609,8 @@ class HelpDetail extends PureComponent {
                   <br />
                   <br />
                   收取推广费用的10%作为服务费，可用佣金抵扣
+                  <br />
+                  <br />
                   本通知自即日起执行。在此提醒您合理安排推广活动。感谢您的支持和配合！
                 </Card>
               ) : (
