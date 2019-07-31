@@ -121,7 +121,7 @@ class FdList extends PureComponent {
               </span>
             );
           }
-          if (item.state === 1) {
+          if (item.state === 1 || item.state === 6) {
             operation = <a onClick={this.goDetail.bind(this, item)}>查看 </a>;
           }
           if (item.state === 2) {
