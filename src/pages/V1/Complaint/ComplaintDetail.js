@@ -36,6 +36,8 @@ class ComplaintDetail extends PureComponent {
 
     const contentTitle = <div>申诉编号：{compainData.id}</div>;
 
+    const process = compainData.state === 0 ? 1 : 2;
+
     const content = (
       <div className={styles.top_header}>
         <div>
@@ -65,11 +67,15 @@ class ComplaintDetail extends PureComponent {
     const stepTwo = (
       <div>
         <p>超多客</p>
-        <p style={{ color: '#1890FF' }}>等待审核</p>
+        {process === 1 ? <p style={{ color: '#1890FF' }}>等待审核</p> : <p>审核完成</p>}
       </div>
     );
 
-    const process = compainData.state === 0 ? 1 : 2;
+    const stepThree = (
+      <div>
+        <p style={{ color: '#1890FF' }}>{compainData.verify_content}</p>
+      </div>
+    );
 
     return (
       <PageHeaderWrapper title={contentTitle} content={content}>
@@ -77,7 +83,7 @@ class ComplaintDetail extends PureComponent {
           <Steps progressDot current={process}>
             <Step title="提交申诉" description={stepOne} />
             <Step title="平台审核" description={stepTwo} />
-            <Step title="完成" description="" />
+            <Step title="完成" description={stepThree} />
           </Steps>
         </Card>
 

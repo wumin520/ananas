@@ -266,28 +266,7 @@ class Dashboard extends Component {
                     </TabPane>
                   </Tabs>
                   <div className={styles.rules}>
-                    <Tooltip
-                      title={
-                        <div>
-                          {sharing_rules}
-                          {/* <p>
-                            1.有效订单分成
-                            <br />
-                            分成比例：交易额*2%；
-                          </p>
-                          <p>
-                            2.会员分成：
-                            <br />
-                            充值黄金会员：每个1000元；
-                            <br />
-                            充值白金会员：每个1500元；
-                            <br />
-                            充值钻石会员：每个2000元。
-                          </p>
-                          <p>每月25日结算上月会员分成及有效订单分成。</p> */}
-                        </div>
-                      }
-                    >
+                    <Tooltip title={<div style={{ whiteSpace: 'pre-wrap' }}>{sharing_rules}</div>}>
                       <Icon type="question-circle" className={styles.icon} />
                     </Tooltip>
                     分成规则
