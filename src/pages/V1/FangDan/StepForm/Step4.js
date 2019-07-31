@@ -129,6 +129,14 @@ class Step4 extends React.PureComponent {
         1.免服务费剩余额度￥{taskPayInfo.free_service_balance}
         <br />
         2.商品佣金可抵扣服务费
+        <br />
+        <span style={{ color: '#1890FF' }}>
+          {taskPayInfo.free_type === 1
+            ? '已使用免服务费额度抵扣'
+            : taskPayInfo.free_type === 2
+            ? '已使用商品佣金抵扣'
+            : '无抵扣'}
+        </span>
       </span>
     );
     // const onFinish = () => {
@@ -287,9 +295,9 @@ class Step4 extends React.PureComponent {
                 服务费抵扣：-￥{taskPayInfo.free_service_money}元
               </Tooltip>
             ) : location.query.qf === undefined && memberInfo[0].level === 0 ? (
-              <Tooltip title={<p>收取{taskPayInfo.service_rate}服务费</p>}>
+              <Tooltip title={<p>收取{taskPayInfo.service_rate}%服务费</p>}>
                 <Icon type="question-circle" style={{ marginRight: 8 }} />
-                服务费：￥{taskPayInfo.service_money}
+                服务费：￥{taskPayInfo.need_pay_service_money}
               </Tooltip>
             ) : (
               ''
