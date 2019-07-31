@@ -48,7 +48,11 @@ export default class StepForm extends PureComponent {
     // step 5
     if (location.query.type) {
       title = '商品收藏';
-      location.query.type === '31' ? (title = '店铺收藏') : '';
+      location.query.type === '31'
+        ? (title = '店铺收藏')
+        : location.query.type === '10'
+        ? (title = '试用推广')
+        : '';
     }
     let breadcrumbList = [];
     if (location.query.deq !== undefined) {

@@ -25,7 +25,7 @@ class Step4 extends React.PureComponent {
   onChange = e => {
     const { taskPayInfo, dispatch } = this.props;
     const val = e.target.value;
-    console.log('radio checked', e.target.value);
+    // console.log('radio checked', e.target.value);
     this.setState({
       payType: val,
     });
@@ -39,7 +39,7 @@ class Step4 extends React.PureComponent {
     } else {
       can_pay = 1;
     }
-    console.log(can_pay, 'can_pay -> ', taskPayInfo, wait_pay, reward_balance, balance);
+    // console.log(can_pay, 'can_pay -> ', taskPayInfo, wait_pay, reward_balance, balance);
     if (taskPayInfo.can_pay !== can_pay) {
       dispatch({
         type: 'form/updateState',
@@ -123,13 +123,14 @@ class Step4 extends React.PureComponent {
 
   render() {
     const { taskPayInfo, location, currentUser, goodsDetail } = this.props;
-    let serviceDesc = '';
-    if (taskPayInfo.free_service_balance && taskPayInfo.free_service_balance > 0) {
-      serviceDesc = `剩余免费额度${taskPayInfo.free_service_balance}，超出部分收取5%服务费`;
-    } else {
-      serviceDesc = `收取${taskPayInfo.service_rate}服务费`;
-    }
-    console.log('serviceDesc===', serviceDesc);
+    let serviceDesc = `收取${taskPayInfo.service_rate}%服务费`;
+    let serviceDesc_total = (
+      <span>
+        1.免服务费剩余额度￥{taskPayInfo.free_service_balance}
+        <br />
+        2.商品佣金可抵扣服务费
+      </span>
+    );
     // const onFinish = () => {
     //   router.push('/form/step-form/info');
     // };
@@ -158,12 +159,12 @@ class Step4 extends React.PureComponent {
             obj.children = (
               <div className={styles.hint_}>
                 {value}
-                <Tooltip
+                {/** <Tooltip
                   title={
                     <div>
                       {taskPayInfo.service_notice.map(val => {
                         return (
-                          <p>
+                          <p key={val.name}>
                             {val.name}：{val.desc}
                           </p>
                         );
@@ -173,7 +174,7 @@ class Step4 extends React.PureComponent {
                   style={{ flex: 'auto' }}
                 >
                   <Icon type="question-circle" />
-                </Tooltip>
+                </Tooltip> */}
               </div>
             );
           }
@@ -281,7 +282,7 @@ class Step4 extends React.PureComponent {
         <Row>
           <Col style={{ textAlign: 'right', marginTop: 10 }} push={6} span={12}>
             {location.query.qf === undefined && memberInfo[0].level !== 0 ? (
-              <Tooltip title={<p>免费额度和商品佣金可抵扣服务费</p>}>
+              <Tooltip title={<p>{serviceDesc_total}</p>}>
                 <Icon type="question-circle" style={{ marginRight: 8 }} />
                 服务费抵扣：-￥{taskPayInfo.free_service_money}元
               </Tooltip>

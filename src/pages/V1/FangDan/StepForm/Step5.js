@@ -67,7 +67,7 @@ class Step5 extends React.PureComponent {
           type="success"
           title="提交成功"
           description={description}
-          extra={extra}
+          // extra={extra}
           actions={actions}
           className={styles.result}
         />

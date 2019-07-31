@@ -90,7 +90,7 @@ class VIP extends Component {
           const valObj = {
             0: 2,
             2: 6,
-            8: 5,
+            8: 4,
           };
           if ({}.hasOwnProperty.call(valObj, index)) obj.props.rowSpan = valObj[index];
 
@@ -117,21 +117,21 @@ class VIP extends Component {
         width: 140,
       },
       {
-        title: '黄金会员 ￥4000/年',
+        title: `黄金会员 ￥${memberListData.length >= 4 ? memberListData[1].price : ''}/年`,
         dataIndex: 'function_2',
         render: renderContent,
         align: 'center',
         width: 140,
       },
       {
-        title: '白金会员 ￥6000/年',
+        title: `白金会员 ￥${memberListData.length >= 4 ? memberListData[2].price : ''}/年`,
         dataIndex: 'function_3',
         render: renderContent,
         align: 'center',
         width: 140,
       },
       {
-        title: '铂金会员 ￥6000/年',
+        title: `铂金会员 ￥${memberListData.length >= 4 ? memberListData[3].price : ''}/年`,
         dataIndex: 'function_4',
         render: renderContent,
         align: 'center',
@@ -260,16 +260,6 @@ class VIP extends Component {
         function_3: 'corr',
         function_4: 'corr',
       },
-      {
-        key: '13',
-        title: '基础服务',
-        title_sub: '置顶推广',
-        function: '提高宝贝曝光率',
-        function_1: '每天￥2/次',
-        function_2: '每天免费1次',
-        function_3: '每天免费1次',
-        function_4: '每天免费1次',
-      },
     ];
 
     return (
@@ -317,7 +307,7 @@ class VIP extends Component {
         <div className={styles.VIP_contBlock}>
           <div className={styles.VIPMembers}>
             {memberListData.map((e, index) => (
-              <Fragment>
+              <Fragment key={e.package_id}>
                 {index > 0 ? (
                   <div className={styles.VIPMember}>
                     <div className={`${styles.VIPMember_top} ${styles.VIPMember_top_bg}${index}`}>

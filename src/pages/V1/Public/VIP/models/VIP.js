@@ -4,7 +4,11 @@ export default {
   namespace: 'VIP',
 
   state: {
-    memberListData: [],
+    memberListData: [
+      {
+        price: '',
+      },
+    ],
   },
 
   effects: {

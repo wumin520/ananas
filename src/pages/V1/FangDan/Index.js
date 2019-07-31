@@ -268,7 +268,7 @@ class Index extends PureComponent {
                           <div>
                             {item.label && item.label.length > 0
                               ? item.label.map(element => {
-                                  return <Tag>{element}</Tag>;
+                                  return <Tag key={element}>{element}</Tag>;
                                 })
                               : ''}
                             <p style={{ marginBottom: 10, marginTop: 10 }}>{item.keywords}</p>
