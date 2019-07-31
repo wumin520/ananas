@@ -164,7 +164,7 @@ class Index extends Component {
 
     /* eslint-disable */
     const salesData = taskReportInfo[this.state.dataType];
-    console.log('creditInfo.credit_level====>>>', creditInfo.credit_level);
+    // console.log('creditInfo.credit_level====>>>', creditInfo.credit_level);
     let href_jump = '';
     if (memberInfo[0].level === 10) {
       // 开通会员
@@ -181,7 +181,7 @@ class Index extends Component {
           {memberInfo &&
             memberInfo.map(val => {
               return (
-                <p>
+                <p key={val.level}>
                   {val.name}：{val.level > 10 ? `${val.end_at}到期` : val.end_at}
                 </p>
               );

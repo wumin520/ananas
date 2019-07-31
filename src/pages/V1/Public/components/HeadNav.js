@@ -46,7 +46,6 @@ class HeadNav extends PureComponent {
     /* eslint-disable */
     const { isLogin } = this.state;
     const { currentUser } = this.props;
-    console.log('currentUser: ', currentUser);
     const { state, phone, ts_state } = currentUser;
     const phoneStr = phone
       ? `${currentUser.phone.substr(0, 3)}****${currentUser.phone.substr(7)}`
