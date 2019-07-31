@@ -1,12 +1,19 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
-import { Card, Form, Button, Checkbox, Icon } from 'antd';
+import { Card, Form, Button, Checkbox, Icon, Alert } from 'antd';
 import { Link } from 'umi';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './styles.less';
 
-const content = <div />;
+const content = (
+  <Fragment>
+    <Icon type="exclamation-circle" style={{ color: '#2F54EB', marginRight: '5px' }} />
+    <Link className={styles.col2F54EB} to="/public/VIP">
+      了解VIP会员服务
+    </Link>
+  </Fragment>
+);
 
 @connect(({ VIP, user, loading }) => ({
   memberListData: VIP.memberListData,
@@ -76,28 +83,26 @@ class CheckoutVip extends PureComponent {
     const { selectId, isChecked } = this.state;
     const { memberListData, currentUser } = this.props;
 
+    const alertInfo = (
+      <div className={styles.myVIP}>
+        <span>
+          我的账号<span className={styles.col2F54EB}>{currentUser.phone}</span>，
+        </span>
+        <span>
+          会员等级
+          <span className={styles.col2F54EB}>
+            {currentUser && currentUser.member_info[0].name
+              ? currentUser.member_info[0].name
+              : '无'}
+          </span>
+        </span>
+      </div>
+    );
+
     return (
-      <PageHeaderWrapper title="购买会员" content={content}>
+      <PageHeaderWrapper title="我的VIP会员" content={content}>
         <Card>
-          <div>
-            <strong style={{ fontSize: '20px', marginRight: '10px' }}>我的VIP会员</strong>
-            <Link className={styles.col1890ff} to="/public/VIP">
-              了解VIP会员服务
-            </Link>
-          </div>
-          <div className={styles.myVIP}>
-            <span>
-              我的账号<span className={styles.col1890ff}>{currentUser.phone}</span>，
-            </span>
-            <span>
-              会员等级
-              <span className={styles.col1890ff}>
-                {currentUser && currentUser.member_info[0].name
-                  ? currentUser.member_info[0].name
-                  : '无'}
-              </span>
-            </span>
-          </div>
+          <Alert message={alertInfo} type="info" showIcon />
           <div className={styles.VIP_block}>
             <div className={styles.top_tabs}>
               {memberListData &&
@@ -113,22 +118,6 @@ class CheckoutVip extends PureComponent {
                         onClick={this.selectVIP.bind(this, e.package_id)}
                       >
                         {e.name}
-                        {e.is_recommend ? (
-                          <Fragment>
-                            <span className={styles.triangle_topLeft} />
-                            <span className={styles.triangle_txt}>推荐</span>
-                          </Fragment>
-                        ) : (
-                          ''
-                        )}
-                        {selectId === e.package_id ? (
-                          <Fragment>
-                            <span className={styles.triangle_bottomRight} />
-                            <Icon type="check" className={styles.triangle_icon} />
-                          </Fragment>
-                        ) : (
-                          ''
-                        )}
                       </div>
                     ) : (
                       ''
@@ -140,33 +129,41 @@ class CheckoutVip extends PureComponent {
               <Fragment>
                 <div className={styles.select_Vip_info}>
                   <p>
-                    <span className={styles.label_title}>VIP类型</span>
+                    <span className={styles.label_title}>VIP类型：</span>
                     <span>{memberListData[selectId - 1].name}-年度</span>
                   </p>
                   <p>
-                    <span className={styles.label_title}>会员费</span>
-                    <span>￥{memberListData[selectId - 1].price}/年</span>
-                  </p>
-                  <p>
-                    <span className={styles.label_title}>有效期</span>
-                    <span>{memberListData[selectId - 1].valid_time}</span>
-                  </p>
-                  <p>
-                    <span className={styles.label_title}>会员内容</span>
-                    <span className={styles.col1890ff}>
-                      {memberListData[selectId - 1].content_one}
+                    <span className={styles.label_title}>会员费：</span>
+                    <span>
+                      ￥
+                      <span style={{ fontSize: '30px' }}>{memberListData[selectId - 1].price}</span>
+                      /年
                     </span>
                   </p>
                   <p>
-                    <span className={styles.label_title} />
-                    <span style={{ color: 'red' }}>{memberListData[selectId - 1].content_two}</span>
+                    <span className={styles.label_title}>有效期：</span>
+                    <span>{memberListData[selectId - 1].valid_time}</span>
                   </p>
-                  <p className={styles.describe}>{memberListData[selectId - 1].describe}</p>
+                  <p>
+                    <span className={`${styles.label_title} ${styles.label_title2}`}>
+                      会员内容：
+                    </span>
+                    <span style={{ color: '#BC8567' }}>
+                      {memberListData[selectId - 1].content_one}
+                    </span>
+                  </p>
+                  {memberListData[selectId - 1].content_two ? (
+                    <p>
+                      <span className={styles.label_title} />
+                      <span style={{ color: '#BC8567' }}>
+                        {memberListData[selectId - 1].content_two}
+                      </span>
+                    </p>
+                  ) : (
+                    ''
+                  )}
                 </div>
                 <div className={styles.paid_block}>
-                  <p className={styles.need_price}>
-                    需支付：￥{memberListData[selectId - 1].price}
-                  </p>
                   <div>
                     {isChecked ? (
                       <Button className={styles.btn_paid} type="primary" onClick={this.toPaid}>
@@ -180,10 +177,14 @@ class CheckoutVip extends PureComponent {
                   </div>
                   <div>
                     <Checkbox onChange={this.onChangeCheckbox}>
-                      我已仔细阅读并同意接受《超多客广告服务协议》、《超多客VIP会员服务协议》
+                      我已仔细阅读并同意接受
+                      <Link to="/public/helpDetail?SelectedKeys=7" style={{ color: '#2B4DEF' }}>
+                        《超多客广告服务协议》、《超多客VIP会员服务协议》
+                      </Link>
                     </Checkbox>
                   </div>
                 </div>
+                <p className={styles.describe}>{memberListData[selectId - 1].describe}</p>
               </Fragment>
             ) : (
               ''

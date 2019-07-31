@@ -416,101 +416,75 @@
   }
 }
 
-.myVIP {
-  margin-top: 10px;
-}
-
-.col1890ff {
-  color: #1890ff;
+.col2F54EB {
+  color: #2f54eb;
 }
 
 .VIP_block {
+  margin-top: 20px;
+
   .top_tabs {
     display: flex;
-    justify-content: flex-start;
+    flex: 1;
+    justify-content: space-between;
+    color: rgba(0, 0, 0, 0.65);
+    font-weight: 400;
+    font-size: 16px;
+    font-family: PingFangSC-Regular, sans-serif;
 
     .tab {
       position: relative;
-      margin: 20px 20px 20px 0;
-      padding: 20px 40px;
-      border: 1px solid #e5e5e5;
+      width: 100%;
+      height: 52px;
+      color: rgba(0, 0, 0, 0.45);
+      line-height: 52px;
+      text-align: center;
+      background: rgba(250, 250, 250, 1);
+      border-top: 1px solid rgba(232, 232, 232, 1);
+      border-radius: 2px 2px 0 0;
 
       &.selectedItem {
-        color: #1890ff;
-        background-color: #e6f7ff;
-        border: 1px solid #91d5ff;
-      }
-      .triangle_topLeft {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        width: 0;
-        height: 0;
-        border-top: 30px solid #1890ff;
-        border-right: 50px solid transparent;
-      }
-      .triangle_txt {
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        z-index: 2;
-        color: #fff;
-        font-size: 13px;
-        transform: rotate(-30deg);
-      }
-      .triangle_bottomRight {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-        width: 0;
-        height: 0;
-        border-bottom: 30px solid #1890ff;
-        border-left: 40px solid transparent;
-      }
-      .triangle_icon {
-        position: absolute;
-        right: 6px;
-        bottom: 3px;
-        z-index: 1;
-        color: #fff;
+        color: rgba(0, 0, 0, 0.85);
+        background-color: #fff;
+        border-top: 4px solid rgba(47, 84, 235, 1);
+        border-right: 1px solid rgba(232, 232, 232, 1);
+        border-left: 1px solid rgba(232, 232, 232, 1);
       }
     }
   }
 
   .select_Vip_info {
-    padding: 24px;
-    background-color: #e6f7ff;
-    border: 1px solid #91d5ff;
+    padding: 64px 0 0 240px;
 
     .label_title {
       display: inline-block;
       width: 80px;
-      margin-bottom: 8px;
+      margin-bottom: 24px;
+      margin-left: 5px;
       color: #999;
+      text-align: right;
     }
 
-    .describe {
-      margin-top: 20px;
-      padding-top: 10px;
-      color: #999;
-      border-top: 1px dotted #1890ff;
+    .label_title2 {
+      margin-bottom: 0;
     }
   }
 
-  .paid_block {
-    margin-top: 50px;
-    text-align: center;
+  .describe {
+    margin-top: 20px;
+    padding-top: 10px;
+    color: #999;
+    border-top: 1px solid #e8e8e8;
+  }
 
-    .need_price {
-      font-weight: 500;
-      font-size: 20px;
-    }
+  .paid_block {
+    margin: 64px 0 64px 323px;
 
     .btn_paid {
-      width: 150px;
-      margin: 16px 0;
+      width: 176px;
+      height: 40px;
+      margin-bottom: 32px;
+      border-radius: 4px;
     }
   }
 }
