@@ -1,6 +1,6 @@
 import { query as queryUsers, queryCurrent } from '@/services/user';
 import { accountInfo } from '@/services/zhaoshang_api';
-import { setAuthority, getAuthority } from '@/utils/authority';
+import { setAuthority, getAuthority, setStorage } from '@/utils/authority';
 
 export default {
   namespace: 'user',
@@ -45,6 +45,9 @@ export default {
       const queryUserInfo = _.payload && _.payload.zs === 1 ? accountInfo : queryCurrent;
       const response = yield call(queryUserInfo);
       if (response.status === 'ok') {
+        if (response.payload.info) {
+          setStorage('smr', response.payload.info.show_member_record);
+        }
         yield put({
           type: 'saveCurrentUser',
           payload: response && response.payload,

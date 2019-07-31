@@ -3,6 +3,7 @@ import isEqual from 'lodash/isEqual';
 import { formatMessage } from 'umi-plugin-react/locale';
 import Authorized from '@/utils/Authorized';
 import { menu } from '../defaultSettings';
+import { getStorage } from '@/utils/authority';
 
 const { check } = Authorized;
 
@@ -113,6 +114,17 @@ export default {
       const originalMenuData = memoizeOneFormatter(routes, authority, path);
       const menuData = filterMenuData(originalMenuData);
       const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(originalMenuData);
+      // 会员加成 -> 显示会员购买记录页面
+      if (getStorage('smr') === '0') {
+        const routeItem = menuData.find(item => {
+          return item.path === '/work/businesses';
+        });
+        if (routeItem) {
+          routeItem.children = routeItem.children.filter(item => {
+            return item.path !== '/work/businesses/record';
+          });
+        }
+      }
       yield put({
         type: 'save',
         payload: { menuData, breadcrumbNameMap, routerData: routes },

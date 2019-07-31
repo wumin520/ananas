@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
-import { Card, Form, Divider, Steps, Badge } from 'antd';
+import { Card, Form, Divider, Steps, Badge, Icon } from 'antd';
 
 import DescriptionList from '@/components/DescriptionList';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -73,6 +73,17 @@ class ComplaintDetail extends PureComponent {
 
     const stepThree = (
       <div>
+        <p>
+          {compainData.state === 1 ? (
+            <Fragment>
+              <Icon type="check-circle" style={{ color: 'green' }} /> 审核通过
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Icon type="close-circle" style={{ color: 'red' }} /> 审核不通过
+            </Fragment>
+          )}
+        </p>
         <p style={{ color: '#1890FF' }}>{compainData.verify_content}</p>
       </div>
     );
@@ -86,7 +97,6 @@ class ComplaintDetail extends PureComponent {
             <Step title="完成" description={stepThree} />
           </Steps>
         </Card>
-
         <Card title="订单信息">
           {/** 相关信息 */}
           <Card type="inner" title="相关信息">
@@ -130,6 +140,7 @@ class ComplaintDetail extends PureComponent {
                       orderData.proof_images.length > 0 &&
                       orderData.proof_images.map(e => (
                         <img
+                          key={e}
                           src={e}
                           style={{
                             width: 100,

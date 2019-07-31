@@ -133,7 +133,7 @@ class PayeeAdd extends PureComponent {
           <Col span={6}>银行账号：</Col>
           <Col span={10}>{payeeInfo.bank_card}</Col>
         </Row>
-        {type === 1 ? (
+        {payeeInfo.blis_no !== '' ? (
           <Fragment>
             <Row className={styles.list_h} type="flex" justify="start">
               <Col span={6}>营业执照号：</Col>
