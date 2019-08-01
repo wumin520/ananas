@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { setInviteCode } from '@/utils/authority';
 import router from 'umi/router';
-import { Button, Carousel, Icon } from 'antd';
-import Link from 'umi/link';
+import { Button, Carousel } from 'antd';
+// import Link from 'umi/link';
 import styles from './index.less';
 
 import Footer from '../components/Footer';
@@ -145,7 +145,7 @@ class Index extends Component {
         {/* {con0} */}
         <div className={styles.banners}>
           <Carousel {...bannersSetting} ref={this.setRef}>
-            <div className={styles.content0_1}>
+            {/* <div className={styles.content0_1}>
               <div className={styles.mask} />
               <div className={styles.act_con}>
                 <div className={styles.act_block}>
@@ -166,14 +166,15 @@ class Index extends Component {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className={styles.content0}>
               <div className={styles.mask} />
               <p className={styles.p1}>赋能百万推手 打造极致爆款</p>
               <p className={styles.p2}>社群导购 + 内容服务 + 数字化营销 = 超多客</p>
             </div>
           </Carousel>
-          <div className={styles.icon_block}>
+          {/* banner 悬浮按钮 */}
+          {/* <div className={styles.icon_block}>
             <Icon
               type="left"
               className={`${styles.icon} ${styles.icon_prev}`}
@@ -184,7 +185,7 @@ class Index extends Component {
               className={`${styles.icon} ${styles.icon_next}`}
               onClick={this.next}
             />
-          </div>
+          </div> */}
         </div>
 
         {/* {con1} */}

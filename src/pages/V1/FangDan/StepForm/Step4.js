@@ -295,7 +295,7 @@ class Step4 extends React.PureComponent {
                 服务费抵扣：-￥{taskPayInfo.free_service_money}元
               </Tooltip>
             ) : location.query.qf === undefined && memberInfo[0].level === 0 ? (
-              <Tooltip title={<p>收取{taskPayInfo.service_rate}%服务费</p>}>
+              <Tooltip title={<p>收取{taskPayInfo.service_rate}%服务费，优先使用佣金抵扣</p>}>
                 <Icon type="question-circle" style={{ marginRight: 8 }} />
                 服务费：￥{taskPayInfo.need_pay_service_money}
               </Tooltip>

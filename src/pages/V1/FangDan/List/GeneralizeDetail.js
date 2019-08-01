@@ -158,7 +158,7 @@ class GeneralizeDetail extends Component {
               )}
             </Description>
             <Description term="推广份数">{data.total_amount}</Description>
-            <Description term="返现金额">￥{data.rebate_price}</Description>
+            <Description term="返款总额">￥{data.frozen_money}</Description>
             <Description term="平台服务费">￥{data.service_money}</Description>
           </DescriptionList>
           <Card title="商品信息">

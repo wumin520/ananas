@@ -196,7 +196,7 @@ class VIP extends Component {
         title_sub: '宝贝权重优化',
         function: '快速提升宝贝、店铺权重',
         function_1: '不赠送',
-        function_2: '赠送￥1000',
+        function_2: '赠送￥2000',
         function_3: '赠送￥3000',
         function_4: '赠送￥5000',
       },

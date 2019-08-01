@@ -56,7 +56,7 @@ class Index extends PureComponent {
         avatar:
           'https://cdn.youlianyc.com/image/static/acb251fe8b2dea609b5902ea1f35049841cef6fd.jpg',
         title: '试用推广',
-        keywords: '快速提升关键词排名/加购率/转化率/快速聚集人气/宝贝流量',
+        // keywords: '快速提升关键词排名/加购率/转化率/快速聚集人气/宝贝流量',
         description: `推广场景：
 1、新品上架，需要基础流量、销量、买家秀
 2、老品激活，需要提高老链接的动销率，避免死链
@@ -74,12 +74,12 @@ class Index extends PureComponent {
       {
         // actions: ['列表', '+新增'],
         state: 1,
-        label: ['单品精准爆款打造'],
+        label: ['优化权重赋能维护'],
         type: 3,
         avatar:
           'https://cdn.youlianyc.com/image/static/987b0e82149da8a8edb8f38ed048e6523bbed4dc.jpg',
         title: '高佣推广',
-        keywords: '快速提升关键词排名/加购率/转化率/快速聚集人气/宝贝流量',
+        // keywords: '加大曝光力度，为商家精准吸粉，有助于提升店铺和商品基础权重',
         description: `推广场景：
 1、站外曝光，将商品推荐到百万微信群、QQ群、公众号、小程序流量中
 2、站外分销，吸引和发展分销团体，为商品招募百万中小代理长期合作
@@ -97,12 +97,12 @@ class Index extends PureComponent {
       {
         // actions: ['列表', '+新增'],
         state: 1,
-        label: ['试用标签', '啦啦啦'],
+        label: ['单品精准爆款打造'],
         type: 2,
         avatar:
           'https://cdn.youlianyc.com/image/static/ce77e786bc929fef024746da9738bdc9d8230fd8.jpg',
         title: '收藏推广',
-        keywords: '快速提升关键词排名/加购率/转化率/快速聚集人气/宝贝流量',
+        // keywords: '黄金推荐位，超高曝光率，吸引更多买家抢购更有助于提升收藏、加购、重复访问等',
         description: `推广场景：
 1、优化千人千面展示，提高商品自然曝光权重
 2、优化店铺商品搜索权重，提高商品搜索排名
