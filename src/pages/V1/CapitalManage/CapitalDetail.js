@@ -18,11 +18,12 @@ let params = {
 
 const content = <div />;
 
-@connect(({ capital, loading }) => ({
+@connect(({ capital, user, loading }) => ({
   assetData: capital.assetData,
   rewardData: capital.rewardData,
   exchangeData: capital.exchangeData,
   memberRecordData: capital.memberRecordData,
+  currentUser: user.currentUser,
   loading: loading.models.capital,
 }))
 @Form.create()
@@ -158,11 +159,8 @@ class CapitalDetail extends PureComponent {
       memberRecordData,
       rewardData,
       form: { getFieldDecorator },
+      currentUser,
     } = this.props;
-
-    // const toFreeze = () => {
-    //   router.push('CapitalManage/FreezeDetail');
-    // }
 
     const Info = ({ title, value, bordered, linkName, url }) => (
       <div className={styles.headerInfo}>
@@ -390,19 +388,23 @@ class CapitalDetail extends PureComponent {
                   }}
                 />
               </TabPane>
-              <TabPane tab="会员购买记录" key="member">
-                <Table
-                  columns={columns2}
-                  dataSource={memberRecordData.list}
-                  pagination={{
-                    defaultCurrent: 1,
-                    current: memberRecordData.page_info.current_page,
-                    pageSize: memberRecordData.page_info.per_page,
-                    total: memberRecordData.page_info.total_num,
-                    onChange: this.changePage,
-                  }}
-                />
-              </TabPane>
+              {currentUser.member_info && currentUser.member_info[0].level !== 0 ? (
+                <TabPane tab="会员购买记录" key="member">
+                  <Table
+                    columns={columns2}
+                    dataSource={memberRecordData.list}
+                    pagination={{
+                      defaultCurrent: 1,
+                      current: memberRecordData.page_info.current_page,
+                      pageSize: memberRecordData.page_info.per_page,
+                      total: memberRecordData.page_info.total_num,
+                      onChange: this.changePage,
+                    }}
+                  />
+                </TabPane>
+              ) : (
+                ''
+              )}
             </Tabs>
           </Card>
         </div>
