@@ -206,9 +206,9 @@ class VIP extends Component {
         title_sub: '店铺DSR优化',
         function: '快速提升全维度UV产值排名',
         function_1: '收取10%',
-        function_2: '免费额度50万，超出收取10%',
-        function_3: '免费额度100万，超出收取8%',
-        function_4: '免费额度200万，超出收取5%',
+        function_2: '免费额度1万，超出收取10%',
+        function_3: '免费额度2万，超出收取8%',
+        function_4: '免费额度3万，超出收取5%',
       },
       {
         key: '8',
