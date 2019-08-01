@@ -227,7 +227,9 @@ class Index extends Component {
                     </a>
                   </div>
                 ) : (
-                  ''
+                  <div className={styles.member}>
+                    <p style={{ marginRight: 10 }}>我的账号：{currentUser.phone}</p>
+                  </div>
                 )}
               </div>
             </div>
