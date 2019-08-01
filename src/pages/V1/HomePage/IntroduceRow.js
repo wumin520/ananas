@@ -31,7 +31,7 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
             </Tooltip>
           }
           loading={loading}
-          total={() => <p>{visitData.order_info.day_order_num}</p>}
+          total={() => <p>{visitData.task_info.day_task_num}</p>}
           contentHeight={46}
         />
       </Col>
@@ -51,7 +51,7 @@ const IntroduceRow = memo(function chart({ loading, visitData }) {
               <Icon type="info-circle-o" />
             </Tooltip>
           }
-          total={numeral(visitData.comment_info.good_comment_rate).format('0,0')}
+          total={numeral(visitData.order_info.day_order_num).format('0,0')}
           contentHeight={46}
         />
       </Col>
