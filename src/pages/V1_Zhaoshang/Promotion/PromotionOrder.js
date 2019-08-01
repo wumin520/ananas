@@ -93,13 +93,13 @@ class PromotionOrder extends PureComponent {
           return <span>下单：{item.ordered_datetime}</span>;
         },
       },
-      {
-        title: '操作',
-        width: 120,
-        render: item => {
-          return <a onClick={this.goDetail.bind(this, item)}>查看 </a>;
-        },
-      },
+      // {
+      //   title: '操作',
+      //   width: 120,
+      //   render: item => {
+      //     return <a onClick={this.goDetail.bind(this, item)}>查看 </a>;
+      //   },
+      // },
     ];
   }
 

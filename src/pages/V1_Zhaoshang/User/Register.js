@@ -170,7 +170,7 @@ class Register extends Component {
                   message: formatMessage({ id: 'validation.phone-number.required' }),
                 },
               ],
-            })(<Input size="large" placeholder="输入公司名称" />)}
+            })(<Input size="large" placeholder="输入公司/个人名称" />)}
           </FormItem>
           <FormItem>
             {getFieldDecorator('mobile', {
