@@ -15,6 +15,7 @@ import {
   Popover,
 } from 'antd';
 import Link from 'umi/link';
+import { getStorage } from '@/utils/authority';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './List.less';
@@ -143,6 +144,80 @@ class List extends PureComponent {
               <br />
               <Link to={`/work/businesses/record?shop_code=${item.shop_code}&sh_id=${item.sh_id}`}>
                 会员购买记录
+              </Link>
+            </div>
+          );
+        },
+      },
+    ];
+
+    // 非渠道商家 -> 表格不显示会员等级&会员购买记录信息
+    this.columns1 = [
+      {
+        title: '商户名称',
+        width: 143,
+        render: item => {
+          return (
+            <div>
+              <a>{item.shop_name}</a>
+              <div>店铺编号：{item.shop_code}</div>
+              <div>注册时间：{item.created_at}</div>
+            </div>
+          );
+        },
+      },
+      {
+        title: '联系方式',
+        width: 100,
+        render: item => {
+          return (
+            <div>
+              <div>手机号：{item.phone}</div>
+              <div>qq号：{item.qq}</div>
+            </div>
+          );
+        },
+      },
+      {
+        key: 'total_balance',
+        width: 80,
+        title: '累计充值',
+        dataIndex: 'total_balance',
+        render: val => {
+          return <span>{val ? `￥ ${val}` : ''}</span>;
+        },
+      },
+      {
+        title: '资产余额',
+        width: 150,
+        render: item => {
+          return (
+            <p style={{ textAlign: 'left' }}>
+              <span>账户余额：{item.balance}</span>
+              <br />
+              <span>冻结中：{item.frozen_balance}</span>
+              <br />
+              <span>累计推广支出：{item.outcome}</span>
+            </p>
+          );
+        },
+      },
+      {
+        title: '账号状态',
+        key: 'state',
+        width: 100,
+        render(item) {
+          return <Badge status={item.state_color} text={item.state_desc} />;
+        },
+      },
+      {
+        title: '操作',
+        width: 120,
+        render: item => {
+          return (
+            <div>
+              <Link to={`/work/promotion/plan?shop_code=${item.shop_code}&sh_id=${item.sh_id}`}>
+                推广记录
               </Link>
             </div>
           );
@@ -303,7 +378,7 @@ class List extends PureComponent {
               <div className={styles.tableListForm}>{this.renderForm()}</div>
               <Table
                 rowKey={item => item.qq}
-                columns={this.columns}
+                columns={getStorage('smr') === '1' ? this.columns : this.columns1}
                 dataSource={listData.list}
                 pagination={{
                   defaultCurrent: 1,
