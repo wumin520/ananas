@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Card, Button, Icon, List, Modal } from 'antd';
+import { Card, Button, Icon, List, Modal, Tag } from 'antd';
 import { router } from 'umi';
 
 import Ellipsis from '@/components/Ellipsis';
@@ -43,18 +43,20 @@ class Index extends PureComponent {
     const {
       // list: { list },
       loading,
-      setting,
+      // setting,
     } = this.props;
 
-    const { primaryColor } = setting;
+    // const { primaryColor } = setting;
 
     const listTemp = [
       {
-        actions: ['列表', '+新增'],
+        // actions: ['列表', '+新增'],
         state: 1,
+        label: ['新品提升综合权重'],
         avatar:
-          'https://cdn.youlianyc.com/image/static/4c0162077ac017705f46686278c48edfbc5d0e42.jpg',
+          'https://cdn.youlianyc.com/image/static/acb251fe8b2dea609b5902ea1f35049841cef6fd.jpg',
         title: '试用推广',
+        keywords: '快速提升关键词排名/加购率/转化率/快速聚集人气/宝贝流量',
         description: `推广场景：
 1、新品上架，需要基础流量、销量、买家秀
 2、老品激活，需要提高老链接的动销率，避免死链
@@ -70,12 +72,14 @@ class Index extends PureComponent {
 2、招商推广ID：3662914，招商团长佣金可设置为0`,
       },
       {
-        actions: ['列表', '+新增'],
+        // actions: ['列表', '+新增'],
         state: 1,
+        label: ['单品精准爆款打造'],
         type: 3,
         avatar:
-          'https://cdn.youlianyc.com/image/static/526746a209d504d6d9c43270767ff76e928aedc2.jpg',
+          'https://cdn.youlianyc.com/image/static/987b0e82149da8a8edb8f38ed048e6523bbed4dc.jpg',
         title: '高佣推广',
+        keywords: '快速提升关键词排名/加购率/转化率/快速聚集人气/宝贝流量',
         description: `推广场景：
 1、站外曝光，将商品推荐到百万微信群、QQ群、公众号、小程序流量中
 2、站外分销，吸引和发展分销团体，为商品招募百万中小代理长期合作
@@ -91,12 +95,14 @@ class Index extends PureComponent {
 4、支持专属佣金设置，推广ID：3662914`,
       },
       {
-        actions: ['列表', '+新增'],
+        // actions: ['列表', '+新增'],
         state: 1,
+        label: ['试用标签', '啦啦啦'],
         type: 2,
         avatar:
-          'https://cdn.youlianyc.com/image/static/5c75983b5efea8cef21ec34f25972cb946983272.jpg',
+          'https://cdn.youlianyc.com/image/static/ce77e786bc929fef024746da9738bdc9d8230fd8.jpg',
         title: '收藏推广',
+        keywords: '快速提升关键词排名/加购率/转化率/快速聚集人气/宝贝流量',
         description: `推广场景：
 1、优化千人千面展示，提高商品自然曝光权重
 2、优化店铺商品搜索权重，提高商品搜索排名
@@ -249,39 +255,35 @@ class Index extends PureComponent {
             <List
               rowKey="id"
               loading={loading}
-              itemLayout="vertical"
+              // grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
               dataSource={[...listTemp]}
               renderItem={item =>
                 item ? (
                   <List.Item key={item.id}>
-                    <Card
-                      hoverable
-                      className={styles.card}
-                      actions={[
-                        <a
-                          onClick={() => {
-                            onTabChange(1, item);
-                          }}
-                        >
-                          {item.actions && item.actions[0]}
-                        </a>,
-                        <a
-                          style={item.state ? { color: primaryColor } : {}}
-                          onClick={() => {
-                            onTabChange(2, item);
-                          }}
-                        >
-                          {item.actions && item.actions[1]}
-                        </a>,
-                      ]}
-                    >
+                    <Card hoverable className={styles.card}>
                       <Card.Meta
                         avatar={<img alt="" className={styles.cardAvatar} src={item.avatar} />}
                         title={titleContent(item)}
                         description={
-                          <Ellipsis className={styles.item} lines={3}>
-                            {item.description}
-                          </Ellipsis>
+                          <div>
+                            {item.label && item.label.length > 0
+                              ? item.label.map(element => {
+                                  return <Tag key={element}>{element}</Tag>;
+                                })
+                              : ''}
+                            <p style={{ marginBottom: 10, marginTop: 10 }}>{item.keywords}</p>
+                            <Ellipsis className={styles.item} lines={3}>
+                              {item.description}
+                            </Ellipsis>
+                            <Button
+                              type="primary"
+                              onClick={() => {
+                                onTabChange(2, item);
+                              }}
+                            >
+                              发布推广
+                            </Button>
+                          </div>
                         }
                       />
                     </Card>

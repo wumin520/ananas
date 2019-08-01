@@ -2,12 +2,12 @@ import { stringify } from 'qs';
 import request from '@/utils/request';
 /* eslint-disable */
 const api_pre = `/v1/web/`;
-const api_zs = `/v1/web/`;
 
 // server api
 export async function queryServerTest(params) {
   return request(`/v1/wechat/register/reward?${stringify(params)}`);
 }
+
 // 放单列表
 export async function taskList(params) {
   return request(`/v1/web/task/list?${stringify(params)}`);
@@ -72,6 +72,11 @@ export async function frozenTaskList(params) {
   return request(`/v1/web/account/frozen_task_list?${stringify(params)}`);
 }
 
+// 会员购买记录
+export async function memberRecordList(params) {
+  return request(`/v1/web/buy/member/record?${stringify(params)}`);
+}
+
 // 充值活动
 export async function rechargeActivity() {
   return request(`/v1/web/activity/recharge`);
@@ -96,6 +101,11 @@ export async function rechargeCheck(params) {
     method: 'POST',
     data: params,
   });
+}
+
+// 提现页面信息获取
+export async function memberList() {
+  return request(`/v1/web/member/list`);
 }
 
 // 提现页面信息获取
@@ -186,6 +196,24 @@ export async function tsAddCollect(params) {
 // 官网选品库商品
 export async function tsTaskGoodsUrl(params) {
   return request(api_pre + `ts/task/goods/uri?${stringify(params)}`);
+}
+
+// 提交申诉
+export async function orderComplain(params) {
+  return request(api_pre + `order/complain`, {
+    method: 'POST',
+    data: params,
+  });
+}
+
+// 订单申诉列表
+export async function orderComplainList(params) {
+  return request(api_pre + `order/complain/list?${stringify(params)}`);
+}
+
+// 订单申诉详情
+export async function orderComplainDetail(params) {
+  return request(api_pre + `order/complain/detail?${stringify(params)}`);
 }
 
 // 代理-商家推广排期列表

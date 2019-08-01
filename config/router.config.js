@@ -114,6 +114,11 @@ export default [
         name: 'rechargeActivity',
         component: './V1/Public/RechargeActivity',
       },
+      {
+        path: '/public/VIP',
+        name: 'VIP',
+        component: './V1/Public/VIP/VIP',
+      },
     ],
   },
   {
@@ -387,6 +392,37 @@ export default [
             hideInMenu: true,
             component: './V1/CapitalManage/WithdrawSuccess',
           },
+          {
+            path: '/CapitalManage/CheckoutVip',
+            name: 'checkoutVip',
+            hideInMenu: true,
+            component: './V1/CapitalManage/CheckoutVip',
+          },
+        ],
+      },
+      // complaint
+      {
+        path: '/complaint',
+        icon: 'profile',
+        name: 'complaint',
+        authority: ['admin', 'user'],
+        routes: [
+          {
+            path: '/complaint/complaintList',
+            name: 'complaintList',
+            component: './V1/Complaint/ComplaintList',
+          },
+          {
+            path: '/complaint/complaintDetail',
+            name: 'ComplaintDetail',
+            hideInMenu: true,
+            component: './V1/Complaint/ComplaintDetail',
+          },
+          {
+            path: '/complaint/myComplaint',
+            name: 'myComplaint',
+            component: './V1/Complaint/MyComplaint',
+          },
         ],
       },
       // 推手中心
@@ -471,6 +507,11 @@ export default [
             name: 'list',
             path: '/work/businesses/list',
             component: './V1_Zhaoshang/Businesses/List',
+          },
+          {
+            name: 'record',
+            path: '/work/businesses/record',
+            component: './V1_Zhaoshang/Businesses/Record',
           },
         ],
       },

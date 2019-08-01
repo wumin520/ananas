@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Card, Badge, Table, Divider, Modal } from 'antd';
+import { Card, Badge, Table, Divider, Modal, Row, Col, Tooltip, Icon } from 'antd';
 import DescriptionList from '@/components/DescriptionList';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './GeneralizeDetail.less';
@@ -73,19 +73,12 @@ class GeneralizeDetail extends Component {
   };
 
   render() {
-    const { loading, detailData, currentUser } = this.props;
+    const { loading, detailData } = this.props;
     const progressColumns = [
       {
         title: '推广排期时间',
         dataIndex: 'plan_time',
         key: 'plan_time',
-      },
-      {
-        title: '状态',
-        key: 'state',
-        render(item) {
-          return <Badge status={item.state_color} text={item.state_desc} />;
-        },
       },
       {
         title: '投放份数',
@@ -108,6 +101,17 @@ class GeneralizeDetail extends Component {
           // return <span>{operation}</span>;
         },
       },
+      {
+        title: '状态',
+        key: 'state',
+        render(item) {
+          let option = '';
+          if (item.state !== 4) {
+            option = <Badge status={item.state_color} text={item.state_desc} />;
+          }
+          return option;
+        },
+      },
       // {
       //   title: '操作',
       //   render: item => {
@@ -125,51 +129,74 @@ class GeneralizeDetail extends Component {
     const planList = detailData.plan_list;
     const { data } = detailData;
     const content = <div />;
+    const taskId = `推广编号: ${data.task_id}`;
     return (
       <PageHeaderWrapper title="推广详情" loading={loading} content={content}>
-        <Card bordered={false}>
-          <DescriptionList size="large" title="商品信息" style={{ marginBottom: 32 }}>
-            <Description term="商品id">{data.goods_id}</Description>
-            <Description term="商品名称" className={styles.pro_name}>
-              {data.title}
-            </Description>
-            <Description term="">
-              <div className={styles.pro_img}>
-                <p>商品主图: </p>
-                <img src={data.img} alt="img" style={{ width: 65, heigth: 65, marginLeft: 10 }} />
-              </div>
-            </Description>
-            <Description term="优惠券">
-              {data.coupon_price ? `￥ ${data.coupon_price}` : '无'}{' '}
-            </Description>
-            <Description term="商品价格">￥{data.price}</Description>
-            {currentUser.sh_type === 1 ? (
-              <Description term="招商ID">{data.zs_duo_id}</Description>
-            ) : (
-              ''
-            )}
-          </DescriptionList>
-          <Divider style={{ marginBottom: 32 }} />
-          <DescriptionList size="large" title="推广信息" style={{ marginBottom: 32 }}>
-            <Description term="推广编号">{data.task_id}</Description>
+        <Card bordered={false} style={{ marginBottom: 26 }}>
+          <DescriptionList size="large" title={taskId} style={{ marginBottom: 32 }}>
+            <Description term="推广类型">{data.type_name}</Description>
+            <Description term="申请时间">{data.created_at}</Description>
             <Description term="推广状态">
               <Badge status={data.state_color} text={data.state_desc} />
+              {data.state === 6 ? (
+                <p>
+                  <Tooltip
+                    title={
+                      <div className={styles.toolP}>
+                        <p>手动终止：主动终止推广</p>
+                        <p>系统终止：因券或佣金等变更下架终止</p>
+                        <p>自然终止：推广结束后自动终止</p>
+                      </div>
+                    }
+                  >
+                    <Icon type="question-circle" style={{ marginRight: 8 }} />
+                  </Tooltip>
+                  {data.finsh_desc}：{data.finish_time}
+                </p>
+              ) : (
+                ''
+              )}
             </Description>
-            <Description term="申请时间">{data.created_at}</Description>
             <Description term="推广份数">{data.total_amount}</Description>
             <Description term="返现金额">￥{data.rebate_price}</Description>
-            {data.reject_reason ? (
-              <Description term="驳回原因">{data.reject_reason}</Description>
-            ) : (
-              ''
-            )}
-            <Description term="投放方式">{data.type_name}</Description>
-            {/** <Description term="评价限制">{data.comment_limit_info}</Description>
-                <Description term="评价关键词">{data.comment_keyword}</Description>  */}
+            <Description term="平台服务费">￥{data.service_money}</Description>
           </DescriptionList>
-          <Divider style={{ marginBottom: 32, fontWeight: 600 }} />
-          <div className={styles.title}>推广排期</div>
+          <Card title="商品信息">
+            <DescriptionList size="large" title="商品信息" style={{ marginBottom: 32 }}>
+              <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
+                <Col md={3} sm={24}>
+                  <div>
+                    <img
+                      src={data.img}
+                      alt="img"
+                      style={{ width: 120, heigth: 120, marginLeft: 10 }}
+                    />
+                  </div>
+                </Col>
+                <Col md={18} sm={24} style={{ marginBottom: 32 }}>
+                  <Description term="">
+                    <a href={data.goods_url} style={{ fontSize: 16 }}>
+                      {data.title}
+                    </a>
+                  </Description>
+                  <Description term="商品id">{data.goods_id}</Description>
+                  <Description term="优惠券">
+                    {data.coupon_price ? `￥ ${data.coupon_price}` : '无'}{' '}
+                  </Description>
+                  <Description term="券后价">￥{data.after_coupon_price}</Description>
+                </Col>
+              </Row>
+            </DescriptionList>
+            <Divider style={{ marginBottom: 32 }} />
+            <DescriptionList size="large" title="所属店铺信息" style={{ marginBottom: 32 }}>
+              <Description term="店铺名称">{data.mall_name}</Description>
+              <Description term="店铺编号">{data.mall_id}</Description>
+            </DescriptionList>
+          </Card>
+        </Card>
+        <Card title="推广排期" bordered={false}>
           <Table
+            rowKey={item => item.id}
             style={{ marginBottom: 16 }}
             pagination={false}
             loading={loading}

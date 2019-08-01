@@ -106,12 +106,7 @@
     }
   }
 }
-.income_ {
-  margin: 0 20px;
-  padding-bottom: 30px;
-  text-align: center;
-  border-bottom: 1px dashed #eee;
-}
+
 .zsDashboard {
   :global {
     .ant-descriptions-title {
@@ -127,15 +122,34 @@
       line-height: 38px;
     }
   }
-  .todayEarn {
-    color: #1890ff;
-    font-size: 30px;
-    line-height: 38px;
-  }
-  .totalEarn {
-    color: #fc3;
-    font-size: 30px;
-    line-height: 38px;
+  .incomeMessage {
+    position: relative;
+    .rules {
+      position: absolute;
+      top: 16px;
+      right: 32px;
+      color: #abadaf;
+    }
+    .icon {
+      margin-right: 10px;
+    }
+    .income_ {
+      margin: 0 20px;
+      padding-bottom: 30px;
+      text-align: center;
+      border-bottom: 1px dashed #eee;
+    }
+    .todayEarn {
+      color: #4f545a;
+      font-size: 26px;
+      line-height: 38px;
+    }
+    .totalEarn {
+      color: #1890ff;
+      // color: #fc3;
+      font-size: 26px;
+      line-height: 38px;
+    }
   }
 }
 .qrcodePop {

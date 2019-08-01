@@ -1,4 +1,10 @@
-import { getAssetList, getExchangeList, getRewardList, frozenTaskList } from '@/services/api';
+import {
+  getAssetList,
+  getExchangeList,
+  getRewardList,
+  frozenTaskList,
+  memberRecordList,
+} from '@/services/api';
 
 export default {
   namespace: 'capital',
@@ -43,6 +49,11 @@ export default {
       type_select: [],
       page_info: {},
     },
+    memberRecordData: {
+      list: [],
+      member_level: [],
+      page_info: {},
+    },
   },
 
   effects: {
@@ -75,6 +86,17 @@ export default {
           type: 'saveData',
           payload: {
             rewardData: res.payload,
+          },
+        });
+      }
+    },
+    *getMemberRecordList({ payload }, { call, put }) {
+      const res = yield call(memberRecordList, payload);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'saveData',
+          payload: {
+            memberRecordData: res.payload,
           },
         });
       }

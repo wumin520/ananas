@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { Button, Row, Col, Table, Alert, message, Radio } from 'antd';
+import { Button, Row, Col, Table, Alert, message, Radio, Tooltip, Icon } from 'antd';
 import router from 'umi/router';
+import styles from './style.less';
 
-// import styles from './style.less';
 let toPayIsClick = true;
 
-@connect(({ form }) => ({
+@connect(({ form, user }) => ({
   data: form.step,
+  currentUser: user.currentUser,
   taskPayInfo: form.taskPayInfo,
   taskId: form.taskId,
   goodsDetail: form.goodsDetail,
@@ -24,7 +25,7 @@ class Step4 extends React.PureComponent {
   onChange = e => {
     const { taskPayInfo, dispatch } = this.props;
     const val = e.target.value;
-    console.log('radio checked', e.target.value);
+    // console.log('radio checked', e.target.value);
     this.setState({
       payType: val,
     });
@@ -38,7 +39,7 @@ class Step4 extends React.PureComponent {
     } else {
       can_pay = 1;
     }
-    console.log(can_pay, 'can_pay -> ', taskPayInfo, wait_pay, reward_balance, balance);
+    // console.log(can_pay, 'can_pay -> ', taskPayInfo, wait_pay, reward_balance, balance);
     if (taskPayInfo.can_pay !== can_pay) {
       dispatch({
         type: 'form/updateState',
@@ -121,10 +122,29 @@ class Step4 extends React.PureComponent {
   };
 
   render() {
-    const { taskPayInfo, location, goodsDetail } = this.props;
+    const { taskPayInfo, location, currentUser, goodsDetail } = this.props;
+    let serviceDesc = `收取${taskPayInfo.service_rate}%服务费`;
+    let serviceDesc_total = (
+      <span>
+        1.免服务费剩余额度￥{taskPayInfo.free_service_balance}
+        <br />
+        2.商品佣金可抵扣服务费
+        <br />
+        <span style={{ color: '#1890FF' }}>
+          {taskPayInfo.free_type === 1
+            ? '已使用免服务费额度抵扣'
+            : taskPayInfo.free_type === 2
+            ? '已使用商品佣金抵扣'
+            : '无抵扣'}
+        </span>
+      </span>
+    );
     // const onFinish = () => {
     //   router.push('/form/step-form/info');
     // };
+
+    const memberInfo = currentUser.member_info;
+
     const columns = [
       {
         title: '分类',
@@ -135,11 +155,55 @@ class Step4 extends React.PureComponent {
         title: '金额',
         dataIndex: 'rebate_money',
         key: 'rebate_money',
+        render: (value, row, index) => {
+          const obj = {
+            children: value,
+            row,
+            props: {},
+          };
+
+          if (index === 1) {
+            obj.props.colSpan = 2;
+            obj.children = (
+              <div className={styles.hint_}>
+                {value}
+                {/** <Tooltip
+                  title={
+                    <div>
+                      {taskPayInfo.service_notice.map(val => {
+                        return (
+                          <p key={val.name}>
+                            {val.name}：{val.desc}
+                          </p>
+                        );
+                      })}
+                    </div>
+                  }
+                  style={{ flex: 'auto' }}
+                >
+                  <Icon type="question-circle" />
+                </Tooltip> */}
+              </div>
+            );
+          }
+          return obj;
+        },
       },
       {
         title: '数量',
         dataIndex: 'num',
         key: 'num',
+        render: (value, row, index) => {
+          const obj = {
+            children: value,
+            row,
+            props: {},
+          };
+          if (index == 1) {
+            obj.props.colSpan = 0;
+          }
+          return obj;
+        },
       },
       {
         title: '合计',
@@ -147,20 +211,48 @@ class Step4 extends React.PureComponent {
         dataIndex: 'total_money',
       },
     ];
-
-    const data = [
+    // 收藏推广
+    let data = [
       {
         id: 1,
-        reward_type: location.query.qf === undefined ? '用户返款' : '平台服务费',
+        reward_type: '推广费用',
         ...taskPayInfo,
       },
     ];
+    // 试用会员
+    const syhyData = [
+      {
+        id: 1,
+        reward_type: '用户返款',
+        ...taskPayInfo,
+      },
+      {
+        id: 2,
+        reward_type: '平台服务费',
+        rebate_money: `${serviceDesc}`,
+        total_money: `${taskPayInfo.service_money}`,
+      },
+    ];
+    // 试用-非会员
+    const otherData = [
+      {
+        id: 1,
+        reward_type: '用户返款',
+        ...taskPayInfo,
+      },
+    ];
+    if (location.query.qf === undefined && memberInfo[0].level === 0) {
+      data = otherData;
+    } else if (location.query.qf === undefined && memberInfo[0].level !== 0) {
+      data = syhyData;
+    }
     const chargeUrl = this.chargeUrl || '';
     const radioStyle = {
       display: 'block',
       height: '30px',
       lineHeight: '30px',
     };
+
     return (
       <Fragment>
         {taskPayInfo.can_pay == 1 ? (
@@ -190,16 +282,35 @@ class Step4 extends React.PureComponent {
               pagination={false}
               columns={columns}
               dataSource={data}
+              className={styles.table}
             />
+          </Col>
+        </Row>
+
+        <Row>
+          <Col style={{ textAlign: 'right', marginTop: 10 }} push={6} span={12}>
+            {location.query.qf === undefined && memberInfo[0].level !== 0 ? (
+              <Tooltip title={<p>{serviceDesc_total}</p>}>
+                <Icon type="question-circle" style={{ marginRight: 8 }} />
+                服务费抵扣：-￥{taskPayInfo.free_service_money}元
+              </Tooltip>
+            ) : location.query.qf === undefined && memberInfo[0].level === 0 ? (
+              <Tooltip title={<p>收取{taskPayInfo.service_rate}%服务费</p>}>
+                <Icon type="question-circle" style={{ marginRight: 8 }} />
+                服务费：￥{taskPayInfo.need_pay_service_money}
+              </Tooltip>
+            ) : (
+              ''
+            )}
           </Col>
         </Row>
         <Row>
           <Col style={{ textAlign: 'right', marginTop: 10 }} push={6} span={12}>
-            费用总计：￥{taskPayInfo.total_money}元
+            费用总计：￥{taskPayInfo.wait_pay}元
           </Col>
         </Row>
         <Row style={{ margin: '40px 0' }}>
-          <Col offset={6} span={3}>
+          <Col offset={6} span={5}>
             需支付：￥{taskPayInfo.wait_pay}
           </Col>
           <Col push={5} span={9}>

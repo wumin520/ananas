@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import Link from 'umi/link';
-import { Card, Row, Col, Button, Form, DatePicker, Table, Tabs, Badge } from 'antd';
+import { Card, Row, Col, Button, Form, DatePicker, Table, Tabs, Badge, Alert } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import router from 'umi/router';
 import moment from 'moment';
@@ -219,6 +219,13 @@ class Capital extends PureComponent {
             <Tabs onTabClick={this.tabsClick}>
               <TabPane tab="结算记录" key="settlement">
                 <FilterBlock />
+                <Alert
+                  message="请在每月25日结算后根据结算通知提供发票/电子发票。"
+                  type="info"
+                  showIcon
+                  closable
+                  style={{ marginBottom: '20px' }}
+                />
                 <Table
                   columns={columns}
                   dataSource={settledData.list}

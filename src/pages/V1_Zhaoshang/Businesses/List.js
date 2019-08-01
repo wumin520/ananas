@@ -1,6 +1,19 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Table, Card, Row, Col, Input, Button, Form, Select, Badge, DatePicker } from 'antd';
+import {
+  Table,
+  Card,
+  Row,
+  Col,
+  Input,
+  Button,
+  Form,
+  Select,
+  Badge,
+  DatePicker,
+  Icon,
+  Popover,
+} from 'antd';
 import Link from 'umi/link';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -27,7 +40,6 @@ class List extends PureComponent {
       {
         title: '商户名称',
         width: 143,
-        key: 'shop_name',
         render: item => {
           return (
             <div>
@@ -40,7 +52,6 @@ class List extends PureComponent {
       },
       {
         title: '联系方式',
-        key: 'contact',
         width: 100,
         render: item => {
           return (
@@ -62,7 +73,6 @@ class List extends PureComponent {
       },
       {
         title: '资产余额',
-        key: 'balance',
         width: 150,
         render: item => {
           return (
@@ -77,6 +87,43 @@ class List extends PureComponent {
         },
       },
       {
+        title: '会员等级',
+        width: 150,
+        render: item => {
+          console.log('item.member_list===', item.member_list);
+          const memberPop = (
+            <div>
+              {item.member_list.map(val => {
+                // console.log('item.member_list===', item.member_list, val);
+                return (
+                  <p>
+                    {val.name}:{val.level > 10 ? `${val.end_time}到期` : val.end_time}
+                  </p>
+                );
+              })}
+            </div>
+          );
+
+          return (
+            <div style={{ textAlign: 'left' }}>
+              <span>{item.member_name}</span>
+              <br />
+              <p>{item.member_end_time ? `${item.member_end_time}到期` : '永久'}</p>
+              {item.member_list.length > 1 ? (
+                <Popover placement="right" content={memberPop}>
+                  <Button type="small" style={{ lineHeight: 2, height: 22 }}>
+                    <Icon type="small-dash" />
+                  </Button>
+                </Popover>
+              ) : (
+                ''
+              )}
+            </div>
+          );
+        },
+      },
+
+      {
         title: '账号状态',
         key: 'state',
         width: 100,
@@ -89,9 +136,15 @@ class List extends PureComponent {
         width: 120,
         render: item => {
           return (
-            <Link to={`/work/promotion/plan?shop_code=${item.shop_code}&sh_id=${item.sh_id}`}>
-              推广记录
-            </Link>
+            <div>
+              <Link to={`/work/promotion/plan?shop_code=${item.shop_code}&sh_id=${item.sh_id}`}>
+                推广记录
+              </Link>
+              <br />
+              <Link to={`/work/businesses/record?shop_code=${item.shop_code}&sh_id=${item.sh_id}`}>
+                会员购买记录
+              </Link>
+            </div>
           );
         },
       },
@@ -194,6 +247,7 @@ class List extends PureComponent {
               {getFieldDecorator('shop_name')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
+
           <Col md={5} sm={24}>
             <FormItem label="状态">
               {getFieldDecorator('state')(
@@ -248,7 +302,7 @@ class List extends PureComponent {
             <div className={styles.tableList}>
               <div className={styles.tableListForm}>{this.renderForm()}</div>
               <Table
-                rowKey={item => item.sh_id}
+                rowKey={item => item.qq}
                 columns={this.columns}
                 dataSource={listData.list}
                 pagination={{

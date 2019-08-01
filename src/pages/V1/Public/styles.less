@@ -17,7 +17,7 @@
     background: #95de64;
 
     .ms_banner {
-      width: 1200px;
+      width: 1128px;
       height: 400px;
       margin: 0 auto;
       font-size: 0;
@@ -142,6 +142,173 @@
       font-size: 20px;
       font-family: PingFangSC-Regular, sans-serif;
       line-height: 40px;
+    }
+  }
+}
+
+.VIP_block {
+  overflow: hidden;
+
+  .VIP_top {
+    width: 100%;
+    height: 400px;
+    margin-top: 64px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(76, 161, 175, 1) 0%, rgba(196, 224, 229, 1) 100%);
+
+    .ms_banner {
+      width: 1128px;
+      height: 400px;
+      margin: 0 auto;
+      color: rgba(255, 255, 255, 1);
+      text-align: center;
+
+      .p1 {
+        margin-top: 64px;
+        font-weight: 100;
+        font-size: 64px;
+        font-family: PingFangSC-Thin, sans-serif;
+        line-height: 90px;
+      }
+
+      .p2 {
+        margin: 24px 0 8px;
+        font-weight: 500;
+        font-size: 32px;
+        font-family: PingFangSC-Medium, sans-serif;
+        line-height: 40px;
+      }
+
+      .p3 {
+        font-weight: 140;
+        font-size: 20px;
+        font-family: PingFangSC-Regular, sans-serif;
+        line-height: 40px;
+      }
+    }
+  }
+}
+
+.VIP_contBlock {
+  position: relative;
+  top: -110px;
+  width: 1128px;
+  margin: 0 auto;
+
+  .VIPMembers {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+
+    .VIPMember {
+      width: 344px;
+      overflow: hidden;
+      border-radius: 4px;
+
+      .VIPMember_top {
+        height: 138px;
+        padding: 24px;
+        color: #fff;
+        font-family: PingFangSC-Regular, sans-serif;
+
+        &.VIPMember_top_bg {
+          color: #fff;
+        }
+
+        &.VIPMember_top_bg1 {
+          background: url(https://cdn.youlianyc.com/image/static/20dc985c15cba4fcd8b3cbb3a088e31090efe6f3.jpg)
+            no-repeat;
+          background-size: cover;
+        }
+
+        &.VIPMember_top_bg2 {
+          background: url(https://cdn.youlianyc.com/image/static/ad013611207d27abcbcb70f7edb417544b3b6eaa.jpg)
+            no-repeat;
+          background-size: cover;
+        }
+
+        &.VIPMember_top_bg3 {
+          background: url(https://cdn.youlianyc.com/image/static/d1aef44c8e15ddf45dadff3c96b3bc050275b61d.jpg)
+            no-repeat;
+          background-size: cover;
+        }
+
+        .VIP_name {
+          margin-bottom: 16px;
+          font-weight: 500;
+          font-size: 20px;
+          font-family: PingFangSC-Medium, sans-serif;
+          line-height: 28px;
+        }
+
+        .VIP_price_block {
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 22px;
+        }
+
+        .VIP_price {
+          font-size: 38px;
+          font-family: HelveticaNeue, sans-serif;
+          line-height: 46px;
+        }
+      }
+
+      .VIPMember_bottom {
+        padding: 24px 24px 32px;
+        text-align: center;
+
+        .desc {
+          margin-bottom: 8px;
+          color: rgba(0, 0, 0, 0.45);
+          font-weight: 400;
+          font-size: 14px;
+          font-family: PingFangSC-Regular, sans-serif;
+          line-height: 22px;
+          text-align: left;
+
+          &::before {
+            content: '';
+            position: relative;
+            left: -10px;
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border: 2px solid rgba(215, 163, 95, 1);
+            border-radius: 4px;
+          }
+        }
+
+        .btn {
+          display: inline-block;
+          box-sizing: content-box;
+          width: 176px;
+          height: 40px;
+          margin-top: 24px;
+          color: rgba(255, 255, 255, 1);
+          font-weight: 400;
+          font-size: 16px;
+          font-family: PingFangSC-Regular, sans-serif;
+          line-height: 40px;
+          background: rgba(215, 163, 95, 1);
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+
+  .VIP_details {
+    margin-top: 45px;
+
+    :global {
+      .ant-table-thead > tr > th {
+        color: rgba(61, 145, 158, 1);
+        font-weight: 500;
+        font-size: 14px;
+        font-family: PingFangSC-Medium, sans-serif;
+        background: rgba(196, 224, 229, 1);
+      }
     }
   }
 }

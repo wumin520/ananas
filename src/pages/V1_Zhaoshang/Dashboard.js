@@ -80,7 +80,16 @@ class Dashboard extends Component {
       currentUser,
       dashboard,
       loading,
-      dashboard: { bd_info, sh_info, income_info, notice_info, today_info, list, page_info },
+      dashboard: {
+        bd_info,
+        sh_info,
+        income_info,
+        sharing_rules,
+        notice_info,
+        today_info,
+        list,
+        page_info,
+      },
     } = this.props;
     const noticeInfo = '通知';
     const pageHeaderContent =
@@ -216,18 +225,28 @@ class Dashboard extends Component {
           <Row gutter={10}>
             <Col span={14}>
               <Card bordered={false} bodyStyle={{ paddingTop: 0 }}>
-                <div>
+                <div className={styles.incomeMessage}>
                   <Tabs size="large" tabBarStyle={{ marginBottom: 24 }}>
                     <TabPane tab="收入概况" key="sales">
                       <div className={styles.income_} style={{ display: 'flex' }}>
                         <div style={{ flex: 'auto' }}>
-                          <div>今日预计分成(元)</div>
+                          <div>今日预计订单分成(元)</div>
                           <div className={styles.todayEarn}>
                             ￥{income_info.today_expect_income}
                           </div>
                         </div>
+                        {income_info.show_member_income === 1 ? (
+                          <div style={{ flex: 'auto' }}>
+                            <div>今日预计会员分成(元)</div>
+                            <div className={styles.todayEarn}>
+                              ￥{income_info.today_member_income}
+                            </div>
+                          </div>
+                        ) : (
+                          ''
+                        )}
                         <div style={{ flex: 'auto' }}>
-                          <div>累计预计分成(元)</div>
+                          <div>累计预计总分成(元)</div>
                           <div className={styles.totalEarn}>
                             ￥{income_info.total_expect_income}
                           </div>
@@ -246,6 +265,12 @@ class Dashboard extends Component {
                       </div>
                     </TabPane>
                   </Tabs>
+                  <div className={styles.rules}>
+                    <Tooltip title={<div style={{ whiteSpace: 'pre-wrap' }}>{sharing_rules}</div>}>
+                      <Icon type="question-circle" className={styles.icon} />
+                    </Tooltip>
+                    分成规则
+                  </div>
                 </div>
               </Card>
             </Col>
@@ -266,7 +291,7 @@ class Dashboard extends Component {
                               </div>
                             }
                           >
-                            <Icon type="info-circle-o" />
+                            <Icon type="question-circle" />
                           </Tooltip>
                         }
                         loading={loading}
@@ -298,7 +323,7 @@ class Dashboard extends Component {
                               </div>
                             }
                           >
-                            <Icon type="info-circle-o" />
+                            <Icon type="question-circle" />
                           </Tooltip>
                         }
                         loading={loading}
@@ -329,7 +354,7 @@ class Dashboard extends Component {
                               </div>
                             }
                           >
-                            <Icon type="info-circle-o" />
+                            <Icon type="question-circle" />
                           </Tooltip>
                         }
                         loading={loading}

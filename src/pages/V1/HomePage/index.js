@@ -3,7 +3,8 @@ import { connect } from 'dva';
 import moment from 'moment';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import PageLoading from '@/components/PageLoading';
-import { Row, Col, Alert, Icon } from 'antd';
+import { Row, Col, Alert, Icon, Avatar, Card, Tag, Button, Tooltip, Popover } from 'antd';
+import { ChartCard } from '@/components/Charts';
 import { Link } from 'umi';
 import styles from './index.less';
 import { getStorage, setStorage } from '@/utils/authority';
@@ -18,8 +19,9 @@ const time = moment().format('YYYY-MM-DD');
 const start_time = `${time} 00:00:00`;
 const end_time = `${time} 23:59:59`;
 
-@connect(({ loading, homedata }) => ({
+@connect(({ loading, homedata, user }) => ({
   homedata,
+  currentUser: user.currentUser,
   loading: loading.effects['homedata/fetch'],
 }))
 class Index extends Component {
@@ -126,17 +128,22 @@ class Index extends Component {
   };
 
   render() {
-    const { loading, homedata } = this.props;
+    const { loading, homedata, currentUser } = this.props;
     const { isShowPop } = this.state;
 
     const headInfo = homedata.head_info;
+    const creditInfo = headInfo.credit_info;
     const taskList = homedata.planData.list;
     const taskReportInfo = homedata.task_report_info;
+    // 余额
+    const assetInfo = headInfo.asset_info;
     // const hotRank = homedata.hot_rank;
     const dayOrderInfo = homedata.orderData;
     let noticeInfo = homedata.notice_info;
     const rechargeActivityState = homedata.recharge_activity_state;
-
+    const { greetings, avatar } = currentUser;
+    const memberInfo = currentUser.member_info;
+    const bdInfo = currentUser.bd_info;
     // rechargeActivityState === 1  活动有效期内
     const actShow = isShowPop === '1' && rechargeActivityState === 1;
 
@@ -157,10 +164,150 @@ class Index extends Component {
 
     /* eslint-disable */
     const salesData = taskReportInfo[this.state.dataType];
+    // console.log('creditInfo.credit_level====>>>', creditInfo.credit_level);
+    let href_jump = '';
+    if (memberInfo[0].level === 10) {
+      // 开通会员
+      href_jump = '/public/VIP';
+    } else {
+      // 续费会员
+      href_jump = '/CapitalManage/CheckoutVip';
+    }
+
+    const memberPop = (
+      <div className={styles.memberPop}>
+        <div className={styles.pop_title}>我的会员</div>
+        <div className={styles.content}>
+          {memberInfo &&
+            memberInfo.map(val => {
+              return (
+                <p key={val.level}>
+                  {val.name}：{val.level > 10 ? `${val.end_at}到期` : val.end_at}
+                </p>
+              );
+            })}
+        </div>
+        <p className={styles.member_desc}>购买多重会员套餐时，采用累加延长制优先享受高一级服务</p>
+      </div>
+    );
+    const pageHeaderContent = (
+      <div>
+        <Row gutter={{ md: 6, lg: 12, xl: 24 }} className={styles.borderLine}>
+          <Col md={16} sm={24}>
+            <div className={styles.pageHeaderContent}>
+              <div className={styles.avatar}>
+                <Avatar size="large" src={avatar} />
+              </div>
+              <div className={styles.content}>
+                <div className={styles.titleTags}>
+                  <div className={styles.contentTitle}>{greetings}</div>
+                  {memberInfo && memberInfo[0].level !== 0 ? (
+                    <Popover placement="right" content={memberPop}>
+                      {memberInfo[0].level === 10 ? (
+                        <Tag>{memberInfo[0].name}</Tag>
+                      ) : memberInfo[0].level === 20 ? (
+                        <Tag className={styles.tag20}>{memberInfo[0].name}</Tag>
+                      ) : memberInfo[0].level === 30 ? (
+                        <Tag className={styles.tag30}>{memberInfo[0].name}</Tag>
+                      ) : memberInfo[0].level === 40 ? (
+                        <Tag className={styles.tag40}>{memberInfo[0].name}</Tag>
+                      ) : (
+                        ''
+                      )}
+                    </Popover>
+                  ) : (
+                    ''
+                  )}
+                </div>
+                {memberInfo[0].level !== 0 ? (
+                  <div className={styles.member}>
+                    <p style={{ marginRight: 10 }}>会员到期时间：{memberInfo[0].end_at}</p>
+                    <a href={href_jump} style={{ marginLeft: 10, borderColor: 'red' }}>
+                      {memberInfo[0].level === 10 ? '开通会员>' : '续费会员>'}
+                    </a>
+                  </div>
+                ) : (
+                  ''
+                )}
+              </div>
+            </div>
+          </Col>
+          <Col md={8} sm={24}>
+            <ChartCard
+              loading={loading}
+              bordered={false}
+              title="当前信用分"
+              action={
+                <Tooltip
+                  title={
+                    <div>
+                      <p>当前的信用情况，请保证信用良好，以防影响您的正常使用</p>
+                    </div>
+                  }
+                >
+                  <Icon type="info-circle-o" />
+                </Tooltip>
+              }
+              total={creditInfo.credit_score}
+              footer={
+                <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
+                  <span className={styles.trendT0 + creditInfo.credit_level}>
+                    {creditInfo.limit_info}
+                  </span>
+                </div>
+              }
+              contentHeight={46}
+              className={styles.score}
+            />
+          </Col>
+        </Row>
+        <Row className={styles.flex_}>
+          <Col className={styles.auto_}>
+            <div className={styles.yue}>
+              账户余额
+              <div className={styles.price_}>
+                <p className={styles.money}>￥{assetInfo.balance}</p>
+                <Button
+                  href="/CapitalManage/Recharge"
+                  type="primary"
+                  size="small"
+                  style={{ marginLeft: 15, marginRight: 20 }}
+                >
+                  充值
+                </Button>
+              </div>
+            </div>
+            <p className={styles.desc_}>余额可用于发布所有推广活动</p>
+          </Col>
+          <Col className={styles.auto_}>
+            <div className={styles.yue}>
+              奖励金
+              <div className={styles.price_}>
+                <p className={styles.money}>￥{assetInfo.reward_balance}</p>
+              </div>
+            </div>
+            <p className={styles.desc_}>奖励金可用于收藏推广</p>
+          </Col>
+          <Col className={styles.auto_none}>
+            <div className={styles.yue}>
+              冻结余额
+              <div className={styles.price_}>
+                <p className={styles.money}>￥{assetInfo.frozen_balance}</p>
+              </div>
+            </div>
+            <p className={styles.desc_}>冻结余额用于推广担保</p>
+          </Col>
+        </Row>
+      </div>
+    );
 
     return (
       <GridContent>
-        <Alert message={noticeInfo} type="warning" showIcon style={{ marginBottom: 20 }} />
+        {noticeInfo ? (
+          <Alert message={noticeInfo} type="warning" showIcon style={{ marginBottom: 20 }} />
+        ) : (
+          ''
+        )}
         <div
           style={{
             position: 'absolute',
@@ -189,9 +336,30 @@ class Index extends Component {
             onClick={this.closePop}
           />
         </div>
-        <Suspense fallback={<PageLoading />}>
-          <IntroduceRow loading={loading} visitData={headInfo} />
-        </Suspense>
+        <Row className={styles.header}>
+          <Col md={17} sm={24} style={{ flex: 'auto', marginRight: 20 }}>
+            <Card style={{ marginBottom: 10 }}>
+              <div className={styles.content}>{pageHeaderContent}</div>
+            </Card>
+            <Suspense fallback={<PageLoading />}>
+              <IntroduceRow loading={loading} visitData={headInfo} />
+            </Suspense>
+          </Col>
+          <Col md={6} sm={24}>
+            <Card>
+              <div className={styles.textAlign}>
+                <div className={styles.bdInfo_avatar}>
+                  <Avatar size="large" src={bdInfo.avatar} />
+                  <div className={styles.message}>
+                    <p className={styles.bdInfoname}>{bdInfo.name}</p>
+                    <Tag color="gold">{bdInfo.label}</Tag>
+                  </div>
+                </div>
+                <img className={styles.qrcode} src={bdInfo.qrcode} />
+              </div>
+            </Card>
+          </Col>
+        </Row>
         <Suspense fallback={null}>
           <SalesCard
             radioGroupOnChange={this.reportRadioOnChange}

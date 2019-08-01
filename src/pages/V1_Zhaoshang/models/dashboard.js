@@ -5,6 +5,7 @@ export default {
   state: {
     today_info: {},
     sh_info: {},
+    sharing_rules: '',
     income_info: {
       week_expect_income_list: [],
     },

@@ -41,7 +41,7 @@ class OrderDetail extends Component {
             </Description>
             <Description term="订单来源">推广编号{orderInfo.task_id}</Description>
             <Description term="订单价格">{orderInfo.price}</Description>
-            <Description term="返现金额">￥{orderInfo.rebate_money}</Description>
+            <Description term="结算分成">￥{orderInfo.settle_money}</Description>
           </DescriptionList>
           <Card title="商品信息">
             <DescriptionList size="large" title="商品信息" style={{ marginBottom: 32 }}>

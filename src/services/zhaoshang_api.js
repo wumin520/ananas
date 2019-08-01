@@ -14,10 +14,17 @@ export async function accountInfo(params) {
 export async function home(params) {
   return _request('home', params);
 }
+
+// 代理-会员购买记录
+export async function memberRecord(params) {
+  return request(`${api_pre}assets/member/record?${stringify(params)}`);
+}
+
 // 商户列表
 export async function shlist(params) {
   return _request('sh_list', params);
 }
+
 // 排期列表
 export async function planlist(params) {
   return _request('task/plan_list', params);

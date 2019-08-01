@@ -66,7 +66,7 @@ class RechargePay extends PureComponent {
           <div className={styles.payBlock}>
             <div className={styles.payBlock_center}>
               <div className={styles.payBlock_top}>
-                活动费用：<span className={styles.money}>{qrcodeInfo.money}</span>元，请在{' '}
+                费用：<span className={styles.money}>{qrcodeInfo.money}</span>元，请在{' '}
                 <Countdown
                   value={time}
                   onFinish={this.onFinish}
