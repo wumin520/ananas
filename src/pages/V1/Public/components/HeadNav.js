@@ -83,7 +83,7 @@ class HeadNav extends PureComponent {
                 <div>
                   {state === 0 ? (
                     <a className={styles.headNavWord} href="/user/settlein">
-                      招商/商家认证
+                      商家/招商认证
                     </a>
                   ) : (
                     <a className={styles.headNavWord} href="/homePage">
