@@ -130,11 +130,11 @@ class Header extends PureComponent {
                     首页
                   </a>
                 </Col>
-                <Col span={3} style={{ textAlign: 'right' }}>
+                {/** <Col span={3} style={{ textAlign: 'right' }}>
                   <a className={`${styles.a_nav}`} href="/public/favorites">
                     选品库
                   </a>
-                </Col>
+                </Col> */}
                 <Dropdown
                   overlay={menu}
                   overlayStyle={{ width: '100%' }}
