@@ -90,8 +90,8 @@ class HeadNav extends PureComponent {
                       放单中心
                     </a>
                   )}
-                  {ts_state === 0 ? (
-                    <a
+                  {/** {ts_state === 0 ? (
+                     <a
                       style={{ marginLeft: 20 }}
                       className={styles.headNavWord}
                       href="/user/tuishou-signin"
@@ -102,7 +102,7 @@ class HeadNav extends PureComponent {
                     <a style={{ marginLeft: 20 }} className={styles.headNavWord} href="/tuishou">
                       推手中心
                     </a>
-                  )}
+                  )} */}
                 </div>
               ) : (
                 <a className={styles.headNavWord} href="/user/register">
