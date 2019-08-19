@@ -52,7 +52,6 @@ const PageHeaderWrapper = ({
       {title && content && (
         <MenuContext.Consumer>
           {value => {
-            console.log(value, restProps, '11111');
             return (
               <PageHeader
                 wide={contentWidth === 'Fixed'}
@@ -60,7 +59,8 @@ const PageHeaderWrapper = ({
                   <Title
                     level={4}
                     style={{
-                      marginBottom: 0,
+                      marginTop: 16,
+                      marginBottom: 16,
                     }}
                   >
                     {title}

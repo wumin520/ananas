@@ -440,9 +440,19 @@ export default [
         authority: ['tuishou'],
         routes: [
           {
-            name: 'h5',
-            path: '/tuishou-platform/h5',
-            component: './V1_Tuishou/Platform/H5',
+            name: 'basic',
+            path: '/tuishou-platform/basic',
+            component: './V1_Tuishou/MiniApp/Index',
+          },
+          {
+            name: 'home',
+            path: '/tuishou-platform/home',
+            component: './V1_Tuishou/MiniApp/Home',
+          },
+          {
+            name: 'shop',
+            path: '/tuishou-platform/shop',
+            component: './V1_Tuishou/MiniApp/Shop',
           },
         ],
       },
